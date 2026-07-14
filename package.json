@@ -1,0 +1,9 @@
+{
+  "name": "kookyangi",
+  "version": "1.0.0",
+  "description": "국양로지텍 사내 물류 챗봇 국양이",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": { "express": "^4.19.2" }
+}

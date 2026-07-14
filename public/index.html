@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B1622">
+<title>국양이 · 국양로지텍</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B1622; --panel:#0F1D2C; --line:#24384D; --line2:#1B2E42;
+  --txt:#DCE6F0; --dim:#9FB3C8; --dim2:#7A8B9E; --dim3:#4C6076;
+  --hi:#F2E205; --warn:#C97A2B;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);
+  font-family:'IBM Plex Sans KR',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;font-size:15px;line-height:1.6}
+.mono{font-family:'IBM Plex Mono','IBM Plex Sans KR',monospace}
+button,input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--line)}
+
+header{background:var(--panel);border-bottom:2px solid var(--line);position:sticky;top:0;z-index:20}
+.hatch{height:6px;background:repeating-linear-gradient(135deg,var(--hi) 0 8px,var(--bg) 8px 16px)}
+.hbar{max-width:720px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.plate{border:1px solid var(--hi);color:var(--hi);padding:3px 7px;flex-shrink:0;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;line-height:1.25}
+.plate span{color:var(--dim2)}
+.hname{font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.hsub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim2);letter-spacing:.08em}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;padding:2px 6px;flex-shrink:0}
+.chip.adm{background:var(--hi);color:var(--bg)}
+.chip.open{border:1px solid var(--line);color:var(--dim2)}
+
+nav{max-width:720px;margin:0 auto;display:flex;border-top:1px solid var(--line)}
+nav button{flex:1;padding:13px 4px;font-size:11px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--dim2);transition:.15s}
+nav button:hover{color:var(--dim)}
+nav button.on{background:var(--hi);color:var(--bg)}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:0 4px;margin-left:5px;background:var(--warn);color:var(--bg)}
+nav button.on .badge{background:var(--bg);color:var(--hi)}
+
+main{flex:1;max-width:720px;width:100%;margin:0 auto;display:flex;flex-direction:column;overflow:hidden}
+.pane{display:none;flex:1;overflow-y:auto;padding:20px 16px;-webkit-overflow-scrolling:touch}
+.pane.on{display:block}
+.pane.chat.on{display:flex;flex-direction:column;padding:0}
+
+.lead{color:var(--dim2);font-size:14px;margin-bottom:18px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim3);letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px}
+input[type=text],input[type=password],input[type=search],textarea{
+  width:100%;background:var(--bg);border:1px solid var(--line);padding:11px 12px;font-size:14px;outline:none;transition:.15s}
+input::placeholder,textarea::placeholder{color:var(--dim3)}
+input:focus,textarea:focus{border-color:var(--hi)}
+textarea{resize:none;line-height:1.6}
+.btn{background:var(--hi);color:var(--bg);padding:11px 18px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.13em;transition:.15s}
+.btn:disabled{background:var(--line);color:var(--dim3);cursor:default}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--dim2)}
+.btn.ghost:hover{border-color:var(--warn);color:var(--warn)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.note{font-size:12px;color:var(--dim2);line-height:1.65;border-left:2px solid var(--hi);padding-left:10px;margin-top:12px}
+.warn{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--warn);margin-bottom:18px}
+.ok{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--hi)}
+.err{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--warn)}
+mark{background:rgba(242,226,5,.22);color:var(--hi);padding:0 1px}
+
+.searchwrap{position:sticky;top:0;background:var(--bg);margin:-20px -16px 0;padding:20px 16px 14px;z-index:5}
+#q{font-size:16px;padding:13px 12px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tag{font-size:12px;padding:5px 10px;border:1px solid var(--line);color:var(--dim2);transition:.15s}
+.tag:hover,.tag.on{border-color:var(--hi);color:var(--hi)}
+.hit{border:1px solid var(--line);padding:14px;margin-bottom:10px}
+.hit h3{font-size:14px;font-weight:700;line-height:1.4;margin-bottom:3px}
+.hit .cat{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.hit pre{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--dim);
+  white-space:pre-wrap;word-break:break-word;line-height:1.75}
+.empty{color:var(--dim3);font-size:14px;padding:30px 0;text-align:center}
+.count{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim3);letter-spacing:.15em;margin-bottom:12px}
+
+.acc{border:1px solid var(--line);margin-bottom:10px}
+.acc>button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:13px 14px;text-align:left;transition:.15s}
+.acc>button:hover{background:#132234}
+.acc.open>button{background:var(--line2)}
+.acc b{font-size:14px}
+.acc .pm{font-family:'IBM Plex Mono',monospace;color:var(--hi);font-size:13px}
+.acc .body{display:none;padding:4px 14px 14px}
+.acc.open .body{display:block}
+table{width:100%;border-collapse:collapse}
+td{padding:8px 6px 8px 0;font-size:13.5px;border-top:1px solid var(--line2)}
+td:nth-child(1){color:var(--dim);width:38%}
+td:nth-child(2){font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--hi)}
+td:nth-child(3){color:var(--dim2);font-size:12px;text-align:right;padding-right:0}
+
+.log{flex:1;overflow-y:auto;padding:20px 16px;display:flex;flex-direction:column;gap:16px;-webkit-overflow-scrolling:touch}
+.me{align-self:flex-end;max-width:85%;background:var(--line2);padding:10px 14px;font-size:14px}
+.bot{display:flex;gap:10px}
+.bot .bar{width:3px;flex-shrink:0;background:var(--hi)}
+.bot .txt{font-size:14px;line-height:1.7;white-space:pre-wrap;min-width:0;flex:1}
+.bot .txt strong{color:var(--hi);font-weight:700}
+.thinking .bar{animation:pulse 1.1s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.composer{border-top:1px solid var(--line);background:var(--panel);padding:12px}
+.composer .row{flex-wrap:nowrap}
+.composer input{flex:1;padding:13px 12px;font-size:16px}
+.quick{display:flex;flex-direction:column;gap:8px;margin-top:22px}
+.quick button{text-align:left;font-size:14px;padding:11px 12px;border:1px solid var(--line);transition:.15s}
+.quick button:hover{border-color:var(--hi);color:var(--hi)}
+.offbox{margin:0 16px 16px;border:1px solid var(--warn);padding:14px;font-size:13px;color:var(--dim);line-height:1.7}
+
+.card{border:1px solid var(--line);padding:14px;margin-bottom:10px}
+.card.pend{border-color:var(--warn)}
+.card h3{font-size:14px;font-weight:700;line-height:1.4}
+.card p{font-size:13px;color:var(--dim);margin-top:8px;white-space:pre-wrap;line-height:1.7}
+.card .meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim3);margin-top:10px}
+.card .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.mini{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;padding:4px 9px}
+.mini.y{background:var(--hi);color:var(--bg)}
+.mini.g{border:1px solid var(--line);color:var(--dim2)}
+.mini.g:hover{color:var(--warn);border-color:var(--warn)}
+.del{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim3);flex-shrink:0}
+.del:hover{color:var(--warn)}
+
+.sec{border-top:1px solid var(--line);padding-top:22px;margin-top:22px}
+.sec.first{border:none;padding-top:0;margin-top:0}
+.sw{display:flex;gap:12px;align-items:flex-start}
+.toggle{width:44px;height:24px;border:1px solid var(--line);background:var(--bg);position:relative;flex-shrink:0;transition:.15s}
+.toggle.on{background:var(--hi);border-color:var(--hi)}
+.toggle i{position:absolute;top:2px;left:2px;width:16px;height:16px;background:var(--dim3);transition:.15s}
+.toggle.on i{left:24px;background:var(--bg)}
+.sw b{font-size:14px;display:block}
+.sw small{font-size:12px;color:var(--dim2);line-height:1.6;display:block;margin-top:4px}
+
+footer{border-top:1px solid var(--line);background:var(--panel);padding:10px 16px}
+footer p{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim3);text-align:center;max-width:720px;margin:0 auto}
+@media(max-width:420px){nav button{font-size:10px;letter-spacing:.06em;padding:12px 2px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hatch"></div>
+  <div class="hbar">
+    <div class="plate">KYL<br><span>03077</span></div>
+    <div style="min-width:0;flex:1">
+      <div class="hname" id="hname">국양이</div>
+      <div class="hsub">국양로지텍 물류 도우미</div>
+    </div>
+    <span class="chip adm" id="chipAdm" hidden>관리자</span>
+    <span class="chip open" id="chipOpen" hidden>공개</span>
+  </div>
+  <nav>
+    <button data-p="chat" class="on">대화</button>
+    <button data-p="find">찾기</button>
+    <button data-p="cheat">치트시트</button>
+    <button data-p="learn">지식<span class="badge" id="bdg" hidden>0</span></button>
+    <button data-p="set">설정</button>
+  </nav>
+</header>
+
+<main>
+  <section class="pane chat on" id="p-chat">
+    <div class="log" id="log"></div>
+    <div class="offbox" id="offbox" hidden></div>
+    <div class="composer" id="composer">
+      <div class="row">
+        <input type="text" id="msg" placeholder="국양이에게 물어보세요">
+        <button class="btn" id="send">보내기</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="pane" id="p-find">
+    <div class="searchwrap">
+      <input type="search" id="q" placeholder="컨테이너, 샤시, 보세, 자가, 터미널, 연차…" autocomplete="off">
+      <div class="tags" id="tags"></div>
+    </div>
+    <div class="count" id="cnt"></div>
+    <div id="hits"></div>
+  </section>
+
+  <section class="pane" id="p-cheat">
+    <p class="lead">현장에서 바로 보는 숫자.</p>
+    <div id="cheats"></div>
+  </section>
+
+  <section class="pane" id="p-learn">
+    <p class="lead" id="learnLead"></p>
+    <p class="warn">⚠ 계정·비밀번호·계좌는 절대 넣지 마세요.</p>
+    <div style="border:1px solid var(--line);padding:14px;margin-bottom:24px">
+      <input type="text" id="nTitle" placeholder="제목 — 예: 천경(CKL) 자가 서류 변경" style="margin-bottom:8px">
+      <textarea id="nBody" rows="4" placeholder="내용. 숫자·코드·기한을 정확히 쓸수록 답이 정확해집니다." style="margin-bottom:8px"></textarea>
+      <input type="text" id="nWho" placeholder="이름 (선택)" style="margin-bottom:8px">
+      <div class="row"><button class="btn" id="addKb">가르치기</button><span id="flash"></span></div>
+    </div>
+    <div id="pendWrap" hidden>
+      <div class="eyebrow" style="color:var(--warn)">승인 대기 <span id="pendN">0</span>건</div>
+      <div id="pends" style="margin-bottom:28px"></div>
+    </div>
+    <div class="eyebrow">배운 지식 <span id="kbN">0</span>건</div>
+    <div id="kbs"></div>
+  </section>
+
+  <section class="pane" id="p-set">
+    <div class="sec first" id="secLogin" hidden>
+      <div class="eyebrow">관리자 로그인</div>
+      <p style="font-size:14px;color:var(--dim);margin-bottom:14px;line-height:1.7">
+        암호는 서버에 설정되어 있습니다. 관리자만 지식을 등록하고 이름을 바꿀 수 있습니다.
+      </p>
+      <input type="password" id="pin" placeholder="관리자 암호" style="margin-bottom:8px">
+      <div class="row"><button class="btn" id="unlock">잠금 해제</button><span id="pinMsg"></span></div>
+    </div>
+
+    <div id="secAdmin" hidden>
+      <div class="sec first">
+        <div class="eyebrow">이름</div>
+        <p style="font-size:14px;color:var(--dim);margin-bottom:12px">
+          지금 이름은 <b style="color:var(--hi)" id="curName">국양이</b>입니다. 바꾸면 전 직원 화면에 반영됩니다.
+        </p>
+        <div class="row" style="flex-wrap:nowrap">
+          <input type="text" id="nName" placeholder="새 이름" style="flex:1">
+          <button class="btn" id="rename">바꾸기</button>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="eyebrow">지식 등록 권한</div>
+        <div class="sw">
+          <button class="toggle" id="tgOpen"><i></i></button>
+          <div>
+            <b id="openLbl">관리자만 등록</b>
+            <small id="openDesc"></small>
+          </div>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="eyebrow">세션</div>
+        <button class="btn ghost" id="lock">관리자 잠그기</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><p>사내용 · 계정·비밀번호는 관리자 문의 · 선사·터미널 정책은 최종 확인 필요</p></footer>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+let BASE={KB:[],CHEATS:[],QUICKS:[],chatEnabled:false};
+let ST={cfg:{botName:"국양이",openMode:false},entries:[],suggestions:[],isAdmin:false,pendingCount:0};
+let token=sessionStorage.getItem("kyl_token")||"";
+let msgs=[], busy=false, activeCat="";
+
+const H=()=>token?{"Content-Type":"application/json","x-admin-token":token}:{"Content-Type":"application/json"};
+const api=async(p,o={})=>{const r=await fetch(p,{headers:H(),...o});return r.json()};
+
+/* ══ 탭 ══ */
+$$("nav button").forEach(b=>b.onclick=()=>{
+  $$("nav button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+  $$(".pane").forEach(p=>p.classList.remove("on"));
+  $("#p-"+b.dataset.p).classList.add("on");
+  if(b.dataset.p==="chat") renderChat();
+});
+
+/* ══ 초기 로드 ══ */
+(async()=>{
+  BASE=await api("/api/base");
+  await refresh();
+  buildTags(); buildCheats(); paint();
+})();
+async function refresh(){
+  const s=await api("/api/state");
+  if(s && s.cfg) ST=s;
+  if(!ST.isAdmin && token){ token=""; sessionStorage.removeItem("kyl_token"); }
+}
+
+/* ══ 대화 ══ */
+function renderChat(){
+  const on=BASE.chatEnabled;
+  $("#composer").hidden=!on;
+  $("#offbox").hidden=on;
+  if(!on) $("#offbox").innerHTML=
+    `대화 기능이 꺼져 있습니다. 서버에 API 키가 설정되지 않았습니다.<br>
+     <b style="color:var(--hi)">찾기</b>와 <b style="color:var(--hi)">치트시트</b>는 그대로 쓰실 수 있습니다.`;
+  $("#msg").placeholder=ST.cfg.botName+"에게 물어보세요";
+  const log=$("#log");
+  if(!msgs.length){
+    const strictNote = BASE.strict
+      ? `\n<span style="color:var(--warn)">인사·급여, 선사별 자가 서류, 반입전송 코드는 대화로 안 다뤄요. [찾기]에서 검색하세요.</span>`
+      : "";
+    log.innerHTML=
+      `<div class="bot"><div class="bar"></div><div class="txt">안녕하세요, <strong>${esc(ST.cfg.botName)}</strong>예요.
+컨테이너·샤시·보세운송·터미널 코드·통관·INCOTERMS를 물어보세요.
+<span style="color:var(--dim2)">짧게 답하고, 더 알고 싶으시면 이어서 물어보시면 돼요.</span>${strictNote}</div></div>`
+      + (on?`<div class="quick">${BASE.QUICKS.map(q=>`<button data-q="${esc(q)}">${esc(q)}</button>`).join("")}</div>`:"");
+    $$(".quick button").forEach(b=>b.onclick=()=>send(b.dataset.q));
+  }else{
+    log.innerHTML=msgs.map(m=>m.role==="user"
+      ?`<div class="me">${esc(m.content)}</div>`
+      :`<div class="bot"><div class="bar"></div><div class="txt">${esc(m.content).replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>")}</div></div>`
+    ).join("")+(busy?`<div class="bot thinking"><div class="bar"></div><div class="txt mono" style="font-size:11px;color:var(--dim2)">찾는 중…</div></div>`:"");
+    log.scrollTop=log.scrollHeight;
+  }
+}
+async function send(text){
+  const q=(text ?? $("#msg").value).trim();
+  if(!q||busy||!BASE.chatEnabled) return;
+  $("#msg").value="";
+  msgs.push({role:"user",content:q});
+  busy=true; renderChat();
+  try{
+    const d=await api("/api/chat",{method:"POST",body:JSON.stringify({messages:msgs})});
+    msgs.push({role:"assistant",content:d.text||d.error||"답을 못 받았어요."});
+  }catch(e){
+    msgs.push({role:"assistant",content:"연결이 끊겼어요. 잠시 후 다시 시도해 주세요."});
+  }
+  busy=false; renderChat();
+}
+$("#send").onclick=()=>send();
+$("#msg").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();send();}};
+
+/* ══ 찾기 ══ */
+function buildTags(){
+  const cats=[...new Set(BASE.KB.map(x=>x.c))];
+  $("#tags").innerHTML=cats.map(c=>`<button class="tag" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+  $$(".tag").forEach(t=>t.onclick=()=>{
+    activeCat=activeCat===t.dataset.c?"":t.dataset.c;
+    $$(".tag").forEach(x=>x.classList.toggle("on",x.dataset.c===activeCat));
+    search();
+  });
+  $("#q").oninput=search;
+}
+function hl(text,q){
+  if(!q) return esc(text);
+  let out=esc(text);
+  q.split(/\s+/).filter(Boolean).forEach(w=>{
+    const re=new RegExp("("+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi");
+    out=out.replace(re,"<mark>$1</mark>");
+  });
+  return out;
+}
+function search(){
+  const q=($("#q").value||"").trim().toLowerCase();
+  const learned=ST.entries.map(e=>({c:"사내추가",t:e.title,g:"",b:e.body}));
+  let pool=[...BASE.KB,...learned];
+  if(activeCat) pool=pool.filter(x=>x.c===activeCat);
+  let hits=pool;
+  if(q){
+    const ws=q.split(/\s+/);
+    hits=pool.filter(x=>{const hay=(x.t+" "+x.g+" "+x.b+" "+x.c).toLowerCase();return ws.every(w=>hay.includes(w))});
+  }
+  $("#cnt").textContent=(q||activeCat)?hits.length+"건":pool.length+"개 항목 · 검색어를 넣으면 좁혀집니다";
+  $("#hits").innerHTML=hits.length
+    ? hits.map(x=>`<div class="hit"><div class="cat">${esc(x.c)}</div><h3>${hl(x.t,q)}</h3><pre>${hl(x.b,q)}</pre></div>`).join("")
+    : `<div class="empty">찾는 내용이 없습니다.<br>다른 말로 검색하거나 담당자에게 확인하세요.</div>`;
+}
+
+/* ══ 치트시트 ══ */
+function buildCheats(){
+  $("#cheats").innerHTML=BASE.CHEATS.map((c,i)=>`
+    <div class="acc${i===0?" open":""}">
+      <button><b>${esc(c.label)}</b><span class="pm">${i===0?"−":"+"}</span></button>
+      <div class="body">
+        <table><tbody>${c.rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody></table>
+        <p class="note">${esc(c.note)}</p>
+      </div>
+    </div>`).join("");
+  $$(".acc>button").forEach(b=>b.onclick=()=>{
+    const a=b.parentElement, was=a.classList.contains("open");
+    $$(".acc").forEach(x=>{x.classList.remove("open");x.querySelector(".pm").textContent="+"});
+    if(!was){a.classList.add("open");a.querySelector(".pm").textContent="−"}
+  });
+}
+
+/* ══ 지식 ══ */
+const canEdit=()=>ST.isAdmin||ST.cfg.openMode;
+function renderKb(){
+  $("#learnLead").textContent=canEdit()
+    ? `새로 알게 된 규칙이나 바뀐 선사 정책을 적으면 ${ST.cfg.botName}가 다음부터 씁니다. 전 직원에게 즉시 반영됩니다.`
+    : `지금은 관리자만 등록할 수 있어요. 여기 적으시면 관리자에게 제안으로 전달됩니다.`;
+  $("#addKb").textContent=canEdit()?"가르치기":"제안 보내기";
+  $("#nWho").hidden=canEdit();
+
+  const showPend=ST.isAdmin&&ST.suggestions.length>0;
+  $("#pendWrap").hidden=!showPend;
+  $("#pendN").textContent=ST.suggestions.length;
+  $("#bdg").hidden=!showPend;
+  $("#bdg").textContent=ST.suggestions.length;
+  if(showPend){
+    $("#pends").innerHTML=ST.suggestions.map(s=>`
+      <div class="card pend">
+        <h3>${esc(s.title)}</h3><p>${esc(s.body)}</p>
+        <div class="top" style="margin-top:12px;align-items:center">
+          <span class="meta" style="margin:0">${esc(s.who)} · ${esc(s.at)}</span>
+          <div class="row">
+            <button class="mini y" data-ok="${s.id}">반영</button>
+            <button class="mini g" data-no="${s.id}">버림</button>
+          </div>
+        </div>
+      </div>`).join("");
+    $$("[data-ok]").forEach(b=>b.onclick=async()=>{
+      await api("/api/kb/approve",{method:"POST",body:JSON.stringify({id:b.dataset.ok})});
+      await refresh(); paint();
+    });
+    $$("[data-no]").forEach(b=>b.onclick=async()=>{
+      await api("/api/kb/reject",{method:"POST",body:JSON.stringify({id:b.dataset.no})});
+      await refresh(); paint();
+    });
+  }
+  $("#kbN").textContent=ST.entries.length;
+  $("#kbs").innerHTML=ST.entries.length
+    ? ST.entries.map(e=>`
+      <div class="card">
+        <div class="top"><h3>${esc(e.title)}</h3>${ST.isAdmin?`<button class="del" data-del="${e.id}">삭제</button>`:""}</div>
+        <p>${esc(e.body)}</p>
+        <div class="meta">${esc(e.who||"—")} · ${esc(e.at)}</div>
+      </div>`).join("")
+    : `<p style="color:var(--dim3);font-size:14px">아직 없어요. 첫 항목을 적어 보세요.</p>`;
+  $$("[data-del]").forEach(b=>b.onclick=async()=>{
+    await api("/api/kb/delete",{method:"POST",body:JSON.stringify({id:b.dataset.del})});
+    await refresh(); paint();
+  });
+}
+$("#addKb").onclick=async()=>{
+  const title=$("#nTitle").value.trim(), body=$("#nBody").value.trim();
+  if(!title||!body) return;
+  const d=await api("/api/kb",{method:"POST",body:JSON.stringify({title,body,who:$("#nWho").value.trim()})});
+  if(d.ok){
+    $("#nTitle").value=""; $("#nBody").value="";
+    flash(d.direct?"배웠습니다":"제안을 보냈습니다");
+    await refresh(); paint();
+  }else flash(d.error||"저장 실패",true);
+};
+function flash(m,bad){const f=$("#flash");f.className=bad?"err":"ok";f.textContent=m;setTimeout(()=>f.textContent="",2600)}
+
+/* ══ 설정 ══ */
+$("#unlock").onclick=async()=>{
+  const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({password:$("#pin").value})});
+  const d=await r.json();
+  if(d.token){
+    token=d.token; sessionStorage.setItem("kyl_token",token);
+    $("#pin").value=""; $("#pinMsg").textContent="";
+    await refresh(); paint();
+  }else{
+    $("#pinMsg").className="err"; $("#pinMsg").textContent=d.error||"실패";
+  }
+};
+$("#pin").onkeydown=e=>{if(e.key==="Enter")$("#unlock").click()};
+$("#lock").onclick=async()=>{token="";sessionStorage.removeItem("kyl_token");await refresh();paint()};
+$("#rename").onclick=async()=>{
+  const n=$("#nName").value.trim(); if(!n) return;
+  await api("/api/config",{method:"POST",body:JSON.stringify({botName:n})});
+  $("#nName").value=""; await refresh(); paint();
+};
+$("#tgOpen").onclick=async()=>{
+  await api("/api/config",{method:"POST",body:JSON.stringify({openMode:!ST.cfg.openMode})});
+  await refresh(); paint();
+};
+
+/* ══ 렌더 ══ */
+function paint(){
+  $("#hname").textContent=ST.cfg.botName;
+  document.title=ST.cfg.botName+" · 국양로지텍";
+  $("#chipAdm").hidden=!ST.isAdmin;
+  $("#chipOpen").hidden=!(ST.cfg.openMode&&!ST.isAdmin);
+  $("#secLogin").hidden=ST.isAdmin;
+  $("#secAdmin").hidden=!ST.isAdmin;
+  $("#curName").textContent=ST.cfg.botName;
+  $("#tgOpen").classList.toggle("on",ST.cfg.openMode);
+  $("#openLbl").textContent=ST.cfg.openMode?"누구나 등록":"관리자만 등록";
+  $("#openDesc").textContent=ST.cfg.openMode
+    ? "직원 누구나 지식을 바로 등록합니다. 승인 절차가 없습니다."
+    : "직원은 제안까지만 할 수 있고, 관리자가 승인해야 반영됩니다. 나중에 이 스위치를 켜면 전면 공개됩니다.";
+  search(); renderKb(); renderChat();
+}
+</script>
+</body>
+</html>
