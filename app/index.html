@@ -289,7 +289,7 @@ function canonShipper(name){
   if(!name)return null;if(M.shp.has(name))return name;
   const n=name.toLowerCase().replace(/\s/g,'');
   for(const k of M.shp.keys()){if(k.toLowerCase().replace(/\s/g,'')===n)return k;}
-  if(name.length>=3)for(const k of M.shp.keys()){if(k.length===name.length){let d=0;for(let i=0;i<k.length;i++)if(k[i]!==name[i]){if(++d>1)break;}if(d===1)return k;}}
+  if(name.length>=5)for(const k of M.shp.keys()){if(k.length===name.length){let d=0;for(let i=0;i<k.length;i++)if(k[i]!==name[i]){if(++d>1)break;}if(d===1)return k;}} // 짧은 이름 오교정 방지(5자+)
   return null;
 }
 
@@ -583,6 +583,14 @@ function parseText(text){
   if(cntrs.length){const allok=cntrs.every(c=>cntrState(c).st==='ok');
     res.cntr={v:cntrs.join(', '),c:allok?1:0.5};info.push(`컨번호 ${cntrs.length}${allok?'':' (검증 필요)'}`);}
   const tel=text.match(/01[016789][-.\s]?\d{3,4}[-.\s]?\d{4}/);if(tel){res.tel={v:tel[0],c:1};info.push('연락처');}
+  const bt=text.match(/청구처\s*[:\-]?\s*([가-힣A-Za-z0-9()·&]{2,})/);if(bt){res.billto={v:bt[1],c:.85};info.push('청구처');}
+  const cg=text.match(/청구\s*[가액]\s*[:\-]?\s*([\d,]{4,})\s*원?/);if(cg){res.charge={v:cg[1].replace(/,/g,''),c:.8};info.push('청구가');}
+  const am=text.match(/(서울|경기|인천|충남|충북|전남|전북|경남|경북|강원|대전|대구|부산|울산|광주|제주|세종)[가-힣0-9\s\-()번길로동리읍면구시군동]{4,45}/);
+  if(am){let a=am[0].replace(/\s+/g,' ').trim();
+    a=a.split(/\s0?1[016789][-.\s]?\d/)[0].trim();   // 전화번호 앞에서 자름
+    a=a.replace(/\s+[A-Za-z].*$/,'').trim();          // 뒤쪽 영문코드(DWS 등) 제거
+    a=a.split(/\s*(특이사항|비고|담당|연락처|청구|출하|도착|품명|수량|현장|송장|주소|시간)/)[0].trim(); // 뒤 항목 앞에서 자름
+    res.addr={v:a,c:.6};info.push('주소');}
   // ── 날짜: 명시(YYYY-M-D / M월D일 / M.D) → 상대(오늘·내일·모레·다음주 화요일 …)
   // 오더는 항상 '오늘'을 기준으로 상대날짜 계산(붙여넣은 대화의 날짜 헤더는 무시)
   const refD=new Date();
@@ -684,7 +692,7 @@ function applyParse(text){
   const {res,info}=parseText(text);
   for(const k in res){if(k[0]==='_')continue;editing[k]=res[k].v;}
   if(res.vno){const vi=vehInfo(res.vno.v);if(vi&&vi.div)editing.div=vi.div;}
-  if(res.shipper){const si=shpInfo(res.shipper.v);if(si){if(si.addrs[0])editing.addr=si.addrs[0];if(si.tel)editing.tel=si.tel;if(si.bill)editing.billto=si.bill;}}
+  if(res.shipper){const si=shpInfo(res.shipper.v);if(si){if(si.addrs[0]&&!res.addr)editing.addr=si.addrs[0];if(si.tel&&!res.tel)editing.tel=si.tel;if(si.bill&&!res.billto)editing.billto=si.bill;}}
   const qty=(res._qty&&res._qty>1)?res._qty:1;
   if(qty>1)editing._qty=qty;              // 저장 시 N건 등록
   buildFormDom();
@@ -710,7 +718,11 @@ async function handleFile(f){
     info.textContent='PDF 텍스트 추출 중…';
     try{
       const buf=await f.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:buf}).promise;
-      let txt='';for(let p=1;p<=Math.min(pdf.numPages,3);p++){const pg=await pdf.getPage(p);const c=await pg.getTextContent();txt+=c.items.map(i=>i.str).join(' ')+'\n';}
+      let txt='';for(let p=1;p<=Math.min(pdf.numPages,3);p++){const pg=await pdf.getPage(p);
+        const c=await pg.getTextContent();txt+=c.items.map(i=>i.str).join(' ')+'\n';
+        try{const ann=await pg.getAnnotations();for(const a of ann){       // FreeText/메모 주석의 값도 포함
+          const s=(a.contentsObj&&a.contentsObj.str)||a.contents||'';if(s)txt+='\n'+s;}}catch(e){}
+      }
       document.getElementById('pasteBox').value=txt.trim();
       if(txt.replace(/\s/g,'').length<10){info.innerHTML='<span style="color:var(--warn)">글자가 거의 없는 스캔 PDF입니다. 실제 앱에서는 이미지를 Claude Vision으로 판독합니다.</span>';}
       else applyParse(txt);
