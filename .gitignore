@@ -19,6 +19,9 @@ kyss-api/bundle/
 
 # 앱 생성 데이터 (엑셀에서 추출, 전화번호·금액 포함 — tools/extract_dispatch.py 로 재생성)
 app/data.js
+# 아티팩트 본문 (data.js 인라인 — PII 포함, tools/build_artifact.py 로 재생성)
+app/artifact_body.html
+배차일보_artifact.html
 
 # OS / 편집기
 .DS_Store

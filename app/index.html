@@ -470,8 +470,8 @@ function suggest(f,inp,box){
     const m=M[f.src];if(m)items=[...m.keys()].filter(k=>String(k).toLowerCase().includes(q)).slice(0,8).map(k=>({val:k,sub:''}));
   }
   if(!items.length||!q){box.classList.remove('open');box._items=null;return;}
-  box._items=items;box._hi=-1;
-  box.innerHTML=items.map((it,i)=>`<div data-i="${i}" data-val="${esc(it.val)}">${esc(it.val)}<small>${esc(it.sub)}</small></div>`).join('');
+  box._items=items;box._hi=0;
+  box.innerHTML=items.map((it,i)=>`<div data-i="${i}" data-val="${esc(it.val)}" class="${i===0?'hi':''}">${esc(it.val)}<small>${esc(it.sub)}</small></div>`).join('');
   box.classList.add('open');
   box.querySelectorAll('div').forEach(d=>d.onmousedown=e=>{e.preventDefault();pick(f.k,d.dataset.val);box.classList.remove('open');});
 }
@@ -486,7 +486,10 @@ function sugKey(e,k,box){
   if(e.key==='ArrowDown'){e.preventDefault();sugHi(box,1);}
   else if(e.key==='ArrowUp'){e.preventDefault();sugHi(box,-1);}
   else if(e.key==='Enter'){
-    if(box._hi>=0){e.preventDefault();pick(k,box._items[box._hi].val);box.classList.remove('open');}
+    const i=box._hi>=0?box._hi:0;e.preventDefault();pick(k,box._items[i].val);box.classList.remove('open');
+  }
+  else if(e.key==='Tab'){
+    const i=box._hi>=0?box._hi:0;pick(k,box._items[i].val);box.classList.remove('open');
   }
   else if(e.key==='Escape'){box.classList.remove('open');}
 }
