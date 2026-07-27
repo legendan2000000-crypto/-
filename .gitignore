@@ -17,6 +17,9 @@ kyss-api/bundle/
 *.xlsx
 !**/샘플*.xlsx
 
+# 앱 생성 데이터 (엑셀에서 추출, 전화번호·금액 포함 — tools/extract_dispatch.py 로 재생성)
+app/data.js
+
 # OS / 편집기
 .DS_Store
 node_modules/
