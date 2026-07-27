@@ -48,15 +48,20 @@ def main(out=None):
     body = re.search(r'<body[^>]*>(.*?)</body>', html, re.S).group(1)
     # data.js 인라인
     body = body.replace('<script src="data.js"></script>', '<script>' + data + '</script>')
-    # pdf.js 블록 제거
-    body = re.sub(r'<!-- PDF 판독기.*?onerror="window\.__nopdf=1"></script>\s*<script>try\{if\(window\.pdfjsLib\)pdfjsLib\.GlobalWorkerOptions\.workerSrc=\'vendor/pdf\.worker\.min\.js\';\}catch\(e\)\{\}</script>', '', body, flags=re.S)
-    # 아티팩트는 <head>를 떼므로 viewport 메타를 런타임에 주입(모바일 필수) + body 클래스/설정
+    # pdf.js 인라인: pdf.min.js + worker를 메인스레드에 인라인(globalThis.pdfjsWorker 정의).
+    # workerSrc를 안 걸면 v3가 스크립트 주입 없이 fake-worker로 동작 → 아티팩트 CSP 통과.
+    pdfmin = open(os.path.join(APP, 'vendor', 'pdf.min.js'), encoding='utf-8', errors='replace').read()
+    worker = open(os.path.join(APP, 'vendor', 'pdf.worker.min.js'), encoding='utf-8', errors='replace').read()
+    body = re.sub(r'<!-- PDF 판독기.*?workerSrc=\'vendor/pdf\.worker\.min\.js\';\}catch\(e\)\{\}</script>',
+                  '@@PDFJS@@', body, flags=re.S)
+    body = body.replace('@@PDFJS@@', '<script>' + pdfmin + '</script>\n<script>' + worker + '</script>')
+    # 아티팩트는 <head>를 떼므로 viewport 메타를 런타임에 주입(모바일 필수) + body 클래스
     init = ('<script>(function(){'
             'try{if(!document.querySelector("meta[name=viewport]")){'
             'var m=document.createElement("meta");m.name="viewport";'
             'm.content="width=device-width, initial-scale=1, viewport-fit=cover";'
             'document.head.appendChild(m);}}catch(e){}'
-            'document.body.classList.add("amt-hide");window.__nopdf=1;'
+            'document.body.classList.add("amt-hide");'
             '})();</script>')
     content = style + '\n' + body + '\n' + init
     out = out or os.path.join(APP, '..', '배차일보_artifact.html')
