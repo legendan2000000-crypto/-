@@ -395,7 +395,7 @@ function openForm(rec){
     en.style.display='';en.textContent='기존 배차일보 건을 편집합니다 — 원본은 보존되고 수정본으로 저장됩니다.';}
   else if(rec._id){editing=Object.assign({},rec);en.style.display='';en.textContent='내 입력 건을 편집 중입니다.';}
   else{editing=Object.assign({},rec);en.style.display='';en.textContent='복제해서 새 건으로 입력합니다.';}
-  buildFormDom();switchTab('input');
+  buildFormDom();document.getElementById('saveBtn').textContent='저장';switchTab('input');
 }
 const AC_FIELDS=['vno','shipper','billto','line','load'];
 function buildFormDom(){
@@ -545,11 +545,13 @@ document.getElementById('saveBtn').onclick=()=>{
   if(!editing.shipper){alert('화주를 입력하세요 (배차 등록은 화주부터)');return;}
   editing.spec=[editing.size,editing.type].filter(Boolean).join('');
   if(!editing.unload)editing.unload=editing.addr||'';        // 특이사항 없으면 하차지=주소
-  if(editing._id){const i=USER.findIndex(x=>x._id===editing._id);USER[i]=editing;}
-  else{editing._id='u'+Date.now();USER.push(editing);}
+  const qty=Math.max(1,Math.min(30,+editing._qty||1));
+  if(editing._id){const i=USER.findIndex(x=>x._id===editing._id);delete editing._qty;USER[i]=editing;}
+  else{for(let n=0;n<qty;n++){const e=Object.assign({},editing);delete e._qty;e._id='u'+Date.now()+'_'+n;USER.push(e);}}
   saveUser();
   selDate=editing.date;
-  const st=editing.vno?'저장됨 (배차완료) ✓':'등록됨 — 차량 미배차 ✓';
+  const st=qty>1?`${qty}건 오더 등록됨 — 차량 미배차 (디테일 나중에) ✓`:(editing.vno?'저장됨 (배차완료) ✓':'등록됨 — 차량 미배차 ✓');
+  document.getElementById('saveBtn').textContent='저장';
   switchTab('day');renderDay();
   document.getElementById('daymeta').insertAdjacentHTML('afterbegin',`<span style="color:var(--ok);font-weight:700">${st}</span>`);
 };
@@ -615,6 +617,19 @@ function parseText(text){
   if(nums.length){res.vno={v:nums[0],c:.7};info.push('차량후보');}
   // 화주 마스터 매칭 (긴 이름 우선)
   for(const s of [...M.shp.keys()].sort((a,b)=>b.length-a.length)){if(s&&s.length>=2&&text.includes(s)){res.shipper={v:s,c:.8};break;}}
+  // 마스터에 없는 새 화주: 짧은 오더면 앞쪽 명사 토큰을 후보로 (놓치지 않게)
+  if(!res.shipper){
+    const STOP=/^(내일|모레|오늘|글피|이번주|금주|다음주|담주|차주|다담주|오전|오후|아침|저녁|밤|새벽|낮|수입|수출|반입|반출|들어온|들어옴|들어온거|입항|출항|선적|컨테이너|컨|박스|피트|기준|담당|안녕하세요|안녕하세용|있어요|있음)$/;
+    const toks=text.replace(/[()\[\]:·,\/\n]/g,' ').split(/\s+/).filter(Boolean);
+    if(toks.length<=6){
+      for(const t of toks){
+        if(t.length<2||STOP.test(t))continue;
+        if(/^\d/.test(t)||/\d(대|개|시|분|피트|월|일|톤)/.test(t))continue; // 수량/시간/날짜 토큰 제외
+        if(/^[A-Z]{4}\d{7}$/.test(t)||/요일$/.test(t))continue;               // 컨번호/요일 제외
+        res.shipper={v:t,c:.45};break;
+      }
+    }
+  }
   // 상차/하차: 라벨(상차/하차) 뒤에 오는 터미널 우선, 없으면 첫 매칭
   const findTerm=(map,labels,useFallback)=>{
     for(const lb of labels){const gi=text.indexOf(lb);if(gi>=0){const seg=text.slice(gi,gi+18);
@@ -635,10 +650,13 @@ function applyParse(text){
   for(const k in res){if(k[0]==='_')continue;editing[k]=res[k].v;}
   if(res.vno){const vi=vehInfo(res.vno.v);if(vi&&vi.div)editing.div=vi.div;}
   if(res.shipper){const si=shpInfo(res.shipper.v);if(si){if(si.addrs[0])editing.addr=si.addrs[0];if(si.tel)editing.tel=si.tel;if(si.bill)editing.billto=si.bill;}}
+  const qty=(res._qty&&res._qty>1)?res._qty:1;
+  if(qty>1)editing._qty=qty;              // 저장 시 N건 등록
   buildFormDom();
+  document.getElementById('saveBtn').textContent=qty>1?`${qty}건 등록`:'저장';
   // 확신 낮은 필드 노랑
   for(const k in res){if(k[0]==='_')continue;if(res[k].c<0.75){const el=document.querySelector(`#form [data-k="${k}"]`);if(el)el.classList.add('conf-low');}}
-  const qtyMsg=(res._qty&&res._qty>1)?` <span style="color:var(--accent);font-weight:700">· 컨테이너 ${res._qty}대 → 저장 후 '복제'로 나머지 추가</span>`:'';
+  const qtyMsg=qty>1?` <span style="color:var(--accent);font-weight:700">· 저장하면 ${qty}건이 오더장에 등록됩니다 (디테일 나중에)</span>`:'';
   document.getElementById('parseInfo').innerHTML=info.length?`파싱됨: ${info.join(' · ')} <span style="color:var(--warn)">— 노란 칸은 확인 필요</span>${qtyMsg}`:'인식된 값이 없습니다. 직접 입력하세요.';
 }
 document.getElementById('parseBtn').onclick=()=>{const t=document.getElementById('pasteBox').value.trim();if(t)applyParse(t);};
