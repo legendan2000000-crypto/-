@@ -584,8 +584,8 @@ function parseText(text){
     res.cntr={v:cntrs.join(', '),c:allok?1:0.5};info.push(`컨번호 ${cntrs.length}${allok?'':' (검증 필요)'}`);}
   const tel=text.match(/01[016789][-.\s]?\d{3,4}[-.\s]?\d{4}/);if(tel){res.tel={v:tel[0],c:1};info.push('연락처');}
   // ── 날짜: 명시(YYYY-M-D / M월D일 / M.D) → 상대(오늘·내일·모레·다음주 화요일 …)
-  const refD=(()=>{const h=text.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일/);
-    const y=new Date().getFullYear();return h?new Date(y,+h[1]-1,+h[2]):new Date();})();
+  // 오더는 항상 '오늘'을 기준으로 상대날짜 계산(붙여넣은 대화의 날짜 헤더는 무시)
+  const refD=new Date();
   const fmtD=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
   const hasRel=/다음주|담주|다담주|이번주|금주|내일|모레|글피|오늘|요일/.test(text); // '차주'(車主)는 제외
@@ -621,7 +621,7 @@ function parseText(text){
         rd=addD(mon,wkn+(tdow===0?6:tdow-1));
       }else{let g=(tdow-cur+7)%7;if(g===0)g=7;rd=addD(refD,g);}          // 주 지정 없으면 다음 해당요일
     }
-    if(rd){dateVal=fmtD(rd);dateConf=0.55;dateNote=` (기준 ${refD.getMonth()+1}/${refD.getDate()})`;}
+    if(rd){dateVal=fmtD(rd);dateConf=0.55;dateNote=` (오늘 ${refD.getMonth()+1}/${refD.getDate()} 기준)`;}
   }
   if(dateVal){res.date={v:dateVal,c:dateConf};info.push('날짜'+(dateConf<0.75?' ⚠확인'+dateNote:''));}
   // ── 시간: 오전/오후 N시(반/N분) 우선, 없으면 HH:MM
