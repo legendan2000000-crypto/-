@@ -588,14 +588,23 @@ function parseText(text){
     const y=new Date().getFullYear();return h?new Date(y,+h[1]-1,+h[2]):new Date();})();
   const fmtD=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
-  const hasRel=/다음주|담주|차주|다담주|이번주|금주|내일|모레|글피|오늘|요일/.test(text);
+  const hasRel=/다음주|담주|다담주|이번주|금주|내일|모레|글피|오늘|요일/.test(text); // '차주'(車主)는 제외
   let dateVal=null,dateConf=1,dateNote='';
-  let dm=text.match(/(20\d{2})[-.\/](\d{1,2})[-.\/](\d{1,2})/);
-  let mdk=text.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일/);
-  if(dm&&!hasRel){dateVal=`${dm[1]}-${String(dm[2]).padStart(2,'0')}-${String(dm[3]).padStart(2,'0')}`;}
-  else if(mdk&&!hasRel){dateVal=`${new Date().getFullYear()}-${String(mdk[1]).padStart(2,'0')}-${String(mdk[2]).padStart(2,'0')}`;}
+  const yr=(text.match(/(20\d{2})\s*년/)||[])[1]||new Date().getFullYear();
+  const pad2=x=>String(x).padStart(2,'0');
+  // ⬆ 현장 도착/납품일 우선: 'M/D일' 형태 또는 도착·납품·상차·현장·하차 키워드 근처 날짜(발행일보다 우선)
+  let deliv=null;
+  const sd=text.match(/(\d{1,2})\s*\/\s*(\d{1,2})\s*일/);
+  if(sd)deliv=[+sd[1],+sd[2]];
+  if(!deliv){const kb=text.match(/(도착|납품|상차|현장|하차|입고|배송|납기)[^\d]{0,12}(\d{1,2})\s*[월\/\.]\s*(\d{1,2})/);if(kb)deliv=[+kb[2],+kb[3]];}
+  if(!deliv){const ka=text.match(/(\d{1,2})\s*[월\/\.]\s*(\d{1,2})\s*일?[^\d]{0,8}(도착|납품|상차|하차|입고|현장)/);if(ka)deliv=[+ka[1],+ka[2]];}
+  const dm=text.match(/(20\d{2})[-.\/](\d{1,2})[-.\/](\d{1,2})/);
+  const mdk=text.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일/);
+  if(deliv&&!hasRel&&deliv[0]>=1&&deliv[0]<=12&&deliv[1]>=1&&deliv[1]<=31){dateVal=`${yr}-${pad2(deliv[0])}-${pad2(deliv[1])}`;dateConf=.7;dateNote=' (현장/납품일)';}
+  else if(dm&&!hasRel){dateVal=`${dm[1]}-${pad2(dm[2])}-${pad2(dm[3])}`;}
+  else if(mdk&&!hasRel){dateVal=`${yr}-${pad2(mdk[1])}-${pad2(mdk[2])}`;}
   else if(!hasRel){const m2=text.match(/\b(\d{1,2})[.\/](\d{1,2})\b/);
-    if(m2)dateVal=`${new Date().getFullYear()}-${String(m2[1]).padStart(2,'0')}-${String(m2[2]).padStart(2,'0')}`;}
+    if(m2)dateVal=`${yr}-${pad2(m2[1])}-${pad2(m2[2])}`;}
   if(hasRel){
     const DK={'일':0,'월':1,'화':2,'수':3,'목':4,'금':5,'토':6};let rd=null;
     if(/모레/.test(text))rd=addD(refD,2);
@@ -603,12 +612,12 @@ function parseText(text){
     else if(/글피/.test(text))rd=addD(refD,3);
     else if(/오늘/.test(text))rd=new Date(refD);
     const relText=text.replace(/\d{1,2}\s*월\s*\d{1,2}\s*일\s*[월화수목금토일]\s*요일/g,' '); // 날짜헤더 제거
-    const wk=relText.match(/(이번주|금주|다음주|담주|차주|다담주)\s*([월화수목금토일])\s*요일/); // 주+요일 우선
+    const wk=relText.match(/(이번주|금주|다음주|담주|다담주)\s*([월화수목금토일])\s*요일/); // 주+요일 우선
     const bare=relText.match(/([월화수목금토일])\s*요일/);
     const wm=wk?{word:wk[1],dow:wk[2]}:(bare?{word:'',dow:bare[1]}:null);
     if(wm){const tdow=DK[wm.dow],cur=refD.getDay();
       if(wm.word){const mon=addD(refD,-(cur===0?6:cur-1));              // 이번주 월요일
-        const wkn=/다담주/.test(wm.word)?14:(/다음주|담주|차주/.test(wm.word)?7:0);
+        const wkn=/다담주/.test(wm.word)?14:(/다음주|담주/.test(wm.word)?7:0);
         rd=addD(mon,wkn+(tdow===0?6:tdow-1));
       }else{let g=(tdow-cur+7)%7;if(g===0)g=7;rd=addD(refD,g);}          // 주 지정 없으면 다음 해당요일
     }
