@@ -1,0 +1,4267 @@
+{
+ "간편 오더 조회": {
+  "menu_id": "ordSimSearch",
+  "screen": "order/door/simple/ordSimSearch",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectCstmOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectSimOrderCntr"
+   }
+  ]
+ },
+ "간편 오더 등록": {
+  "menu_id": "ordSimRequest",
+  "screen": "order/door/simple/ordSimRequest",
+  "apis": [
+   {
+    "fn": "searchOrder",
+    "method": "POST",
+    "url": "/api/order/selectSimpleOrder"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/order/saveSimpleOrder"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/deleteSimpleOrder"
+   },
+   {
+    "fn": "selectCommonPopupPic",
+    "method": "POST",
+    "url": "/api/cms/popup/selectCommonPopupPic"
+   },
+   {
+    "fn": "getExportEtrans",
+    "method": "POST",
+    "url": "/api/order/getExportEtrans"
+   },
+   {
+    "fn": "getExportCargoView",
+    "method": "POST",
+    "url": "/api/order/getExportCargoView"
+   },
+   {
+    "fn": "getImportEtrans",
+    "method": "POST",
+    "url": "/api/order/getImportEtrans"
+   },
+   {
+    "fn": "getImportCargoView",
+    "method": "POST",
+    "url": "/api/order/getImportCargoView"
+   },
+   {
+    "fn": "MailSend",
+    "method": "POST",
+    "url": "/api/order/sendSimpleOrder"
+   }
+  ]
+ },
+ "수출오더조회": {
+  "menu_id": "EO_100010",
+  "screen": "order/door/export/orderSearch",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectCstmOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectCstmExportOrderCntr"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/deleteExportOrder"
+   }
+  ]
+ },
+ "수출오더등록": {
+  "menu_id": "EO_100030",
+  "screen": "order/door/export/orderRequest",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectCstmOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectCstmExportOrderCntr"
+   },
+   {
+    "fn": "searchOrder",
+    "method": "POST",
+    "url": "/api/order/selectCstmExportOrder"
+   },
+   {
+    "fn": "tmpSave",
+    "method": "POST",
+    "url": "/api/order/saveUserOrder"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/order/saveCstmExportOrder"
+   },
+   {
+    "fn": "deleteOrder",
+    "method": "POST",
+    "url": "/api/order/deleteExportOrder"
+   },
+   {
+    "fn": "deleteUserOrder",
+    "method": "POST",
+    "url": "/api/order/deleteUserOrder"
+   },
+   {
+    "fn": "confirm",
+    "method": "POST",
+    "url": "/api/order/confirmExportOrder"
+   },
+   {
+    "fn": "getExportEtrans",
+    "method": "POST",
+    "url": "/api/order/getExportEtrans"
+   },
+   {
+    "fn": "getExportCargoView",
+    "method": "POST",
+    "url": "/api/order/getExportCargoView"
+   },
+   {
+    "fn": "selectCommonPopupPic",
+    "method": "POST",
+    "url": "/api/cms/popup/selectCommonPopupPic"
+   },
+   {
+    "fn": "updateOrderFileDoc",
+    "method": "POST",
+    "url": "/api/order/updateOrderFileDoc"
+   },
+   {
+    "fn": "selectOrderTemplateDetail",
+    "method": "POST",
+    "url": "/api/orderTemplate/selectOrderTemplateDetail"
+   },
+   {
+    "fn": "validUnpayUser",
+    "method": "POST",
+    "url": "/api/order/validUnpayUser"
+   }
+  ]
+ },
+ "고객사 수출 오더 조회": {
+  "menu_id": "EO_100040",
+  "screen": "order/door/export/orderSearchMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectExportOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectExportOrderCntr"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/deleteExportOrder"
+   },
+   {
+    "fn": "searchOrderBook",
+    "method": "POST",
+    "url": "/api/orderList/selectOrderBookList"
+   }
+  ]
+ },
+ "고객사 수출 오더 상세": {
+  "menu_id": "EO_100020",
+  "screen": "order/door/export/orderRequestMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectExportOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectExportOrderCntr"
+   },
+   {
+    "fn": "searchOrder",
+    "method": "POST",
+    "url": "/api/order/selectExportOrder"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/order/saveExportOrder"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/deleteExportOrder"
+   },
+   {
+    "fn": "confirm",
+    "method": "POST",
+    "url": "/api/order/confirmExportOrder"
+   },
+   {
+    "fn": "getExportEtrans",
+    "method": "POST",
+    "url": "/api/order/getExportEtrans"
+   },
+   {
+    "fn": "getExportCargoView",
+    "method": "POST",
+    "url": "/api/order/getExportCargoView"
+   },
+   {
+    "fn": "selectCommonPopupBilling",
+    "method": "POST",
+    "url": "/api/cms/popup/selectCommonPopupBilling"
+   },
+   {
+    "fn": "updateOrderFileDoc",
+    "method": "POST",
+    "url": "/api/order/updateOrderFileDoc"
+   },
+   {
+    "fn": "selectBillngTariffList",
+    "method": "POST",
+    "url": "/api/order/selectBillngTariffList"
+   },
+   {
+    "fn": "selectBillPic",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingBillPicList"
+   },
+   {
+    "fn": "MailSend",
+    "method": "POST",
+    "url": "/api/order/sendCofirmMail"
+   }
+  ]
+ },
+ "수입오더조회": {
+  "menu_id": "IO_100010",
+  "screen": "order/door/import/orderSearch",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectCstmOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectCstmImportOrderCntr"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/deleteImportOrder"
+   }
+  ]
+ },
+ "수입오더등록": {
+  "menu_id": "IO_100030",
+  "screen": "order/door/import/orderRequest",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectCstmOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectCstmImportOrderCntr"
+   },
+   {
+    "fn": "searchOrder",
+    "method": "POST",
+    "url": "/api/order/selectCstmImportOrder"
+   },
+   {
+    "fn": "tmpSave",
+    "method": "POST",
+    "url": "/api/order/saveUserOrder"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/order/saveCstmImportOrder"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/deleteImportOrder"
+   },
+   {
+    "fn": "deleteUserOrder",
+    "method": "POST",
+    "url": "/api/order/deleteUserOrder"
+   },
+   {
+    "fn": "getImportEtrans",
+    "method": "POST",
+    "url": "/api/order/getImportEtrans"
+   },
+   {
+    "fn": "getImportCargoView",
+    "method": "POST",
+    "url": "/api/order/getImportCargoView"
+   },
+   {
+    "fn": "selectCommonPopupPic",
+    "method": "POST",
+    "url": "/api/cms/popup/selectCommonPopupPic"
+   },
+   {
+    "fn": "updateOrderFileDoc",
+    "method": "POST",
+    "url": "/api/order/updateOrderFileDoc"
+   },
+   {
+    "fn": "selectOrderTemplateDetail",
+    "method": "POST",
+    "url": "/api/orderTemplate/selectOrderTemplateDetail"
+   },
+   {
+    "fn": "validUnpayUser",
+    "method": "POST",
+    "url": "/api/order/validUnpayUser"
+   }
+  ]
+ },
+ "고객사 수입 오더 조회": {
+  "menu_id": "IO_100020",
+  "screen": "order/door/import/orderSearchMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectImportOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectImportOrderCntr"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/deleteImportOrder"
+   },
+   {
+    "fn": "searchOrderBook",
+    "method": "POST",
+    "url": "/api/orderList/selectOrderBookList"
+   }
+  ]
+ },
+ "고객사 수입 오더 상세": {
+  "menu_id": "IO_100040",
+  "screen": "order/door/import/orderRequestMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectImportOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectImportOrderCntr"
+   },
+   {
+    "fn": "searchOrder",
+    "method": "POST",
+    "url": "/api/order/selectImportOrder"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/order/saveImportOrder"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/deleteImportOrder"
+   },
+   {
+    "fn": "confirm",
+    "method": "POST",
+    "url": "/api/order/confirmImportOrder"
+   },
+   {
+    "fn": "getImportEtrans",
+    "method": "POST",
+    "url": "/api/order/getImportEtrans"
+   },
+   {
+    "fn": "getImportEtransEmptyCntr",
+    "method": "POST",
+    "url": "/api/order/getImportEtransEmptyCntr"
+   },
+   {
+    "fn": "getImportCargoView",
+    "method": "POST",
+    "url": "/api/order/getImportCargoView"
+   },
+   {
+    "fn": "selectCommonPopupBilling",
+    "method": "POST",
+    "url": "/api/cms/popup/selectCommonPopupBilling"
+   },
+   {
+    "fn": "updateOrderFileDoc",
+    "method": "POST",
+    "url": "/api/order/updateOrderFileDoc"
+   },
+   {
+    "fn": "selectBillngTariffList",
+    "method": "POST",
+    "url": "/api/order/selectBillngTariffList"
+   },
+   {
+    "fn": "selectBillPic",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingBillPicList"
+   },
+   {
+    "fn": "selectCmsWorkPlace",
+    "method": "POST",
+    "url": "/api/cms/comm/selectCommonWorkPlace"
+   },
+   {
+    "fn": "MailSend",
+    "method": "POST",
+    "url": "/api/order/sendCofirmMail"
+   }
+  ]
+ },
+ "배차 현황 조회": {
+  "menu_id": "TM_100010",
+  "screen": "allocation/door/alloStatusSearch",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/allocation/selectAllocationTruckList"
+   },
+   {
+    "fn": "checkOrderCntr",
+    "method": "POST",
+    "url": "/api/allocation/checkOrderCntr"
+   },
+   {
+    "fn": "updateEmptyCntrReturnDate",
+    "method": "POST",
+    "url": "/api/allocation/updateEmptyCntrReturnDate"
+   },
+   {
+    "fn": "updateCntrReturnChk",
+    "method": "POST",
+    "url": "/api/allocation/updateCntrReturnChk"
+   },
+   {
+    "fn": "updateCntrReturnChk2",
+    "method": "POST",
+    "url": "/api/allocation/updateCntrReturnChk2"
+   },
+   {
+    "fn": "searchAlloList",
+    "method": "POST",
+    "url": "/api/allocation/selectAlloSeqList"
+   },
+   {
+    "fn": "searchTerminalYardLoc",
+    "method": "POST",
+    "url": "/api/allocation/searchTerminalYardLoc"
+   }
+  ]
+ },
+ "차량 할당 (수출)": {
+  "menu_id": "TM_100030",
+  "screen": "allocation/door/allocationTruck",
+  "apis": [
+   {
+    "fn": "searchOrder",
+    "method": "POST",
+    "url": "/api/allocation/selectAllocationTruckDetail"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/allocation/saveAllocationTruck"
+   },
+   {
+    "fn": "confirm",
+    "method": "POST",
+    "url": "/api/allocation/confirmAllocationTruck"
+   },
+   {
+    "fn": "cancelDoorOrderCntrPtn",
+    "method": "POST",
+    "url": "/api/allocation/cancelDoorOrderCntrPtn"
+   }
+  ]
+ },
+ "차량 할당 (수입)": {
+  "menu_id": "TM_100020",
+  "screen": "allocation/door/allocationTruckImport",
+  "apis": [
+   {
+    "fn": "searchOrder",
+    "method": "POST",
+    "url": "/api/allocation/selectAllocationTruckDetail"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/allocation/saveAllocationTruck"
+   },
+   {
+    "fn": "cancelDoorOrderCntrPtn",
+    "method": "POST",
+    "url": "/api/allocation/cancelDoorOrderCntrPtn"
+   }
+  ]
+ },
+ "직접 배차 및 코피노": {
+  "menu_id": "TM_100012",
+  "screen": "allocation/door/directAlloAndCopino",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/allocation/selectAllocationTruckList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/allocation/saveAllocationTruckList"
+   },
+   {
+    "fn": "cancelDoorOrderCntrPtn",
+    "method": "POST",
+    "url": "/api/allocation/cancelDoorOrderCntrPtn"
+   },
+   {
+    "fn": "searchTariffList",
+    "method": "POST",
+    "url": "/api/allocation/selectAllocationTruckTariffList"
+   },
+   {
+    "fn": "checkOrderCntr",
+    "method": "POST",
+    "url": "/api/allocation/checkOrderCntr"
+   }
+  ]
+ },
+ "도어배차": {
+  "menu_id": "TM_1000013",
+  "screen": "allocation/door/directAlloAndCopinoV2",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/allocation/selectDirectAllocationTruckList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/allocation/saveAllocationTruckListV2"
+   },
+   {
+    "fn": "saveInputAllo",
+    "method": "POST",
+    "url": "/api/allocation/saveInputAllo"
+   },
+   {
+    "fn": "deleteInputAllo",
+    "method": "POST",
+    "url": "/api/allocation/deleteInputAllo"
+   },
+   {
+    "fn": "cancelDoorOrderCntrPtn",
+    "method": "POST",
+    "url": "/api/allocation/cancelDoorOrderCntrPtn"
+   },
+   {
+    "fn": "searchTariffList",
+    "method": "POST",
+    "url": "/api/allocation/selectAllocationTruckTariffList"
+   },
+   {
+    "fn": "checkOrderCntr",
+    "method": "POST",
+    "url": "/api/allocation/checkOrderCntr"
+   },
+   {
+    "fn": "openOnlyPage",
+    "method": "POST",
+    "url": "/api/openOnlyPage"
+   },
+   {
+    "fn": "cancelUltOrder",
+    "method": "POST",
+    "url": "/api/dr/allo/cancelUltOrder"
+   },
+   {
+    "fn": "completeUltOrder",
+    "method": "POST",
+    "url": "/api/dr/allo/completeUltOrder"
+   }
+  ]
+ },
+ "셔틀오더 등록 및 조회": {
+  "menu_id": "SO_110000",
+  "screen": "order/shuttle/orderRequestMgt",
+  "apis": [
+   {
+    "fn": "searchOrder",
+    "method": "POST",
+    "url": "/api/order/shuttle/selectShuttleOrder"
+   },
+   {
+    "fn": "selectShuttleCntr",
+    "method": "POST",
+    "url": "/api/order/shuttle/selectShuttleCntr"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/order/shuttle/saveShuttleOrder"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/shuttle/deleteShuttleOrder"
+   },
+   {
+    "fn": "selectSuttleOrderDetail",
+    "method": "POST",
+    "url": "/api/order/shuttle/selectSuttleOrderDetail"
+   },
+   {
+    "fn": "updateShuttleOrderWeigthType",
+    "method": "POST",
+    "url": "/api/order/shuttle/updateShuttleOrderWeigthType"
+   },
+   {
+    "fn": "getShuttleBillTariff",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/getShuttleBillTariff"
+   }
+  ]
+ },
+ "셔틀배차": {
+  "menu_id": "SO_120000",
+  "screen": "allocation/shuttle/allocationTruck",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/selectAllocationTruckList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/saveAllocationTruck"
+   },
+   {
+    "fn": "alloCancel",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/updateAlloCancel"
+   },
+   {
+    "fn": "alloStatus",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/updateAlloStatus"
+   },
+   {
+    "fn": "getShuttlePayTariff",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/getShuttlePayTariff"
+   },
+   {
+    "fn": "getShuttleBillTariff_BILL",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/getShuttleBillTariff"
+   },
+   {
+    "fn": "copino",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/copino"
+   },
+   {
+    "fn": "updateHoldingOn",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/updateHoldingOn"
+   },
+   {
+    "fn": "updateHoldingOff",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/updateHoldingOff"
+   },
+   {
+    "fn": "saveCopinoId",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/saveCopinoId"
+   },
+   {
+    "fn": "cancelShuttleOrderCntrPtn",
+    "method": "POST",
+    "url": "/api/order/shuttle/cancelShuttleOrderCntrPtn"
+   },
+   {
+    "fn": "deleteShuttleCntr",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/deleteShuttleCntr"
+   },
+   {
+    "fn": "sendTssCopino",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/sendTssCopino"
+   },
+   {
+    "fn": "searchTerminalEta",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/searchTerminalEta"
+   },
+   {
+    "fn": "searchTerminalYardLoc",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/searchTerminalYardLoc"
+   },
+   {
+    "fn": "searchInTmlVslVoy",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/searchInTmlVslVoy"
+   },
+   {
+    "fn": "searchOutTmlVslVoy",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/searchOutTmlVslVoy"
+   },
+   {
+    "fn": "searchTmlInOutTime",
+    "method": "POST",
+    "url": "/api/shuttle/allocation/searchTmlInOutTime"
+   }
+  ]
+ },
+ "실적통합관리(셔틀)": {
+  "menu_id": "ShutTotalOutputMgt",
+  "screen": "outputs/shutTotalOutputMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/selectTotalOutputsList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/outputs/save"
+   },
+   {
+    "fn": "searchBillInfo",
+    "method": "POST",
+    "url": "/api/outputs/selectBillList"
+   },
+   {
+    "fn": "searchPayInfo",
+    "method": "POST",
+    "url": "/api/outputs/selectPayList"
+   },
+   {
+    "fn": "savePayCf",
+    "method": "POST",
+    "url": "/api/outputs/savePayCf"
+   },
+   {
+    "fn": "cancelPayCf",
+    "method": "POST",
+    "url": "/api/outputs/cancelPayCf"
+   },
+   {
+    "fn": "deleteBilling",
+    "method": "POST",
+    "url": "/api/outputs/deleteBilling"
+   },
+   {
+    "fn": "deletePayment",
+    "method": "POST",
+    "url": "/api/outputs/deletePayment"
+   },
+   {
+    "fn": "selectBillPic",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingBillPicList"
+   },
+   {
+    "fn": "validationPay",
+    "method": "POST",
+    "url": "/api/outputs/validationPay"
+   }
+  ]
+ },
+ "그룹오더생성": {
+  "menu_id": "GroupOrderRegist",
+  "screen": "allocation/shuttle/GroupOrderRegist",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/selectGroupOrderRegistList"
+   },
+   {
+    "fn": "cntrSearch",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/selectGroupOrderRegistCntrList"
+   },
+   {
+    "fn": "vhcSearch",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/selectGroupOrderRegistVhcList"
+   },
+   {
+    "fn": "vhcDelete",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/deleteGroupOrderVhcList"
+   },
+   {
+    "fn": "regist",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/saveGroupOrderRegist"
+   },
+   {
+    "fn": "trans",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/savePreExImInfo"
+   },
+   {
+    "fn": "validRegistVhcList",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/validRegistVhcList"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/deleteGroupOrderRegistCntr"
+   },
+   {
+    "fn": "groupOrderValidation",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/groupOrderValidation"
+   },
+   {
+    "fn": "validGroupOrder",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/validGroupOrder"
+   },
+   {
+    "fn": "validRegist",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/validRegist"
+   }
+  ]
+ },
+ "그룹오더배차": {
+  "menu_id": "GroupOrderAllocation",
+  "screen": "allocation/shuttle/GroupOrderAllocation",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/selectGroupOrderAlloList"
+   },
+   {
+    "fn": "updateGroupOrderList",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/updateGroupOrderList"
+   },
+   {
+    "fn": "updateGroupOrderStatus",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/updateGroupOrderStatus"
+   },
+   {
+    "fn": "saveBundle",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/saveBundle"
+   },
+   {
+    "fn": "deleteGroupOrder",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/deleteGroupOrder"
+   }
+  ]
+ },
+ "그룹오더 진행상태 및 변경": {
+  "menu_id": "GroupOrderStatus",
+  "screen": "allocation/shuttle/GroupOrderStatus",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/selectGroupOrderStatusList"
+   },
+   {
+    "fn": "selectGroupOrderCntrList",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/selectGroupOrderCntrList"
+   },
+   {
+    "fn": "selectGroupOrderVhcList",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/selectGroupOrderVhcList"
+   },
+   {
+    "fn": "cntrSearch",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/selectGroupOrderRegistCntrList"
+   },
+   {
+    "fn": "vhcSearch",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/selectGroupOrderRegistVhcList"
+   },
+   {
+    "fn": "updateGroupOrderStatus",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/updateGroupOrderStatus"
+   },
+   {
+    "fn": "updateGroupOrder",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/updateTssGroupOrder"
+   },
+   {
+    "fn": "validGroupOrderCntrRemove",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/validGroupOrderCntrRemove"
+   },
+   {
+    "fn": "validGroupOrderMultiCntrRemove",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/validGroupOrderMultiCntrRemove"
+   },
+   {
+    "fn": "validGroupOrderVhcRemove",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/validGroupOrderVhcRemove"
+   },
+   {
+    "fn": "validRegistVhcList",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/validRegistVhcList"
+   },
+   {
+    "fn": "groupOrderValidation",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/groupOrderValidation"
+   },
+   {
+    "fn": "validRegist",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/validRegist"
+   },
+   {
+    "fn": "validModify",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/validModify"
+   },
+   {
+    "fn": "groupOrderModifyValidation",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/groupOrderModifyValidation"
+   },
+   {
+    "fn": "removeGroupOrderModCntrValid",
+    "method": "POST",
+    "url": "/api/shuttle/groupOrder/removeGroupOrderModCntrValid"
+   }
+  ]
+ },
+ "셔틀 Daily Closing List": {
+  "menu_id": "shuttleOrderClosingList",
+  "screen": "order/shuttle/orderClosingList",
+  "apis": [
+   {
+    "fn": "searchSkrList",
+    "method": "POST",
+    "url": "/api/order/shuttle/selectSkrDailyClosing"
+   },
+   {
+    "fn": "searchHasList",
+    "method": "POST",
+    "url": "/api/order/shuttle/selectHasDailyClosing"
+   }
+  ]
+ },
+ "전배보세 등록": {
+  "menu_id": "BndCntrMgt",
+  "screen": "order/shuttle/BndCntrMgt",
+  "apis": [
+   {
+    "fn": "selectBndCntrList",
+    "method": "POST",
+    "url": "/api/order/shuttle/selectBndCntrList"
+   },
+   {
+    "fn": "saveBndCntrList",
+    "method": "POST",
+    "url": "/api/order/shuttle/saveBndCntrList"
+   }
+  ]
+ },
+ "통합 오더 조회": {
+  "menu_id": "OP_100020",
+  "screen": "order/door/total/orderSearchMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/orderList/selectTotalOrderList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/orderList/selectImportOrderCntr"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/order/deleteImportOrder"
+   },
+   {
+    "fn": "searchOrderBook",
+    "method": "POST",
+    "url": "/api/orderList/selectOrderBookList"
+   }
+  ]
+ },
+ "실적통합관리": {
+  "menu_id": "OP_100010",
+  "screen": "outputs/totalOutputMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/selectTotalOutputsList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/outputs/save"
+   },
+   {
+    "fn": "searchBillInfo",
+    "method": "POST",
+    "url": "/api/outputs/selectBillList"
+   },
+   {
+    "fn": "searchPayInfo",
+    "method": "POST",
+    "url": "/api/outputs/selectPayList"
+   },
+   {
+    "fn": "savePayCf",
+    "method": "POST",
+    "url": "/api/outputs/savePayCf"
+   },
+   {
+    "fn": "savePayCf_ALL",
+    "method": "POST",
+    "url": "/api/outputs/savePayCf_ALL"
+   },
+   {
+    "fn": "cancelPayCf",
+    "method": "POST",
+    "url": "/api/outputs/cancelPayCf"
+   },
+   {
+    "fn": "deleteBilling",
+    "method": "POST",
+    "url": "/api/outputs/deleteBilling"
+   },
+   {
+    "fn": "deletePayment",
+    "method": "POST",
+    "url": "/api/outputs/deletePayment"
+   },
+   {
+    "fn": "selectBillPic",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingBillPicList"
+   },
+   {
+    "fn": "validationPay",
+    "method": "POST",
+    "url": "/api/outputs/validationPay"
+   }
+  ]
+ },
+ "거래처별 청구집계": {
+  "menu_id": "OP_110010",
+  "screen": "outputs/billingTot/billTotByAcc",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/billingTotal/selectBillTotByAccList"
+   }
+  ]
+ },
+ "하불승인": {
+  "menu_id": "PayApprMgt",
+  "screen": "outputs/payApprMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/selectPayApprList"
+   },
+   {
+    "fn": "getDept",
+    "method": "POST",
+    "url": "/api/outputs/getDept"
+   },
+   {
+    "fn": "payApprCntr",
+    "method": "POST",
+    "url": "/api/outputs/savePayApprList"
+   },
+   {
+    "fn": "selectPayApprDetail",
+    "method": "POST",
+    "url": "/api/outputs/selectPayApprDetail"
+   },
+   {
+    "fn": "savePayApprRemark",
+    "method": "POST",
+    "url": "/api/outputs/savePayApprRemark"
+   }
+  ]
+ },
+ "매입처현황": {
+  "menu_id": "OP_120010",
+  "screen": "outputs/payTot/payCorpStatus",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/paymentTotal/selectPayCorpStatusList"
+   }
+  ]
+ },
+ "차량별 정산서": {
+  "menu_id": "OP_120020",
+  "screen": "outputs/payTot/stateOfAccByVehicle",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/paymentTotal/selectStateOfAccByVehicleList"
+   },
+   {
+    "fn": "searchDtl1",
+    "method": "POST",
+    "url": "/api/outputs/paymentTotal/selectStateOfDtl1List"
+   },
+   {
+    "fn": "searchDtl2",
+    "method": "POST",
+    "url": "/api/outputs/paymentTotal/selectStateOfDtl2List"
+   }
+  ]
+ },
+ "차량매출": {
+  "menu_id": "OP_130010",
+  "screen": "outputs/management/vhcSales",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/management/selectVhcsalesList"
+   }
+  ]
+ },
+ "손익현황": {
+  "menu_id": "OP_130020",
+  "screen": "outputs/management/profitNLossStat",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/management/selectProfitNLossStatList"
+   },
+   {
+    "fn": "searchDtl",
+    "method": "POST",
+    "url": "/api/outputs/management/selectProfitDetailList"
+   }
+  ]
+ },
+ "오더접수현황": {
+  "menu_id": "OP_130050",
+  "screen": "outputs/management/orderRecvSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/management/selectOrdersList"
+   }
+  ]
+ },
+ "용차사 매출입현황": {
+  "menu_id": "OP_130060",
+  "screen": "outputs/management/hiredCarCorpBillPaySt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/management/selectHiredCarCorpBillPayStList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/outputs/management/saveMgtRmkMgt"
+   }
+  ]
+ },
+ "차량별 지급 공제관리": {
+  "menu_id": "OP_130070",
+  "screen": "outputs/management/vhcPayDdcMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/management/selectVhcPayDdcMgtList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/outputs/management/saveMgtRmkMgt"
+   },
+   {
+    "fn": "SendEtransDrv",
+    "method": "POST",
+    "url": "/api/outputs/management/SendEtransDrv"
+   },
+   {
+    "fn": "checkSendTalkClPay",
+    "method": "POST",
+    "url": "/api/outputs/management/checkSendTalkClPay"
+   },
+   {
+    "fn": "sendTalkClPay",
+    "method": "POST",
+    "url": "/api/outputs/management/sendTalkClPay"
+   }
+  ]
+ },
+ "차량별 운행실적 (배차형평성)": {
+  "menu_id": "OP_130080",
+  "screen": "outputs/management/vhcTrcStat",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/management/selectVhcTrcStatList"
+   }
+  ]
+ },
+ "실시간 차량 매출 현황": {
+  "menu_id": "OP_130090",
+  "screen": "outputs/management/rtVhcRevSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/management/selectRtVhcRevStList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/outputs/management/saveRtVhcRevSt"
+   }
+  ]
+ },
+ "월별&업체별 매출현황": {
+  "menu_id": "OP_140010",
+  "screen": "outputs/statistics/monNCorpBillSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectMonCorpSalesList"
+   }
+  ]
+ },
+ "월별&업체별 실적현황": {
+  "menu_id": "OP_140020",
+  "screen": "outputs/statistics/monNCorpPFMSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectMonCorpOutsList"
+   }
+  ]
+ },
+ "기간별&업체별 하불현황": {
+  "menu_id": "OP_140040",
+  "screen": "outputs/statistics/termNCorpPaySt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectTermNCorpPayStList"
+   }
+  ]
+ },
+ "청구처별 미수현황": {
+  "menu_id": "OP_140080",
+  "screen": "outputs/statistics/billCorpByUnpaidSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectCorpUnpaidList"
+   }
+  ]
+ },
+ "점소별 영업이익 현황": {
+  "menu_id": "OP_140090",
+  "screen": "outputs/statistics/pointByPFMSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectPointByPFMStList"
+   },
+   {
+    "fn": "searchDtl",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectPointByPFMStDetail"
+   }
+  ]
+ },
+ "영업담당자별 매출현황": {
+  "menu_id": "OP_140110",
+  "screen": "outputs/statistics/opPicByBillSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectManSalesList"
+   }
+  ]
+ },
+ "영업사원 실적현황": {
+  "menu_id": "OP_140120",
+  "screen": "outputs/statistics/opPicPFMSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectManOutsList"
+   }
+  ]
+ },
+ "(영업) 월별&업체별 실적현황": {
+  "menu_id": "OP_140130",
+  "screen": "outputs/statistics/opMonNCorpPFMSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectOPMonCorpOutsList"
+   }
+  ]
+ },
+ "(영업) 영업사원 실적현황": {
+  "menu_id": "OP_140140",
+  "screen": "outputs/statistics/opOpPicPFMSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/statssales/selectOPManOutsList"
+   }
+  ]
+ },
+ "당월 포인트 현황": {
+  "menu_id": "monPointSt",
+  "screen": "outputs/monPointSt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/outputs/point/selectMonPointStList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/outputs/point/saveMonPointSt"
+   },
+   {
+    "fn": "validSalesPic",
+    "method": "POST",
+    "url": "/api/outputs/point/validSalesPic"
+   }
+  ]
+ },
+ "청구마감": {
+  "menu_id": "SM_110010",
+  "screen": "sm/generalBilling/billingClosing",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingCorpList"
+   },
+   {
+    "fn": "searchBilling",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingList"
+   },
+   {
+    "fn": "selectBillPic",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingBillPicList"
+   },
+   {
+    "fn": "updateBillngClosing",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/updateBillngClosing"
+   },
+   {
+    "fn": "updateCarryOver",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/updateCarryOver"
+   },
+   {
+    "fn": "saveTax",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/saveTax"
+   }
+  ]
+ },
+ "청구마감(대용량)": {
+  "menu_id": "LargeBillingClosing",
+  "screen": "sm/generalBilling/LargeBillingClosing",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingCorpList"
+   },
+   {
+    "fn": "searchBilling",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingList"
+   },
+   {
+    "fn": "selectBillPic",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingBillPicList"
+   },
+   {
+    "fn": "updateBillngClosing",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/updateBillngClosing"
+   },
+   {
+    "fn": "updateRargeBillngClosing",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/updateRargeBillngClosing"
+   },
+   {
+    "fn": "updateCarryOver",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/updateCarryOver"
+   },
+   {
+    "fn": "saveTax",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/saveTax"
+   },
+   {
+    "fn": "validBilling",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/validBilling"
+   }
+  ]
+ },
+ "청구현황": {
+  "menu_id": "SM_110020",
+  "screen": "sm/generalBilling/billingStatus",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingStatusList"
+   },
+   {
+    "fn": "selectBillPic",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingBillPicList"
+   },
+   {
+    "fn": "selectBillingStatusDetail",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingStatusDetail"
+   },
+   {
+    "fn": "cancelBillingClose",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/cancelBillingClose"
+   },
+   {
+    "fn": "saveAccounting",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/saveAccounting"
+   },
+   {
+    "fn": "cancelAccounting",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/cancelAccounting"
+   },
+   {
+    "fn": "executeSKClosing",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/executeSKClosing"
+   },
+   {
+    "fn": "cancelSKClosing",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/cancelSKClosing"
+   }
+  ]
+ },
+ "전자세금계산서 관리": {
+  "menu_id": "SM_110030",
+  "screen": "sm/generalBilling/taxMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/taxMgt/selectMgtList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/taxMgt/saveRemark"
+   },
+   {
+    "fn": "searchBillDiv",
+    "method": "POST",
+    "url": "/api/taxMgt/selectBillList"
+   },
+   {
+    "fn": "searchLogisBill",
+    "method": "POST",
+    "url": "/api/tax/selectLogisBill"
+   },
+   {
+    "fn": "issueTaxBill",
+    "method": "POST",
+    "url": "/api/tax/issueTaxBill"
+   },
+   {
+    "fn": "issueRsdnRgstTaxBill",
+    "method": "POST",
+    "url": "/api/tax/issueRsdnRgstTaxBill"
+   },
+   {
+    "fn": "cancelTaxBill",
+    "method": "POST",
+    "url": "/api/taxMgt/cancelTaxBill"
+   },
+   {
+    "fn": "saveAccounting",
+    "method": "POST",
+    "url": "/api/taxMgt/saveAccounting"
+   },
+   {
+    "fn": "cancelAccounting",
+    "method": "POST",
+    "url": "/api/taxMgt/cancelAccounting"
+   },
+   {
+    "fn": "selectBillTaxCntrList",
+    "method": "POST",
+    "url": "/api/taxMgt/selectBillTaxCntrList"
+   },
+   {
+    "fn": "resendMail",
+    "method": "POST",
+    "url": "/api/tax/resendMail"
+   }
+  ]
+ },
+ "미청구 및 이월청구 조회": {
+  "menu_id": "SM_110050",
+  "screen": "sm/generalBilling/carrybillingList",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/carryBill/carryBillListSearch"
+   },
+   {
+    "fn": "ApprSave",
+    "method": "POST",
+    "url": "/api/sm/carryBill/carryBillListApprSave"
+   },
+   {
+    "fn": "rmkSave",
+    "method": "POST",
+    "url": "/api/sm/carryBill/carryBillListRmkSave"
+   }
+  ]
+ },
+ "하불확정(대용량)": {
+  "menu_id": "SM_120005",
+  "screen": "sm/generalPayment/paymentConf",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/selectPaymentConfirmList"
+   },
+   {
+    "fn": "updatePaymentConfirm",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/updatePaymentConfirm"
+   }
+  ]
+ },
+ "하불마감 및 현황": {
+  "menu_id": "SM_120010",
+  "screen": "sm/generalPayment/paymentClosing",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/selectPaymentClosingList"
+   },
+   {
+    "fn": "searchPayment",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/selectPaymentClosingList"
+   },
+   {
+    "fn": "selectPayDivList",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/selectPayDivList"
+   },
+   {
+    "fn": "updatePaymentClosing",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/updatePaymentClosing"
+   },
+   {
+    "fn": "saveTax",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/saveTax"
+   }
+  ]
+ },
+ "매입세금계산서": {
+  "menu_id": "SM_120020",
+  "screen": "sm/generalPayment/taxMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/selectPaymentTaxList"
+   },
+   {
+    "fn": "selectPaymentTaxDetail",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/selectPaymentTaxDetail"
+   },
+   {
+    "fn": "cancelPaymentClose",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/cancelPaymentClose"
+   },
+   {
+    "fn": "saveAccounting",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/saveAccounting"
+   },
+   {
+    "fn": "saveMergeAccounting",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/saveMergeAccounting"
+   },
+   {
+    "fn": "cancelAccounting",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/cancelAccounting"
+   }
+  ]
+ },
+ "BILL청구": {
+  "menu_id": "SM_130010",
+  "screen": "sm/lineBill/billMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/lineBillMgt/selectLineBillMgtList"
+   },
+   {
+    "fn": "selectBillPic",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingBillPicList"
+   },
+   {
+    "fn": "selectCntrDetail",
+    "method": "POST",
+    "url": "/api/sm/lineBillMgt/selectCntrDetail"
+   },
+   {
+    "fn": "saveLineBill",
+    "method": "POST",
+    "url": "/api/sm/lineBillMgt/saveLineBill"
+   },
+   {
+    "fn": "cancelLineBill",
+    "method": "POST",
+    "url": "/api/sm/lineBillMgt/cancelLineBill"
+   },
+   {
+    "fn": "updateTotalBillingAmount",
+    "method": "POST",
+    "url": "/api/sm/lineBillMgt/updateTotalBillingAmount"
+   },
+   {
+    "fn": "applyForeignBillAmount",
+    "method": "POST",
+    "url": "/api/sm/lineBillMgt/applyForeignBillAmount"
+   },
+   {
+    "fn": "updateForeignBillAmount",
+    "method": "POST",
+    "url": "/api/sm/lineBillMgt/updateForeignBillAmount"
+   },
+   {
+    "fn": "selectLineBillPrintCntrList",
+    "method": "POST",
+    "url": "/api/sm/lineBillMgt/selectLineBillPrintCntrList"
+   }
+  ]
+ },
+ "거래명세서": {
+  "menu_id": "TransSpec",
+  "screen": "sm/TransSpec",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/transSpec/selectTransSpecList"
+   },
+   {
+    "fn": "selectBillingStatusDetail",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingStatusDetail"
+   },
+   {
+    "fn": "selectMainInfo",
+    "method": "POST",
+    "url": "/api/mdm/organization/selectMainInfo"
+   },
+   {
+    "fn": "selectBillingDetailList",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingDetailList"
+   }
+  ]
+ },
+ "거래명세서(협력사)": {
+  "menu_id": "TransSpecPtn",
+  "screen": "sm/TransSpecPtn",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/transSpec/selectTransSpecPtnList"
+   },
+   {
+    "fn": "selectPaymentClosingDetailList",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/selectPaymentClosingDetailList"
+   },
+   {
+    "fn": "selectMainInfo",
+    "method": "POST",
+    "url": "/api/mdm/organization/selectMainInfo"
+   },
+   {
+    "fn": "selectPayDivList",
+    "method": "POST",
+    "url": "/api/sm/generalPayment/selectPayDivList"
+   }
+  ]
+ },
+ "거래처별 청구수금 명세서": {
+  "menu_id": "SM_160020",
+  "screen": "sm/collect/billCollectByAcc",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/collect/selectBillCollectByAccList"
+   },
+   {
+    "fn": "searchDtl",
+    "method": "POST",
+    "url": "/api/sm/collect/selectBillCollectByAccDtlList"
+   },
+   {
+    "fn": "selectBillPic",
+    "method": "POST",
+    "url": "/api/sm/generalBilling/selectBillingClosingBillPicList"
+   }
+  ]
+ },
+ "대납리스트": {
+  "menu_id": "ProxyList",
+  "screen": "sm/proxy/proxyList",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyListSearch"
+   },
+   {
+    "fn": "searchDetail",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyListSearchDetail"
+   },
+   {
+    "fn": "proxyDivSave",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyDivSave"
+   },
+   {
+    "fn": "proxyRmkSave",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyRmkSave"
+   },
+   {
+    "fn": "proxyConfirmSave",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyConfirmSave"
+   },
+   {
+    "fn": "proxyConfirmCancel",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyConfirmCancel"
+   },
+   {
+    "fn": "proxyDepositSave",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyDepositSave"
+   },
+   {
+    "fn": "proxyDepositCancel",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyDepositCancel"
+   },
+   {
+    "fn": "selectProxyPrintList",
+    "method": "POST",
+    "url": "/api/sm/proxy/selectProxyPrintList"
+   },
+   {
+    "fn": "updateFileDoc",
+    "method": "POST",
+    "url": "/api/sm/proxy/updateFileDoc"
+   },
+   {
+    "fn": "proxyApprovalSave",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyApprovalSave"
+   },
+   {
+    "fn": "proxyApprovalCancel",
+    "method": "POST",
+    "url": "/api/sm/proxy/proxyApprovalCancel"
+   }
+  ]
+ },
+ "보세운송 전송 및 관리": {
+  "menu_id": "BT_130000",
+  "screen": "bnd/BndTransMgt",
+  "apis": [
+   {
+    "fn": "selectCusmovList",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/selectCusmovList"
+   },
+   {
+    "fn": "selectCusmovCntDmrList",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/selectCusmovCntDmrList"
+   },
+   {
+    "fn": "selectMfcsPrintList",
+    "method": "POST",
+    "url": "/api/bnd/mfcsSearch/selectMfcsPrintList"
+   },
+   {
+    "fn": "insertListBndMapOut",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/insertListBndMapOut"
+   },
+   {
+    "fn": "deleteCusmovList",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/deleteCusmovList"
+   }
+  ]
+ },
+ "정정신고 송수신": {
+  "menu_id": "BT_140000",
+  "screen": "bnd/BndUpdate",
+  "apis": [
+   {
+    "fn": "selectBndUpdate",
+    "method": "POST",
+    "url": "/api/bnd/bndUpdate/selectBndUpdate"
+   },
+   {
+    "fn": "selectBndUpdatePrintList",
+    "method": "POST",
+    "url": "/api/bnd/bndUpdate/selectBndUpdatePrintList"
+   },
+   {
+    "fn": "insertMapOut",
+    "method": "POST",
+    "url": "/api/bnd/bndUpdate/insertMapOut"
+   }
+  ]
+ },
+ "적하목록 업로드": {
+  "menu_id": "BT_110000",
+  "screen": "bnd/MfcsUpload",
+  "apis": [
+   {
+    "fn": "selectMfcsUploadList",
+    "method": "POST",
+    "url": "/api/bnd/mfcsSearch/selectMfcsUploadList"
+   },
+   {
+    "fn": "saveUploadFile",
+    "method": "POST",
+    "url": "/api/bnd/mfcsUpload/saveMfcs"
+   },
+   {
+    "fn": "deleteMfcsFiles",
+    "method": "POST",
+    "url": "/api/bnd/mfcsUpload/deleteMfcsFiles"
+   },
+   {
+    "fn": "getMfcs",
+    "method": "POST",
+    "url": "/api/bnd/mfcsUpload/getMfcs"
+   }
+  ]
+ },
+ "적하목록 조회": {
+  "menu_id": "BT_120000",
+  "screen": "bnd/MfcsSearch",
+  "apis": [
+   {
+    "fn": "serachMfcs",
+    "method": "POST",
+    "url": "/api/bnd/mfcsSearch/selectMfcsList"
+   },
+   {
+    "fn": "selectMfcsPrintList",
+    "method": "POST",
+    "url": "/api/bnd/mfcsSearch/selectMfcsPrintList"
+   },
+   {
+    "fn": "updateMfcs",
+    "method": "POST",
+    "url": "/api/bnd/mfcsSearch/updateMfcs"
+   },
+   {
+    "fn": "deleteMfcs",
+    "method": "POST",
+    "url": "/api/bnd/mfcsSearch/deleteMfcsList"
+   }
+  ]
+ },
+ "보세운송 전송 및 관리_V2": {
+  "menu_id": "BndTransMgt-v2",
+  "screen": "bnd-v2/BndTransMgt-v2",
+  "apis": [
+   {
+    "fn": "selectCusmovList_V2",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/selectCusmovList_V2"
+   },
+   {
+    "fn": "selectCusmovCntDmrList_V2",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/selectCusmovCntDmrList_V2"
+   },
+   {
+    "fn": "selectMfcsPrintList",
+    "method": "POST",
+    "url": "/api/bnd/mfcsSearch/selectMfcsPrintList"
+   },
+   {
+    "fn": "insertListBndMapOut_V2",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/insertListBndMapOut_V2"
+   },
+   {
+    "fn": "deleteCusmovList",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/deleteCusmovList"
+   }
+  ]
+ },
+ "정정신고 송수신_V2": {
+  "menu_id": "BndUpdate-v2",
+  "screen": "bnd-v2/BndUpdate-v2",
+  "apis": [
+   {
+    "fn": "selectBndUpdate_V2",
+    "method": "POST",
+    "url": "/api/bnd/bndUpdate/selectBndUpdate_V2"
+   },
+   {
+    "fn": "selectBndUpdatePrintList",
+    "method": "POST",
+    "url": "/api/bnd/bndUpdate/selectBndUpdatePrintList"
+   },
+   {
+    "fn": "insertBondModi",
+    "method": "POST",
+    "url": "/api/bnd/bndUpdate/insertBondModi"
+   }
+  ]
+ },
+ "임시개청신청": {
+  "menu_id": "BndOpenTrans",
+  "screen": "bnd-v2/BndOpenTrans",
+  "apis": [
+   {
+    "fn": "selectBndOpenTrans",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/selectBndOpenTrans"
+   },
+   {
+    "fn": "saveBndOpenTrans",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/saveBndOpenTrans"
+   },
+   {
+    "fn": "selectBndOpenTransDtl",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/selectBndOpenTransDtl"
+   },
+   {
+    "fn": "sendOpenTrans",
+    "method": "POST",
+    "url": "/api/bnd/bndTransMgt/sendOpenTrans"
+   }
+  ]
+ },
+ "공지사항": {
+  "menu_id": "DB_100010",
+  "screen": "db/notice",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/db/notice/selectDBNotice"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/db/notice/saveDBNotice"
+   }
+  ]
+ },
+ "고객사 공지사항": {
+  "menu_id": "DB_100011",
+  "screen": "dsh/dashboard/customNoticeList",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/dsh/dashboard/selectCustomNotice"
+   },
+   {
+    "fn": "searchView",
+    "method": "POST",
+    "url": "/api/dsh/dashboard/selectCustomNoticeView"
+   }
+  ]
+ },
+ "FAQ": {
+  "menu_id": "DB_100020",
+  "screen": "db/faq",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/db/faq/selectFaqList"
+   }
+  ]
+ },
+ "안전운임제": {
+  "menu_id": "DB_100040",
+  "screen": "db/tariff",
+  "apis": [
+   {
+    "fn": "settingData",
+    "method": "POST",
+    "url": "/api/intro/tariff/selectIntroTariffSettingData"
+   },
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/intro/tariff/selectIntroTariff"
+   },
+   {
+    "fn": "search_v2",
+    "method": "POST",
+    "url": "/api/intro/tariff/selectIntroTariff_v2"
+   },
+   {
+    "fn": "searchCity",
+    "method": "POST",
+    "url": "/api/intro/tariff/selectIntroTariffCity"
+   },
+   {
+    "fn": "searchDong",
+    "method": "POST",
+    "url": "/api/intro/tariff/selectIntroTariffDong"
+   },
+   {
+    "fn": "searchBlock",
+    "method": "POST",
+    "url": "/api/intro/tariff/selectIntroTariffBlock"
+   },
+   {
+    "fn": "searchBlock_v2",
+    "method": "POST",
+    "url": "/api/intro/tariff/selectIntroTariffBlock_v2"
+   },
+   {
+    "fn": "clearLoginParam",
+    "method": "POST",
+    "url": "/api/auth/clearLoginParam"
+   }
+  ]
+ },
+ "컨테이너 정보": {
+  "menu_id": "DB_100050",
+  "screen": "db/containerInfo",
+  "apis": []
+ },
+ "셔틀 권역관리": {
+  "menu_id": "MA_1100090",
+  "screen": "mdm/code/MdmShtlRegionMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmShTransRectMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmShTransRectMgt"
+   }
+  ]
+ },
+ "작업지 관리": {
+  "menu_id": "MA_1100020",
+  "screen": "mdm/customer/MdmWorkPlace",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectMdmWorkPlace"
+   },
+   {
+    "fn": "searchDetail",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectMdmWorkPlaceDetail"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/workplace/saveMdmWorkPlace"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/mdm/workplace/deleteMdmWorkPlace"
+   },
+   {
+    "fn": "selectMdmWorkPlaceDo",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectMdmWorkPlaceDo"
+   },
+   {
+    "fn": "selectMdmWorkPlaceCity",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectMdmWorkPlaceCity"
+   },
+   {
+    "fn": "selectMdmWorkPlaceDong",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectMdmWorkPlaceDong"
+   },
+   {
+    "fn": "selectMdmWorkPlaceDongList",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectMdmWorkPlaceDongList"
+   }
+  ]
+ },
+ "화주 관리": {
+  "menu_id": "MA_1100070",
+  "screen": "mdm/customer/MdmShipper",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/shipper/selectList"
+   },
+   {
+    "fn": "searchDetail",
+    "method": "POST",
+    "url": "/api/mdm/shipper/selectMgrList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/shipper/saveMdmShipperMgt"
+   },
+   {
+    "fn": "validationShipper",
+    "method": "POST",
+    "url": "/api/mdm/shipper/validationShipper"
+   },
+   {
+    "fn": "validationBln",
+    "method": "POST",
+    "url": "/api/mdm/shipper/validationBln"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/mdm/shipper/deleteMdmShipperMgt"
+   }
+  ]
+ },
+ "고객사 메일관리": {
+  "menu_id": "MA_1100120",
+  "screen": "mdm/customer/MdmCustomerMail",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/customerMail/selectMdmCustomerMail"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/customerMail/saveMdmContract"
+   }
+  ]
+ },
+ "오더 공유팀 관리": {
+  "menu_id": "MA_1100110",
+  "screen": "mdm/code/MdmOrdTeamMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/comm/selectMdmOrdTeamMgt"
+   },
+   {
+    "fn": "searchTeamUser",
+    "method": "POST",
+    "url": "/api/mdm/comm/selectMdmOrdUserMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/comm/savetMdmOrdUserMgt"
+   }
+  ]
+ },
+ "즐겨찾기": {
+  "menu_id": "MA_1100050",
+  "screen": "cms/comm/CmsFavoritesMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cms/comm/selectCmsFavoritesMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cms/comm/saveCmsFavoritesMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cms/comm/deleteCmsFavoritesMgt"
+   },
+   {
+    "fn": "selectCommonPopupBilling",
+    "method": "POST",
+    "url": "/api/cms/popup/selectCommonPopupBilling"
+   }
+  ]
+ },
+ "타리프 관리": {
+  "menu_id": "MA_1100100",
+  "screen": "mdm/tariff/MdmTariffMgtV2",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/tariff2/selectMdmTariffMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/tariff2/saveMdmTariffMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/mdm/tariff2/deleteMdmTariffMgt"
+   }
+  ]
+ },
+ "장비관리": {
+  "menu_id": "MA_1200030",
+  "screen": "mdm/code/MdmEqpMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmEqpMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmEqpMgt"
+   },
+   {
+    "fn": "saerchEqpHistory",
+    "method": "POST",
+    "url": "/api/mdm/code/saerchEqpHistory"
+   },
+   {
+    "fn": "updateEqpFileUpload",
+    "method": "POST",
+    "url": "/api/mdm/code/updateEqpFileUpload"
+   }
+  ]
+ },
+ "장비내역 수리관리": {
+  "menu_id": "MA_1200031",
+  "screen": "mdm/code/MdmEqpRepairMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmEqpRepairMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmEqpRepairMgt"
+   }
+  ]
+ },
+ "배차 팀 관리": {
+  "menu_id": "MA_1200040",
+  "screen": "mdm/code/MdmAlloMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/comm/selectMdmAlloMgt"
+   },
+   {
+    "fn": "searchTeamUser",
+    "method": "POST",
+    "url": "/api/mdm/comm/selectMdmAlloUserMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/comm/savetMdmAlloUserMgt"
+   }
+  ]
+ },
+ "입고오더등록 (클락)": {
+  "menu_id": "FRcvCOrdReqMgt",
+  "screen": "cfs/FRcvCOrdReqMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/selectExcOrd"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveExcOrd"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/deleteExcOrd"
+   },
+   {
+    "fn": "validExcOrd",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/validExcOrd"
+   }
+  ]
+ },
+ "입고오더조회 (클락)": {
+  "menu_id": "FRcvCOrdSchMgt",
+  "screen": "cfs/FRcvCOrdSchMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/selectExcOrdList"
+   },
+   {
+    "fn": "cancelWrng",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/cancelWrng"
+   }
+  ]
+ },
+ "컨테이너적입관리 (FCL)": {
+  "menu_id": "FClpFclMgt",
+  "screen": "cfs/FClpFclMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExClpFcl"
+   },
+   {
+    "fn": "selectExBookingInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExBookingInfo"
+   },
+   {
+    "fn": "validExClp",
+    "method": "POST",
+    "url": "/api/cfs/exClp/validExClp"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/exClp/saveExFclClp"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/exClp/deleteExClp"
+   },
+   {
+    "fn": "selectPrintFcl",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectPrintFcl"
+   },
+   {
+    "fn": "selectContainerList",
+    "method": "POST",
+    "url": "/api/code/selectContainerList"
+   },
+   {
+    "fn": "selectCntrLine",
+    "method": "POST",
+    "url": "/api/code/selectCntrLine"
+   },
+   {
+    "fn": "tranferClp",
+    "method": "POST",
+    "url": "/api/cfs/exClp/tranferClp"
+   },
+   {
+    "fn": "checkClpStatus",
+    "method": "POST",
+    "url": "/api/cfs/exClp/checkClpStatus"
+   },
+   {
+    "fn": "requestCancelClp",
+    "method": "POST",
+    "url": "/api/cfs/exClp/requestCancelClp"
+   }
+  ]
+ },
+ "컨테이너적입관리 (LCL)": {
+  "menu_id": "FClpLclMgt",
+  "screen": "cfs/FClpLclMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExClpLcl"
+   },
+   {
+    "fn": "selectExBookingInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExBookingInfo"
+   },
+   {
+    "fn": "validExClp",
+    "method": "POST",
+    "url": "/api/cfs/exClp/validExClp"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/exClp/saveExLclClp"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/exClp/deleteExClp"
+   },
+   {
+    "fn": "searchRcvList",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExcRcvList"
+   },
+   {
+    "fn": "updateCargoInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/updateCargoInfo"
+   },
+   {
+    "fn": "updateCrg",
+    "method": "POST",
+    "url": "/api/cfs/exClp/updateLclCrg"
+   },
+   {
+    "fn": "updateRcv",
+    "method": "POST",
+    "url": "/api/cfs/exClp/updateLclRcv"
+   },
+   {
+    "fn": "selectPrintLcl",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectPrintLcl"
+   },
+   {
+    "fn": "selectContainerList",
+    "method": "POST",
+    "url": "/api/code/selectContainerList"
+   },
+   {
+    "fn": "selectCntrLine",
+    "method": "POST",
+    "url": "/api/code/selectCntrLine"
+   },
+   {
+    "fn": "deleteCntrNo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/deleteCntrNo"
+   },
+   {
+    "fn": "tranferClp",
+    "method": "POST",
+    "url": "/api/cfs/exClp/tranferClp"
+   },
+   {
+    "fn": "checkClpStatus",
+    "method": "POST",
+    "url": "/api/cfs/exClp/checkClpStatus"
+   },
+   {
+    "fn": "requestCancelClp",
+    "method": "POST",
+    "url": "/api/cfs/exClp/requestCancelClp"
+   }
+  ]
+ },
+ "컨테이너적입현황 조회": {
+  "menu_id": "FClpSchMgt",
+  "screen": "cfs/FClpSchMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExcClpList"
+   }
+  ]
+ },
+ "CERTIFICATE 관리": {
+  "menu_id": "FCertMgt",
+  "screen": "cfs/FCertMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/fCrtfMgt/selectFCrtfMgtList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/cfs/fCrtfMgt/selectFCrtfCntrList"
+   },
+   {
+    "fn": "saveCrtf",
+    "method": "POST",
+    "url": "/api/cfs/fCrtfMgt/updateCrtfNoMgt"
+   },
+   {
+    "fn": "saveSmBill",
+    "method": "POST",
+    "url": "/api/cfs/fCrtfMgt/saveSmBill"
+   },
+   {
+    "fn": "deleteSmBill",
+    "method": "POST",
+    "url": "/api/cfs/fCrtfMgt/deleteSmBill"
+   },
+   {
+    "fn": "saveGrpSm",
+    "method": "POST",
+    "url": "/api/cfs/fCrtfMgt/saveGrpSm"
+   },
+   {
+    "fn": "cancelGrpSm",
+    "method": "POST",
+    "url": "/api/cfs/fCrtfMgt/cancelGrpSm"
+   },
+   {
+    "fn": "selectPrintBillList",
+    "method": "POST",
+    "url": "/api/cfs/fCrtfMgt/selectPrintBillList"
+   },
+   {
+    "fn": "selectPrintCertList",
+    "method": "POST",
+    "url": "/api/cfs/fCrtfMgt/selectPrintCertList"
+   }
+  ]
+ },
+ "기타이고반출 관리": {
+  "menu_id": "FTrfCrgIsuMgt",
+  "screen": "cfs/FTrfCrgIsuMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/trfCrgIsuMgt/selectTrfCrgIsuList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/trfCrgIsuMgt/saveTrfCrgIsu"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/trfCrgIsuMgt/deleteTrfCrgIsu"
+   }
+  ]
+ },
+ "입고현황조회(고객용)": {
+  "menu_id": "FRcvCOrdSchList",
+  "screen": "cfs/FRcvCOrdSchList",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/selectRcvOrdSchList"
+   },
+   {
+    "fn": "searchDtl",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/selectRcvOrdSchDtlList"
+   }
+  ]
+ },
+ "입고오더등록 (현수)": {
+  "menu_id": "FRcvHOrdReqMgt",
+  "screen": "cfs/FRcvHOrdReqMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/selectExhOrd"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveExhOrd"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/deleteExhOrdMgt"
+   },
+   {
+    "fn": "validExhOrd",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/validExhOrd"
+   },
+   {
+    "fn": "selectExBookingInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExBookingInfo"
+   },
+   {
+    "fn": "updateAlloExcp",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/updateAlloExcp"
+   },
+   {
+    "fn": "selectCorpBillPic",
+    "method": "POST",
+    "url": "/api/mdm/code/selectCorpBillPicList"
+   }
+  ]
+ },
+ "입고오더관리 (현수)": {
+  "menu_id": "FRcvHOrdMgt",
+  "screen": "cfs/FRcvHOrdMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/selectExhOrdMgtList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/selectExhOrdCntrList"
+   },
+   {
+    "fn": "updateExBookingInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/updateExBookingInfo"
+   },
+   {
+    "fn": "checkExBookingInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExBookingListInfo"
+   },
+   {
+    "fn": "updateAlloExcp",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/updateAlloExcp"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveExhOrdMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/deleteExhOrdMgt"
+   },
+   {
+    "fn": "saveWrkYn",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveWrkYn"
+   },
+   {
+    "fn": "saveLkcYn",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveLkcYn"
+   },
+   {
+    "fn": "saveWrkYnAtOnce",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveWrkYnAtOnce"
+   }
+  ]
+ },
+ "입고컨테이너관리 (현수)": {
+  "menu_id": "FRcvHOrdSchMgt",
+  "screen": "cfs/FRcvHOrdSchMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/selectExhOrdList"
+   },
+   {
+    "fn": "selectExBookingInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExBookingInfo"
+   },
+   {
+    "fn": "updateAlloExcp",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/updateAlloExcp"
+   },
+   {
+    "fn": "saveWrkYn",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveWrkYn"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveExhCntrMgt"
+   },
+   {
+    "fn": "updateExhOrd",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/updateExhOrd"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/deleteExhCntrListMgt"
+   }
+  ]
+ },
+ "거래명세서 관리(현수)": {
+  "menu_id": "FRcvHOrdTransSttMgt",
+  "screen": "cfs/FRcvHOrdTransSttMgt",
+  "apis": [
+   {
+    "fn": "searchNoBillClpCntrMgtInfo",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectNoBillClpCntrMgtInfo"
+   },
+   {
+    "fn": "searchNoBillClpChgList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectNoBillClpChgList"
+   },
+   {
+    "fn": "searchNoBillClpCntrList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectNoBillClpCntrList"
+   },
+   {
+    "fn": "searchSmMgtClpList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectSmMgtClpList"
+   },
+   {
+    "fn": "searchBillChgList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectBillChgList"
+   },
+   {
+    "fn": "searchBillCntrClpList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectBillCntrClpList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/saveSmMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/deleteSmMgt"
+   },
+   {
+    "fn": "selectCorpBillPic",
+    "method": "POST",
+    "url": "/api/mdm/code/selectCorpBillPicList"
+   },
+   {
+    "fn": "selectTariffCalc",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectTariffCalc"
+   },
+   {
+    "fn": "selectPrintSmMgtClpList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectPrintSmMgtClpList"
+   }
+  ]
+ },
+ "컨테이너 반출입 관리": {
+  "menu_id": "FCntrCarryMgt",
+  "screen": "cfs/FCntrCarryMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/cntr/selectExCntrMgtList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/cntr/saveCntrMgt"
+   },
+   {
+    "fn": "selectExBookingInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExBookingInfo"
+   },
+   {
+    "fn": "saveManualIO",
+    "method": "POST",
+    "url": "/api/cfs/cntr/saveManualIO"
+   }
+  ]
+ },
+ "컨테이너 DB 등록": {
+  "menu_id": "FCntrDBRgstMgt",
+  "screen": "cfs/FCntrDBRgstMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/cntr/selectImCntrMgtList"
+   },
+   {
+    "fn": "callAPi",
+    "method": "POST",
+    "url": "/api/cfs/cntr/callCntrMgtList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/cntr/saveCntrMgtUp"
+   }
+  ]
+ },
+ "컨테이너 DB리스트": {
+  "menu_id": "FCntrDBListMgt",
+  "screen": "cfs/FCntrDBListMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/cntr/selectImCntrMgtList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/cntr/saveCntrMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/cntr/deleteImCntrMgt"
+   }
+  ]
+ },
+ "내장통관직상차 관리": {
+  "menu_id": "FOrdMgt",
+  "screen": "cfs/FOrdMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/imcord/selectImcOrdList"
+   },
+   {
+    "fn": "exit",
+    "method": "POST",
+    "url": "/api/cfs/allo/extAllo"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/imcord/saveImcOrd"
+   }
+  ]
+ },
+ "내장통관 거래명세서 관리": {
+  "menu_id": "FBltCustTransSttMgt",
+  "screen": "cfs/FBltCustTransSttMgt",
+  "apis": [
+   {
+    "fn": "searchNoBillCntrMgtInfo",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectNoBillCntrMgtInfo"
+   },
+   {
+    "fn": "searchNoBillChgList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectNoBillChgList"
+   },
+   {
+    "fn": "searchNoBillCntrList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectNoBillCntrList"
+   },
+   {
+    "fn": "searchSmMgtList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectSmMgtList"
+   },
+   {
+    "fn": "searchBillChgList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectBillChgList"
+   },
+   {
+    "fn": "searchBillCntrList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectBillCntrList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/saveSmMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/deleteSmMgt"
+   },
+   {
+    "fn": "selectCorpBillPic",
+    "method": "POST",
+    "url": "/api/mdm/code/selectCorpBillPicList"
+   },
+   {
+    "fn": "selectTariffCalc",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectTariffCalc"
+   },
+   {
+    "fn": "selectPrintSmMgtList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectPrintSmMgtList"
+   }
+  ]
+ },
+ "Shipping Order 관리": {
+  "menu_id": "FShipOrdMgt",
+  "screen": "cfs/FShipOrdMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/exShipOrdMgt/selectExShipOrdList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/cfs/exShipOrdMgt/selectExShipOrdCntrList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/exShipOrdMgt/saveExShipOrd"
+   },
+   {
+    "fn": "saveDtl",
+    "method": "POST",
+    "url": "/api/cfs/exShipOrdMgt/saveExShipOrdDtl"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/exShipOrdMgt/deleteExShipOrd"
+   },
+   {
+    "fn": "updateExhOrd",
+    "method": "POST",
+    "url": "/api/cfs/exShipOrdMgt/updateExhOrd"
+   },
+   {
+    "fn": "selectExBookingInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExBookingInfo"
+   },
+   {
+    "fn": "selectExBookingListInfo",
+    "method": "POST",
+    "url": "/api/cfs/exClp/selectExBookingListInfo"
+   },
+   {
+    "fn": "saveWrkYn",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveWrkYn"
+   }
+  ]
+ },
+ "배차관리(수출) 픽업": {
+  "menu_id": "FExAlloMgtP",
+  "screen": "cfs/FExAlloMgtP",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/allo/selectExAlloPList"
+   },
+   {
+    "fn": "searchCntr",
+    "method": "POST",
+    "url": "/api/cfs/allo/selectExAlloCntrPList"
+   },
+   {
+    "fn": "updateAlloExcp",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/updateAlloExcp"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/deleteExhOrdMgt"
+   },
+   {
+    "fn": "saveWrkYn",
+    "method": "POST",
+    "url": "/api/cfs/exOrd/saveWrkYn"
+   },
+   {
+    "fn": "exit",
+    "method": "POST",
+    "url": "/api/cfs/allo/extAllo"
+   },
+   {
+    "fn": "update",
+    "method": "POST",
+    "url": "/api/cfs/allo/updateEx"
+   },
+   {
+    "fn": "updatePay",
+    "method": "POST",
+    "url": "/api/cfs/allo/searchStdPayTariffList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/allo/saveExAlloP"
+   }
+  ]
+ },
+ "배차관리(수출) 반입": {
+  "menu_id": "FExAlloMgtR",
+  "screen": "cfs/FExAlloMgtR",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/allo/selectExAlloRList"
+   },
+   {
+    "fn": "exit",
+    "method": "POST",
+    "url": "/api/cfs/allo/extAllo"
+   },
+   {
+    "fn": "update",
+    "method": "POST",
+    "url": "/api/cfs/allo/updateEx"
+   },
+   {
+    "fn": "updatePay",
+    "method": "POST",
+    "url": "/api/cfs/allo/searchStdPayTariffList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/allo/saveExAlloR"
+   }
+  ]
+ },
+ "배차관리(수입)": {
+  "menu_id": "FImAlloMgt",
+  "screen": "cfs/FImAlloMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/allo/selectImAlloList"
+   },
+   {
+    "fn": "searchDtl",
+    "method": "POST",
+    "url": "/api/cfs/allo/selectAlloImDtlList"
+   },
+   {
+    "fn": "exit",
+    "method": "POST",
+    "url": "/api/cfs/allo/extAllo"
+   },
+   {
+    "fn": "update",
+    "method": "POST",
+    "url": "/api/cfs/allo/updateIm"
+   },
+   {
+    "fn": "updatePay",
+    "method": "POST",
+    "url": "/api/cfs/allo/searchStdPayTariffList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/allo/saveAllo"
+   },
+   {
+    "fn": "saveDtl",
+    "method": "POST",
+    "url": "/api/cfs/allo/saveAlloDtl"
+   },
+   {
+    "fn": "selectPartner",
+    "method": "POST",
+    "url": "/api/cms/popup/selectCommonPopupCorp"
+   },
+   {
+    "fn": "autoReturnEmptyCntr",
+    "method": "POST",
+    "url": "/api/cfs/allo/autoReturnEmptyCntr"
+   },
+   {
+    "fn": "updateEmptyCntrReturnDate",
+    "method": "POST",
+    "url": "/api/cfs/allo/updateEmptyCntrReturnDate"
+   }
+  ]
+ },
+ "게이트로그 프리즘 3.0": {
+  "menu_id": "FPrismGateLogMgt",
+  "screen": "cfs/FPrismGateLogMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/prism/selectGateLogList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/prism/saveGateLog"
+   },
+   {
+    "fn": "updateStTrmn",
+    "method": "POST",
+    "url": "/api/cfs/prism/updateStTrmn"
+   },
+   {
+    "fn": "saveStTrmn",
+    "method": "POST",
+    "url": "/api/cfs/prism/saveStTrmn"
+   }
+  ]
+ },
+ "CFS 요율관리": {
+  "menu_id": "FCfsTariffMgt",
+  "screen": "cfs/FCfsTariffMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/Tariff/selectCfsTariffHdList"
+   },
+   {
+    "fn": "searchDetail",
+    "method": "POST",
+    "url": "/api/cfs/Tariff/selectCfsTariffDetailList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/Tariff/saveCfsTariff"
+   },
+   {
+    "fn": "searchDetailCopy",
+    "method": "POST",
+    "url": "/api/cfs/Tariff/selectCfsTariffDetailCopyList"
+   }
+  ]
+ },
+ "컨테이너 Movement": {
+  "menu_id": "FCntrDailyMov",
+  "screen": "cfs/FCntrDailyMov",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/cntr/selectCntrMgtLogList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/cntr/saveCntrMgt"
+   }
+  ]
+ },
+ "청구 및 수금현황": {
+  "menu_id": "FBillCollStatus",
+  "screen": "cfs/FBillCollStatus",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/fBillCollStatus/selectBillingList"
+   },
+   {
+    "fn": "cancelGroupBilling",
+    "method": "POST",
+    "url": "/api/cfs/fBillCollStatus/cancelGroupBilling"
+   },
+   {
+    "fn": "selectCorpBillPic",
+    "method": "POST",
+    "url": "/api/mdm/code/selectCorpBillPicList"
+   }
+  ]
+ },
+ "기타 거래명세서 관리": {
+  "menu_id": "FOtherTransSttMgt",
+  "screen": "cfs/FOtherTransSttMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectOtherTransList"
+   },
+   {
+    "fn": "searchBillChgList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectBillChgList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/saveSmMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/deleteSmMgt"
+   },
+   {
+    "fn": "selectCorpBillPic",
+    "method": "POST",
+    "url": "/api/mdm/code/selectCorpBillPicList"
+   },
+   {
+    "fn": "selectOtherTarrifList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectOtherTarrifList"
+   },
+   {
+    "fn": "selectTariffCalc",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectTariffCalc"
+   },
+   {
+    "fn": "selectPrintOtherTransList",
+    "method": "POST",
+    "url": "/api/cfs/BltCust/selectPrintOtherTransList"
+   }
+  ]
+ },
+ "통합 매출 조회": {
+  "menu_id": "FTotSaleStatus",
+  "screen": "cfs/FTotSaleStatus",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/fTotSaleStatus/selectTotalSalesList"
+   }
+  ]
+ },
+ "매출세금계산서 관리": {
+  "menu_id": "FSalesTaxMgt",
+  "screen": "cfs/FSalesTaxMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/selectTaxMgtList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/saveRemark"
+   },
+   {
+    "fn": "searchBillDiv",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/selectBillList"
+   },
+   {
+    "fn": "searchLogisBill",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/selectLogisBill"
+   },
+   {
+    "fn": "issueTaxBill",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/issueTaxBill"
+   },
+   {
+    "fn": "cancelTaxBill",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/cancelTaxBill"
+   },
+   {
+    "fn": "saveAccounting",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/saveAccounting"
+   },
+   {
+    "fn": "cancelAccounting",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/cancelAccounting"
+   },
+   {
+    "fn": "selectBillTaxCntrList",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/selectBillTaxCntrList"
+   },
+   {
+    "fn": "resendMail",
+    "method": "POST",
+    "url": "/api/cfs/fSalesTaxMgt/resendMail"
+   },
+   {
+    "fn": "selectCorpBillPic",
+    "method": "POST",
+    "url": "/api/mdm/code/selectCorpBillPicList"
+   }
+  ]
+ },
+ "(CFS) CFS 영업사원 실적현황": {
+  "menu_id": "BwsPicPFList",
+  "screen": "bws/BwsPicPFList",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/bws/bwsList/selectOPManSttList"
+   }
+  ]
+ },
+ "CFS 권역관리": {
+  "menu_id": "MdmCfsRegionMgt",
+  "screen": "mdm/code/MdmCfsRegionMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmCfsTransRectMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmShTransRectMgt"
+   }
+  ]
+ },
+ "CFS 타리프 관리": {
+  "menu_id": "MdmCfsTariffMgt",
+  "screen": "mdm/tariff/MdmCfsTariffMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/tariff2/selectMdmTariffMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/tariff2/saveMdmTariffMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/mdm/tariff2/deleteMdmTariffMgt"
+   }
+  ]
+ },
+ "국가코드 관리": {
+  "menu_id": "MdmCountry",
+  "screen": "mdm/code/MdmCountryMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmCountryMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmCountryMgt"
+   }
+  ]
+ },
+ "선사/항공사 관리": {
+  "menu_id": "MdmCarrier",
+  "screen": "mdm/code/MdmCarrierMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmCarrierMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmCarrierMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/mdm/code/deleteMdmCarrierMgt"
+   }
+  ]
+ },
+ "통화코드 관리": {
+  "menu_id": "MdmCurrency",
+  "screen": "mdm/code/MdmCurrencyMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmCurrencyMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmCurrencyMgt"
+   }
+  ]
+ },
+ "창고 코드 관리": {
+  "menu_id": "MdmWarehouseMgt",
+  "screen": "mdm/code/MdmWarehouseMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmWarehouseMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmWarehouseMgt"
+   }
+  ]
+ },
+ "CFS 화주 관리": {
+  "menu_id": "FShprMgt",
+  "screen": "cfs/FShprMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/fShprMgt/selectFShprMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/fShprMgt/saveFShprMgt"
+   }
+  ]
+ },
+ "영업창고 상품코드": {
+  "menu_id": "FCfsSalesItemMgt",
+  "screen": "cfs/FCfsSalesItemMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectZCfsItemMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/sales/saveZCfsItemMgt"
+   }
+  ]
+ },
+ "반입관리(영업창고)": {
+  "menu_id": "FCfsSalesInMgt",
+  "screen": "cfs/FCfsSalesInMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectIn"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/sales/saveIn"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/sales/deleteIn"
+   }
+  ]
+ },
+ "반입조회(영업창고)": {
+  "menu_id": "FCfsSalesInSearch",
+  "screen": "cfs/FCfsSalesInSearch",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectInList"
+   }
+  ]
+ },
+ "반출관리(영업창고)": {
+  "menu_id": "FCfsSalesOutMgt",
+  "screen": "cfs/FCfsSalesOutMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectOut"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/sales/saveOut"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/sales/deleteOut"
+   },
+   {
+    "fn": "searchStock",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectInList"
+   }
+  ]
+ },
+ "반출조회(영업창고)": {
+  "menu_id": "FCfsSalesOutSearch",
+  "screen": "cfs/FCfsSalesOutSearch",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectOutList"
+   }
+  ]
+ },
+ "재고조회(영업창고)": {
+  "menu_id": "FCfsSalesStock",
+  "screen": "cfs/FCfsSalesStock",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectStockList"
+   },
+   {
+    "fn": "searchOut",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectOutList"
+   }
+  ]
+ },
+ "보관료 정산관리(영업창고)": {
+  "menu_id": "FCfsSalesAcct",
+  "screen": "cfs/FCfsSalesAcct",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectAcct"
+   },
+   {
+    "fn": "searchDetail",
+    "method": "POST",
+    "url": "/api/cfs/sales/selectAcctList"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cfs/sales/saveAcct"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cfs/sales/deleteAcct"
+   },
+   {
+    "fn": "print",
+    "method": "POST",
+    "url": "/api/cfs/sales/printAcct"
+   }
+  ]
+ },
+ "거래처 계약관리": {
+  "menu_id": "MA_1200060",
+  "screen": "mdm/customer/MdmContract",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/contract/selectMdmContract"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/contract/saveMdmContract"
+   },
+   {
+    "fn": "updateFileDoc",
+    "method": "POST",
+    "url": "/api/mdm/contract/updateFileDoc"
+   }
+  ]
+ },
+ "배차차량 관리": {
+  "menu_id": "MA_1200010",
+  "screen": "mdm/code/MdmDspVhcMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmDspVhcMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmDspVhcMgt"
+   },
+   {
+    "fn": "valid",
+    "method": "POST",
+    "url": "/api/mdm/code/validMdmDspVhcMgt"
+   },
+   {
+    "fn": "rest",
+    "method": "POST",
+    "url": "/api/mdm/code/restMdmDspVhcMgt"
+   }
+  ]
+ },
+ "위험물 관리": {
+  "menu_id": "MA_103000",
+  "screen": "mdm/code/MdmImdgMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmImdgMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmImdgMgt"
+   }
+  ]
+ },
+ "선사 관리": {
+  "menu_id": "MA_101400",
+  "screen": "mdm/code/MdmLineMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmLineMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmLineMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/mdm/code/deleteMdmLineMgt"
+   },
+   {
+    "fn": "getReadLine",
+    "method": "POST",
+    "url": "/api/mdm/code/getReadLine"
+   }
+  ]
+ },
+ "포트 코드 관리": {
+  "menu_id": "MA_102000",
+  "screen": "mdm/code/MdmPortMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmPortMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmPortMgt"
+   }
+  ]
+ },
+ "위수탁 및 장기용차 계약관리": {
+  "menu_id": "MA_1200062",
+  "screen": "mdm/customer/MdmVhcContract",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/contract/selectMdmVhcContract"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/contract/saveMdmVhcContract"
+   },
+   {
+    "fn": "updateFileDoc",
+    "method": "POST",
+    "url": "/api/mdm/contract/updateFileDoc_VHC"
+   }
+  ]
+ },
+ "특이사항 관리대장": {
+  "menu_id": "MA_1200071",
+  "screen": "mdm/others/MdmInternalNote",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmInternalNote"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmInternalNote"
+   }
+  ]
+ },
+ "보관소 관리대장": {
+  "menu_id": "MA_1200072",
+  "screen": "mdm/others/MdmStorage",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmStorage"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmStorage"
+   }
+  ]
+ },
+ "장치장 관리": {
+  "menu_id": "MA_1400010",
+  "screen": "mdm/facl/MdmBndFaclMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/bnd/selectMdmBndFacl"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/bnd/saveMdmBndFacl"
+   },
+   {
+    "fn": "selectMdmWorkPlaceDo",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectMdmWorkPlaceDo"
+   },
+   {
+    "fn": "selectMdmWorkPlaceCity",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectMdmWorkPlaceCity"
+   },
+   {
+    "fn": "selectMdmWorkPlaceDong",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectMdmWorkPlaceDong"
+   }
+  ]
+ },
+ "터미널 관리": {
+  "menu_id": "MA_1100040",
+  "screen": "mdm/terminal/MdmTerminalMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/terminal/selectMdmTerminalMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/terminal/saveMdmTerminalMgt"
+   }
+  ]
+ },
+ "모선 관리": {
+  "menu_id": "MdmVslMgt",
+  "screen": "mdm/code/MdmVslMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/code/selectMdmVslMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/code/saveMdmVslMgt"
+   }
+  ]
+ },
+ "회사 관리": {
+  "menu_id": "CM_1100010",
+  "screen": "mdm/organization/MdmCorpMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/organization/selectMdmCorpMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/organization/saveMdmCorpMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/mdm/organization/deleteMdmCorpMgt"
+   },
+   {
+    "fn": "validCorpCd",
+    "method": "POST",
+    "url": "/api/mdm/organization/validMdmCorpMgt"
+   },
+   {
+    "fn": "validCorpBsnLcnNmb",
+    "method": "POST",
+    "url": "/api/mdm/organization/validCorpBsnLcnNmb"
+   },
+   {
+    "fn": "searchInfo",
+    "method": "POST",
+    "url": "/api/mdm/organization/selectCmsCorpInfo"
+   },
+   {
+    "fn": "updateCorpUse",
+    "method": "POST",
+    "url": "/api/mdm/organization/updateCorpUse"
+   }
+  ]
+ },
+ "국양 직원 관리": {
+  "menu_id": "CM_1100020",
+  "screen": "cms/comm/CmsUserMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cms/comm/selectCmsUserMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cms/comm/saveCmsUserMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cms/comm/deleteCmsUserMgt"
+   },
+   {
+    "fn": "validUserId",
+    "method": "POST",
+    "url": "/api/cms/comm/validCmsUserMgtId"
+   },
+   {
+    "fn": "changeUserPassword",
+    "method": "POST",
+    "url": "/api/cms/comm/changeCmsUserMgtPwd"
+   },
+   {
+    "fn": "searchBranch",
+    "method": "POST",
+    "url": "/api/cms/comm/selectCmsUserBranch"
+   }
+  ]
+ },
+ "고객사 직원 관리": {
+  "menu_id": "CM_1100030",
+  "screen": "cms/comm/CmsFwdUserMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cms/comm/selectCmsUserMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cms/comm/saveCmsUserMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cms/comm/deleteCmsUserMgt"
+   },
+   {
+    "fn": "validUserId",
+    "method": "POST",
+    "url": "/api/cms/comm/validCmsUserMgtId"
+   },
+   {
+    "fn": "changeUserPassword",
+    "method": "POST",
+    "url": "/api/cms/comm/changeCmsUserMgtPwd"
+   }
+  ]
+ },
+ "협력사 직원 관리": {
+  "menu_id": "CM_1100040",
+  "screen": "cms/comm/CmsPtnUserMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/cms/comm/selectCmsUserMgt"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/cms/comm/saveCmsUserMgt"
+   },
+   {
+    "fn": "delete",
+    "method": "POST",
+    "url": "/api/cms/comm/deleteCmsUserMgt"
+   },
+   {
+    "fn": "validUserId",
+    "method": "POST",
+    "url": "/api/cms/comm/validCmsUserMgtId"
+   },
+   {
+    "fn": "changeUserPassword",
+    "method": "POST",
+    "url": "/api/cms/comm/changeCmsUserMgtPwd"
+   }
+  ]
+ },
+ "사용자별 권한설정": {
+  "menu_id": "CM_1100050",
+  "screen": "mdm/user/MdmUserSetting",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/mdm/user/selectMdmUserList"
+   },
+   {
+    "fn": "searchSetting",
+    "method": "POST",
+    "url": "/api/mdm/user/selectMdmUserSetting"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/mdm/user/saveMdmUserSetting"
+   }
+  ]
+ },
+ "파일관리팝업": {
+  "menu_id": "CmsFileAgentPopup",
+  "screen": "cms/popup/CmsFileAgentPopup",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/file/selectFileList"
+   }
+  ]
+ },
+ "배차현황 팝업": {
+  "menu_id": "AlloStatusPopup",
+  "screen": "allocation/popup/AlloStatusPopup",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/allocation/selectAllocation"
+   },
+   {
+    "fn": "selectWorkPlace",
+    "method": "POST",
+    "url": "/api/mdm/workplace/selectWorkPlace"
+   },
+   {
+    "fn": "updateOrderFileDoc",
+    "method": "POST",
+    "url": "/api/order/updateOrderFileDoc"
+   },
+   {
+    "fn": "updateAlloStatus",
+    "method": "POST",
+    "url": "/api/allocation/updateAlloStatus"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/allocation/saveAllocation"
+   },
+   {
+    "fn": "saveCntr",
+    "method": "POST",
+    "url": "/api/allocation/saveCntr"
+   },
+   {
+    "fn": "selectTrainList",
+    "method": "POST",
+    "url": "/api/allocation/selectTrainList"
+   },
+   {
+    "fn": "deleteAllocation",
+    "method": "POST",
+    "url": "/api/allocation/deleteAllocation"
+   },
+   {
+    "fn": "validSelfTransAppr",
+    "method": "POST",
+    "url": "/api/allocation/validSelfTransAppr"
+   },
+   {
+    "fn": "clipBoardAlloAlertMsg",
+    "method": "POST",
+    "url": "/api/allocation/clipBoardAlloAlertMsg"
+   },
+   {
+    "fn": "cancelUltOrder",
+    "method": "POST",
+    "url": "/api/dr/allo/cancelUltOrder"
+   }
+  ]
+ },
+ "Main": {
+  "menu_id": "Dsh01",
+  "screen": "dsh/dashboard/Dsh01",
+  "apis": [
+   {
+    "fn": "selectMyDashboard",
+    "method": "POST",
+    "url": "/api/dsh/dashboard/selectMyDashboard"
+   },
+   {
+    "fn": "settingData",
+    "method": "POST",
+    "url": "/api/intro/tariff/selectIntroTariffSettingData"
+   },
+   {
+    "fn": "selectExcahgneRate",
+    "method": "POST",
+    "url": "/api/dsh/dashboard/selectExcahgneRate"
+   },
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/dsh/dashboard/selectCustomNotice"
+   },
+   {
+    "fn": "searchView",
+    "method": "POST",
+    "url": "/api/dsh/dashboard/selectCustomNoticeView"
+   }
+  ]
+ },
+ "실적신고관리": {
+  "menu_id": "PerformDeclareMgt",
+  "screen": "legal/PerformDeclareMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/legal/perform/selectPerfromDeclare"
+   },
+   {
+    "fn": "selectCntr",
+    "method": "POST",
+    "url": "/api/legal/perform/selectPerfromDeclareCntr"
+   }
+  ]
+ },
+ "차량위치추적": {
+  "menu_id": "VhcLocTrckMgt",
+  "screen": "legal/VhcLocTrckMgt",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/legal/vhcLocTrck/selectVhcLocTrckMgtList"
+   }
+  ]
+ },
+ "고객서비스관리": {
+  "menu_id": "DV_170000",
+  "screen": "db/request",
+  "apis": [
+   {
+    "fn": "search",
+    "method": "POST",
+    "url": "/api/db/request/selectDBRequest"
+   },
+   {
+    "fn": "save",
+    "method": "POST",
+    "url": "/api/db/request/saveDBRequest"
+   }
+  ]
+ }
+}

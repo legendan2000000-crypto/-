@@ -1,0 +1,2853 @@
+{
+ "admin/AdminChangePW": [
+  "/api/updateChgPwTm",
+  "/api/updatePassword"
+ ],
+ "admin/AdminUserInfo": [
+  "/api/outputs/point/selectPoint",
+  "/api/updateUser",
+  "/api/withdrawalUser"
+ ],
+ "admin/BoardPopup": [
+  "/api/db/notice/naverOpen"
+ ],
+ "admin/NoticePopup": [
+  "/api/db/notice/naverOpen"
+ ],
+ "admin/pointHistoryPopup": [
+  "/api/outputs/point/selectPointMgtList"
+ ],
+ "allocation/door/AlloStatusSearchPn": [
+  "/api/allocation/selectAllocationTruckListPn"
+ ],
+ "allocation/door/alloStatusSearch": [
+  "/api/allocation/checkOrderCntr",
+  "/api/allocation/searchTerminalYardLoc",
+  "/api/allocation/selectAlloSeqList",
+  "/api/allocation/selectAllocationTruckList",
+  "/api/allocation/updateCntrReturnChk",
+  "/api/allocation/updateCntrReturnChk2",
+  "/api/allocation/updateEmptyCntrReturnDate"
+ ],
+ "allocation/door/allocationTruck": [
+  "/api/allocation/cancelDoorOrderCntrPtn",
+  "/api/allocation/confirmAllocationTruck",
+  "/api/allocation/saveAllocationTruck",
+  "/api/allocation/selectAllocationTruckDetail"
+ ],
+ "allocation/door/allocationTruckImport": [
+  "/api/allocation/cancelDoorOrderCntrPtn",
+  "/api/allocation/saveAllocationTruck",
+  "/api/allocation/selectAllocationTruckDetail"
+ ],
+ "allocation/door/directAlloAndCopino": [
+  "/api/allocation/cancelDoorOrderCntrPtn",
+  "/api/allocation/checkOrderCntr",
+  "/api/allocation/saveAllocationTruckList",
+  "/api/allocation/selectAllocationTruckList",
+  "/api/allocation/selectAllocationTruckTariffList"
+ ],
+ "allocation/door/directAlloAndCopinoV2": [
+  "/api/allocation/cancelDoorOrderCntrPtn",
+  "/api/allocation/checkOrderCntr",
+  "/api/allocation/deleteInputAllo",
+  "/api/allocation/saveAllocationTruckListV2",
+  "/api/allocation/saveInputAllo",
+  "/api/allocation/selectAllocationTruckTariffList",
+  "/api/allocation/selectDirectAllocationTruckList",
+  "/api/dr/allo/cancelUltOrder",
+  "/api/dr/allo/completeUltOrder",
+  "/api/openOnlyPage"
+ ],
+ "allocation/popup/AlloCopinoPopup": [
+  "/api/allocation/selectDoorAlloInfo",
+  "/api/cms/popup/selectCommonPopupCpWrk",
+  "/api/shuttle/allocation/copino"
+ ],
+ "allocation/popup/AlloMultiModiV2Popup": [
+  "/api/allocation/saveAlloMultiModi"
+ ],
+ "allocation/popup/AlloShareOrderPopup": [
+  "/api/dr/allo/sendUltAllocation",
+  "/api/order/shuttle/selectShuttleOrderCntrPtn"
+ ],
+ "allocation/popup/AlloSharePopup": [
+  "/api/allocation/selectAlloPicHis",
+  "/api/allocation/updateAlloPic"
+ ],
+ "allocation/popup/AlloStatusPopup": [
+  "/api/allocation/clipBoardAlloAlertMsg",
+  "/api/allocation/deleteAllocation",
+  "/api/allocation/saveAllocation",
+  "/api/allocation/saveCntr",
+  "/api/allocation/selectAllocation",
+  "/api/allocation/selectTrainList",
+  "/api/allocation/updateAlloStatus",
+  "/api/allocation/validSelfTransAppr",
+  "/api/dr/allo/cancelUltOrder",
+  "/api/mdm/workplace/selectWorkPlace",
+  "/api/order/updateOrderFileDoc"
+ ],
+ "allocation/popup/AlloTeamPopup": [
+  "/api/cms/popup/selectCommonPopupAlloTeam",
+  "/api/cms/popup/selectCommonPopupAlloTeamUserList"
+ ],
+ "allocation/popup/GroupOrdAlloRegPopup": [
+  "/api/cms/popup/selectCommonPopupGroupOrderVhcReg",
+  "/api/shuttle/groupOrder/saveGroupOrderVhcReg"
+ ],
+ "allocation/popup/InstUltOrderPopup": [
+  "/api/allocation/selectInstUltOrderPartner",
+  "/api/cms/comm/saveCmsCdUserRank",
+  "/api/dr/allo/sendUltOrder"
+ ],
+ "allocation/popup/OutTmPopup": [
+  "/api/shuttle/allocation/saveOutTmInfo",
+  "/api/shuttle/allocation/selectOutTmInfo"
+ ],
+ "allocation/popup/SimulAlloCopinoPopup": [
+  "/api/allocation/selectDoorAlloInfo",
+  "/api/cms/popup/selectCommonPopupCpWrk",
+  "/api/shuttle/allocation/copino"
+ ],
+ "allocation/popup/allocationPopup": [
+  "/api/cms/popup/selectCommonPopupAllocationTruck"
+ ],
+ "allocation/popup/directAlloPaymentPopup": [
+  "/api/allocation/savePaymentList",
+  "/api/allocation/searchStdPayTariff",
+  "/api/allocation/selectDirectAlloPayment",
+  "/api/allocation/selectPayPicList",
+  "/api/outputs/validMultiPayAppr"
+ ],
+ "allocation/popup/doorMultiAlloPopup": [
+  "/api/allocation/saveMultiAllo"
+ ],
+ "allocation/popup/multiAlloPayPopup": [
+  "/api/allocation/saveMultiAlloPayList",
+  "/api/allocation/searchStdPayTariff",
+  "/api/allocation/selectPaymentList",
+  "/api/outputs/validMultiPayAppr"
+ ],
+ "allocation/popup/multiPaymentPopup": [
+  "/api/allocation/saveMultiPaymentList",
+  "/api/allocation/searchStdPayTariff",
+  "/api/allocation/selectPaymentList",
+  "/api/outputs/validMultiPayAppr"
+ ],
+ "allocation/popup/paymentPopup": [
+  "/api/allocation/savePaymentList",
+  "/api/allocation/searchStdPayTariff",
+  "/api/allocation/selectPayPicList",
+  "/api/allocation/selectPaymentList",
+  "/api/outputs/validPayAppr"
+ ],
+ "allocation/popup/prtTransDrivingPopup": [
+  "/api/allocation/PopselectTransDriving"
+ ],
+ "allocation/popup/registShuttleOrderPopup": [
+  "/api/allocation/registShuttleOrder",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "allocation/popup/shutAlloCopinoPopup": [
+  "/api/shuttle/allocation/copino",
+  "/api/shuttle/allocation/selectShutAlloInfo"
+ ],
+ "allocation/popup/shutAlloStatusPopup": [
+  "/api/shuttle/allocation/selectShutAlloStatusList"
+ ],
+ "allocation/popup/shutMultiAlloPopup": [
+  "/api/shuttle/allocation/saveShutAlloGroupOrder",
+  "/api/shuttle/allocation/saveShutMultiAllo"
+ ],
+ "allocation/popup/shutMultiModiPopup": [
+  "/api/shuttle/allocation/saveShutMultiModi",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "allocation/popup/shutTssCopinoPopup": [
+  "/api/shuttle/allocation/sendTssCopino",
+  "/api/shuttle/allocation/sendTssCopinoV2"
+ ],
+ "allocation/popup/tariffAddPopup": [
+  "/api/mdm/tariff/saveMdmTariff"
+ ],
+ "allocation/shuttle/GroupOrderAllocation": [
+  "/api/shuttle/groupOrder/deleteGroupOrder",
+  "/api/shuttle/groupOrder/saveBundle",
+  "/api/shuttle/groupOrder/selectGroupOrderAlloList",
+  "/api/shuttle/groupOrder/updateGroupOrderList",
+  "/api/shuttle/groupOrder/updateGroupOrderStatus"
+ ],
+ "allocation/shuttle/GroupOrderRegist": [
+  "/api/shuttle/groupOrder/deleteGroupOrderRegistCntr",
+  "/api/shuttle/groupOrder/deleteGroupOrderVhcList",
+  "/api/shuttle/groupOrder/groupOrderValidation",
+  "/api/shuttle/groupOrder/saveGroupOrderRegist",
+  "/api/shuttle/groupOrder/savePreExImInfo",
+  "/api/shuttle/groupOrder/selectGroupOrderRegistCntrList",
+  "/api/shuttle/groupOrder/selectGroupOrderRegistList",
+  "/api/shuttle/groupOrder/selectGroupOrderRegistVhcList",
+  "/api/shuttle/groupOrder/validGroupOrder",
+  "/api/shuttle/groupOrder/validRegist",
+  "/api/shuttle/groupOrder/validRegistVhcList"
+ ],
+ "allocation/shuttle/GroupOrderStatus": [
+  "/api/shuttle/groupOrder/groupOrderModifyValidation",
+  "/api/shuttle/groupOrder/groupOrderValidation",
+  "/api/shuttle/groupOrder/removeGroupOrderModCntrValid",
+  "/api/shuttle/groupOrder/selectGroupOrderCntrList",
+  "/api/shuttle/groupOrder/selectGroupOrderRegistCntrList",
+  "/api/shuttle/groupOrder/selectGroupOrderRegistVhcList",
+  "/api/shuttle/groupOrder/selectGroupOrderStatusList",
+  "/api/shuttle/groupOrder/selectGroupOrderVhcList",
+  "/api/shuttle/groupOrder/updateGroupOrderStatus",
+  "/api/shuttle/groupOrder/updateTssGroupOrder",
+  "/api/shuttle/groupOrder/validGroupOrderCntrRemove",
+  "/api/shuttle/groupOrder/validGroupOrderMultiCntrRemove",
+  "/api/shuttle/groupOrder/validGroupOrderVhcRemove",
+  "/api/shuttle/groupOrder/validModify",
+  "/api/shuttle/groupOrder/validRegist",
+  "/api/shuttle/groupOrder/validRegistVhcList"
+ ],
+ "allocation/shuttle/allocationTruck": [
+  "/api/order/shuttle/cancelShuttleOrderCntrPtn",
+  "/api/shuttle/allocation/copino",
+  "/api/shuttle/allocation/deleteShuttleCntr",
+  "/api/shuttle/allocation/getShuttleBillTariff",
+  "/api/shuttle/allocation/getShuttlePayTariff",
+  "/api/shuttle/allocation/saveAllocationTruck",
+  "/api/shuttle/allocation/saveCopinoId",
+  "/api/shuttle/allocation/searchInTmlVslVoy",
+  "/api/shuttle/allocation/searchOutTmlVslVoy",
+  "/api/shuttle/allocation/searchTerminalEta",
+  "/api/shuttle/allocation/searchTerminalYardLoc",
+  "/api/shuttle/allocation/searchTmlInOutTime",
+  "/api/shuttle/allocation/selectAllocationTruckList",
+  "/api/shuttle/allocation/sendTssCopino",
+  "/api/shuttle/allocation/updateAlloCancel",
+  "/api/shuttle/allocation/updateAlloStatus",
+  "/api/shuttle/allocation/updateHoldingOff",
+  "/api/shuttle/allocation/updateHoldingOn"
+ ],
+ "bnd-v2/BndOpenTrans": [
+  "/api/bnd/bndTransMgt/saveBndOpenTrans",
+  "/api/bnd/bndTransMgt/selectBndOpenTrans",
+  "/api/bnd/bndTransMgt/selectBndOpenTransDtl",
+  "/api/bnd/bndTransMgt/sendOpenTrans"
+ ],
+ "bnd-v2/BndTransMgt-v2": [
+  "/api/bnd/bndTransMgt/deleteCusmovList",
+  "/api/bnd/bndTransMgt/insertListBndMapOut_V2",
+  "/api/bnd/bndTransMgt/selectCusmovCntDmrList_V2",
+  "/api/bnd/bndTransMgt/selectCusmovList_V2",
+  "/api/bnd/mfcsSearch/selectMfcsPrintList"
+ ],
+ "bnd-v2/BndUpdate-v2": [
+  "/api/bnd/bndUpdate/insertBondModi",
+  "/api/bnd/bndUpdate/selectBndUpdatePrintList",
+  "/api/bnd/bndUpdate/selectBndUpdate_V2"
+ ],
+ "bnd-v2/popup/BndAlloEstTransPopup-v2": [
+  "/api/bnd/bndTransMgt/saveBndAlloEstTrans_V2",
+  "/api/bnd/bndTransMgt/selectCusdmrList_V2"
+ ],
+ "bnd-v2/popup/BndArrivalReportPopup-v2": [
+  "/api/bnd/bndTransMgt/saveBndArrivalReport_V2",
+  "/api/bnd/bndTransMgt/selectCusinf_V2"
+ ],
+ "bnd-v2/popup/BndTransMgtPopup-v2": [
+  "/api/bnd/bndTransMgt/cargoEntryStatusCfs",
+  "/api/bnd/bndTransMgt/cargoEntryStatusLcNoSearch",
+  "/api/bnd/bndTransMgt/deleteCusmovList",
+  "/api/bnd/bndTransMgt/saveBnd_V2",
+  "/api/bnd/bndTransMgt/selectCusmovDtlList",
+  "/api/bnd/mfcsSearch/selectMfcsList",
+  "/api/mdm/bnd/selectMdmBndFacl"
+ ],
+ "bnd-v2/popup/BndTransUpdatePopup-v2": [
+  "/api/bnd/bndTransMgt/selectCusmovDtlList",
+  "/api/bnd/bndUpdate/saveBndUpdate",
+  "/api/bnd/bndUpdate/selectBndUpdatePopup"
+ ],
+ "bnd-v2/popup/ForceBndCompletePopup-v2": [
+  "/api/bnd/bndTransMgt/ForceBndComplete_V2"
+ ],
+ "bnd/BndTransMgt": [
+  "/api/bnd/bndTransMgt/deleteCusmovList",
+  "/api/bnd/bndTransMgt/insertListBndMapOut",
+  "/api/bnd/bndTransMgt/selectCusmovCntDmrList",
+  "/api/bnd/bndTransMgt/selectCusmovList",
+  "/api/bnd/mfcsSearch/selectMfcsPrintList"
+ ],
+ "bnd/BndUpdate": [
+  "/api/bnd/bndUpdate/insertMapOut",
+  "/api/bnd/bndUpdate/selectBndUpdate",
+  "/api/bnd/bndUpdate/selectBndUpdatePrintList"
+ ],
+ "bnd/MfcsSearch": [
+  "/api/bnd/mfcsSearch/deleteMfcsList",
+  "/api/bnd/mfcsSearch/selectMfcsList",
+  "/api/bnd/mfcsSearch/selectMfcsPrintList",
+  "/api/bnd/mfcsSearch/updateMfcs"
+ ],
+ "bnd/MfcsUpload": [
+  "/api/bnd/mfcsSearch/selectMfcsUploadList",
+  "/api/bnd/mfcsUpload/deleteMfcsFiles",
+  "/api/bnd/mfcsUpload/getMfcs",
+  "/api/bnd/mfcsUpload/saveMfcs"
+ ],
+ "bnd/popup/BndAddFaclPopup": [
+  "/api/mdm/bnd/saveMdmBndFacl",
+  "/api/mdm/workplace/selectMdmWorkPlaceCity",
+  "/api/mdm/workplace/selectMdmWorkPlaceDo",
+  "/api/mdm/workplace/selectMdmWorkPlaceDong"
+ ],
+ "bnd/popup/BndAlloEstTransPopup": [
+  "/api/bnd/bndTransMgt/saveBndAlloEstTrans",
+  "/api/bnd/bndTransMgt/selectCusdmrList"
+ ],
+ "bnd/popup/BndArrivalReportPopup": [
+  "/api/bnd/bndTransMgt/saveBndArrivalReport",
+  "/api/bnd/bndTransMgt/selectCusinf"
+ ],
+ "bnd/popup/BndErrorDetailPopup": [
+  "/api/bnd/bndTransMgt/selectBndErrList"
+ ],
+ "bnd/popup/BndFileUploadtPopup": [
+  "/api/file/fileDownload",
+  "/api/file/multiFileUpload",
+  "/api/file/multiFileUploadForRequest",
+  "/api/file/selectFileList"
+ ],
+ "bnd/popup/BndGetKlnetMfcsPopup": [
+  "/api/bnd/customApi/cargoEntryStatusSearch"
+ ],
+ "bnd/popup/BndPrintPopup": [
+  "/api/bnd/bndTransMgt/saveBndPrintSetup",
+  "/api/bnd/bndTransMgt/selectBndPrintSetup",
+  "/api/bnd/bndTransMgt/selectCusmovDtlPrint"
+ ],
+ "bnd/popup/BndProgressInfoPopup": [
+  "/api/bnd/customApi/cargoEntryStatusSearch"
+ ],
+ "bnd/popup/BndTransMgtPopup": [
+  "/api/bnd/bndTransMgt/cargoEntryStatusLcNoSearch",
+  "/api/bnd/bndTransMgt/deleteCusmovList",
+  "/api/bnd/bndTransMgt/saveBnd",
+  "/api/bnd/bndTransMgt/selectCusmovDtlList",
+  "/api/bnd/mfcsSearch/selectMfcsList",
+  "/api/mdm/bnd/selectMdmBndFacl"
+ ],
+ "bnd/popup/BndTransUpdatePopup": [
+  "/api/bnd/bndTransMgt/selectCusmovDtlList",
+  "/api/bnd/bndUpdate/saveBndUpdate",
+  "/api/bnd/bndUpdate/selectBndUpdate",
+  "/api/bnd/bndUpdate/selectBndUpdatePopup"
+ ],
+ "bnd/popup/BndUnInPlcSearchPopup": [
+  "/api/bnd/bndTransMgt/cargoEntryStatusUnInPlcCheck",
+  "/api/bnd/bndTransMgt/selectCusmovUnInPlcList"
+ ],
+ "bnd/popup/MfcsPrintPopup": [
+  "/api/bnd/mfcsSearch/selectMfcsPrintList"
+ ],
+ "bws/BwsAcsCrgLdg": [
+  "/api/bws/acsNoti/selectAcsCrgLdgList",
+  "/api/mdm/organization/selectMainInfo"
+ ],
+ "bws/BwsAcsNotiMgt": [
+  "/api/bws/acsNoti/deleteAcsNoti",
+  "/api/bws/acsNoti/saveAcsNoti",
+  "/api/bws/acsNoti/selectAcsNotiList",
+  "/api/bws/acsNoti/transAcsNoti",
+  "/api/mdm/organization/selectMainInfo"
+ ],
+ "bws/BwsAgiAlertMgt": [
+  "/api/bws/agi/alert/selectNotOutAlertList",
+  "/api/bws/agi/alert/selectTransDeadLineAlertList"
+ ],
+ "bws/BwsAgrAgiDivList": [
+  "/api/bws/bwsList/selectAgrAgiDivList"
+ ],
+ "bws/BwsAgrAgiStMgt": [
+  "/api/bws/agrAgiSt/selectAgrAgiStList",
+  "/api/bws/agrAgiSt/selectPrintAgrAgiStList"
+ ],
+ "bws/BwsAgrCrgScdMgt": [
+  "/api/bws/scd/saveAgrCrgScdMgt",
+  "/api/bws/scd/selectAgrCrgScdMgt"
+ ],
+ "bws/BwsAgrTransSttMgt": [
+  "/api/bws/TransStt/deleteSmMgt",
+  "/api/bws/TransStt/saveSmMgt",
+  "/api/bws/TransStt/selectAgrTransList",
+  "/api/bws/TransStt/selectBillChgList",
+  "/api/bws/TransStt/selectNewTransList",
+  "/api/bws/TransStt/selectPrintTransList",
+  "/api/bws/TransStt/selectTariffCalc",
+  "/api/bws/TransStt/selectTariffList",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsAgreeMgt": [
+  "/api/bws/agree/deleteAgree",
+  "/api/bws/agree/saveAgree",
+  "/api/bws/agree/selectAgreeList",
+  "/api/bws/agree/updateAgreeFile"
+ ],
+ "bws/BwsBillCollStatus": [
+  "/api/bws/cfsBillCollStatus/cancelGroupBilling",
+  "/api/bws/cfsBillCollStatus/selectBillingList",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsBndAgiCorrMgt": [
+  "/api/bws/agiCorr/deleteAgiCorr",
+  "/api/bws/agiCorr/saveAgiCorr",
+  "/api/bws/agiCorr/selectAgiCorrList",
+  "/api/bws/agiCorr/selectAgiCorrLogDtlList",
+  "/api/bws/agiCorr/selectAgiCorrLogList",
+  "/api/bws/agiCorr/transAgiCorr"
+ ],
+ "bws/BwsBndAgiMgt": [
+  "/api/bws/agi/deleteAgi",
+  "/api/bws/agi/processAgiRcv",
+  "/api/bws/agi/saveAgi",
+  "/api/bws/agi/selectAgiList",
+  "/api/bws/agi/transAgi",
+  "/api/bws/agi/updateDt",
+  "/api/bws/agi/updateEcgOff",
+  "/api/bws/agi/updateEgiDlAlertOff",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsBndAgrCorrMgt": [
+  "/api/bws/agrCorr/deleteAgrCorr",
+  "/api/bws/agrCorr/saveAgrCorr",
+  "/api/bws/agrCorr/selectAgrCorrList",
+  "/api/bws/agrCorr/selectAgrCorrLogDtlList",
+  "/api/bws/agrCorr/selectAgrCorrLogList",
+  "/api/bws/agrCorr/transAgrCorr"
+ ],
+ "bws/BwsBndAgrMgt": [
+  "/api/bws/agr/deleteAgr",
+  "/api/bws/agr/processAgrRcv",
+  "/api/bws/agr/saveAgr",
+  "/api/bws/agr/selectAgrList",
+  "/api/bws/agr/sendAgr",
+  "/api/bws/agr/updateEgrDlAlertOff",
+  "/api/bws/egr/saveEgrPrintRemark",
+  "/api/bws/egr/selectEgrCntr",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsBndEgrMgt": [
+  "/api/bws/egr/callCntrMgtList",
+  "/api/bws/egr/deleteEgrInfo",
+  "/api/bws/egr/saveEgrInfo",
+  "/api/bws/egr/selectEgrList",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsBndEgrSearch": [
+  "/api/bws/egr/deleteEgrListInfo",
+  "/api/bws/egr/selectEgrSearchList"
+ ],
+ "bws/BwsBndTransSttMgt": [
+  "/api/bws/TransStt/deleteSmMgt",
+  "/api/bws/TransStt/saveSmMgt",
+  "/api/bws/TransStt/selectBillChgList",
+  "/api/bws/TransStt/selectBondedTransList",
+  "/api/bws/TransStt/selectNewTransList",
+  "/api/bws/TransStt/selectPrintTransList",
+  "/api/bws/TransStt/selectTariff",
+  "/api/bws/TransStt/selectTariffCalc",
+  "/api/bws/TransStt/selectTariffList",
+  "/api/bws/TransStt/selectTariffList_v2",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsCloseStMgt": [
+  "/api/bws/agrAgiSt/selectCloseStCrgList"
+ ],
+ "bws/BwsCustCrgListMgt": [
+  "/api/bws/agrAgiSt/selectCustCrgList"
+ ],
+ "bws/BwsDailyCargoAgiReportMgt": [
+  "/api/bws/dailyCrgReport/selectDailyAgiCrgReportList"
+ ],
+ "bws/BwsDailyCargoAgrReportMgt": [
+  "/api/bws/dailyCrgReport/selectDailyAgrCrgReportList"
+ ],
+ "bws/BwsDmtAgiCorrMgt": [
+  "/api/bws/agiCorr/deleteAgiCorr",
+  "/api/bws/agiCorr/saveAgiCorr",
+  "/api/bws/agiCorr/selectAgiCorrList",
+  "/api/bws/agiCorr/selectAgiCorrLogDtlList",
+  "/api/bws/agiCorr/selectAgiCorrLogList",
+  "/api/bws/agiCorr/transAgiCorr"
+ ],
+ "bws/BwsDmtAgiMgt": [
+  "/api/bws/agi/deleteAgi",
+  "/api/bws/agi/processAgiRcv",
+  "/api/bws/agi/saveAgi",
+  "/api/bws/agi/selectAgiDetatil",
+  "/api/bws/agi/selectAgiList",
+  "/api/bws/agi/transAgi",
+  "/api/cms/popup/selectCommonPopupCorpUser",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsDmtAgrCorrMgt": [
+  "/api/bws/agrCorr/deleteAgrCorr",
+  "/api/bws/agrCorr/saveAgrCorr",
+  "/api/bws/agrCorr/selectAgrCorrList",
+  "/api/bws/agrCorr/selectAgrCorrLogDtlList",
+  "/api/bws/agrCorr/selectAgrCorrLogList",
+  "/api/bws/agrCorr/transAgrCorr"
+ ],
+ "bws/BwsDmtAgrMgt": [
+  "/api/bws/agr/deleteAgr",
+  "/api/bws/agr/processAgrRcv",
+  "/api/bws/agr/saveAgr",
+  "/api/bws/agr/selectAgrList",
+  "/api/bws/agr/sendAgr",
+  "/api/bws/egr/saveEgrPrintRemark",
+  "/api/bws/egr/selectEgrCntr",
+  "/api/cms/popup/selectCommonPopupCorpUser",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsDmtEgrMgt": [
+  "/api/bws/egr/callCntrMgtList",
+  "/api/bws/egr/deleteEgrInfo",
+  "/api/bws/egr/saveEgrInfo",
+  "/api/bws/egr/selectEgrList",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsDmtTransSttMgt": [
+  "/api/bws/TransStt/deleteSmMgt",
+  "/api/bws/TransStt/saveSmMgt",
+  "/api/bws/TransStt/selectBillChgList",
+  "/api/bws/TransStt/selectDomesticTransList",
+  "/api/bws/TransStt/selectNewTransList",
+  "/api/bws/TransStt/selectPrintTransList",
+  "/api/bws/TransStt/selectTariffCalc",
+  "/api/bws/TransStt/selectTariffList",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsDmtUnDeclareMgt": [
+  "/api/bws/undeclared/deleteUnDeclaredAgriMgt",
+  "/api/bws/undeclared/saveUnDeclaredAgriMgt",
+  "/api/bws/undeclared/selectUnDeclaredAgriMgt"
+ ],
+ "bws/BwsEcgList": [
+  "/api/bws/bwsList/selectEcgList"
+ ],
+ "bws/BwsFreeAgiCorrMgt": [
+  "/api/bws/agiCorr/deleteAgiCorr",
+  "/api/bws/agiCorr/saveAgiCorr",
+  "/api/bws/agiCorr/selectAgiCorrList",
+  "/api/bws/agiCorr/selectAgiCorrLogDtlList",
+  "/api/bws/agiCorr/selectAgiCorrLogList",
+  "/api/bws/agiCorr/transAgiCorr"
+ ],
+ "bws/BwsFreeAgiMgt": [
+  "/api/bws/TransStt/checkBillNoForAgi",
+  "/api/bws/agi/deleteAgi",
+  "/api/bws/agi/processAgiRcv",
+  "/api/bws/agi/saveAgi",
+  "/api/bws/agi/selectAgiDetatil",
+  "/api/bws/agi/selectAgiList",
+  "/api/bws/agi/transAgi",
+  "/api/cms/popup/selectCommonPopupCorpUser",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsFreeAgrCorrMgt": [
+  "/api/bws/agrCorr/deleteAgrCorr",
+  "/api/bws/agrCorr/saveAgrCorr",
+  "/api/bws/agrCorr/selectAgrCorrList",
+  "/api/bws/agrCorr/selectAgrCorrLogDtlList",
+  "/api/bws/agrCorr/selectAgrCorrLogList",
+  "/api/bws/agrCorr/transAgrCorr"
+ ],
+ "bws/BwsFreeAgrMgt": [
+  "/api/bws/TransStt/checkBillNoForAgr",
+  "/api/bws/agr/deleteFreeAgr",
+  "/api/bws/agr/processAgrRcv",
+  "/api/bws/agr/saveFreeAgr",
+  "/api/bws/agr/selectAgrList",
+  "/api/bws/agr/sendAgr",
+  "/api/bws/egr/saveEgrPrintRemark",
+  "/api/bws/egr/selectEgrCntr",
+  "/api/cms/popup/selectCommonPopupCorpUser",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsMonthAgrAgiMgt": [
+  "/api/bws/agrAgiSt/selectMonthAgrAgiList"
+ ],
+ "bws/BwsOthTransSttMgt": [
+  "/api/bws/TransStt/deleteSmMgt",
+  "/api/bws/TransStt/saveSmMgt",
+  "/api/bws/TransStt/selectBillChgList",
+  "/api/bws/TransStt/selectOtherTarrifList",
+  "/api/bws/TransStt/selectOtherTransList",
+  "/api/bws/TransStt/selectPrintOtherTransList",
+  "/api/bws/TransStt/selectTariffCalc",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsPeriodPerformance": [
+  "/api/bws/Report/PeriodPerformanceSelectList"
+ ],
+ "bws/BwsPftCustList": [
+  "/api/bws/bwsPftCustList/selectDetailList",
+  "/api/bws/bwsPftCustList/selectList"
+ ],
+ "bws/BwsPicPFList": [
+  "/api/bws/bwsList/selectOPManSttList"
+ ],
+ "bws/BwsSalesTaxMgt": [
+  "/api/bws/cfsSalesTaxMgt/cancelTaxBill",
+  "/api/bws/cfsSalesTaxMgt/issueTaxBill",
+  "/api/bws/cfsSalesTaxMgt/resendMail",
+  "/api/bws/cfsSalesTaxMgt/saveRemark",
+  "/api/bws/cfsSalesTaxMgt/selectBillList",
+  "/api/bws/cfsSalesTaxMgt/selectLogisBill",
+  "/api/bws/cfsSalesTaxMgt/selectTaxMgtList",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "bws/BwsStockStatus": [
+  "/api/bws/agrAgiSt/selectDetailStockList",
+  "/api/bws/agrAgiSt/selectTotStockList"
+ ],
+ "bws/BwsTariffMgt": [
+  "/api/bws/Tariff/saveCfsTariff",
+  "/api/bws/Tariff/selectCfsTariffDetailCopyList",
+  "/api/bws/Tariff/selectCfsTariffDetailList",
+  "/api/bws/Tariff/selectCfsTariffHdList"
+ ],
+ "bws/BwsTotSaleStatus": [
+  "/api/bws/cfsTotSaleMgt/selectTotalSalesList"
+ ],
+ "bws/BwsUniCrossChk": [
+  "/api/bws/UniCrossChk/selectList"
+ ],
+ "bws/popup/BwsBillMergePopup": [
+  "/api/bws/cfsBillCollStatus/groupBilling"
+ ],
+ "bws/popup/BwsBndErrDetailPopup": [
+  "/api/cfs/imorder/selectErrList"
+ ],
+ "bws/popup/BwsBndExportPrintPopup": [
+  "/api/bws/egr/saveEgrImportPrint"
+ ],
+ "bws/popup/BwsBndImportPrintPopup": [
+  "/api/bws/egr/saveEgrImportPrint"
+ ],
+ "bws/popup/BwsSalesTaxTotAmtPopup": [
+  "/api/bws/cfsBillCollStatus/selectBillList"
+ ],
+ "bws/popup/BwsUniCrossUpload": [
+  "/api/bws/UniCrossChk/saveUniinfo"
+ ],
+ "cfs/FAcsNotiMgt": [
+  "/api/cfs/fAcsNotiMgt/deleteAcsNotiMgt",
+  "/api/cfs/fAcsNotiMgt/saveAcsNotiMgt",
+  "/api/cfs/fAcsNotiMgt/selectAcsNotiMgtList",
+  "/api/cfs/fAcsNotiMgt/transAcsNotiMgt"
+ ],
+ "cfs/FAgreeMgt": [
+  "/api/cfs/imagree/deleteImAgrMgt",
+  "/api/cfs/imagree/saveImAgrMgt",
+  "/api/cfs/imagree/selectImAgrMgtList",
+  "/api/cfs/imagree/updateAgreeFile"
+ ],
+ "cfs/FBillCollStatus": [
+  "/api/cfs/fBillCollStatus/cancelGroupBilling",
+  "/api/cfs/fBillCollStatus/selectBillingList",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FBltCustTransSttMgt": [
+  "/api/cfs/BltCust/deleteSmMgt",
+  "/api/cfs/BltCust/saveSmMgt",
+  "/api/cfs/BltCust/selectBillChgList",
+  "/api/cfs/BltCust/selectBillCntrList",
+  "/api/cfs/BltCust/selectNoBillChgList",
+  "/api/cfs/BltCust/selectNoBillCntrList",
+  "/api/cfs/BltCust/selectNoBillCntrMgtInfo",
+  "/api/cfs/BltCust/selectPrintSmMgtList",
+  "/api/cfs/BltCust/selectSmMgtList",
+  "/api/cfs/BltCust/selectTariffCalc",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FBndExportCorrMgt": [
+  "/api/cfs/im/saveImOutCor",
+  "/api/cfs/im/selectImOutCorList",
+  "/api/cfs/im/selectImOutCorLogList",
+  "/api/cfs/im/selectImOutCorrectDtlList",
+  "/api/cfs/im/transImOutCor"
+ ],
+ "cfs/FBndExportMgt": [
+  "/api/cfs/im/deleteImOut",
+  "/api/cfs/im/saveImOut",
+  "/api/cfs/im/selectImOutDetail",
+  "/api/cfs/im/selectImOutList",
+  "/api/cfs/im/transImOut",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FBndImportCorrMgt": [
+  "/api/cfs/imorder/saveImInCor",
+  "/api/cfs/imorder/selectImInCorList",
+  "/api/cfs/imorder/selectImInCorLogList",
+  "/api/cfs/imorder/selectImInCorrectDtlList",
+  "/api/cfs/imorder/transImInCor"
+ ],
+ "cfs/FBndImportMgt": [
+  "/api/cfs/imorder/deleteImIn",
+  "/api/cfs/imorder/saveImIn",
+  "/api/cfs/imorder/selectImInDtl",
+  "/api/cfs/imorder/selectImInList",
+  "/api/cfs/imorder/selectNotInCntrList",
+  "/api/cfs/imorder/transImIn",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FBndTransMgt-v2": [
+  "/api/cfs/bndTransMgt/deleteCusmovList",
+  "/api/cfs/bndTransMgt/insertListBndSend",
+  "/api/cfs/bndTransMgt/selectCusmovList_V2"
+ ],
+ "cfs/FBndTransMgt": [
+  "/api/cfs/bndTransMgt/deleteCusmovList",
+  "/api/cfs/bndTransMgt/insertListBndMapOut",
+  "/api/cfs/bndTransMgt/selectCusdmrList",
+  "/api/cfs/bndTransMgt/selectCusmovList"
+ ],
+ "cfs/FBndTransSttMgt": [
+  "/api/cfs/BltCust/deleteSmMgt",
+  "/api/cfs/BltCust/saveSmMgt",
+  "/api/cfs/BltCust/selectBillChgList",
+  "/api/cfs/BltCust/selectBndTarrifList",
+  "/api/cfs/BltCust/selectBndTarrifMinList",
+  "/api/cfs/BltCust/selectBndTransList",
+  "/api/cfs/BltCust/selectPrintBndTransList",
+  "/api/cfs/BltCust/selectStcTotAmount",
+  "/api/cfs/BltCust/selectTariffCalc",
+  "/api/cfs/BltCust/selectThcTotAmount",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FBndUpdate-v2": [
+  "/api/cfs/bndUpdate/insertBondModi",
+  "/api/cfs/bndUpdate/selectBndUpdate_V2"
+ ],
+ "cfs/FBndUpdate": [
+  "/api/cfs/bndUpdate/insertMapOut",
+  "/api/cfs/bndUpdate/selectBndUpdate"
+ ],
+ "cfs/FCertMgt": [
+  "/api/cfs/fCrtfMgt/cancelGrpSm",
+  "/api/cfs/fCrtfMgt/deleteSmBill",
+  "/api/cfs/fCrtfMgt/saveGrpSm",
+  "/api/cfs/fCrtfMgt/saveSmBill",
+  "/api/cfs/fCrtfMgt/selectFCrtfCntrList",
+  "/api/cfs/fCrtfMgt/selectFCrtfMgtList",
+  "/api/cfs/fCrtfMgt/selectPrintBillList",
+  "/api/cfs/fCrtfMgt/selectPrintCertList",
+  "/api/cfs/fCrtfMgt/updateCrtfNoMgt"
+ ],
+ "cfs/FCfsSalesAcct": [
+  "/api/cfs/sales/deleteAcct",
+  "/api/cfs/sales/printAcct",
+  "/api/cfs/sales/saveAcct",
+  "/api/cfs/sales/selectAcct",
+  "/api/cfs/sales/selectAcctList"
+ ],
+ "cfs/FCfsSalesInMgt": [
+  "/api/cfs/sales/deleteIn",
+  "/api/cfs/sales/saveIn",
+  "/api/cfs/sales/selectIn"
+ ],
+ "cfs/FCfsSalesInSearch": [
+  "/api/cfs/sales/selectInList"
+ ],
+ "cfs/FCfsSalesItemMgt": [
+  "/api/cfs/sales/saveZCfsItemMgt",
+  "/api/cfs/sales/selectZCfsItemMgt"
+ ],
+ "cfs/FCfsSalesOutMgt": [
+  "/api/cfs/sales/deleteOut",
+  "/api/cfs/sales/saveOut",
+  "/api/cfs/sales/selectInList",
+  "/api/cfs/sales/selectOut"
+ ],
+ "cfs/FCfsSalesOutSearch": [
+  "/api/cfs/sales/selectOutList"
+ ],
+ "cfs/FCfsSalesStock": [
+  "/api/cfs/sales/selectOutList",
+  "/api/cfs/sales/selectStockList"
+ ],
+ "cfs/FCfsTariffMgt": [
+  "/api/cfs/Tariff/saveCfsTariff",
+  "/api/cfs/Tariff/selectCfsTariffDetailCopyList",
+  "/api/cfs/Tariff/selectCfsTariffDetailList",
+  "/api/cfs/Tariff/selectCfsTariffHdList"
+ ],
+ "cfs/FCfsZcePlanMgt": [
+  "/api/cfs/cntr/callCntrMgtList",
+  "/api/cfs/inplan/deleteCePlan",
+  "/api/cfs/inplan/saveCePlan",
+  "/api/cfs/inplan/selectCePlanDetailList",
+  "/api/cfs/inplan/selectCePlanHdList",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FCfsZcePlanSearch": [
+  "/api/cfs/inplan/selectCePlanList"
+ ],
+ "cfs/FClpFclMgt": [
+  "/api/cfs/exClp/checkClpStatus",
+  "/api/cfs/exClp/deleteExClp",
+  "/api/cfs/exClp/requestCancelClp",
+  "/api/cfs/exClp/saveExFclClp",
+  "/api/cfs/exClp/selectExBookingInfo",
+  "/api/cfs/exClp/selectExClpFcl",
+  "/api/cfs/exClp/selectPrintFcl",
+  "/api/cfs/exClp/tranferClp",
+  "/api/cfs/exClp/validExClp",
+  "/api/code/selectCntrLine",
+  "/api/code/selectContainerList"
+ ],
+ "cfs/FClpFclSkrMgt": [
+  "/api/cfs/exClp/deleteExClp",
+  "/api/cfs/exClp/saveExFclClp",
+  "/api/cfs/exClp/selectExBookingInfo",
+  "/api/cfs/exClp/selectExClpFcl",
+  "/api/cfs/exClp/selectPrintFcl",
+  "/api/cfs/exClp/validExClp",
+  "/api/code/selectCntrLine",
+  "/api/code/selectContainerList"
+ ],
+ "cfs/FClpLclMgt": [
+  "/api/cfs/exClp/checkClpStatus",
+  "/api/cfs/exClp/deleteCntrNo",
+  "/api/cfs/exClp/deleteExClp",
+  "/api/cfs/exClp/requestCancelClp",
+  "/api/cfs/exClp/saveExLclClp",
+  "/api/cfs/exClp/selectExBookingInfo",
+  "/api/cfs/exClp/selectExClpLcl",
+  "/api/cfs/exClp/selectExcRcvList",
+  "/api/cfs/exClp/selectPrintLcl",
+  "/api/cfs/exClp/tranferClp",
+  "/api/cfs/exClp/updateCargoInfo",
+  "/api/cfs/exClp/updateLclCrg",
+  "/api/cfs/exClp/updateLclRcv",
+  "/api/cfs/exClp/validExClp",
+  "/api/code/selectCntrLine",
+  "/api/code/selectContainerList"
+ ],
+ "cfs/FClpLclSkrMgt": [
+  "/api/cfs/exClp/deleteCntrNo",
+  "/api/cfs/exClp/deleteExClp",
+  "/api/cfs/exClp/saveExLclClp",
+  "/api/cfs/exClp/selectExBookingInfo",
+  "/api/cfs/exClp/selectExClpLcl",
+  "/api/cfs/exClp/selectExcRcvList",
+  "/api/cfs/exClp/selectPrintLcl",
+  "/api/cfs/exClp/updateCargoInfo",
+  "/api/cfs/exClp/updateLclCrg",
+  "/api/cfs/exClp/updateLclRcv",
+  "/api/cfs/exClp/validExClp",
+  "/api/code/selectCntrLine",
+  "/api/code/selectContainerList"
+ ],
+ "cfs/FClpSchMgt": [
+  "/api/cfs/exClp/selectExcClpList"
+ ],
+ "cfs/FClpSchSkrMgt": [
+  "/api/cfs/exClp/selectExcClpList"
+ ],
+ "cfs/FCntrCarryMgt": [
+  "/api/cfs/cntr/saveCntrMgt",
+  "/api/cfs/cntr/saveManualIO",
+  "/api/cfs/cntr/selectExCntrMgtList",
+  "/api/cfs/exClp/selectExBookingInfo"
+ ],
+ "cfs/FCntrDBListMgt": [
+  "/api/cfs/cntr/deleteImCntrMgt",
+  "/api/cfs/cntr/saveCntrMgt",
+  "/api/cfs/cntr/selectImCntrMgtList"
+ ],
+ "cfs/FCntrDBRgstMgt": [
+  "/api/cfs/cntr/callCntrMgtList",
+  "/api/cfs/cntr/saveCntrMgtUp",
+  "/api/cfs/cntr/selectImCntrMgtList"
+ ],
+ "cfs/FCntrDailyMov": [
+  "/api/cfs/cntr/saveCntrMgt",
+  "/api/cfs/cntr/selectCntrMgtLogList"
+ ],
+ "cfs/FDomesticExportCorrMgt": [
+  "/api/cfs/im/saveDomesticOutCor",
+  "/api/cfs/im/selectDomesticOutCorList",
+  "/api/cfs/im/selectDomesticOutCorLogList",
+  "/api/cfs/im/selectDomesticOutCorrectDtlList",
+  "/api/cfs/im/transDomesticOutCor"
+ ],
+ "cfs/FDomesticExportMgt": [
+  "/api/cfs/im/deleteImOut",
+  "/api/cfs/im/saveImOut",
+  "/api/cfs/im/selectDomesticOutList",
+  "/api/cfs/im/selectImOutDetail",
+  "/api/cfs/im/transDomesticOut",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FDomesticImportCorrMgt": [
+  "/api/cfs/imorder/saveDomesticInCor",
+  "/api/cfs/imorder/selectDomesticInCorList",
+  "/api/cfs/imorder/selectDomesticInCorLogList",
+  "/api/cfs/imorder/selectDomesticInCorrectDtlList",
+  "/api/cfs/imorder/transDomesticInCor"
+ ],
+ "cfs/FDomesticImportMgt": [
+  "/api/cfs/imorder/deleteImIn",
+  "/api/cfs/imorder/saveImIn",
+  "/api/cfs/imorder/selectDomesticInList",
+  "/api/cfs/imorder/selectImInDtl",
+  "/api/cfs/imorder/selectNotInCntrList",
+  "/api/cfs/imorder/transDomesticIn",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FDomesticTransSttMgt": [
+  "/api/cfs/BltCust/deleteSmMgt",
+  "/api/cfs/BltCust/saveSmMgt",
+  "/api/cfs/BltCust/selectBillChgList",
+  "/api/cfs/BltCust/selectBndTarrifList",
+  "/api/cfs/BltCust/selectBndTarrifMinList",
+  "/api/cfs/BltCust/selectDomesticTransList",
+  "/api/cfs/BltCust/selectPrintBndTransList",
+  "/api/cfs/BltCust/selectStcTotAmount",
+  "/api/cfs/BltCust/selectTariffCalc",
+  "/api/cfs/BltCust/selectThcTotAmount",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FExAlloMgtP": [
+  "/api/cfs/allo/extAllo",
+  "/api/cfs/allo/saveExAlloP",
+  "/api/cfs/allo/searchStdPayTariffList",
+  "/api/cfs/allo/selectExAlloCntrPList",
+  "/api/cfs/allo/selectExAlloPList",
+  "/api/cfs/allo/updateEx",
+  "/api/cfs/exOrd/deleteExhOrdMgt",
+  "/api/cfs/exOrd/saveWrkYn",
+  "/api/cfs/exOrd/updateAlloExcp"
+ ],
+ "cfs/FExAlloMgtR": [
+  "/api/cfs/allo/extAllo",
+  "/api/cfs/allo/saveExAlloR",
+  "/api/cfs/allo/searchStdPayTariffList",
+  "/api/cfs/allo/selectExAlloRList",
+  "/api/cfs/allo/updateEx"
+ ],
+ "cfs/FImAlloMgt": [
+  "/api/cfs/allo/autoReturnEmptyCntr",
+  "/api/cfs/allo/extAllo",
+  "/api/cfs/allo/saveAllo",
+  "/api/cfs/allo/saveAlloDtl",
+  "/api/cfs/allo/searchStdPayTariffList",
+  "/api/cfs/allo/selectAlloImDtlList",
+  "/api/cfs/allo/selectImAlloList",
+  "/api/cfs/allo/updateEmptyCntrReturnDate",
+  "/api/cfs/allo/updateIm",
+  "/api/cms/popup/selectCommonPopupCorp"
+ ],
+ "cfs/FInOutStcSchMgt": [
+  "/api/cfs/fStcStt/selectInOutStockStatusList",
+  "/api/cfs/fStcStt/selectPrintInOutStockStatusList"
+ ],
+ "cfs/FOrdMgt": [
+  "/api/cfs/allo/extAllo",
+  "/api/cfs/imcord/saveImcOrd",
+  "/api/cfs/imcord/selectImcOrdList"
+ ],
+ "cfs/FOtherTransSttMgt": [
+  "/api/cfs/BltCust/deleteSmMgt",
+  "/api/cfs/BltCust/saveSmMgt",
+  "/api/cfs/BltCust/selectBillChgList",
+  "/api/cfs/BltCust/selectOtherTarrifList",
+  "/api/cfs/BltCust/selectOtherTransList",
+  "/api/cfs/BltCust/selectPrintOtherTransList",
+  "/api/cfs/BltCust/selectTariffCalc",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FPrismGateLogMgt": [
+  "/api/cfs/prism/saveGateLog",
+  "/api/cfs/prism/saveStTrmn",
+  "/api/cfs/prism/selectGateLogList",
+  "/api/cfs/prism/updateStTrmn"
+ ],
+ "cfs/FRcvCOrdReqMgt": [
+  "/api/cfs/exOrd/deleteExcOrd",
+  "/api/cfs/exOrd/saveExcOrd",
+  "/api/cfs/exOrd/selectExcOrd",
+  "/api/cfs/exOrd/validExcOrd"
+ ],
+ "cfs/FRcvCOrdSchList": [
+  "/api/cfs/exOrd/selectRcvOrdSchDtlList",
+  "/api/cfs/exOrd/selectRcvOrdSchList"
+ ],
+ "cfs/FRcvCOrdSchMgt": [
+  "/api/cfs/exOrd/cancelWrng",
+  "/api/cfs/exOrd/selectExcOrdList"
+ ],
+ "cfs/FRcvCOrdSkrReqMgt": [
+  "/api/cfs/exOrd/deleteExcOrd",
+  "/api/cfs/exOrd/saveExcOrd",
+  "/api/cfs/exOrd/selectExcOrd",
+  "/api/cfs/exOrd/validExcOrd"
+ ],
+ "cfs/FRcvCOrdSkrSchMgt": [
+  "/api/cfs/exOrd/cancelWrng",
+  "/api/cfs/exOrd/selectExcOrdList"
+ ],
+ "cfs/FRcvHOrdMgt": [
+  "/api/cfs/exClp/selectExBookingListInfo",
+  "/api/cfs/exClp/updateExBookingInfo",
+  "/api/cfs/exOrd/deleteExhOrdMgt",
+  "/api/cfs/exOrd/saveExhOrdMgt",
+  "/api/cfs/exOrd/saveLkcYn",
+  "/api/cfs/exOrd/saveWrkYn",
+  "/api/cfs/exOrd/saveWrkYnAtOnce",
+  "/api/cfs/exOrd/selectExhOrdCntrList",
+  "/api/cfs/exOrd/selectExhOrdMgtList",
+  "/api/cfs/exOrd/updateAlloExcp"
+ ],
+ "cfs/FRcvHOrdReqMgt": [
+  "/api/cfs/exClp/selectExBookingInfo",
+  "/api/cfs/exOrd/deleteExhOrdMgt",
+  "/api/cfs/exOrd/saveExhOrd",
+  "/api/cfs/exOrd/selectExhOrd",
+  "/api/cfs/exOrd/updateAlloExcp",
+  "/api/cfs/exOrd/validExhOrd",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FRcvHOrdSchMgt": [
+  "/api/cfs/exClp/selectExBookingInfo",
+  "/api/cfs/exOrd/deleteExhCntrListMgt",
+  "/api/cfs/exOrd/saveExhCntrMgt",
+  "/api/cfs/exOrd/saveWrkYn",
+  "/api/cfs/exOrd/selectExhOrdList",
+  "/api/cfs/exOrd/updateAlloExcp",
+  "/api/cfs/exOrd/updateExhOrd"
+ ],
+ "cfs/FRcvHOrdTransSttMgt": [
+  "/api/cfs/BltCust/deleteSmMgt",
+  "/api/cfs/BltCust/saveSmMgt",
+  "/api/cfs/BltCust/selectBillChgList",
+  "/api/cfs/BltCust/selectBillCntrClpList",
+  "/api/cfs/BltCust/selectNoBillClpChgList",
+  "/api/cfs/BltCust/selectNoBillClpCntrList",
+  "/api/cfs/BltCust/selectNoBillClpCntrMgtInfo",
+  "/api/cfs/BltCust/selectPrintSmMgtClpList",
+  "/api/cfs/BltCust/selectSmMgtClpList",
+  "/api/cfs/BltCust/selectTariffCalc",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FSalesTaxMgt": [
+  "/api/cfs/fSalesTaxMgt/cancelAccounting",
+  "/api/cfs/fSalesTaxMgt/cancelTaxBill",
+  "/api/cfs/fSalesTaxMgt/issueTaxBill",
+  "/api/cfs/fSalesTaxMgt/resendMail",
+  "/api/cfs/fSalesTaxMgt/saveAccounting",
+  "/api/cfs/fSalesTaxMgt/saveRemark",
+  "/api/cfs/fSalesTaxMgt/selectBillList",
+  "/api/cfs/fSalesTaxMgt/selectBillTaxCntrList",
+  "/api/cfs/fSalesTaxMgt/selectLogisBill",
+  "/api/cfs/fSalesTaxMgt/selectTaxMgtList",
+  "/api/mdm/code/selectCorpBillPicList"
+ ],
+ "cfs/FShipOrdMgt": [
+  "/api/cfs/exClp/selectExBookingInfo",
+  "/api/cfs/exClp/selectExBookingListInfo",
+  "/api/cfs/exOrd/saveWrkYn",
+  "/api/cfs/exShipOrdMgt/deleteExShipOrd",
+  "/api/cfs/exShipOrdMgt/saveExShipOrd",
+  "/api/cfs/exShipOrdMgt/saveExShipOrdDtl",
+  "/api/cfs/exShipOrdMgt/selectExShipOrdCntrList",
+  "/api/cfs/exShipOrdMgt/selectExShipOrdList",
+  "/api/cfs/exShipOrdMgt/updateExhOrd"
+ ],
+ "cfs/FShprMgt": [
+  "/api/cfs/fShprMgt/saveFShprMgt",
+  "/api/cfs/fShprMgt/selectFShprMgt"
+ ],
+ "cfs/FStockStatus": [
+  "/api/cfs/fStcStt/selectStockStatusList"
+ ],
+ "cfs/FTotSaleStatus": [
+  "/api/cfs/fTotSaleStatus/selectTotalSalesList"
+ ],
+ "cfs/FTrfCrgIsuMgt": [
+  "/api/cfs/trfCrgIsuMgt/deleteTrfCrgIsu",
+  "/api/cfs/trfCrgIsuMgt/saveTrfCrgIsu",
+  "/api/cfs/trfCrgIsuMgt/selectTrfCrgIsuList"
+ ],
+ "cfs/FUniPassImpSchMgt": [
+  "/api/cfs/inplan/selectInPlanList"
+ ],
+ "cfs/popup/FAlloClPopup": [
+  "/api/cfs/allo/cancelAllo"
+ ],
+ "cfs/popup/FAlloCopinoPopup": [
+  "/api/cfs/allo/copino"
+ ],
+ "cfs/popup/FAlloPClConfPopup": [
+  "/api/cfs/allo/cancelAlloP"
+ ],
+ "cfs/popup/FAlloPClPopup": [
+  "/api/cfs/allo/cancelAllo"
+ ],
+ "cfs/popup/FAlloPayPopup": [
+  "/api/cfs/allo/savePayment",
+  "/api/cfs/allo/searchStdPayTariff",
+  "/api/cfs/allo/selectPaymentList"
+ ],
+ "cfs/popup/FAlloPopup": [
+  "/api/cfs/allo/saveAlloPartnerOrLine",
+  "/api/cms/popup/selectCommonPopupCorp"
+ ],
+ "cfs/popup/FAlloShipperPopup": [
+  "/api/cfs/allo/saveAlloPartnerOrLine",
+  "/api/cms/popup/selectCommonPopupCorp"
+ ],
+ "cfs/popup/FAlloStatusPopup": [
+  "/api/cfs/allo/saveAlloStrange",
+  "/api/cfs/allo/selectAlloStrange"
+ ],
+ "cfs/popup/FAlloTruckPopup": [
+  "/api/cms/popup/selectCommonPopupAllocationTruck",
+  "/api/cms/popup/selectCommonPopupCorp"
+ ],
+ "cfs/popup/FBillMergePopup": [
+  "/api/cfs/fBillCollStatus/groupBilling"
+ ],
+ "cfs/popup/FBkgDetailPopup": [
+  "/api/cfs/exOrd/saveExBkgOrdCrg",
+  "/api/cfs/exOrd/selectExBkgOrdCrg"
+ ],
+ "cfs/popup/FBndAlloEstTransPopup-v2": [
+  "/api/cfs/bndTransMgt/saveBndAlloEstTrans_V2",
+  "/api/cfs/bndTransMgt/selectCusdmrList_V2"
+ ],
+ "cfs/popup/FBndAlloEstTransPopup": [
+  "/api/cfs/bndTransMgt/saveBndAlloEstTrans",
+  "/api/cfs/bndTransMgt/selectCusdmrList"
+ ],
+ "cfs/popup/FBndErrorDetailPopup": [
+  "/api/cfs/bndTransMgt/selectBndErrList"
+ ],
+ "cfs/popup/FBndImportExportErrDetailPopup": [
+  "/api/cfs/imorder/selectErrList"
+ ],
+ "cfs/popup/FBndPrgInfoPopup": [
+  "/api/cfs/customApi/cargoEntryStatusSearch"
+ ],
+ "cfs/popup/FBndTransRegPopup-v2": [
+  "/api/cfs/bndTransMgt/cargoEntryStatusCfs",
+  "/api/cfs/bndTransMgt/deleteCusmovList",
+  "/api/cfs/bndTransMgt/saveBnd_V2",
+  "/api/cfs/bndTransMgt/selectCusmovDtlList",
+  "/api/mdm/bnd/selectMdmBndFacl"
+ ],
+ "cfs/popup/FBndTransRegPopup": [
+  "/api/cfs/bndTransMgt/cargoEntryStatusCfs",
+  "/api/cfs/bndTransMgt/deleteCusmovList",
+  "/api/cfs/bndTransMgt/saveBnd",
+  "/api/cfs/bndTransMgt/selectCusmovDtlList",
+  "/api/mdm/bnd/selectMdmBndFacl"
+ ],
+ "cfs/popup/FBndTransUpdatePopup": [
+  "/api/cfs/bndTransMgt/selectCusmovDtlList",
+  "/api/cfs/bndUpdate/saveBndUpdate",
+  "/api/cfs/bndUpdate/selectBndUpdate",
+  "/api/cfs/bndUpdate/selectBndUpdatePopup"
+ ],
+ "cfs/popup/FCntrHisPopup": [
+  "/api/cfs/cntrhis/selectCntrMgtHisList"
+ ],
+ "cfs/popup/FExCrgIsuLogPopup": [
+  "/api/cfs/trfCrgIsuMgt/selectCrgIsuLog"
+ ],
+ "cfs/popup/FExcCrgHisPopup": [
+  "/api/cfs/exOrd/selectExBkgOrdCrgHis"
+ ],
+ "cfs/popup/FOrdRegPopup": [
+  "/api/bnd/customApi/cargoEntryStatusSearch"
+ ],
+ "cfs/popup/FPaymentPopup": [
+  "/api/allocation/savePaymentList",
+  "/api/allocation/searchStdPayTariff",
+  "/api/allocation/selectPayPicList",
+  "/api/allocation/selectPaymentList"
+ ],
+ "cfs/popup/FRcvList2Popup": [
+  "/api/cfs/exClp/selectExcRcvList"
+ ],
+ "cfs/popup/FRcvListPopup": [
+  "/api/cfs/exClp/selectExcRcvList"
+ ],
+ "cfs/popup/FSalesTaxTotAmtPopup": [
+  "/api/cfs/fBillCollStatus/selectBillList"
+ ],
+ "cfs/popup/FSendBillingPopup": [
+  "/api/cfs/fBillCollStatus/sendBillingData"
+ ],
+ "cfs/popup/FSendBillingSearchPopup": [
+  "/api/cfs/fBillCollStatus/selectBillingData"
+ ],
+ "cfs/popup/FShipOrdCntrUpdatePopup": [
+  "/api/cfs/exShipOrdMgt/updateShipOrdCntr"
+ ],
+ "cfs/popup/FShipOrdUpdatePopup": [
+  "/api/cfs/exClp/selectExBookingInfo"
+ ],
+ "cfs/popup/FShprRegPopup": [
+  "/api/cfs/fShprMgt/insertFShprMgt"
+ ],
+ "cfs/popup/FUpdateBookingInfoPopup": [
+  "/api/cfs/exClp/reUpdateExBookingInfo"
+ ],
+ "cms/comm/CmsCommonCode": [
+  "/api/cms/comm/saveCommonCode",
+  "/api/cms/comm/selectCommonCode",
+  "/api/cms/comm/selectCommonCodeDetail"
+ ],
+ "cms/comm/CmsCorpPicMgt": [
+  "/api/cms/comm/saveCmsCorpPicMgt",
+  "/api/cms/comm/selectCmsCorpList",
+  "/api/cms/comm/selectCmsCorpPicMgt"
+ ],
+ "cms/comm/CmsDataDicMgt": [
+  "/api/cms/comm/saveDataDicMgt",
+  "/api/cms/comm/selectDataDicMgt"
+ ],
+ "cms/comm/CmsDelLog": [
+  "/api/cms/comm/selectCmsDelLog"
+ ],
+ "cms/comm/CmsEdiLog": [
+  "/api/cms/comm/selectCmsEdiLog"
+ ],
+ "cms/comm/CmsErrorLog": [
+  "/api/cms/comm/saveCmsErrorLog",
+  "/api/cms/comm/selectCmsErrorLog"
+ ],
+ "cms/comm/CmsFavoritesMgt": [
+  "/api/cms/comm/deleteCmsFavoritesMgt",
+  "/api/cms/comm/saveCmsFavoritesMgt",
+  "/api/cms/comm/selectCmsFavoritesMgt",
+  "/api/cms/popup/selectCommonPopupBilling"
+ ],
+ "cms/comm/CmsFwdUserMgt": [
+  "/api/cms/comm/changeCmsUserMgtPwd",
+  "/api/cms/comm/deleteCmsUserMgt",
+  "/api/cms/comm/saveCmsUserMgt",
+  "/api/cms/comm/selectCmsUserMgt",
+  "/api/cms/comm/validCmsUserMgtId"
+ ],
+ "cms/comm/CmsKakaoTalkMgt": [
+  "/api/cms/comm/saveCmsKakaoTalkMgt",
+  "/api/cms/comm/selectCmsKakaoTalkSkillMgt",
+  "/api/cms/comm/selectCmsKakaoTalkTemplateMgt"
+ ],
+ "cms/comm/CmsLangMgt": [
+  "/api/cms/comm/saveLangMgt",
+  "/api/cms/comm/selectLangMgt"
+ ],
+ "cms/comm/CmsMenuMgt": [
+  "/api/cms/comm/changeMenuId",
+  "/api/cms/comm/checkMenuId",
+  "/api/cms/comm/deleteMenuMgt",
+  "/api/cms/comm/saveMenuMgt",
+  "/api/cms/comm/selectMenuMgt"
+ ],
+ "cms/comm/CmsPtnUserMgt": [
+  "/api/cms/comm/changeCmsUserMgtPwd",
+  "/api/cms/comm/deleteCmsUserMgt",
+  "/api/cms/comm/saveCmsUserMgt",
+  "/api/cms/comm/selectCmsUserMgt",
+  "/api/cms/comm/validCmsUserMgtId"
+ ],
+ "cms/comm/CmsRoleButtonMgt": [
+  "/api/cms/comm/saveCmsRoleButtonMgt",
+  "/api/cms/comm/selectCmsButtonRoleList",
+  "/api/cms/comm/selectCmsRoleButtonAuth",
+  "/api/cms/comm/selectCmsRoleButtonMgt",
+  "/api/cms/comm/selectCmsRoleButtonSet"
+ ],
+ "cms/comm/CmsRoleMenuMgt": [
+  "/api/cms/comm/copyCmsRoleMenuMgt",
+  "/api/cms/comm/saveCmsRoleMenuMgt",
+  "/api/cms/comm/selectCmsMenuRoleList",
+  "/api/cms/comm/selectCmsRoleMenuAuth"
+ ],
+ "cms/comm/CmsRoleUserMgt": [
+  "/api/cms/comm/saveCmsRoleUserMgt",
+  "/api/cms/comm/selectCmsRoleMgt",
+  "/api/cms/comm/selectCmsRoleUserMgt"
+ ],
+ "cms/comm/CmsScreenMgt": [
+  "/api/cms/comm/saveScreenMgt",
+  "/api/cms/comm/selectScreenMgt"
+ ],
+ "cms/comm/CmsUserMgt": [
+  "/api/cms/comm/changeCmsUserMgtPwd",
+  "/api/cms/comm/deleteCmsUserMgt",
+  "/api/cms/comm/saveCmsUserMgt",
+  "/api/cms/comm/selectCmsUserBranch",
+  "/api/cms/comm/selectCmsUserMgt",
+  "/api/cms/comm/validCmsUserMgtId"
+ ],
+ "cms/history/CmsOrderHistory": [
+  "/api/cms/history/selectCmsOrderHistory"
+ ],
+ "cms/history/CmsVisitLog": [
+  "/api/cms/history/selectCmsVisitLog"
+ ],
+ "cms/popup/CmsCsmOpenPopup": [
+  "/api/cms/comm/selectCsmUserInfo",
+  "/api/sso/ssoLogin"
+ ],
+ "cms/popup/CmsDocumentMgt": [
+  "/api/cms/popup/saveDocumentMgt",
+  "/api/cms/popup/selectDocumentMgt",
+  "/api/file/multiFileUpload"
+ ],
+ "cms/popup/CmsFaclPopup": [
+  "/api/mdm/bnd/saveMdmBndFacl"
+ ],
+ "cms/popup/CmsFileAgentPopup": [
+  "/api/file/fileDownload",
+  "/api/file/multiFileUpload",
+  "/api/file/multiFileUploadForRequest",
+  "/api/file/selectFileList"
+ ],
+ "cms/popup/CmsWrkPlcMngPopup": [
+  "/api/mdm/workplace/selectMdmWorkPlaceDetail",
+  "/api/mdm/workplace/selectWorkPlace"
+ ],
+ "cms/setting/CmsAutonoRuleMgt": [
+  "/api/cms/setting/saveCmsAutonoRuleMgt",
+  "/api/cms/setting/selectCmsAutonoRuleList",
+  "/api/cms/setting/selectCmsAutonoTypeList"
+ ],
+ "cy/adjustment/CyBlBndLicInvMgt": [
+  "/api/cy/inv/billingBlBndLicInv",
+  "/api/cy/inv/cancelBlBndLicInv",
+  "/api/cy/inv/selectBlBndLicInvList"
+ ],
+ "cy/adjustment/E71E001C": [
+  "/api/cy/E71E001C/delete",
+  "/api/cy/E71E001C/save",
+  "/api/cy/E71E001C/select"
+ ],
+ "cy/adjustment/E71E002C": [
+  "/api/cy/E71E002C/delete",
+  "/api/cy/E71E002C/paste",
+  "/api/cy/E71E002C/save",
+  "/api/cy/E71E002C/select"
+ ],
+ "cy/adjustment/E71E003C": [
+  "/api/cy/E71E003C/save",
+  "/api/cy/E71E003C/select"
+ ],
+ "cy/adjustment/E71E004C": [
+  "/api/cy/E71E004C/delete",
+  "/api/cy/E71E004C/save",
+  "/api/cy/E71E004C/select",
+  "/api/cy/E71E004C/selectDetail"
+ ],
+ "cy/adjustment/E71E005C": [
+  "/api/cy/E71E005C/delete",
+  "/api/cy/E71E005C/save",
+  "/api/cy/E71E005C/select",
+  "/api/cy/E71E005C/selectDetail"
+ ],
+ "cy/adjustment/E71E006C": [
+  "/api/cy/E71E006C/billUpdate",
+  "/api/cy/E71E006C/calculation",
+  "/api/cy/E71E006C/delete",
+  "/api/cy/E71E006C/deleteCntr",
+  "/api/cy/E71E006C/process",
+  "/api/cy/E71E006C/selectCnaccList",
+  "/api/cy/E71E006C/selectInvCn",
+  "/api/cy/E71E006C/selectInvLine",
+  "/api/cy/E71E006C/selectInvoiceList",
+  "/api/cy/E71E006C/selectTamtList"
+ ],
+ "cy/adjustment/E71E007C": [
+  "/api/cy/E71E007C/process",
+  "/api/cy/E71E007C/selectInvcnList",
+  "/api/cy/E71E007C/selectInvlineList",
+  "/api/cy/E71E007C/selectInvoiceList",
+  "/api/cy/E71E007C/updateAppDt"
+ ],
+ "cy/adjustment/E71E008C": [
+  "/api/cy/E71E008C/process",
+  "/api/cy/E71E008C/selectInvcnList",
+  "/api/cy/E71E008C/selectInvlineList",
+  "/api/cy/E71E008C/selectInvoiceList"
+ ],
+ "cy/conMng/E71A011C": [
+  "/api/cy/E71A011C/select"
+ ],
+ "cy/conMng/E71A012C": [
+  "/api/cy/E71A012C/select"
+ ],
+ "cy/conMng/E71A013C": [
+  "/api/cy/E71A013C/save",
+  "/api/cy/E71A013C/select"
+ ],
+ "cy/conMng/E71A014C": [
+  "/api/cy/E71A014C/save",
+  "/api/cy/E71A014C/select",
+  "/api/cy/positionChk"
+ ],
+ "cy/conMng/E71A015C": [
+  "/api/cy/E71A015C/delete",
+  "/api/cy/E71A015C/save",
+  "/api/cy/E71A015C/select",
+  "/api/cy/cntrChk"
+ ],
+ "cy/conMng/E71A016C": [
+  "/api/cy/E71A016C/delete",
+  "/api/cy/E71A016C/save",
+  "/api/cy/E71A016C/select"
+ ],
+ "cy/config": [
+  "/api/cy/config/info",
+  "/api/cy/config/saveInfo"
+ ],
+ "cy/danger/E71F001C": [
+  "/api/cy/E71F001C/delete",
+  "/api/cy/E71F001C/insert",
+  "/api/cy/E71F001C/select",
+  "/api/cy/E71F001C/update"
+ ],
+ "cy/danger/E71F002C": [
+  "/api/cy/E71F002C/select"
+ ],
+ "cy/danger/E71F003C": [
+  "/api/cy/E71F003C/select"
+ ],
+ "cy/danger/E71F004C": [
+  "/api/cy/E71F004C/select"
+ ],
+ "cy/danger/E71F005C": [
+  "/api/cy/E71F005C/select"
+ ],
+ "cy/danger/E71F006C": [
+  "/api/cy/E71F006C/select"
+ ],
+ "cy/danger/E71F007C": [
+  "/api/cy/E71F007C/select"
+ ],
+ "cy/danger/E71F008C": [
+  "/api/cy/E71F008C/select"
+ ],
+ "cy/danger/E71F009C": [
+  "/api/cy/E71F009C/select"
+ ],
+ "cy/danger/E71F010C": [
+  "/api/cy/E71F010C/select"
+ ],
+ "cy/device/gate/E71B001C": [
+  "/api/cy/E71B001C/refresh",
+  "/api/cy/E71B001C/save"
+ ],
+ "cy/device/yard/E71C001C": [
+  "/api/cy/E71C001C/UpdateEq",
+  "/api/cy/E71C001C/cancelComplete",
+  "/api/cy/E71C001C/cancelOrderList",
+  "/api/cy/E71C001C/cntrEOrderData",
+  "/api/cy/E71C001C/cntrFromChk",
+  "/api/cy/E71C001C/cntrInfoOne",
+  "/api/cy/E71C001C/cntrOrderList",
+  "/api/cy/E71C001C/cntrStckList",
+  "/api/cy/E71C001C/login",
+  "/api/cy/E71C001C/orderComplete",
+  "/api/cy/E71C001C/positionChk",
+  "/api/cy/E71C001C/select",
+  "/api/cy/E71C001C/vhcOrderSearch"
+ ],
+ "cy/inOutMng/E71A001C": [
+  "/api/cy/E71A001C/delete",
+  "/api/cy/E71A001C/save",
+  "/api/cy/E71A001C/select",
+  "/api/cy/E71A001C/selectCarrierCd",
+  "/api/cy/E71A001C/selectCustCd",
+  "/api/cy/E71A001C/selectShipperCd",
+  "/api/cy/E71A001C/updateChkYn",
+  "/api/cy/E71A001C/updateErrYn",
+  "/api/cy/cntrChk"
+ ],
+ "cy/inOutMng/E71A002C": [
+  "/api/cy/E71A002C/save",
+  "/api/cy/E71A002C/select"
+ ],
+ "cy/inOutMng/E71A003C": [
+  "/api/cy/E71A003C/save",
+  "/api/cy/E71A003C/select"
+ ],
+ "cy/inOutMng/E71A004C": [
+  "/api/cy/E71A004C/delete",
+  "/api/cy/E71A004C/save",
+  "/api/cy/E71A004C/select",
+  "/api/cy/E71A004C/selectBlockBay",
+  "/api/cy/E71A004C/selectInfo",
+  "/api/cy/E71A004C/updateSeq"
+ ],
+ "cy/inOutMng/E71A005C": [
+  "/api/cy/E71A005C/delete",
+  "/api/cy/E71A005C/save",
+  "/api/cy/E71A005C/select",
+  "/api/cy/blockChk"
+ ],
+ "cy/inOutMng/E71A006C": [
+  "/api/cy/order/deleteCyOrder",
+  "/api/cy/order/saveCyOrder",
+  "/api/cy/order/selectOrderList"
+ ],
+ "cy/inOutMng/E71A007C": [
+  "/api/cy/order/deleteCyOrder",
+  "/api/cy/order/saveCyOrder",
+  "/api/cy/order/selectOrderList"
+ ],
+ "cy/inOutMng/E71A008C": [
+  "/api/cy/E71A008C/saveTerminalMgt",
+  "/api/cy/E71A008C/selectTerminalMgt"
+ ],
+ "cy/inOutMng/E71A009C": [
+  "/api/cy/E71A009C/saveTerminalMgt",
+  "/api/cy/E71A009C/selectTerminalMgt"
+ ],
+ "cy/popup/E71A013CPopup": [
+  "/api/cy/E71A013C/save",
+  "/api/cy/E71A013C/select"
+ ],
+ "cy/popup/bulkUpdatePopup": [
+  "/api/cy/E71A012C/save"
+ ],
+ "cy/reefer/E71A101C": [
+  "/api/cy/E71A101C/delete",
+  "/api/cy/E71A101C/insert",
+  "/api/cy/E71A101C/select",
+  "/api/cy/E71A101C/update"
+ ],
+ "cy/reefer/E71A102C": [
+  "/api/cy/E71A102C/save",
+  "/api/cy/E71A102C/select"
+ ],
+ "cy/reefer/E71A103C": [
+  "/api/cy/E71A103C/select"
+ ],
+ "cy/reefer/E71A104C": [
+  "/api/cy/E71A104C/select"
+ ],
+ "cy/reefer/E71A105C": [
+  "/api/cy/E71A105C/select"
+ ],
+ "cy/reefer/E71A106C": [
+  "/api/cy/E71A106C/select"
+ ],
+ "cy/reefer/E71A107C": [
+  "/api/cy/E71A107C/select",
+  "/api/cy/E71A107C/selectListDtl"
+ ],
+ "cy/reefer/E71A108C": [
+  "/api/cy/E71A108C/select"
+ ],
+ "cy/statistics/E71A021C": [
+  "/api/cy/statics/E71A021C/selectTimeList",
+  "/api/cy/statics/E71A021C/selectWeekList"
+ ],
+ "cy/statistics/E71A022C": [
+  "/api/cy/statics/E71A022C/selectList"
+ ],
+ "cy/statistics/E71A023C": [
+  "/api/cy/statics/E71A023C/selectList",
+  "/api/cy/statics/E71A023C/selectListDtl"
+ ],
+ "cy/yardMng/E71D001C": [
+  "/api/cy/E71D001C/deleteYardInfo",
+  "/api/cy/E71D001C/saveYardInfo",
+  "/api/cy/E71D001C/selectYardInfo"
+ ],
+ "cy/yardMng/E71J001C": [
+  "/api/cy/E71J001C/deleteYardOrder",
+  "/api/cy/E71J001C/insertYardOrder",
+  "/api/cy/E71J001C/selectOrderInfo",
+  "/api/cy/E71J001C/selectRowInfo",
+  "/api/cy/E71J001C/selectYardInfo",
+  "/api/cy/E71J001C/updateHot",
+  "/api/cy/E71J001C/updateYardOrder"
+ ],
+ "db/FCfsRequest": [
+  "/api/db/request/saveCfsDBRequest",
+  "/api/db/request/selectCfsDBRequest"
+ ],
+ "db/faq": [
+  "/api/db/faq/selectFaqList"
+ ],
+ "db/notice": [
+  "/api/db/notice/saveDBNotice",
+  "/api/db/notice/selectDBNotice"
+ ],
+ "db/popup/FCfsRequestPopup": [
+  "/api/db/request/deleteCfsDBRequestPopup",
+  "/api/db/request/saveCfsDBRequestPopup",
+  "/api/db/request/selectCfsDBRequest",
+  "/api/db/request/updateCfsRequestFile"
+ ],
+ "db/popup/faqPopup": [
+  "/api/db/popup/deleteFaqPopUp",
+  "/api/db/popup/saveFaqPopUp",
+  "/api/db/popup/selectFaqPopUp",
+  "/api/db/popup/updateFaqPopUp",
+  "/api/file/fileDownload",
+  "/api/file/multiFileUpload"
+ ],
+ "db/popup/noticePopup": [
+  "/api/db/notice/deleteDBNoticePopup",
+  "/api/db/notice/saveDBNoticePopup",
+  "/api/db/notice/selectDBNotice"
+ ],
+ "db/popup/requestPopup": [
+  "/api/db/request/deleteDBRequestPopup",
+  "/api/db/request/saveDBRequestPopup",
+  "/api/db/request/selectDBRequest",
+  "/api/db/request/updateRequestFile"
+ ],
+ "db/popup/tmpDownPopup": [
+  "/api/db/popup/deleteTmpDownPopUp",
+  "/api/db/popup/saveTmpDownPopUp",
+  "/api/db/popup/selectTmpDownPopUp",
+  "/api/db/popup/updateTmpDownPopUp",
+  "/api/file/fileDownload",
+  "/api/file/multiFileUpload"
+ ],
+ "db/request": [
+  "/api/db/request/saveDBRequest",
+  "/api/db/request/selectDBRequest"
+ ],
+ "db/tariff": [
+  "/api/auth/clearLoginParam",
+  "/api/intro/tariff/selectIntroTariff",
+  "/api/intro/tariff/selectIntroTariffBlock",
+  "/api/intro/tariff/selectIntroTariffBlock_v2",
+  "/api/intro/tariff/selectIntroTariffCity",
+  "/api/intro/tariff/selectIntroTariffDong",
+  "/api/intro/tariff/selectIntroTariffSettingData",
+  "/api/intro/tariff/selectIntroTariff_v2"
+ ],
+ "db/templateDownload": [
+  "/api/db/tmpDown/selectTemplateDownloadList"
+ ],
+ "dsh/dashboard/Dsh01": [
+  "/api/dsh/dashboard/selectCustomNotice",
+  "/api/dsh/dashboard/selectCustomNoticeView",
+  "/api/dsh/dashboard/selectExcahgneRate",
+  "/api/dsh/dashboard/selectMyDashboard",
+  "/api/intro/tariff/selectIntroTariffSettingData"
+ ],
+ "dsh/dashboard/customNoticeList": [
+  "/api/dsh/dashboard/selectCustomNotice",
+  "/api/dsh/dashboard/selectCustomNoticeView"
+ ],
+ "dsh/dashboard/orderByShipper": [
+  "/api/dsh/dashboard/selectOrderByShipper"
+ ],
+ "dsh/dashboard/popup/alarmView": [
+  "/api/dsh/dashboard/CustomNotinaverOpen",
+  "/api/dsh/dashboard/searchFileList"
+ ],
+ "dsh/dashboard/popup/customNoticeMgt": [
+  "/api/dsh/dashboard/deleteCustomNoticePopup",
+  "/api/dsh/dashboard/saveCustomNoticePopup",
+  "/api/dsh/dashboard/selectCustomNotice",
+  "/api/dsh/dashboard/updateCusNoticeFile"
+ ],
+ "dsh/dashboard/popup/customNoticeView": [
+  "/api/dsh/dashboard/CustomNotinaverOpen",
+  "/api/dsh/dashboard/searchFileList"
+ ],
+ "dsh/dashboard/popup/exchangeRatePopup": [
+  "/api/dsh/dashboard/selectExcahgneRate"
+ ],
+ "dsh/dashboard/popup/kyltPicInfoPopup": [
+  "/api/dsh/dashboard/selectExcahgneRate"
+ ],
+ "dsh/dashboard/popup/orderTempPopup": [
+  "/api/cms/popup/selectCommonPopupPic",
+  "/api/orderTemplate/saveOrderTemplate",
+  "/api/orderTemplate/selectOrderTemplateDetailByDashBoard",
+  "/api/orderTemplate/validRepresentativeUser"
+ ],
+ "dsh/dashboard/popup/terminalPopup": [
+  "/api/dsh/dashboard/selectExcahgneRate"
+ ],
+ "dsh/dashboard/popup/webBookingPopup": [
+  "/api/dsh/dashboard/selectExcahgneRate"
+ ],
+ "intro/apiPage/apiRequestPage1": [
+  "/api/requestApi/findMyPayList"
+ ],
+ "intro/apiPage/apiRequestPage2": [
+  "/api/requestApi/findMyPayList_Car"
+ ],
+ "intro/apiPage/apiautologin": [
+  "/api/login"
+ ],
+ "intro/cyPage/cyLogin": [
+  "/api/login"
+ ],
+ "intro/cyPage/gateDevice": [
+  "/api/requestApi/E71B001Csave"
+ ],
+ "intro/cyPage/yardDevice": [
+  "/api/cy/E71C001C/UpdateEq",
+  "/api/cy/E71C001C/cancelComplete",
+  "/api/cy/E71C001C/cancelOrderList",
+  "/api/cy/E71C001C/cntrEOrderData",
+  "/api/cy/E71C001C/cntrFromChk",
+  "/api/cy/E71C001C/cntrInfoOne",
+  "/api/cy/E71C001C/cntrOrderList",
+  "/api/cy/E71C001C/cntrStckList",
+  "/api/cy/E71C001C/orderComplete",
+  "/api/cy/E71C001C/positionChk",
+  "/api/cy/E71C001C/select",
+  "/api/cy/E71C001C/setInfo",
+  "/api/cy/E71C001C/vhcOrderSearch"
+ ],
+ "intro/membership/Intro": [
+  "/api/intro/code/selectNoticeList",
+  "/api/intro/tariff/selectIntroTariffDong",
+  "/api/intro/tariff/selectIntroTariffSettingData"
+ ],
+ "intro/membership/IntroFindId": [
+  "/api/auth/findMyId"
+ ],
+ "intro/membership/IntroFindPw": [
+  "/api/auth/findMyPassword"
+ ],
+ "intro/membership/IntroJoin": [
+  "/api/auth/registerUser",
+  "/api/auth/validUserId",
+  "/api/auth/validUserMbilNo",
+  "/api/intro/code/selectCorpCode"
+ ],
+ "intro/membership/IntroLogin": [
+  "/api/login"
+ ],
+ "intro/membership/autoLogin": [
+  "/api/login"
+ ],
+ "legal/PerformDeclareMgt": [
+  "/api/legal/perform/selectPerfromDeclare",
+  "/api/legal/perform/selectPerfromDeclareCntr"
+ ],
+ "legal/VhcLocTrckMgt": [
+  "/api/legal/vhcLocTrck/selectVhcLocTrckMgtList"
+ ],
+ "mdm/code/MdmAlloMgt": [
+  "/api/mdm/comm/savetMdmAlloUserMgt",
+  "/api/mdm/comm/selectMdmAlloMgt",
+  "/api/mdm/comm/selectMdmAlloUserMgt"
+ ],
+ "mdm/code/MdmCarrierMgt": [
+  "/api/mdm/code/deleteMdmCarrierMgt",
+  "/api/mdm/code/saveMdmCarrierMgt",
+  "/api/mdm/code/selectMdmCarrierMgt"
+ ],
+ "mdm/code/MdmCfsItemMgt": [
+  "/api/mdm/code/saveMdmCfsItemMgt",
+  "/api/mdm/code/selectMdmCfsItemMgt"
+ ],
+ "mdm/code/MdmCfsRegionMgt": [
+  "/api/mdm/code/saveMdmShTransRectMgt",
+  "/api/mdm/code/selectMdmCfsTransRectMgt"
+ ],
+ "mdm/code/MdmCountryMgt": [
+  "/api/mdm/code/saveMdmCountryMgt",
+  "/api/mdm/code/selectMdmCountryMgt"
+ ],
+ "mdm/code/MdmCurrencyMgt": [
+  "/api/mdm/code/saveMdmCurrencyMgt",
+  "/api/mdm/code/selectMdmCurrencyMgt"
+ ],
+ "mdm/code/MdmDspVhcMgt": [
+  "/api/mdm/code/restMdmDspVhcMgt",
+  "/api/mdm/code/saveMdmDspVhcMgt",
+  "/api/mdm/code/selectMdmDspVhcMgt",
+  "/api/mdm/code/validMdmDspVhcMgt"
+ ],
+ "mdm/code/MdmDspVhcPrtnMgt": [
+  "/api/mdm/code/saveMdmDspVhcPrtnMgt",
+  "/api/mdm/code/selectMdmDspVhcPrtnMgt"
+ ],
+ "mdm/code/MdmEqpMgt": [
+  "/api/mdm/code/saerchEqpHistory",
+  "/api/mdm/code/saveMdmEqpMgt",
+  "/api/mdm/code/selectMdmEqpMgt",
+  "/api/mdm/code/updateEqpFileUpload"
+ ],
+ "mdm/code/MdmEqpRepairMgt": [
+  "/api/mdm/code/saveMdmEqpRepairMgt",
+  "/api/mdm/code/selectMdmEqpRepairMgt"
+ ],
+ "mdm/code/MdmExrateMgt": [
+  "/api/mdm/code/saveMdmExrateMgt",
+  "/api/mdm/code/selectMdmExrateMgt"
+ ],
+ "mdm/code/MdmHscodeMgt": [
+  "/api/mdm/code/saveMdmHscodeMgt",
+  "/api/mdm/code/selectMdmHscodeMgt"
+ ],
+ "mdm/code/MdmImdgMgt": [
+  "/api/mdm/code/saveMdmImdgMgt",
+  "/api/mdm/code/selectMdmImdgMgt"
+ ],
+ "mdm/code/MdmLineMgt": [
+  "/api/mdm/code/deleteMdmLineMgt",
+  "/api/mdm/code/getReadLine",
+  "/api/mdm/code/saveMdmLineMgt",
+  "/api/mdm/code/selectMdmLineMgt"
+ ],
+ "mdm/code/MdmManifestItem": [
+  "/api/mdm/code/saveMdmManifestItem",
+  "/api/mdm/code/selectMdmManifestItem"
+ ],
+ "mdm/code/MdmOrdTeamMgt": [
+  "/api/mdm/comm/savetMdmOrdUserMgt",
+  "/api/mdm/comm/selectMdmOrdTeamMgt",
+  "/api/mdm/comm/selectMdmOrdUserMgt"
+ ],
+ "mdm/code/MdmPackageUnit": [
+  "/api/mdm/code/saveMdmPackageUnit",
+  "/api/mdm/code/selectMdmPackageUnit"
+ ],
+ "mdm/code/MdmPortMgt": [
+  "/api/mdm/code/saveMdmPortMgt",
+  "/api/mdm/code/selectMdmPortMgt"
+ ],
+ "mdm/code/MdmRegionMgt": [
+  "/api/mdm/code/saveMdmRegionMgt",
+  "/api/mdm/code/selectMdmRegionMgt"
+ ],
+ "mdm/code/MdmRpaAccountMgt": [
+  "/api/mdm/code/saveMdmRpaAccountMgt",
+  "/api/mdm/code/selectMdmRpaAccountMgt"
+ ],
+ "mdm/code/MdmSelPchMgt": [
+  "/api/mdm/code/deleteMdmSelPchMgt",
+  "/api/mdm/code/saveMdmSelPchMgt",
+  "/api/mdm/code/selectMdmSelPchJobTax",
+  "/api/mdm/code/selectMdmSelPchMgt"
+ ],
+ "mdm/code/MdmShtlRegionMgt": [
+  "/api/mdm/code/saveMdmShTransRectMgt",
+  "/api/mdm/code/selectMdmShTransRectMgt"
+ ],
+ "mdm/code/MdmTruckDistanceRate": [
+  "/api/mdm/code/dstrate/save",
+  "/api/mdm/code/dstrate/upload"
+ ],
+ "mdm/code/MdmTruckStdRateMgt": [
+  "/api/mdm/code/stdrate/save",
+  "/api/mdm/code/stdrate/upload"
+ ],
+ "mdm/code/MdmVesselMgt": [
+  "/api/mdm/code/saveMdmVesselMgt",
+  "/api/mdm/code/selectMdmVesselMgt"
+ ],
+ "mdm/code/MdmVslMgt": [
+  "/api/mdm/code/saveMdmVslMgt",
+  "/api/mdm/code/selectMdmVslMgt"
+ ],
+ "mdm/code/MdmWarehouseMgt": [
+  "/api/mdm/code/saveMdmWarehouseMgt",
+  "/api/mdm/code/selectMdmWarehouseMgt"
+ ],
+ "mdm/container/MdmContainer": [
+  "/api/mdm/container/saveMdmContainer",
+  "/api/mdm/container/selectMdmContainer"
+ ],
+ "mdm/customer/MdmContract": [
+  "/api/mdm/contract/saveMdmContract",
+  "/api/mdm/contract/selectMdmContract",
+  "/api/mdm/contract/updateFileDoc"
+ ],
+ "mdm/customer/MdmContractEtc": [
+  "/api/mdm/contract/saveMdmContract",
+  "/api/mdm/contract/selectMdmContract",
+  "/api/mdm/contract/updateFileDoc"
+ ],
+ "mdm/customer/MdmCustomerMail": [
+  "/api/mdm/customerMail/saveMdmContract",
+  "/api/mdm/customerMail/selectMdmCustomerMail"
+ ],
+ "mdm/customer/MdmCustomerMgt": [
+  "/api/mdm/customer/deleteMdmCustomerMgt",
+  "/api/mdm/customer/saveMdmCustomerMgt",
+  "/api/mdm/customer/selectMdmCustomerMgt",
+  "/api/mdm/customer/selectMdmCustomerMgtDetail"
+ ],
+ "mdm/customer/MdmShipper": [
+  "/api/mdm/shipper/deleteMdmShipperMgt",
+  "/api/mdm/shipper/saveMdmShipperMgt",
+  "/api/mdm/shipper/selectList",
+  "/api/mdm/shipper/selectMgrList",
+  "/api/mdm/shipper/validationBln",
+  "/api/mdm/shipper/validationShipper"
+ ],
+ "mdm/customer/MdmVhcContract": [
+  "/api/mdm/contract/saveMdmVhcContract",
+  "/api/mdm/contract/selectMdmVhcContract",
+  "/api/mdm/contract/updateFileDoc_VHC"
+ ],
+ "mdm/customer/MdmWorkPlace": [
+  "/api/mdm/workplace/deleteMdmWorkPlace",
+  "/api/mdm/workplace/saveMdmWorkPlace",
+  "/api/mdm/workplace/selectMdmWorkPlace",
+  "/api/mdm/workplace/selectMdmWorkPlaceCity",
+  "/api/mdm/workplace/selectMdmWorkPlaceDetail",
+  "/api/mdm/workplace/selectMdmWorkPlaceDo",
+  "/api/mdm/workplace/selectMdmWorkPlaceDong",
+  "/api/mdm/workplace/selectMdmWorkPlaceDongList"
+ ],
+ "mdm/facl/MdmBndFaclMgt": [
+  "/api/mdm/bnd/saveMdmBndFacl",
+  "/api/mdm/bnd/selectMdmBndFacl",
+  "/api/mdm/workplace/selectMdmWorkPlaceCity",
+  "/api/mdm/workplace/selectMdmWorkPlaceDo",
+  "/api/mdm/workplace/selectMdmWorkPlaceDong"
+ ],
+ "mdm/organization/MdmCorpMgt": [
+  "/api/mdm/organization/deleteMdmCorpMgt",
+  "/api/mdm/organization/saveMdmCorpMgt",
+  "/api/mdm/organization/selectCmsCorpInfo",
+  "/api/mdm/organization/selectMdmCorpMgt",
+  "/api/mdm/organization/updateCorpUse",
+  "/api/mdm/organization/validCorpBsnLcnNmb",
+  "/api/mdm/organization/validMdmCorpMgt"
+ ],
+ "mdm/others/MdmInternalNote": [
+  "/api/mdm/code/saveMdmInternalNote",
+  "/api/mdm/code/selectMdmInternalNote"
+ ],
+ "mdm/others/MdmStorage": [
+  "/api/mdm/code/saveMdmStorage",
+  "/api/mdm/code/selectMdmStorage"
+ ],
+ "mdm/popup/MdmContractHistoryPopup": [
+  "/api/mdm/contract/selectContractHistory"
+ ],
+ "mdm/popup/MdmContractRenewlPopup": [
+  "/api/mdm/contract/renewlContract"
+ ],
+ "mdm/popup/MdmEqpCostPopup": [
+  "/api/mdm/code/saveMdmEqpCost",
+  "/api/mdm/code/selectMdmEqpCostList"
+ ],
+ "mdm/popup/MdmEqpHistoryPopup": [
+  "/api/mdm/code/selectEqpHistoryList"
+ ],
+ "mdm/popup/MdmEqpRepairExcelUploadPopup": [
+  "/api/mdm/code/excelUploadMdmEqpRepairMgt"
+ ],
+ "mdm/popup/MdmVhcContractHistoryPopup": [
+  "/api/mdm/contract/selectVhcContractHistory"
+ ],
+ "mdm/tariff/MdmCfsTariffMgt": [
+  "/api/mdm/tariff2/deleteMdmTariffMgt",
+  "/api/mdm/tariff2/saveMdmTariffMgt",
+  "/api/mdm/tariff2/selectMdmTariffMgt"
+ ],
+ "mdm/tariff/MdmTariffMgt": [
+  "/api/mdm/tariff/deleteMdmTariffMgt",
+  "/api/mdm/tariff/saveMdmTariffMgt",
+  "/api/mdm/tariff/selectMdmTariffMgt"
+ ],
+ "mdm/tariff/MdmTariffMgtV2": [
+  "/api/mdm/tariff2/deleteMdmTariffMgt",
+  "/api/mdm/tariff2/saveMdmTariffMgt",
+  "/api/mdm/tariff2/selectMdmTariffMgt"
+ ],
+ "mdm/terminal/MdmTerminalMgt": [
+  "/api/mdm/terminal/saveMdmTerminalMgt",
+  "/api/mdm/terminal/selectMdmTerminalMgt"
+ ],
+ "mdm/user/MdmUserSetting": [
+  "/api/mdm/user/saveMdmUserSetting",
+  "/api/mdm/user/selectMdmUserList",
+  "/api/mdm/user/selectMdmUserSetting"
+ ],
+ "mobile/MobileAciList": [
+  "/api/mobile/selectMobileAciList"
+ ],
+ "mobile/MobileDrvNotice": [
+  "/api/db/notice/selectDriverNotice",
+  "/api/db/notice/selectDriverNoticeView"
+ ],
+ "mobile/MobileEduMgt": [
+  "/api/mobile/deleteMobilEdu",
+  "/api/mobile/saveMobilEdu",
+  "/api/mobile/selectMobilEduDetail",
+  "/api/mobile/selectMobilEduList",
+  "/api/mobile/updateMobileEduFile"
+ ],
+ "mobile/popup/drvNoticeMgtPopup": [
+  "/api//db/notice/deleteDriverNoticePopup",
+  "/api//db/notice/saveDriverNoticePopup",
+  "/api//db/notice/selectDriverNotice",
+  "/api//db/notice/updateDrvNoticeFile"
+ ],
+ "order/door/excelUpload": [
+  "/api/order/excelUpload/selectExcelUpload"
+ ],
+ "order/door/export/kakaoOrderList": [
+  "/api/orderList/selectKakaoExportOrder"
+ ],
+ "order/door/export/orderRequest": [
+  "/api/cms/popup/selectCommonPopupPic",
+  "/api/order/confirmExportOrder",
+  "/api/order/deleteExportOrder",
+  "/api/order/deleteUserOrder",
+  "/api/order/getExportCargoView",
+  "/api/order/getExportEtrans",
+  "/api/order/saveCstmExportOrder",
+  "/api/order/saveUserOrder",
+  "/api/order/selectCstmExportOrder",
+  "/api/order/updateOrderFileDoc",
+  "/api/order/validUnpayUser",
+  "/api/orderList/selectCstmExportOrderCntr",
+  "/api/orderList/selectCstmOrderList",
+  "/api/orderTemplate/selectOrderTemplateDetail"
+ ],
+ "order/door/export/orderRequestMgt": [
+  "/api/cms/popup/selectCommonPopupBilling",
+  "/api/order/confirmExportOrder",
+  "/api/order/deleteExportOrder",
+  "/api/order/getExportCargoView",
+  "/api/order/getExportEtrans",
+  "/api/order/saveExportOrder",
+  "/api/order/selectBillngTariffList",
+  "/api/order/selectExportOrder",
+  "/api/order/sendCofirmMail",
+  "/api/order/updateOrderFileDoc",
+  "/api/orderList/selectExportOrderCntr",
+  "/api/orderList/selectExportOrderList",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "order/door/export/orderSearch": [
+  "/api/order/deleteExportOrder",
+  "/api/orderList/selectCstmExportOrderCntr",
+  "/api/orderList/selectCstmOrderList"
+ ],
+ "order/door/export/orderSearchMgt": [
+  "/api/order/deleteExportOrder",
+  "/api/orderList/selectExportOrderCntr",
+  "/api/orderList/selectExportOrderList",
+  "/api/orderList/selectOrderBookList"
+ ],
+ "order/door/import/kakaoOrderList": [
+  "/api/orderList/selectKakaoImportOrder"
+ ],
+ "order/door/import/orderRequest": [
+  "/api/cms/popup/selectCommonPopupPic",
+  "/api/order/deleteImportOrder",
+  "/api/order/deleteUserOrder",
+  "/api/order/getImportCargoView",
+  "/api/order/getImportEtrans",
+  "/api/order/saveCstmImportOrder",
+  "/api/order/saveUserOrder",
+  "/api/order/selectCstmImportOrder",
+  "/api/order/updateOrderFileDoc",
+  "/api/order/validUnpayUser",
+  "/api/orderList/selectCstmImportOrderCntr",
+  "/api/orderList/selectCstmOrderList",
+  "/api/orderTemplate/selectOrderTemplateDetail"
+ ],
+ "order/door/import/orderRequestMgt": [
+  "/api/cms/comm/selectCommonWorkPlace",
+  "/api/cms/popup/selectCommonPopupBilling",
+  "/api/order/confirmImportOrder",
+  "/api/order/deleteImportOrder",
+  "/api/order/getImportCargoView",
+  "/api/order/getImportEtrans",
+  "/api/order/getImportEtransEmptyCntr",
+  "/api/order/saveImportOrder",
+  "/api/order/selectBillngTariffList",
+  "/api/order/selectImportOrder",
+  "/api/order/sendCofirmMail",
+  "/api/order/updateOrderFileDoc",
+  "/api/orderList/selectImportOrderCntr",
+  "/api/orderList/selectImportOrderList",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "order/door/import/orderSearch": [
+  "/api/order/deleteImportOrder",
+  "/api/orderList/selectCstmImportOrderCntr",
+  "/api/orderList/selectCstmOrderList"
+ ],
+ "order/door/import/orderSearchMgt": [
+  "/api/order/deleteImportOrder",
+  "/api/orderList/selectImportOrderCntr",
+  "/api/orderList/selectImportOrderList",
+  "/api/orderList/selectOrderBookList"
+ ],
+ "order/door/simple/ordSimRequest": [
+  "/api/cms/popup/selectCommonPopupPic",
+  "/api/order/deleteSimpleOrder",
+  "/api/order/getExportCargoView",
+  "/api/order/getExportEtrans",
+  "/api/order/getImportCargoView",
+  "/api/order/getImportEtrans",
+  "/api/order/saveSimpleOrder",
+  "/api/order/selectSimpleOrder",
+  "/api/order/sendSimpleOrder"
+ ],
+ "order/door/simple/ordSimSearch": [
+  "/api/orderList/selectCstmOrderList",
+  "/api/orderList/selectSimOrderCntr"
+ ],
+ "order/door/total/orderSearchMgt": [
+  "/api/order/deleteImportOrder",
+  "/api/orderList/selectImportOrderCntr",
+  "/api/orderList/selectOrderBookList",
+  "/api/orderList/selectTotalOrderList"
+ ],
+ "order/popup/BookingExcelUploadPopup": [
+  "/api/mdm/code/stdrate/upload",
+  "/api/order/saveExportExcel"
+ ],
+ "order/popup/billingPopup": [
+  "/api/order/saveBillingList",
+  "/api/order/selectBillingList",
+  "/api/order/selectBillngTariffList"
+ ],
+ "order/popup/doorAlloPtnPopup": [
+  "/api/allocation/updateDoorOrderCntrPtn",
+  "/api/order/shuttle/selectShuttleOrderCntrPtn"
+ ],
+ "order/popup/orderFavoritesAddPopup": [
+  "/api/cms/comm/saveCmsFavoritesAddPopup",
+  "/api/cms/comm/validFavoritesCode"
+ ],
+ "order/popup/orderMultiModiPopup": [
+  "/api/cms/comm/selectCommonWorkPlace"
+ ],
+ "order/popup/orderTemplateAddPopup": [
+  "/api/cms/popup/selectCommonPopupPic",
+  "/api/orderTemplate/deleteOrderTemplate",
+  "/api/orderTemplate/saveOrderTemplate",
+  "/api/orderTemplate/selectOrderTemplate",
+  "/api/orderTemplate/validRepresentativeUser"
+ ],
+ "order/popup/orderWrkplcAddPopup": [
+  "/api/mdm/workplace/deleteMdmWorkPlace",
+  "/api/mdm/workplace/regionSet",
+  "/api/mdm/workplace/saveMdmWorkPlaceAddPopup",
+  "/api/mdm/workplace/selectChkLikeValue",
+  "/api/mdm/workplace/selectMdmWorkPlace",
+  "/api/mdm/workplace/selectMdmWorkPlaceCity",
+  "/api/mdm/workplace/selectMdmWorkPlaceDetail",
+  "/api/mdm/workplace/selectMdmWorkPlaceDo",
+  "/api/mdm/workplace/selectMdmWorkPlaceDong",
+  "/api/mdm/workplace/selectMdmWorkPlaceDongList"
+ ],
+ "order/popup/searchOrderModiPopup": [
+  "/api/order/updateSearchOrderMgt"
+ ],
+ "order/popup/searchXrayCorpModPopup": [
+  "/api/order/saveXrayCorpInfo"
+ ],
+ "order/popup/searchXrayInfoPopup": [
+  "/api/order/saveXrayInfoList",
+  "/api/orderList/searchXrayInfoList"
+ ],
+ "order/popup/shipperAddPopup": [
+  "/api/mdm/shipper/save",
+  "/api/mdm/shipper/validationBln",
+  "/api/mdm/shipper/validationShipper"
+ ],
+ "order/popup/shuttleAlloPtnPopup": [
+  "/api/order/shuttle/selectShuttleOrderCntrPtn",
+  "/api/order/shuttle/updateShuttleOrderCntrPtn"
+ ],
+ "order/popup/shuttleExcelUploadPopup": [
+  "/api/mdm/code/selectMdmShTransRectMgt",
+  "/api/mdm/code/stdrate/upload",
+  "/api/mdm/container/selectMdmContainer",
+  "/api/order/shuttle/saveShuttleExcel",
+  "/api/order/shuttle/shuttleCntrValidation",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "order/popup/shuttleOrderBillModiPopup": [
+  "/api/order/shuttle/updateShuttleOrderBillModi",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "order/popup/shuttleOrderModiPopup": [
+  "/api/order/shuttle/updateShuttleOrderModi"
+ ],
+ "order/popup/shuttleRegBptPopup": [
+  "/api/order/shuttle/getBptCntrList",
+  "/api/order/shuttle/saveShuttleBpt",
+  "/api/order/shuttle/shuttleCntrValidation",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "order/popup/shuttleRegSkrPopup": [
+  "/api/order/shuttle/saveShuttleSkr",
+  "/api/order/shuttle/selectHasShuttleOrder",
+  "/api/order/shuttle/selectShuttleVesselList",
+  "/api/order/shuttle/selectSkrShuttleOrder",
+  "/api/order/shuttle/shuttleCntrValidation"
+ ],
+ "order/popup/transTariffPopup": [
+  "/api/order/selectTransTariffList"
+ ],
+ "order/popup/vslSkrHasListPopup": [
+  "/api/order/shuttle/selectShuttleVesselList"
+ ],
+ "order/shuttle/BndCntrMgt": [
+  "/api/order/shuttle/saveBndCntrList",
+  "/api/order/shuttle/selectBndCntrList"
+ ],
+ "order/shuttle/orderClosingList": [
+  "/api/order/shuttle/selectHasDailyClosing",
+  "/api/order/shuttle/selectSkrDailyClosing"
+ ],
+ "order/shuttle/orderRequestMgt": [
+  "/api/order/shuttle/deleteShuttleOrder",
+  "/api/order/shuttle/saveShuttleOrder",
+  "/api/order/shuttle/selectShuttleCntr",
+  "/api/order/shuttle/selectShuttleOrder",
+  "/api/order/shuttle/selectSuttleOrderDetail",
+  "/api/order/shuttle/updateShuttleOrderWeigthType",
+  "/api/shuttle/allocation/getShuttleBillTariff"
+ ],
+ "order/template": [
+  "/api/cms/popup/selectCommonPopupPic",
+  "/api/orderTemplate/deleteOrderTemplate",
+  "/api/orderTemplate/saveOrderTemplate",
+  "/api/orderTemplate/selectOrderTemplate",
+  "/api/orderTemplate/validRepresentativeUser"
+ ],
+ "outputs/billingTot/billTotByAcc": [
+  "/api/outputs/billingTotal/selectBillTotByAccList"
+ ],
+ "outputs/management/hiredCarCorpBillPaySt": [
+  "/api/outputs/management/saveMgtRmkMgt",
+  "/api/outputs/management/selectHiredCarCorpBillPayStList"
+ ],
+ "outputs/management/orderRecvSt": [
+  "/api/outputs/management/selectOrdersList"
+ ],
+ "outputs/management/profitNLossStat": [
+  "/api/outputs/management/selectProfitDetailList",
+  "/api/outputs/management/selectProfitNLossStatList"
+ ],
+ "outputs/management/rtVhcRevSt": [
+  "/api/outputs/management/saveRtVhcRevSt",
+  "/api/outputs/management/selectRtVhcRevStList"
+ ],
+ "outputs/management/vhcPayDdcMgt": [
+  "/api/outputs/management/SendEtransDrv",
+  "/api/outputs/management/checkSendTalkClPay",
+  "/api/outputs/management/saveMgtRmkMgt",
+  "/api/outputs/management/selectVhcPayDdcMgtList",
+  "/api/outputs/management/sendTalkClPay"
+ ],
+ "outputs/management/vhcSales": [
+  "/api/outputs/management/selectVhcsalesList"
+ ],
+ "outputs/management/vhcTrcStat": [
+  "/api/outputs/management/selectVhcTrcStatList"
+ ],
+ "outputs/monPointSt": [
+  "/api/outputs/point/saveMonPointSt",
+  "/api/outputs/point/selectMonPointStList",
+  "/api/outputs/point/validSalesPic"
+ ],
+ "outputs/payApprMgt": [
+  "/api/outputs/getDept",
+  "/api/outputs/savePayApprList",
+  "/api/outputs/savePayApprRemark",
+  "/api/outputs/selectPayApprDetail",
+  "/api/outputs/selectPayApprList"
+ ],
+ "outputs/payTot/payCorpStatus": [
+  "/api/outputs/paymentTotal/selectPayCorpStatusList"
+ ],
+ "outputs/payTot/stateOfAccByVehicle": [
+  "/api/outputs/paymentTotal/selectStateOfAccByVehicleList",
+  "/api/outputs/paymentTotal/selectStateOfDtl1List",
+  "/api/outputs/paymentTotal/selectStateOfDtl2List"
+ ],
+ "outputs/popup/billLogPopup": [
+  "/api/outputs/selectBillingHistory"
+ ],
+ "outputs/popup/billStatusPopup": [
+  "/api/mdm/organization/selectMdmCorpMgt",
+  "/api/outputs/saveBillInfo",
+  "/api/outputs/selectBillingHistory",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "outputs/popup/multiPayApprPopup": [
+  "/api/outputs/saveMultiPayAppr"
+ ],
+ "outputs/popup/ordStSearchPopup": [
+  "/api/outputs/management/selectordStPopupList"
+ ],
+ "outputs/popup/payLogPopup": [
+  "/api/outputs/selectPayHistory"
+ ],
+ "outputs/popup/payStatusPopup": [
+  "/api/allocation/selectPayPicList",
+  "/api/outputs/savePayInfo",
+  "/api/outputs/selectPayHistory_only"
+ ],
+ "outputs/popup/pointLogPopup": [
+  "/api/outputs/point/selectPointLogList"
+ ],
+ "outputs/popup/toutMultiModiPopup": [
+  "/api/allocation/selectPayPicList",
+  "/api/outputs/updateTotalOutputModi",
+  "/api/outputs/validTotalOutputsPayAppr",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "outputs/popup/usePointPopup": [
+  "/api/mdm/organization/selectMdmCorpMgt",
+  "/api/outputs/point/selectUsePointLogList",
+  "/api/outputs/point/updateUsePoint",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "outputs/popup/vhcTrcMonthMemoPopup": [
+  "/api/outputs/management/deleteVhcTrcMemo",
+  "/api/outputs/management/insertVhcTrcMemo",
+  "/api/outputs/management/selectVhcTrcMemo",
+  "/api/outputs/management/selectVhcTrcMemoDetail"
+ ],
+ "outputs/shutTotalOutputMgt": [
+  "/api/outputs/cancelPayCf",
+  "/api/outputs/deleteBilling",
+  "/api/outputs/deletePayment",
+  "/api/outputs/save",
+  "/api/outputs/savePayCf",
+  "/api/outputs/selectBillList",
+  "/api/outputs/selectPayList",
+  "/api/outputs/selectTotalOutputsList",
+  "/api/outputs/validationPay",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "outputs/statistics/billCorpByUnpaidSt": [
+  "/api/outputs/statssales/selectCorpUnpaidList"
+ ],
+ "outputs/statistics/monNCorpBillSt": [
+  "/api/outputs/statssales/selectMonCorpSalesList"
+ ],
+ "outputs/statistics/monNCorpPFMSt": [
+  "/api/outputs/statssales/selectMonCorpOutsList"
+ ],
+ "outputs/statistics/opMonNCorpPFMSt": [
+  "/api/outputs/statssales/selectOPMonCorpOutsList"
+ ],
+ "outputs/statistics/opOpPicPFMSt": [
+  "/api/outputs/statssales/selectOPManOutsList"
+ ],
+ "outputs/statistics/opPicByBillSt": [
+  "/api/outputs/statssales/selectManSalesList"
+ ],
+ "outputs/statistics/opPicPFMSt": [
+  "/api/outputs/statssales/selectManOutsList"
+ ],
+ "outputs/statistics/pointByPFMSt": [
+  "/api/outputs/statssales/selectPointByPFMStDetail",
+  "/api/outputs/statssales/selectPointByPFMStList"
+ ],
+ "outputs/statistics/termNCorpPaySt": [
+  "/api/outputs/statssales/selectTermNCorpPayStList"
+ ],
+ "outputs/totalOutputMgt": [
+  "/api/outputs/cancelPayCf",
+  "/api/outputs/deleteBilling",
+  "/api/outputs/deletePayment",
+  "/api/outputs/save",
+  "/api/outputs/savePayCf",
+  "/api/outputs/savePayCf_ALL",
+  "/api/outputs/selectBillList",
+  "/api/outputs/selectPayList",
+  "/api/outputs/selectTotalOutputsList",
+  "/api/outputs/validationPay",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "sm/IntegrateSettlement": [
+  "/api/intStt/cancelAccounting",
+  "/api/intStt/cancelIntSttList",
+  "/api/intStt/cancelTaxBill",
+  "/api/intStt/deleteTaxList",
+  "/api/intStt/issueRsdnRgstTaxBill",
+  "/api/intStt/issueTaxBill",
+  "/api/intStt/resendMail",
+  "/api/intStt/saveAccounting",
+  "/api/intStt/saveIntSttList",
+  "/api/intStt/saveTaxList",
+  "/api/intStt/selectBranchTaxList",
+  "/api/intStt/selectLogisBill",
+  "/api/intStt/selectTaxList"
+ ],
+ "sm/TransSpec": [
+  "/api/mdm/organization/selectMainInfo",
+  "/api/sm/generalBilling/selectBillingDetailList",
+  "/api/sm/generalBilling/selectBillingStatusDetail",
+  "/api/sm/transSpec/selectTransSpecList"
+ ],
+ "sm/TransSpecPtn": [
+  "/api/mdm/organization/selectMainInfo",
+  "/api/sm/generalPayment/selectPayDivList",
+  "/api/sm/generalPayment/selectPaymentClosingDetailList",
+  "/api/sm/transSpec/selectTransSpecPtnList"
+ ],
+ "sm/TransSpecShp": [
+  "/api/sm/generalBilling/selectBillingDetailList",
+  "/api/sm/generalBilling/selectBillingStatusDetail",
+  "/api/sm/transSpec/selectTransSpecShpList"
+ ],
+ "sm/TrkPaymentList": [
+  "/api/sm/TrkPaymentList/selectTrkPaymentList"
+ ],
+ "sm/collect/billCollectByAcc": [
+  "/api/sm/collect/selectBillCollectByAccDtlList",
+  "/api/sm/collect/selectBillCollectByAccList",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList"
+ ],
+ "sm/generalBilling/LargeBillingClosing": [
+  "/api/sm/generalBilling/saveTax",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList",
+  "/api/sm/generalBilling/selectBillingClosingCorpList",
+  "/api/sm/generalBilling/selectBillingClosingList",
+  "/api/sm/generalBilling/updateBillngClosing",
+  "/api/sm/generalBilling/updateCarryOver",
+  "/api/sm/generalBilling/updateRargeBillngClosing",
+  "/api/sm/generalBilling/validBilling"
+ ],
+ "sm/generalBilling/billingClosing": [
+  "/api/sm/generalBilling/billingClosingExcel",
+  "/api/sm/generalBilling/saveTax",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList",
+  "/api/sm/generalBilling/selectBillingClosingCorpList",
+  "/api/sm/generalBilling/selectBillingClosingList",
+  "/api/sm/generalBilling/updateBillngClosing",
+  "/api/sm/generalBilling/updateCarryOver"
+ ],
+ "sm/generalBilling/billingStatus": [
+  "/api/sm/generalBilling/cancelAccounting",
+  "/api/sm/generalBilling/cancelBillingClose",
+  "/api/sm/generalBilling/cancelSKClosing",
+  "/api/sm/generalBilling/executeSKClosing",
+  "/api/sm/generalBilling/saveAccounting",
+  "/api/sm/generalBilling/selectBillingClosingBillPicList",
+  "/api/sm/generalBilling/selectBillingStatusDetail",
+  "/api/sm/generalBilling/selectBillingStatusList"
+ ],
+ "sm/generalBilling/carrybillingList": [
+  "/api/sm/carryBill/carryBillListApprSave",
+  "/api/sm/carryBill/carryBillListRmkSave",
+  "/api/sm/carryBill/carryBillListSearch"
+ ],
+ "sm/generalBilling/skSettlementMgt": [
+  "/api/mdm/organization/selectMainInfo",
+  "/api/sm/generalBilling/cancelSkInvList",
+  "/api/sm/generalBilling/issueSkInvList",
+  "/api/sm/generalBilling/selectSkBillingStatusList"
+ ],
+ "sm/generalBilling/taxMgt": [
+  "/api/tax/issueRsdnRgstTaxBill",
+  "/api/tax/issueTaxBill",
+  "/api/tax/resendMail",
+  "/api/tax/selectLogisBill",
+  "/api/taxMgt/cancelAccounting",
+  "/api/taxMgt/cancelTaxBill",
+  "/api/taxMgt/saveAccounting",
+  "/api/taxMgt/saveRemark",
+  "/api/taxMgt/selectBillList",
+  "/api/taxMgt/selectBillTaxCntrList",
+  "/api/taxMgt/selectMgtList"
+ ],
+ "sm/generalPayment/paymentClosing": [
+  "/api/sm/generalPayment/saveTax",
+  "/api/sm/generalPayment/selectPayDivList",
+  "/api/sm/generalPayment/selectPaymentClosingList",
+  "/api/sm/generalPayment/updatePaymentClosing"
+ ],
+ "sm/generalPayment/paymentConf": [
+  "/api/sm/generalPayment/selectPaymentConfirmList",
+  "/api/sm/generalPayment/updatePaymentConfirm"
+ ],
+ "sm/generalPayment/taxMgt": [
+  "/api/sm/generalPayment/cancelAccounting",
+  "/api/sm/generalPayment/cancelPaymentClose",
+  "/api/sm/generalPayment/saveAccounting",
+  "/api/sm/generalPayment/saveMergeAccounting",
+  "/api/sm/generalPayment/selectPaymentTaxDetail",
+  "/api/sm/generalPayment/selectPaymentTaxList"
+ ],
+ "sm/lineBill/billMgt": [
+  "/api/sm/generalBilling/selectBillingClosingBillPicList",
+  "/api/sm/lineBillMgt/applyForeignBillAmount",
+  "/api/sm/lineBillMgt/cancelLineBill",
+  "/api/sm/lineBillMgt/saveLineBill",
+  "/api/sm/lineBillMgt/selectCntrDetail",
+  "/api/sm/lineBillMgt/selectLineBillMgtList",
+  "/api/sm/lineBillMgt/selectLineBillPrintCntrList",
+  "/api/sm/lineBillMgt/updateForeignBillAmount",
+  "/api/sm/lineBillMgt/updateTotalBillingAmount"
+ ],
+ "sm/popup/DriverSignPopup": [
+  "/api/cms/popup/selectCommonPopupCpWrk",
+  "/api/copino/cancelBookingCopino",
+  "/api/copino/saveBookingCopino",
+  "/api/copino/selectCopinoHdSch",
+  "/api/tms/dr/allo/selectDoorAlloInfo",
+  "/api/tms/st/allo/copino"
+ ],
+ "sm/popup/billMergePopup": [
+  "/api/sm/generalBilling/changeMergeBilling"
+ ],
+ "sm/popup/billMgtPrintPopup": [
+  "/api/sm/lineBillMgt/selectLineBillPrintCntrList"
+ ],
+ "sm/popup/billModiIssuePopup": [],
+ "sm/popup/integrateOutputPopup": [
+  "/api/mdm/organization/selectMainInfo",
+  "/api/sm/generalBilling/selectBillingDetailList"
+ ],
+ "sm/popup/logisbillOpenPopup": [
+  "/api/tax/selectLogisBill"
+ ],
+ "sm/popup/payClsSpecificationPopup": [
+  "/api/mdm/organization/selectMainInfo",
+  "/api/sm/generalPayment/selectPaymentClosingDetailList",
+  "/api/sm/generalPayment/selectPaymentTaxDetailList"
+ ],
+ "sm/popup/payMergeMsgPopup": [
+  "/api/sm/generalPayment/changeMergePayment"
+ ],
+ "sm/popup/payMergePopup": [
+  "/api/sm/generalPayment/changeMergePayment"
+ ],
+ "sm/popup/selectMailPopup": [
+  "/api/mdm/organization/selectMdmCorpMail"
+ ],
+ "sm/popup/sendMonBillStPopup": [
+  "/api/sm/generalBilling/sendMonthlyBillingStatement"
+ ],
+ "sm/popup/taxInvoicePopup": [
+  "/api/mdm/organization/selectMainInfo",
+  "/api/sm/generalPayment/selectPaymentTaxDetailList"
+ ],
+ "sm/popup/transSpecificationPopup": [
+  "/api/mdm/organization/selectMainInfo"
+ ],
+ "sm/popup/updateBillDtPopup": [
+  "/api/sm/generalBilling/updateBillDt"
+ ],
+ "sm/popup/updateTaxInfoPopup": [
+  "/api/sm/generalBilling/selectTaxInfo",
+  "/api/sm/generalBilling/updateTaxInfo"
+ ],
+ "sm/popup/vendorFileAgentPopup": [
+  "/api/sm/generalBilling/sendMonthlyBillingStatement"
+ ],
+ "sm/popup/wrkDtModiPopup": [
+  "/api/sm/generalBilling/updatewrkDt"
+ ],
+ "sm/proxy/proxyList": [
+  "/api/sm/proxy/proxyApprovalCancel",
+  "/api/sm/proxy/proxyApprovalSave",
+  "/api/sm/proxy/proxyConfirmCancel",
+  "/api/sm/proxy/proxyConfirmSave",
+  "/api/sm/proxy/proxyDepositCancel",
+  "/api/sm/proxy/proxyDepositSave",
+  "/api/sm/proxy/proxyDivSave",
+  "/api/sm/proxy/proxyListSearch",
+  "/api/sm/proxy/proxyListSearchDetail",
+  "/api/sm/proxy/proxyRmkSave",
+  "/api/sm/proxy/selectProxyPrintList",
+  "/api/sm/proxy/updateFileDoc"
+ ],
+ "wms/AppView/WmsAgiWrkList": [
+  "/api/wms/wmsClpMgt/selectAgiWrkList"
+ ],
+ "wms/AppView/WmsAgrWrkList": [
+  "/api/wms/wmsAgrMgt/selectAgrWrkList"
+ ],
+ "wms/AppView/WmsLocStt": [
+  "/api/wms/wmsIvnList/selectLocationDtlList",
+  "/api/wms/wmsIvnList/selectLocationList"
+ ],
+ "wms/Inventory/WmsGrgiList": [
+  "/api/wms/wmsGrgiList/selectGrgiList"
+ ],
+ "wms/Inventory/WmsIvnList": [
+  "/api/wms/wmsIvnList/selectIvnList"
+ ],
+ "wms/Monitoring/WmsWhConfiguration": [
+  "/api/wms/configuration/deleteWareHouseConfigInfo",
+  "/api/wms/configuration/saveWareHouseConfigInfo",
+  "/api/wms/configuration/selectWareHouseConfig"
+ ],
+ "wms/Monitoring/WmsWhMonitoring": [
+  "/api/wms/monitoring/selectInventoryInfo",
+  "/api/wms/monitoring/selectWareHouseInfo",
+  "/api/wms/monitoring/selectWhStatusList"
+ ],
+ "wms/Performance/WmsCustSaleList": [
+  "/api/wms/wmsPerformance/selectCustSaleList"
+ ],
+ "wms/Performance/WmsFrtSaleList": [
+  "/api/wms/wmsPerformance/selectFrtSaleList"
+ ],
+ "wms/Performance/WmsMonPtnList": [
+  "/api/wms/wmsPerformance/selectMonPtnList"
+ ],
+ "wms/Performance/WmsTotalSaleList": [
+  "/api/wms/wmsPerformance/selectTotalsaleList"
+ ],
+ "wms/Settlement/WmsEtcInvMgt": [
+  "/api/mdm/code/selectCorpBillPicList",
+  "/api/wms/wmsEtcInvMgt/deleteEtcInvMgt",
+  "/api/wms/wmsEtcInvMgt/saveEtcInvMgt",
+  "/api/wms/wmsEtcInvMgt/selectEtcInvMgtDtlList",
+  "/api/wms/wmsEtcInvMgt/selectEtcInvMgtList",
+  "/api/wms/wmsEtcInvMgt/selectEtcInvMgtPrintList",
+  "/api/wms/wmsInvPrchsgMgt/updateFileDoc"
+ ],
+ "wms/Settlement/WmsInvConfrimMgt": [
+  "/api/wms/wmsInvConfrimMgt/delete",
+  "/api/wms/wmsInvConfrimMgt/save",
+  "/api/wms/wmsInvConfrimMgt/selectGrpInvPrintList",
+  "/api/wms/wmsInvConfrimMgt/selectInvList",
+  "/api/wms/wmsInvConfrimMgt/selectInvPrintList",
+  "/api/wms/wmsInvConfrimMgt/updateInvPrintDt"
+ ],
+ "wms/Settlement/WmsInvEndMgt": [
+  "/api/wms/WmsInvEndMgt/saveInvEndMgt",
+  "/api/wms/WmsInvEndMgt/selectInvEndMgt"
+ ],
+ "wms/Settlement/WmsInvList": [
+  "/api/wms/wmsInvList/delete",
+  "/api/wms/wmsInvList/save",
+  "/api/wms/wmsInvList/selectGrpInvPrintList",
+  "/api/wms/wmsInvList/selectInvList",
+  "/api/wms/wmsInvList/selectInvPrintList",
+  "/api/wms/wmsInvList/updateFileDoc",
+  "/api/wms/wmsInvList/updateInvPrintDt"
+ ],
+ "wms/Settlement/WmsInvMgt": [
+  "/api/mdm/code/selectCorpBillPicList",
+  "/api/wms/wmsInvMgt/deleteInvMgt",
+  "/api/wms/wmsInvMgt/saveInvMgt",
+  "/api/wms/wmsInvMgt/selectInvMgtList",
+  "/api/wms/wmsInvMgt/selectInvMgtPrintList"
+ ],
+ "wms/Settlement/WmsPftCustList": [
+  "/api/wms/wmsPftCustList/selectBuyDetailList",
+  "/api/wms/wmsPftCustList/selectDetailList",
+  "/api/wms/wmsPftCustList/selectList"
+ ],
+ "wms/Settlement/WmsPrchsInvMgt": [
+  "/api/mdm/code/selectCorpBillPicList",
+  "/api/wms/wmsInvPrchsgMgt/deleteInvPrchsMgt",
+  "/api/wms/wmsInvPrchsgMgt/saveInvPrchsMgt",
+  "/api/wms/wmsInvPrchsgMgt/selectInvPrchsMgtDtlList",
+  "/api/wms/wmsInvPrchsgMgt/selectInvPrchsMgtList",
+  "/api/wms/wmsInvPrchsgMgt/selectInvPrchsMgtPrintList",
+  "/api/wms/wmsInvPrchsgMgt/selectStDayCalc",
+  "/api/wms/wmsInvPrchsgMgt/updateFileDoc"
+ ],
+ "wms/Settlement/WmsStrgInvMgt": [
+  "/api/mdm/code/selectCorpBillPicList",
+  "/api/wms/wmsInvStrgMgt/deleteInvStrgMgt",
+  "/api/wms/wmsInvStrgMgt/saveInvStrgMgt",
+  "/api/wms/wmsInvStrgMgt/selectInvStrgMgtDtlList",
+  "/api/wms/wmsInvStrgMgt/selectInvStrgMgtList",
+  "/api/wms/wmsInvStrgMgt/selectInvStrgMgtPrintList",
+  "/api/wms/wmsInvStrgMgt/selectStDayCalc"
+ ],
+ "wms/Settlement/WmsTariffMgt": [
+  "/api/wms/Tariff/saveCfsTariff",
+  "/api/wms/Tariff/selectCfsTariffDetailCopyList",
+  "/api/wms/Tariff/selectCfsTariffDetailList",
+  "/api/wms/Tariff/selectCfsTariffHdList"
+ ],
+ "wms/Settlement/WmsTaxMgt": [
+  "/api/wms/wmsTaxMgt/cancelAccounting",
+  "/api/wms/wmsTaxMgt/cancelTaxBill",
+  "/api/wms/wmsTaxMgt/issueTaxBill",
+  "/api/wms/wmsTaxMgt/saveAccounting",
+  "/api/wms/wmsTaxMgt/saveRemark",
+  "/api/wms/wmsTaxMgt/selectBillList",
+  "/api/wms/wmsTaxMgt/selectLogisBill",
+  "/api/wms/wmsTaxMgt/selectTaxMgtList"
+ ],
+ "wms/Settlement/WmsTrfInvMgt": [
+  "/api/wms/wmsTrfInvMgt/delete",
+  "/api/wms/wmsTrfInvMgt/searchInvDtlList",
+  "/api/wms/wmsTrfInvMgt/searchTariffList",
+  "/api/wms/wmsTrfInvMgt/selectTariff",
+  "/api/wms/wmsTrfInvMgt/selectTrfInvList",
+  "/api/wms/wmsTrfInvMgt/updateInvDtl"
+ ],
+ "wms/issue/WmsAgiMgt": [
+  "/api/mdm/code/selectCorpBillPicList",
+  "/api/wms/Tariff/selectTariffList_v2",
+  "/api/wms/wmsAgiMgt/deleteAgiMgt",
+  "/api/wms/wmsAgiMgt/saveAgiInvDtl",
+  "/api/wms/wmsAgiMgt/saveAgiMgt",
+  "/api/wms/wmsAgiMgt/selectAgiDtlList",
+  "/api/wms/wmsAgiMgt/selectAgiInvDtlList",
+  "/api/wms/wmsAgiMgt/selectAgiMgtList",
+  "/api/wms/wmsInvStrgMgt/selectStDayCalc"
+ ],
+ "wms/issue/WmsClpMgt": [
+  "/api/mdm/code/selectCorpBillPicList",
+  "/api/wms/wmsClpMgt/deleteClpMgt",
+  "/api/wms/wmsClpMgt/saveClpMgt",
+  "/api/wms/wmsClpMgt/selectClpMgtDtlList",
+  "/api/wms/wmsClpMgt/selectClpMgtList",
+  "/api/wms/wmsClpMgt/selectClpMgtNotDtlList",
+  "/api/wms/wmsClpMgt/updateClpNotState",
+  "/api/wms/wmsClpMgt/updateClpState"
+ ],
+ "wms/issue/WmsEgiMgt": [
+  "/api/mdm/code/selectCorpBillPicList",
+  "/api/wms/wmsEgiMgt/deleteEgiMgt",
+  "/api/wms/wmsEgiMgt/saveEgiMgt",
+  "/api/wms/wmsEgiMgt/selectEgiDtlList",
+  "/api/wms/wmsEgiMgt/selectEgiMgtList"
+ ],
+ "wms/popup/FDimensionPopup": [
+  "/api/wms/wmsAgrMgt/saveAgrDim",
+  "/api/wms/wmsAgrMgt/selectAgrDimList"
+ ],
+ "wms/popup/WmsAgiClpPopup": [
+  "/api/wms/wmsClpMgt/saveClpMgt",
+  "/api/wms/wmsClpMgt/selectClpMgtDtlList",
+  "/api/wms/wmsClpMgt/updateClpState",
+  "/api/wms/wmsClpMgt/updatePick"
+ ],
+ "wms/popup/WmsAgrInvenLocaPopup": [
+  "/api/wms/wmsAgrMgt/saveInventoryLocation",
+  "/api/wms/wmsAgrMgt/selectWhDetailInfo",
+  "/api/wms/wmsAgrMgt/selectWhList"
+ ],
+ "wms/popup/WmsAgrMgtPopup": [
+  "/api/wms/wmsAgrMgt/saveAgrMgtAtWrk",
+  "/api/wms/wmsAgrMgt/selectAgrDtlList"
+ ],
+ "wms/popup/WmsPrchsInvPrintPopup": [
+  "/api/wms/wmsInvList/selectPrchsTotalInvPrintList"
+ ],
+ "wms/popup/WmsUpdateAgrInvenPopup": [
+  "/api/wms/wmsAgrMgt/updateAgrInvenInfo"
+ ],
+ "wms/popup/WmsWhGatePopup": [
+  "/api/wms/configuration/saveGateInfoByWhId",
+  "/api/wms/configuration/selectGateInfoByWhId"
+ ],
+ "wms/receipt/WmsAgrMgt": [
+  "/api/cfs/imorder/transImIn",
+  "/api/mdm/code/selectCorpBillPicList",
+  "/api/wms/Tariff/selectTariffList_v2",
+  "/api/wms/wmsAgrMgt/deleteAgrMgt",
+  "/api/wms/wmsAgrMgt/saveAgrInvDtl",
+  "/api/wms/wmsAgrMgt/saveAgrMgt",
+  "/api/wms/wmsAgrMgt/selectAgrDtlList",
+  "/api/wms/wmsAgrMgt/selectAgrInvDtlList",
+  "/api/wms/wmsAgrMgt/selectAgrMgtList"
+ ],
+ "wms/receipt/WmsEgrMgt": [
+  "/api/cfs/imorder/transImIn",
+  "/api/mdm/code/selectCorpBillPicList",
+  "/api/wms/wmsEgrMgt/callCntrMgtList",
+  "/api/wms/wmsEgrMgt/copyEgrMgt",
+  "/api/wms/wmsEgrMgt/deleteEgrMgt",
+  "/api/wms/wmsEgrMgt/saveEgrMgt",
+  "/api/wms/wmsEgrMgt/selectEgrDtlList",
+  "/api/wms/wmsEgrMgt/selectEgrMgtList",
+  "/api/wms/wmsEgrMgt/selectEgrTrkList"
+ ],
+ "z-dev/layout/layout01": [
+  "/api/menuList"
+ ],
+ "z-dev/layout/layout02": [
+  "/api/menuList"
+ ],
+ "z-dev/layout/layout03": [
+  "/api/dev/template/savetTemplateLayout01",
+  "/api/dev/template/selectTemplateLayout01"
+ ],
+ "z-dev/layout/layout04": [],
+ "z-dev/layout/layout05": [],
+ "z-dev/popup/TemplateBoardPopup": [
+  "/api/cms/popup/deleteTemplateBoardMgt",
+  "/api/cms/popup/saveTemplateBoardMgt",
+  "/api/cms/popup/selectTemplateBoardMgt",
+  "/api/cms/popup/updateTemplateBoardMgt",
+  "/api/file/fileDownload",
+  "/api/file/multiFileUpload"
+ ],
+ "z-dev/sample/layout01": [
+  "/api/findMyId",
+  "/api/findMyPassword",
+  "/api/menuList"
+ ],
+ "z-dev/sample/layout02": [
+  "/api/menuList"
+ ],
+ "z-dev/sample/layout03": [],
+ "z-dev/sample/layout04": [
+  "/api/admin/userList",
+  "/api/admin/userOne",
+  "/api/admin/userSave"
+ ],
+ "z-dev/template/board/boardMgt": [
+  "/api/file/multiFileUpload",
+  "/api/template/board/excelUpTemplateBoardMgt",
+  "/api/template/board/saveTemplateBoardMgt",
+  "/api/template/board/selectTemplateBoardMgt",
+  "/api/template/board/sendTemplateBoardMgtEmail"
+ ],
+ "z-dev/template/containerImgUpload": [
+  "/api/cms/comm/changeMenuId",
+  "/api/cms/comm/checkMenuId",
+  "/api/cms/comm/deleteMenuMgt",
+  "/api/cms/comm/saveMenuMgt",
+  "/api/cms/comm/selectMenuMgt"
+ ],
+ "z-dev/template/excelImportTemplate": [
+  "/api/dev/excel/upload"
+ ],
+ "z-dev/template/faq": [
+  "/api/file/multiFileUpload",
+  "/api/template/board/excelUpTemplateBoardMgt",
+  "/api/template/board/saveTemplateBoardMgt",
+  "/api/template/board/selectTemplateBoardMgt",
+  "/api/template/board/sendTemplateBoardMgtEmail"
+ ],
+ "z-dev/template/mail": [
+  "/api/dev/template/sendMail"
+ ],
+ "z-dev/template/templateDownload": [
+  "/api/file/fileDownload",
+  "/api/file/multiFileUpload",
+  "/api/template/board/excelUpTemplateBoardMgt",
+  "/api/template/board/saveTemplateBoardMgt",
+  "/api/template/board/selectTemplateBoardMgt",
+  "/api/template/board/sendTemplateBoardMgtEmail"
+ ],
+ "z-dev/template/webpush": [
+  "/api/dev/template/createJsonWebToken",
+  "/api/dev/template/sendMessage"
+ ]
+}

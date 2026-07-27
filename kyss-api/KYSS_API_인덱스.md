@@ -1,0 +1,2815 @@
+# KYSS API 엔드포인트 전수 인덱스
+
+총 1335개 엔드포인트. `사용 화면`은 req2svr 기준이며, 비어 있으면 공통 모듈/컴포넌트에서 호출된다.
+
+
+## /api/  (4)
+
+- `/api//db/notice/deleteDriverNoticePopup`
+    - 사용: mobile/popup/drvNoticeMgtPopup
+- `/api//db/notice/saveDriverNoticePopup`
+    - 사용: mobile/popup/drvNoticeMgtPopup
+- `/api//db/notice/selectDriverNotice`
+    - 사용: mobile/popup/drvNoticeMgtPopup
+- `/api//db/notice/updateDrvNoticeFile`
+    - 사용: mobile/popup/drvNoticeMgtPopup
+
+## /api/(root)  (1)
+
+- `test.txt`
+    - 사용: z-dev/layout/layout05
+
+## /api/BoardList  (1)
+
+- `/api/BoardList`
+
+## /api/admin  (3)
+
+- `/api/admin/userList`
+    - 사용: z-dev/sample/layout04
+- `/api/admin/userOne`
+    - 사용: z-dev/sample/layout04
+- `/api/admin/userSave`
+    - 사용: z-dev/sample/layout04
+
+## /api/allocation  (43)
+
+- `/api/allocation/PopselectTransDriving`
+    - 사용: allocation/popup/prtTransDrivingPopup
+- `/api/allocation/cancelDoorOrderCntrPtn`
+    - 사용: 차량 할당 (수출)(allocation/door/allocationTruck), 차량 할당 (수입)(allocation/door/allocationTruckImport), 직접 배차 및 코피노(allocation/door/directAlloAndCopino), 도어배차(allocation/door/directAlloAndCopinoV2)
+- `/api/allocation/checkOrderCntr`
+    - 사용: 배차 현황 조회(allocation/door/alloStatusSearch), 직접 배차 및 코피노(allocation/door/directAlloAndCopino), 도어배차(allocation/door/directAlloAndCopinoV2)
+- `/api/allocation/clipBoardAlloAlertMsg`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup)
+- `/api/allocation/confirmAllocationTruck`
+    - 사용: 차량 할당 (수출)(allocation/door/allocationTruck)
+- `/api/allocation/deleteAllocation`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup)
+- `/api/allocation/deleteInputAllo`
+    - 사용: 도어배차(allocation/door/directAlloAndCopinoV2)
+- `/api/allocation/registShuttleOrder`
+    - 사용: allocation/popup/registShuttleOrderPopup
+- `/api/allocation/saveAlloMultiModi`
+    - 사용: allocation/popup/AlloMultiModiV2Popup
+- `/api/allocation/saveAllocation`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup)
+- `/api/allocation/saveAllocationTruck`
+    - 사용: 차량 할당 (수출)(allocation/door/allocationTruck), 차량 할당 (수입)(allocation/door/allocationTruckImport)
+- `/api/allocation/saveAllocationTruckList`
+    - 사용: 직접 배차 및 코피노(allocation/door/directAlloAndCopino)
+- `/api/allocation/saveAllocationTruckListV2`
+    - 사용: 도어배차(allocation/door/directAlloAndCopinoV2)
+- `/api/allocation/saveCntr`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup)
+- `/api/allocation/saveInputAllo`
+    - 사용: 도어배차(allocation/door/directAlloAndCopinoV2)
+- `/api/allocation/saveMultiAllo`
+    - 사용: allocation/popup/doorMultiAlloPopup
+- `/api/allocation/saveMultiAlloPayList`
+    - 사용: allocation/popup/multiAlloPayPopup
+- `/api/allocation/saveMultiPaymentList`
+    - 사용: allocation/popup/multiPaymentPopup
+- `/api/allocation/savePaymentList`
+    - 사용: allocation/popup/directAlloPaymentPopup, allocation/popup/paymentPopup, cfs/popup/FPaymentPopup
+- `/api/allocation/searchStdPayTariff`
+    - 사용: allocation/popup/directAlloPaymentPopup, allocation/popup/multiAlloPayPopup, allocation/popup/multiPaymentPopup, allocation/popup/paymentPopup, cfs/popup/FPaymentPopup
+- `/api/allocation/searchTerminalYardLoc`
+    - 사용: 배차 현황 조회(allocation/door/alloStatusSearch)
+- `/api/allocation/selectAlloPicHis`
+    - 사용: allocation/popup/AlloSharePopup
+- `/api/allocation/selectAlloSeqList`
+    - 사용: 배차 현황 조회(allocation/door/alloStatusSearch)
+- `/api/allocation/selectAllocation`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup)
+- `/api/allocation/selectAllocationTruckDetail`
+    - 사용: 차량 할당 (수출)(allocation/door/allocationTruck), 차량 할당 (수입)(allocation/door/allocationTruckImport)
+- `/api/allocation/selectAllocationTruckList`
+    - 사용: 배차 현황 조회(allocation/door/alloStatusSearch), 직접 배차 및 코피노(allocation/door/directAlloAndCopino)
+- `/api/allocation/selectAllocationTruckListPn`
+    - 사용: allocation/door/AlloStatusSearchPn
+- `/api/allocation/selectAllocationTruckTariffList`
+    - 사용: 직접 배차 및 코피노(allocation/door/directAlloAndCopino), 도어배차(allocation/door/directAlloAndCopinoV2)
+- `/api/allocation/selectDirectAlloPayment`
+    - 사용: allocation/popup/directAlloPaymentPopup
+- `/api/allocation/selectDirectAllocationTruckList`
+    - 사용: 도어배차(allocation/door/directAlloAndCopinoV2)
+- `/api/allocation/selectDoorAlloInfo`
+    - 사용: allocation/popup/AlloCopinoPopup, allocation/popup/SimulAlloCopinoPopup
+- `/api/allocation/selectInstUltOrderInfo `
+    - 사용: allocation/popup/InstUltOrderPopup
+- `/api/allocation/selectInstUltOrderPartner`
+    - 사용: allocation/popup/InstUltOrderPopup
+- `/api/allocation/selectPayPicList`
+    - 사용: allocation/popup/directAlloPaymentPopup, allocation/popup/paymentPopup, cfs/popup/FPaymentPopup, outputs/popup/payStatusPopup, outputs/popup/toutMultiModiPopup
+- `/api/allocation/selectPaymentList`
+    - 사용: allocation/popup/multiAlloPayPopup, allocation/popup/multiPaymentPopup, allocation/popup/paymentPopup, cfs/popup/FPaymentPopup
+- `/api/allocation/selectTrainList`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup)
+- `/api/allocation/updateAlloPic`
+    - 사용: allocation/popup/AlloSharePopup
+- `/api/allocation/updateAlloStatus`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup)
+- `/api/allocation/updateCntrReturnChk`
+    - 사용: 배차 현황 조회(allocation/door/alloStatusSearch)
+- `/api/allocation/updateCntrReturnChk2`
+    - 사용: 배차 현황 조회(allocation/door/alloStatusSearch)
+- `/api/allocation/updateDoorOrderCntrPtn`
+    - 사용: order/popup/doorAlloPtnPopup
+- `/api/allocation/updateEmptyCntrReturnDate`
+    - 사용: 배차 현황 조회(allocation/door/alloStatusSearch)
+- `/api/allocation/validSelfTransAppr`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup)
+
+## /api/auth  (7)
+
+- `/api/auth/authorized`
+- `/api/auth/clearLoginParam`
+    - 사용: 안전운임제(db/tariff)
+- `/api/auth/findMyId`
+    - 사용: intro/membership/IntroFindId
+- `/api/auth/findMyPassword`
+    - 사용: intro/membership/IntroFindPw
+- `/api/auth/registerUser`
+    - 사용: intro/membership/IntroJoin
+- `/api/auth/validUserId`
+    - 사용: intro/membership/IntroJoin
+- `/api/auth/validUserMbilNo`
+    - 사용: intro/membership/IntroJoin
+
+## /api/bnd  (47)
+
+- `/api/bnd/bndTransMgt/ForceBndComplete_V2`
+    - 사용: bnd-v2/popup/ForceBndCompletePopup-v2
+- `/api/bnd/bndTransMgt/cargoEntryStatusCfs`
+    - 사용: bnd-v2/popup/BndTransMgtPopup-v2
+- `/api/bnd/bndTransMgt/cargoEntryStatusLcNoSearch`
+    - 사용: bnd-v2/popup/BndTransMgtPopup-v2, bnd/popup/BndTransMgtPopup
+- `/api/bnd/bndTransMgt/cargoEntryStatusUnInPlcCheck`
+    - 사용: bnd/popup/BndUnInPlcSearchPopup
+- `/api/bnd/bndTransMgt/deleteCusmovList`
+    - 사용: 보세운송 전송 및 관리_V2(bnd-v2/BndTransMgt-v2), bnd-v2/popup/BndTransMgtPopup-v2, 보세운송 전송 및 관리(bnd/BndTransMgt), bnd/popup/BndTransMgtPopup
+- `/api/bnd/bndTransMgt/insertListBndMapOut`
+    - 사용: 보세운송 전송 및 관리(bnd/BndTransMgt)
+- `/api/bnd/bndTransMgt/insertListBndMapOut_V2`
+    - 사용: 보세운송 전송 및 관리_V2(bnd-v2/BndTransMgt-v2)
+- `/api/bnd/bndTransMgt/saveBnd`
+    - 사용: bnd/popup/BndTransMgtPopup
+- `/api/bnd/bndTransMgt/saveBndAlloEstTrans`
+    - 사용: bnd/popup/BndAlloEstTransPopup
+- `/api/bnd/bndTransMgt/saveBndAlloEstTrans_V2`
+    - 사용: bnd-v2/popup/BndAlloEstTransPopup-v2
+- `/api/bnd/bndTransMgt/saveBndArrivalReport`
+    - 사용: bnd/popup/BndArrivalReportPopup
+- `/api/bnd/bndTransMgt/saveBndArrivalReport_V2`
+    - 사용: bnd-v2/popup/BndArrivalReportPopup-v2
+- `/api/bnd/bndTransMgt/saveBndOpenTrans`
+    - 사용: 임시개청신청(bnd-v2/BndOpenTrans)
+- `/api/bnd/bndTransMgt/saveBndPrintSetup`
+    - 사용: bnd/popup/BndPrintPopup
+- `/api/bnd/bndTransMgt/saveBnd_V2`
+    - 사용: bnd-v2/popup/BndTransMgtPopup-v2
+- `/api/bnd/bndTransMgt/selectBndErrList`
+    - 사용: bnd/popup/BndErrorDetailPopup
+- `/api/bnd/bndTransMgt/selectBndOpenTrans`
+    - 사용: 임시개청신청(bnd-v2/BndOpenTrans)
+- `/api/bnd/bndTransMgt/selectBndOpenTransDtl`
+    - 사용: 임시개청신청(bnd-v2/BndOpenTrans)
+- `/api/bnd/bndTransMgt/selectBndPrintSetup`
+    - 사용: bnd/popup/BndPrintPopup
+- `/api/bnd/bndTransMgt/selectCusdmrList`
+    - 사용: bnd/popup/BndAlloEstTransPopup
+- `/api/bnd/bndTransMgt/selectCusdmrList_V2`
+    - 사용: bnd-v2/popup/BndAlloEstTransPopup-v2
+- `/api/bnd/bndTransMgt/selectCusinf`
+    - 사용: bnd/popup/BndArrivalReportPopup
+- `/api/bnd/bndTransMgt/selectCusinf_V2`
+    - 사용: bnd-v2/popup/BndArrivalReportPopup-v2
+- `/api/bnd/bndTransMgt/selectCusmovCntDmrList`
+    - 사용: 보세운송 전송 및 관리(bnd/BndTransMgt)
+- `/api/bnd/bndTransMgt/selectCusmovCntDmrList_V2`
+    - 사용: 보세운송 전송 및 관리_V2(bnd-v2/BndTransMgt-v2)
+- `/api/bnd/bndTransMgt/selectCusmovDtlList`
+    - 사용: bnd-v2/popup/BndTransMgtPopup-v2, bnd-v2/popup/BndTransUpdatePopup-v2, bnd/popup/BndTransMgtPopup, bnd/popup/BndTransUpdatePopup
+- `/api/bnd/bndTransMgt/selectCusmovDtlPrint`
+    - 사용: bnd/popup/BndPrintPopup
+- `/api/bnd/bndTransMgt/selectCusmovList`
+    - 사용: 보세운송 전송 및 관리(bnd/BndTransMgt)
+- `/api/bnd/bndTransMgt/selectCusmovList_V2`
+    - 사용: 보세운송 전송 및 관리_V2(bnd-v2/BndTransMgt-v2)
+- `/api/bnd/bndTransMgt/selectCusmovUnInPlcList`
+    - 사용: bnd/popup/BndUnInPlcSearchPopup
+- `/api/bnd/bndTransMgt/sendOpenTrans`
+    - 사용: 임시개청신청(bnd-v2/BndOpenTrans)
+- `/api/bnd/bndUpdate/insertBondModi`
+    - 사용: 정정신고 송수신_V2(bnd-v2/BndUpdate-v2)
+- `/api/bnd/bndUpdate/insertMapOut`
+    - 사용: 정정신고 송수신(bnd/BndUpdate)
+- `/api/bnd/bndUpdate/saveBndUpdate`
+    - 사용: bnd-v2/popup/BndTransUpdatePopup-v2, bnd/popup/BndTransUpdatePopup
+- `/api/bnd/bndUpdate/selectBndUpdate`
+    - 사용: 정정신고 송수신(bnd/BndUpdate), bnd/popup/BndTransUpdatePopup
+- `/api/bnd/bndUpdate/selectBndUpdatePopup`
+    - 사용: bnd-v2/popup/BndTransUpdatePopup-v2, bnd/popup/BndTransUpdatePopup
+- `/api/bnd/bndUpdate/selectBndUpdatePrintList`
+    - 사용: 정정신고 송수신_V2(bnd-v2/BndUpdate-v2), 정정신고 송수신(bnd/BndUpdate)
+- `/api/bnd/bndUpdate/selectBndUpdate_V2`
+    - 사용: 정정신고 송수신_V2(bnd-v2/BndUpdate-v2)
+- `/api/bnd/customApi/cargoEntryStatusSearch`
+    - 사용: bnd/popup/BndGetKlnetMfcsPopup, bnd/popup/BndProgressInfoPopup, cfs/popup/FOrdRegPopup
+- `/api/bnd/mfcsSearch/deleteMfcsList`
+    - 사용: 적하목록 조회(bnd/MfcsSearch)
+- `/api/bnd/mfcsSearch/selectMfcsList`
+    - 사용: bnd-v2/popup/BndTransMgtPopup-v2, 적하목록 조회(bnd/MfcsSearch), bnd/popup/BndTransMgtPopup
+- `/api/bnd/mfcsSearch/selectMfcsPrintList`
+    - 사용: 보세운송 전송 및 관리_V2(bnd-v2/BndTransMgt-v2), 보세운송 전송 및 관리(bnd/BndTransMgt), 적하목록 조회(bnd/MfcsSearch), bnd/popup/MfcsPrintPopup
+- `/api/bnd/mfcsSearch/selectMfcsUploadList`
+    - 사용: 적하목록 업로드(bnd/MfcsUpload)
+- `/api/bnd/mfcsSearch/updateMfcs`
+    - 사용: 적하목록 조회(bnd/MfcsSearch)
+- `/api/bnd/mfcsUpload/deleteMfcsFiles`
+    - 사용: 적하목록 업로드(bnd/MfcsUpload)
+- `/api/bnd/mfcsUpload/getMfcs`
+    - 사용: 적하목록 업로드(bnd/MfcsUpload)
+- `/api/bnd/mfcsUpload/saveMfcs`
+    - 사용: 적하목록 업로드(bnd/MfcsUpload)
+
+## /api/bws  (104)
+
+- `/api/bws/Report/PeriodPerformanceSelectList`
+    - 사용: bws/BwsPeriodPerformance
+- `/api/bws/Tariff/saveCfsTariff`
+    - 사용: bws/BwsTariffMgt
+- `/api/bws/Tariff/selectCfsTariffDetailCopyList`
+    - 사용: bws/BwsTariffMgt
+- `/api/bws/Tariff/selectCfsTariffDetailList`
+    - 사용: bws/BwsTariffMgt
+- `/api/bws/Tariff/selectCfsTariffHdList`
+    - 사용: bws/BwsTariffMgt
+- `/api/bws/TransStt/checkBillNoForAgi`
+    - 사용: bws/BwsFreeAgiMgt
+- `/api/bws/TransStt/checkBillNoForAgr`
+    - 사용: bws/BwsFreeAgrMgt
+- `/api/bws/TransStt/deleteSmMgt`
+    - 사용: bws/BwsAgrTransSttMgt, bws/BwsBndTransSttMgt, bws/BwsDmtTransSttMgt, bws/BwsOthTransSttMgt
+- `/api/bws/TransStt/saveSmMgt`
+    - 사용: bws/BwsAgrTransSttMgt, bws/BwsBndTransSttMgt, bws/BwsDmtTransSttMgt, bws/BwsOthTransSttMgt
+- `/api/bws/TransStt/selectAgrTransList`
+    - 사용: bws/BwsAgrTransSttMgt
+- `/api/bws/TransStt/selectBillChgList`
+    - 사용: bws/BwsAgrTransSttMgt, bws/BwsBndTransSttMgt, bws/BwsDmtTransSttMgt, bws/BwsOthTransSttMgt
+- `/api/bws/TransStt/selectBondedTransList`
+    - 사용: bws/BwsBndTransSttMgt
+- `/api/bws/TransStt/selectDomesticTransList`
+    - 사용: bws/BwsDmtTransSttMgt
+- `/api/bws/TransStt/selectNewTransList`
+    - 사용: bws/BwsAgrTransSttMgt, bws/BwsBndTransSttMgt, bws/BwsDmtTransSttMgt
+- `/api/bws/TransStt/selectOtherTarrifList`
+    - 사용: bws/BwsOthTransSttMgt
+- `/api/bws/TransStt/selectOtherTransList`
+    - 사용: bws/BwsOthTransSttMgt
+- `/api/bws/TransStt/selectPrintOtherTransList`
+    - 사용: bws/BwsOthTransSttMgt
+- `/api/bws/TransStt/selectPrintTransList`
+    - 사용: bws/BwsAgrTransSttMgt, bws/BwsBndTransSttMgt, bws/BwsDmtTransSttMgt
+- `/api/bws/TransStt/selectTariff`
+    - 사용: bws/BwsBndTransSttMgt
+- `/api/bws/TransStt/selectTariffCalc`
+    - 사용: bws/BwsAgrTransSttMgt, bws/BwsBndTransSttMgt, bws/BwsDmtTransSttMgt, bws/BwsOthTransSttMgt
+- `/api/bws/TransStt/selectTariffList`
+    - 사용: bws/BwsAgrTransSttMgt, bws/BwsBndTransSttMgt, bws/BwsDmtTransSttMgt
+- `/api/bws/TransStt/selectTariffList_v2`
+    - 사용: bws/BwsBndTransSttMgt
+- `/api/bws/UniCrossChk/saveUniinfo`
+    - 사용: bws/popup/BwsUniCrossUpload
+- `/api/bws/UniCrossChk/selectList`
+    - 사용: bws/BwsUniCrossChk
+- `/api/bws/acsNoti/deleteAcsNoti`
+    - 사용: bws/BwsAcsNotiMgt
+- `/api/bws/acsNoti/saveAcsNoti`
+    - 사용: bws/BwsAcsNotiMgt
+- `/api/bws/acsNoti/selectAcsCrgLdgList`
+    - 사용: bws/BwsAcsCrgLdg
+- `/api/bws/acsNoti/selectAcsNotiList`
+    - 사용: bws/BwsAcsNotiMgt
+- `/api/bws/acsNoti/transAcsNoti`
+    - 사용: bws/BwsAcsNotiMgt
+- `/api/bws/agi/alert/selectNotOutAlertList`
+    - 사용: bws/BwsAgiAlertMgt
+- `/api/bws/agi/alert/selectTransDeadLineAlertList`
+    - 사용: bws/BwsAgiAlertMgt
+- `/api/bws/agi/deleteAgi`
+    - 사용: bws/BwsBndAgiMgt, bws/BwsDmtAgiMgt, bws/BwsFreeAgiMgt
+- `/api/bws/agi/processAgiRcv`
+    - 사용: bws/BwsBndAgiMgt, bws/BwsDmtAgiMgt, bws/BwsFreeAgiMgt
+- `/api/bws/agi/saveAgi`
+    - 사용: bws/BwsBndAgiMgt, bws/BwsDmtAgiMgt, bws/BwsFreeAgiMgt
+- `/api/bws/agi/selectAgiDetatil`
+    - 사용: bws/BwsDmtAgiMgt, bws/BwsFreeAgiMgt
+- `/api/bws/agi/selectAgiList`
+    - 사용: bws/BwsBndAgiMgt, bws/BwsDmtAgiMgt, bws/BwsFreeAgiMgt
+- `/api/bws/agi/transAgi`
+    - 사용: bws/BwsBndAgiMgt, bws/BwsDmtAgiMgt, bws/BwsFreeAgiMgt
+- `/api/bws/agi/updateDt`
+    - 사용: bws/BwsBndAgiMgt
+- `/api/bws/agi/updateEcgOff`
+    - 사용: bws/BwsBndAgiMgt
+- `/api/bws/agi/updateEgiDlAlertOff`
+    - 사용: bws/BwsBndAgiMgt
+- `/api/bws/agiCorr/deleteAgiCorr`
+    - 사용: bws/BwsBndAgiCorrMgt, bws/BwsDmtAgiCorrMgt, bws/BwsFreeAgiCorrMgt
+- `/api/bws/agiCorr/saveAgiCorr`
+    - 사용: bws/BwsBndAgiCorrMgt, bws/BwsDmtAgiCorrMgt, bws/BwsFreeAgiCorrMgt
+- `/api/bws/agiCorr/selectAgiCorrList`
+    - 사용: bws/BwsBndAgiCorrMgt, bws/BwsDmtAgiCorrMgt, bws/BwsFreeAgiCorrMgt
+- `/api/bws/agiCorr/selectAgiCorrLogDtlList`
+    - 사용: bws/BwsBndAgiCorrMgt, bws/BwsDmtAgiCorrMgt, bws/BwsFreeAgiCorrMgt
+- `/api/bws/agiCorr/selectAgiCorrLogList`
+    - 사용: bws/BwsBndAgiCorrMgt, bws/BwsDmtAgiCorrMgt, bws/BwsFreeAgiCorrMgt
+- `/api/bws/agiCorr/transAgiCorr`
+    - 사용: bws/BwsBndAgiCorrMgt, bws/BwsDmtAgiCorrMgt, bws/BwsFreeAgiCorrMgt
+- `/api/bws/agr/deleteAgr`
+    - 사용: bws/BwsBndAgrMgt, bws/BwsDmtAgrMgt
+- `/api/bws/agr/deleteFreeAgr`
+    - 사용: bws/BwsFreeAgrMgt
+- `/api/bws/agr/processAgrRcv`
+    - 사용: bws/BwsBndAgrMgt, bws/BwsDmtAgrMgt, bws/BwsFreeAgrMgt
+- `/api/bws/agr/saveAgr`
+    - 사용: bws/BwsBndAgrMgt, bws/BwsDmtAgrMgt
+- `/api/bws/agr/saveFreeAgr`
+    - 사용: bws/BwsFreeAgrMgt
+- `/api/bws/agr/selectAgrList`
+    - 사용: bws/BwsBndAgrMgt, bws/BwsDmtAgrMgt, bws/BwsFreeAgrMgt
+- `/api/bws/agr/sendAgr`
+    - 사용: bws/BwsBndAgrMgt, bws/BwsDmtAgrMgt, bws/BwsFreeAgrMgt
+- `/api/bws/agr/updateEgrDlAlertOff`
+    - 사용: bws/BwsBndAgrMgt
+- `/api/bws/agrAgiSt/selectAgrAgiStList`
+    - 사용: bws/BwsAgrAgiStMgt
+- `/api/bws/agrAgiSt/selectCloseStCrgList`
+    - 사용: bws/BwsCloseStMgt
+- `/api/bws/agrAgiSt/selectCustCrgList`
+    - 사용: bws/BwsCustCrgListMgt
+- `/api/bws/agrAgiSt/selectDetailStockList`
+    - 사용: bws/BwsStockStatus
+- `/api/bws/agrAgiSt/selectMonthAgrAgiList`
+    - 사용: bws/BwsMonthAgrAgiMgt
+- `/api/bws/agrAgiSt/selectPrintAgrAgiStList`
+    - 사용: bws/BwsAgrAgiStMgt
+- `/api/bws/agrAgiSt/selectTotStockList`
+    - 사용: bws/BwsStockStatus
+- `/api/bws/agrCorr/deleteAgrCorr`
+    - 사용: bws/BwsBndAgrCorrMgt, bws/BwsDmtAgrCorrMgt, bws/BwsFreeAgrCorrMgt
+- `/api/bws/agrCorr/saveAgrCorr`
+    - 사용: bws/BwsBndAgrCorrMgt, bws/BwsDmtAgrCorrMgt, bws/BwsFreeAgrCorrMgt
+- `/api/bws/agrCorr/selectAgrCorrList`
+    - 사용: bws/BwsBndAgrCorrMgt, bws/BwsDmtAgrCorrMgt, bws/BwsFreeAgrCorrMgt
+- `/api/bws/agrCorr/selectAgrCorrLogDtlList`
+    - 사용: bws/BwsBndAgrCorrMgt, bws/BwsDmtAgrCorrMgt, bws/BwsFreeAgrCorrMgt
+- `/api/bws/agrCorr/selectAgrCorrLogList`
+    - 사용: bws/BwsBndAgrCorrMgt, bws/BwsDmtAgrCorrMgt, bws/BwsFreeAgrCorrMgt
+- `/api/bws/agrCorr/transAgrCorr`
+    - 사용: bws/BwsBndAgrCorrMgt, bws/BwsDmtAgrCorrMgt, bws/BwsFreeAgrCorrMgt
+- `/api/bws/agree/deleteAgree`
+    - 사용: bws/BwsAgreeMgt
+- `/api/bws/agree/saveAgree`
+    - 사용: bws/BwsAgreeMgt
+- `/api/bws/agree/selectAgreeList`
+    - 사용: bws/BwsAgreeMgt
+- `/api/bws/agree/updateAgreeFile`
+    - 사용: bws/BwsAgreeMgt
+- `/api/bws/bwsList/selectAgrAgiDivList`
+    - 사용: bws/BwsAgrAgiDivList
+- `/api/bws/bwsList/selectEcgList`
+    - 사용: bws/BwsEcgList
+- `/api/bws/bwsList/selectOPManSttList`
+    - 사용: (CFS) CFS 영업사원 실적현황(bws/BwsPicPFList)
+- `/api/bws/bwsPftCustList/selectDetailList`
+    - 사용: bws/BwsPftCustList
+- `/api/bws/bwsPftCustList/selectList`
+    - 사용: bws/BwsPftCustList
+- `/api/bws/cfsBillCollStatus/cancelGroupBilling`
+    - 사용: bws/BwsBillCollStatus
+- `/api/bws/cfsBillCollStatus/groupBilling`
+    - 사용: bws/popup/BwsBillMergePopup
+- `/api/bws/cfsBillCollStatus/selectBillList`
+    - 사용: bws/popup/BwsSalesTaxTotAmtPopup
+- `/api/bws/cfsBillCollStatus/selectBillingList`
+    - 사용: bws/BwsBillCollStatus
+- `/api/bws/cfsSalesTaxMgt/cancelTaxBill`
+    - 사용: bws/BwsSalesTaxMgt
+- `/api/bws/cfsSalesTaxMgt/issueTaxBill`
+    - 사용: bws/BwsSalesTaxMgt
+- `/api/bws/cfsSalesTaxMgt/resendMail`
+    - 사용: bws/BwsSalesTaxMgt
+- `/api/bws/cfsSalesTaxMgt/saveRemark`
+    - 사용: bws/BwsSalesTaxMgt
+- `/api/bws/cfsSalesTaxMgt/selectBillList`
+    - 사용: bws/BwsSalesTaxMgt
+- `/api/bws/cfsSalesTaxMgt/selectLogisBill`
+    - 사용: bws/BwsSalesTaxMgt
+- `/api/bws/cfsSalesTaxMgt/selectTaxMgtList`
+    - 사용: bws/BwsSalesTaxMgt
+- `/api/bws/cfsTotSaleMgt/selectTotalSalesList`
+    - 사용: bws/BwsTotSaleStatus
+- `/api/bws/dailyCrgReport/selectDailyAgiCrgReportList`
+    - 사용: bws/BwsDailyCargoAgiReportMgt
+- `/api/bws/dailyCrgReport/selectDailyAgrCrgReportList`
+    - 사용: bws/BwsDailyCargoAgrReportMgt
+- `/api/bws/egr/callCntrMgtList`
+    - 사용: bws/BwsBndEgrMgt, bws/BwsDmtEgrMgt
+- `/api/bws/egr/deleteEgrInfo`
+    - 사용: bws/BwsBndEgrMgt, bws/BwsDmtEgrMgt
+- `/api/bws/egr/deleteEgrListInfo`
+    - 사용: bws/BwsBndEgrSearch
+- `/api/bws/egr/saveEgrImportPrint`
+    - 사용: bws/popup/BwsBndExportPrintPopup, bws/popup/BwsBndImportPrintPopup
+- `/api/bws/egr/saveEgrInfo`
+    - 사용: bws/BwsBndEgrMgt, bws/BwsDmtEgrMgt
+- `/api/bws/egr/saveEgrPrintRemark`
+    - 사용: bws/BwsBndAgrMgt, bws/BwsDmtAgrMgt, bws/BwsFreeAgrMgt
+- `/api/bws/egr/selectEgrCntr`
+    - 사용: bws/BwsBndAgrMgt, bws/BwsDmtAgrMgt, bws/BwsFreeAgrMgt
+- `/api/bws/egr/selectEgrList`
+    - 사용: bws/BwsBndEgrMgt, bws/BwsDmtEgrMgt
+- `/api/bws/egr/selectEgrSearchList`
+    - 사용: bws/BwsBndEgrSearch
+- `/api/bws/scd/saveAgrCrgScdMgt`
+    - 사용: bws/BwsAgrCrgScdMgt
+- `/api/bws/scd/selectAgrCrgScdMgt`
+    - 사용: bws/BwsAgrCrgScdMgt
+- `/api/bws/undeclared/deleteUnDeclaredAgriMgt`
+    - 사용: bws/BwsDmtUnDeclareMgt
+- `/api/bws/undeclared/saveUnDeclaredAgriMgt`
+    - 사용: bws/BwsDmtUnDeclareMgt
+- `/api/bws/undeclared/selectUnDeclaredAgriMgt`
+    - 사용: bws/BwsDmtUnDeclareMgt
+
+## /api/cfs  (248)
+
+- `/api/cfs/BltCust/deleteSmMgt`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt), cfs/FBndTransSttMgt, cfs/FDomesticTransSttMgt, 기타 거래명세서 관리(cfs/FOtherTransSttMgt), 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/saveSmMgt`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt), cfs/FBndTransSttMgt, cfs/FDomesticTransSttMgt, 기타 거래명세서 관리(cfs/FOtherTransSttMgt), 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/selectBillChgList`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt), cfs/FBndTransSttMgt, cfs/FDomesticTransSttMgt, 기타 거래명세서 관리(cfs/FOtherTransSttMgt), 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/selectBillCntrClpList`
+    - 사용: 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/selectBillCntrList`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt)
+- `/api/cfs/BltCust/selectBndTarrifList`
+    - 사용: cfs/FBndTransSttMgt, cfs/FDomesticTransSttMgt
+- `/api/cfs/BltCust/selectBndTarrifMinList`
+    - 사용: cfs/FBndTransSttMgt, cfs/FDomesticTransSttMgt
+- `/api/cfs/BltCust/selectBndTransList`
+    - 사용: cfs/FBndTransSttMgt
+- `/api/cfs/BltCust/selectDomesticTransList`
+    - 사용: cfs/FDomesticTransSttMgt
+- `/api/cfs/BltCust/selectNoBillChgList`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt)
+- `/api/cfs/BltCust/selectNoBillClpChgList`
+    - 사용: 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/selectNoBillClpCntrList`
+    - 사용: 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/selectNoBillClpCntrMgtInfo`
+    - 사용: 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/selectNoBillCntrList`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt)
+- `/api/cfs/BltCust/selectNoBillCntrMgtInfo`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt)
+- `/api/cfs/BltCust/selectOtherTarrifList`
+    - 사용: 기타 거래명세서 관리(cfs/FOtherTransSttMgt)
+- `/api/cfs/BltCust/selectOtherTransList`
+    - 사용: 기타 거래명세서 관리(cfs/FOtherTransSttMgt)
+- `/api/cfs/BltCust/selectPrintBndTransList`
+    - 사용: cfs/FBndTransSttMgt, cfs/FDomesticTransSttMgt
+- `/api/cfs/BltCust/selectPrintOtherTransList`
+    - 사용: 기타 거래명세서 관리(cfs/FOtherTransSttMgt)
+- `/api/cfs/BltCust/selectPrintSmMgtClpList`
+    - 사용: 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/selectPrintSmMgtList`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt)
+- `/api/cfs/BltCust/selectSmMgtClpList`
+    - 사용: 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/selectSmMgtList`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt)
+- `/api/cfs/BltCust/selectStcTotAmount`
+    - 사용: cfs/FBndTransSttMgt, cfs/FDomesticTransSttMgt
+- `/api/cfs/BltCust/selectTariffCalc`
+    - 사용: 내장통관 거래명세서 관리(cfs/FBltCustTransSttMgt), cfs/FBndTransSttMgt, cfs/FDomesticTransSttMgt, 기타 거래명세서 관리(cfs/FOtherTransSttMgt), 거래명세서 관리(현수)(cfs/FRcvHOrdTransSttMgt)
+- `/api/cfs/BltCust/selectThcTotAmount`
+    - 사용: cfs/FBndTransSttMgt, cfs/FDomesticTransSttMgt
+- `/api/cfs/Tariff/saveCfsTariff`
+    - 사용: CFS 요율관리(cfs/FCfsTariffMgt)
+- `/api/cfs/Tariff/selectCfsTariffDetailCopyList`
+    - 사용: CFS 요율관리(cfs/FCfsTariffMgt)
+- `/api/cfs/Tariff/selectCfsTariffDetailList`
+    - 사용: CFS 요율관리(cfs/FCfsTariffMgt)
+- `/api/cfs/Tariff/selectCfsTariffHdList`
+    - 사용: CFS 요율관리(cfs/FCfsTariffMgt)
+- `/api/cfs/allo/autoReturnEmptyCntr`
+    - 사용: 배차관리(수입)(cfs/FImAlloMgt)
+- `/api/cfs/allo/cancelAllo`
+    - 사용: cfs/popup/FAlloClPopup, cfs/popup/FAlloPClPopup
+- `/api/cfs/allo/cancelAlloP`
+    - 사용: cfs/popup/FAlloPClConfPopup
+- `/api/cfs/allo/copino`
+    - 사용: cfs/popup/FAlloCopinoPopup
+- `/api/cfs/allo/extAllo`
+    - 사용: 배차관리(수출) 픽업(cfs/FExAlloMgtP), 배차관리(수출) 반입(cfs/FExAlloMgtR), 배차관리(수입)(cfs/FImAlloMgt), 내장통관직상차 관리(cfs/FOrdMgt)
+- `/api/cfs/allo/saveAllo`
+    - 사용: 배차관리(수입)(cfs/FImAlloMgt)
+- `/api/cfs/allo/saveAlloDtl`
+    - 사용: 배차관리(수입)(cfs/FImAlloMgt)
+- `/api/cfs/allo/saveAlloPartnerOrLine`
+    - 사용: cfs/popup/FAlloPopup, cfs/popup/FAlloShipperPopup
+- `/api/cfs/allo/saveAlloStrange`
+    - 사용: cfs/popup/FAlloStatusPopup
+- `/api/cfs/allo/saveExAlloP`
+    - 사용: 배차관리(수출) 픽업(cfs/FExAlloMgtP)
+- `/api/cfs/allo/saveExAlloR`
+    - 사용: 배차관리(수출) 반입(cfs/FExAlloMgtR)
+- `/api/cfs/allo/savePayment`
+    - 사용: cfs/popup/FAlloPayPopup
+- `/api/cfs/allo/searchStdPayTariff`
+    - 사용: cfs/popup/FAlloPayPopup
+- `/api/cfs/allo/searchStdPayTariffList`
+    - 사용: 배차관리(수출) 픽업(cfs/FExAlloMgtP), 배차관리(수출) 반입(cfs/FExAlloMgtR), 배차관리(수입)(cfs/FImAlloMgt)
+- `/api/cfs/allo/selectAlloImDtlList`
+    - 사용: 배차관리(수입)(cfs/FImAlloMgt)
+- `/api/cfs/allo/selectAlloStrange`
+    - 사용: cfs/popup/FAlloStatusPopup
+- `/api/cfs/allo/selectExAlloCntrPList`
+    - 사용: 배차관리(수출) 픽업(cfs/FExAlloMgtP)
+- `/api/cfs/allo/selectExAlloPList`
+    - 사용: 배차관리(수출) 픽업(cfs/FExAlloMgtP)
+- `/api/cfs/allo/selectExAlloRList`
+    - 사용: 배차관리(수출) 반입(cfs/FExAlloMgtR)
+- `/api/cfs/allo/selectImAlloList`
+    - 사용: 배차관리(수입)(cfs/FImAlloMgt)
+- `/api/cfs/allo/selectPaymentList`
+    - 사용: cfs/popup/FAlloPayPopup
+- `/api/cfs/allo/updateEmptyCntrReturnDate`
+    - 사용: 배차관리(수입)(cfs/FImAlloMgt)
+- `/api/cfs/allo/updateEx`
+    - 사용: 배차관리(수출) 픽업(cfs/FExAlloMgtP), 배차관리(수출) 반입(cfs/FExAlloMgtR)
+- `/api/cfs/allo/updateIm`
+    - 사용: 배차관리(수입)(cfs/FImAlloMgt)
+- `/api/cfs/bndTransMgt/cargoEntryStatusCfs`
+    - 사용: cfs/popup/FBndTransRegPopup, cfs/popup/FBndTransRegPopup-v2
+- `/api/cfs/bndTransMgt/deleteCusmovList`
+    - 사용: cfs/FBndTransMgt, cfs/FBndTransMgt-v2, cfs/popup/FBndTransRegPopup, cfs/popup/FBndTransRegPopup-v2
+- `/api/cfs/bndTransMgt/insertListBndMapOut`
+    - 사용: cfs/FBndTransMgt
+- `/api/cfs/bndTransMgt/insertListBndSend`
+    - 사용: cfs/FBndTransMgt-v2
+- `/api/cfs/bndTransMgt/saveBnd`
+    - 사용: cfs/popup/FBndTransRegPopup
+- `/api/cfs/bndTransMgt/saveBndAlloEstTrans`
+    - 사용: cfs/popup/FBndAlloEstTransPopup
+- `/api/cfs/bndTransMgt/saveBndAlloEstTrans_V2`
+    - 사용: cfs/popup/FBndAlloEstTransPopup-v2
+- `/api/cfs/bndTransMgt/saveBnd_V2`
+    - 사용: cfs/popup/FBndTransRegPopup-v2
+- `/api/cfs/bndTransMgt/selectBndErrList`
+    - 사용: cfs/popup/FBndErrorDetailPopup
+- `/api/cfs/bndTransMgt/selectCusdmrList`
+    - 사용: cfs/FBndTransMgt, cfs/popup/FBndAlloEstTransPopup
+- `/api/cfs/bndTransMgt/selectCusdmrList_V2`
+    - 사용: cfs/popup/FBndAlloEstTransPopup-v2
+- `/api/cfs/bndTransMgt/selectCusmovDtlList`
+    - 사용: cfs/popup/FBndTransRegPopup, cfs/popup/FBndTransRegPopup-v2, cfs/popup/FBndTransUpdatePopup
+- `/api/cfs/bndTransMgt/selectCusmovList`
+    - 사용: cfs/FBndTransMgt
+- `/api/cfs/bndTransMgt/selectCusmovList_V2`
+    - 사용: cfs/FBndTransMgt-v2
+- `/api/cfs/bndUpdate/insertBondModi`
+    - 사용: cfs/FBndUpdate-v2
+- `/api/cfs/bndUpdate/insertMapOut`
+    - 사용: cfs/FBndUpdate
+- `/api/cfs/bndUpdate/saveBndUpdate`
+    - 사용: cfs/popup/FBndTransUpdatePopup
+- `/api/cfs/bndUpdate/selectBndUpdate`
+    - 사용: cfs/FBndUpdate, cfs/popup/FBndTransUpdatePopup
+- `/api/cfs/bndUpdate/selectBndUpdatePopup`
+    - 사용: cfs/popup/FBndTransUpdatePopup
+- `/api/cfs/bndUpdate/selectBndUpdate_V2`
+    - 사용: cfs/FBndUpdate-v2
+- `/api/cfs/cntr/callCntrMgtList`
+    - 사용: cfs/FCfsZcePlanMgt, 컨테이너 DB 등록(cfs/FCntrDBRgstMgt)
+- `/api/cfs/cntr/deleteImCntrMgt`
+    - 사용: 컨테이너 DB리스트(cfs/FCntrDBListMgt)
+- `/api/cfs/cntr/saveCntrMgt`
+    - 사용: 컨테이너 반출입 관리(cfs/FCntrCarryMgt), 컨테이너 DB리스트(cfs/FCntrDBListMgt), 컨테이너 Movement(cfs/FCntrDailyMov)
+- `/api/cfs/cntr/saveCntrMgtUp`
+    - 사용: 컨테이너 DB 등록(cfs/FCntrDBRgstMgt)
+- `/api/cfs/cntr/saveManualIO`
+    - 사용: 컨테이너 반출입 관리(cfs/FCntrCarryMgt)
+- `/api/cfs/cntr/selectCntrMgtLogList`
+    - 사용: 컨테이너 Movement(cfs/FCntrDailyMov)
+- `/api/cfs/cntr/selectExCntrMgtList`
+    - 사용: 컨테이너 반출입 관리(cfs/FCntrCarryMgt)
+- `/api/cfs/cntr/selectImCntrMgtList`
+    - 사용: 컨테이너 DB리스트(cfs/FCntrDBListMgt), 컨테이너 DB 등록(cfs/FCntrDBRgstMgt)
+- `/api/cfs/cntrhis/selectCntrMgtHisList`
+    - 사용: cfs/popup/FCntrHisPopup
+- `/api/cfs/customApi/cargoEntryStatusSearch`
+    - 사용: cfs/popup/FBndPrgInfoPopup
+- `/api/cfs/exClp/checkClpStatus`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), 컨테이너적입관리 (LCL)(cfs/FClpLclMgt)
+- `/api/cfs/exClp/deleteCntrNo`
+    - 사용: 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/cfs/exClp/deleteExClp`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), cfs/FClpFclSkrMgt, 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/cfs/exClp/reUpdateExBookingInfo`
+    - 사용: cfs/popup/FUpdateBookingInfoPopup
+- `/api/cfs/exClp/requestCancelClp`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), 컨테이너적입관리 (LCL)(cfs/FClpLclMgt)
+- `/api/cfs/exClp/saveExFclClp`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), cfs/FClpFclSkrMgt
+- `/api/cfs/exClp/saveExLclClp`
+    - 사용: 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/cfs/exClp/selectExBookingInfo`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), cfs/FClpFclSkrMgt, 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt, 컨테이너 반출입 관리(cfs/FCntrCarryMgt), 입고오더등록 (현수)(cfs/FRcvHOrdReqMgt) 외 3
+- `/api/cfs/exClp/selectExBookingListInfo`
+    - 사용: 입고오더관리 (현수)(cfs/FRcvHOrdMgt), Shipping Order 관리(cfs/FShipOrdMgt)
+- `/api/cfs/exClp/selectExClpFcl`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), cfs/FClpFclSkrMgt
+- `/api/cfs/exClp/selectExClpLcl`
+    - 사용: 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/cfs/exClp/selectExcClpList`
+    - 사용: 컨테이너적입현황 조회(cfs/FClpSchMgt), cfs/FClpSchSkrMgt
+- `/api/cfs/exClp/selectExcRcvList`
+    - 사용: 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt, cfs/popup/FRcvList2Popup, cfs/popup/FRcvListPopup
+- `/api/cfs/exClp/selectPrintFcl`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), cfs/FClpFclSkrMgt
+- `/api/cfs/exClp/selectPrintLcl`
+    - 사용: 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/cfs/exClp/tranferClp`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), 컨테이너적입관리 (LCL)(cfs/FClpLclMgt)
+- `/api/cfs/exClp/updateCargoInfo`
+    - 사용: 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/cfs/exClp/updateExBookingInfo`
+    - 사용: 입고오더관리 (현수)(cfs/FRcvHOrdMgt)
+- `/api/cfs/exClp/updateLclCrg`
+    - 사용: 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/cfs/exClp/updateLclRcv`
+    - 사용: 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/cfs/exClp/validExClp`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), cfs/FClpFclSkrMgt, 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/cfs/exOrd/cancelWrng`
+    - 사용: 입고오더조회 (클락)(cfs/FRcvCOrdSchMgt), cfs/FRcvCOrdSkrSchMgt
+- `/api/cfs/exOrd/deleteExcOrd`
+    - 사용: 입고오더등록 (클락)(cfs/FRcvCOrdReqMgt), cfs/FRcvCOrdSkrReqMgt
+- `/api/cfs/exOrd/deleteExhCntrListMgt`
+    - 사용: 입고컨테이너관리 (현수)(cfs/FRcvHOrdSchMgt)
+- `/api/cfs/exOrd/deleteExhOrdMgt`
+    - 사용: 배차관리(수출) 픽업(cfs/FExAlloMgtP), 입고오더관리 (현수)(cfs/FRcvHOrdMgt), 입고오더등록 (현수)(cfs/FRcvHOrdReqMgt)
+- `/api/cfs/exOrd/saveExBkgOrdCrg`
+    - 사용: cfs/popup/FBkgDetailPopup
+- `/api/cfs/exOrd/saveExcOrd`
+    - 사용: 입고오더등록 (클락)(cfs/FRcvCOrdReqMgt), cfs/FRcvCOrdSkrReqMgt
+- `/api/cfs/exOrd/saveExhCntrMgt`
+    - 사용: 입고컨테이너관리 (현수)(cfs/FRcvHOrdSchMgt)
+- `/api/cfs/exOrd/saveExhOrd`
+    - 사용: 입고오더등록 (현수)(cfs/FRcvHOrdReqMgt)
+- `/api/cfs/exOrd/saveExhOrdMgt`
+    - 사용: 입고오더관리 (현수)(cfs/FRcvHOrdMgt)
+- `/api/cfs/exOrd/saveLkcYn`
+    - 사용: 입고오더관리 (현수)(cfs/FRcvHOrdMgt)
+- `/api/cfs/exOrd/saveWrkYn`
+    - 사용: 배차관리(수출) 픽업(cfs/FExAlloMgtP), 입고오더관리 (현수)(cfs/FRcvHOrdMgt), 입고컨테이너관리 (현수)(cfs/FRcvHOrdSchMgt), Shipping Order 관리(cfs/FShipOrdMgt)
+- `/api/cfs/exOrd/saveWrkYnAtOnce`
+    - 사용: 입고오더관리 (현수)(cfs/FRcvHOrdMgt)
+- `/api/cfs/exOrd/selectExBkgOrdCrg`
+    - 사용: cfs/popup/FBkgDetailPopup
+- `/api/cfs/exOrd/selectExBkgOrdCrgHis`
+    - 사용: cfs/popup/FExcCrgHisPopup
+- `/api/cfs/exOrd/selectExcOrd`
+    - 사용: 입고오더등록 (클락)(cfs/FRcvCOrdReqMgt), cfs/FRcvCOrdSkrReqMgt
+- `/api/cfs/exOrd/selectExcOrdList`
+    - 사용: 입고오더조회 (클락)(cfs/FRcvCOrdSchMgt), cfs/FRcvCOrdSkrSchMgt
+- `/api/cfs/exOrd/selectExhOrd`
+    - 사용: 입고오더등록 (현수)(cfs/FRcvHOrdReqMgt)
+- `/api/cfs/exOrd/selectExhOrdCntrList`
+    - 사용: 입고오더관리 (현수)(cfs/FRcvHOrdMgt)
+- `/api/cfs/exOrd/selectExhOrdList`
+    - 사용: 입고컨테이너관리 (현수)(cfs/FRcvHOrdSchMgt)
+- `/api/cfs/exOrd/selectExhOrdMgtList`
+    - 사용: 입고오더관리 (현수)(cfs/FRcvHOrdMgt)
+- `/api/cfs/exOrd/selectRcvOrdSchDtlList`
+    - 사용: 입고현황조회(고객용)(cfs/FRcvCOrdSchList)
+- `/api/cfs/exOrd/selectRcvOrdSchList`
+    - 사용: 입고현황조회(고객용)(cfs/FRcvCOrdSchList)
+- `/api/cfs/exOrd/updateAlloExcp`
+    - 사용: 배차관리(수출) 픽업(cfs/FExAlloMgtP), 입고오더관리 (현수)(cfs/FRcvHOrdMgt), 입고오더등록 (현수)(cfs/FRcvHOrdReqMgt), 입고컨테이너관리 (현수)(cfs/FRcvHOrdSchMgt)
+- `/api/cfs/exOrd/updateExhOrd`
+    - 사용: 입고컨테이너관리 (현수)(cfs/FRcvHOrdSchMgt)
+- `/api/cfs/exOrd/validExcOrd`
+    - 사용: 입고오더등록 (클락)(cfs/FRcvCOrdReqMgt), cfs/FRcvCOrdSkrReqMgt
+- `/api/cfs/exOrd/validExhOrd`
+    - 사용: 입고오더등록 (현수)(cfs/FRcvHOrdReqMgt)
+- `/api/cfs/exShipOrdMgt/deleteExShipOrd`
+    - 사용: Shipping Order 관리(cfs/FShipOrdMgt)
+- `/api/cfs/exShipOrdMgt/saveExShipOrd`
+    - 사용: Shipping Order 관리(cfs/FShipOrdMgt)
+- `/api/cfs/exShipOrdMgt/saveExShipOrdDtl`
+    - 사용: Shipping Order 관리(cfs/FShipOrdMgt)
+- `/api/cfs/exShipOrdMgt/selectExShipOrdCntrList`
+    - 사용: Shipping Order 관리(cfs/FShipOrdMgt)
+- `/api/cfs/exShipOrdMgt/selectExShipOrdList`
+    - 사용: Shipping Order 관리(cfs/FShipOrdMgt)
+- `/api/cfs/exShipOrdMgt/updateExhOrd`
+    - 사용: Shipping Order 관리(cfs/FShipOrdMgt)
+- `/api/cfs/exShipOrdMgt/updateShipOrdCntr`
+    - 사용: cfs/popup/FShipOrdCntrUpdatePopup
+- `/api/cfs/fAcsNotiMgt/deleteAcsNotiMgt`
+    - 사용: cfs/FAcsNotiMgt
+- `/api/cfs/fAcsNotiMgt/saveAcsNotiMgt`
+    - 사용: cfs/FAcsNotiMgt
+- `/api/cfs/fAcsNotiMgt/selectAcsNotiMgtList`
+    - 사용: cfs/FAcsNotiMgt
+- `/api/cfs/fAcsNotiMgt/selectEcgList`
+- `/api/cfs/fAcsNotiMgt/transAcsNotiMgt`
+    - 사용: cfs/FAcsNotiMgt
+- `/api/cfs/fBillCollStatus/cancelGroupBilling`
+    - 사용: 청구 및 수금현황(cfs/FBillCollStatus)
+- `/api/cfs/fBillCollStatus/groupBilling`
+    - 사용: cfs/popup/FBillMergePopup
+- `/api/cfs/fBillCollStatus/selectBillList`
+    - 사용: cfs/popup/FSalesTaxTotAmtPopup
+- `/api/cfs/fBillCollStatus/selectBillingData`
+    - 사용: cfs/popup/FSendBillingSearchPopup
+- `/api/cfs/fBillCollStatus/selectBillingList`
+    - 사용: 청구 및 수금현황(cfs/FBillCollStatus)
+- `/api/cfs/fBillCollStatus/sendBillingData`
+    - 사용: cfs/popup/FSendBillingPopup
+- `/api/cfs/fCrtfMgt/cancelGrpSm`
+    - 사용: CERTIFICATE 관리(cfs/FCertMgt)
+- `/api/cfs/fCrtfMgt/deleteSmBill`
+    - 사용: CERTIFICATE 관리(cfs/FCertMgt)
+- `/api/cfs/fCrtfMgt/saveGrpSm`
+    - 사용: CERTIFICATE 관리(cfs/FCertMgt)
+- `/api/cfs/fCrtfMgt/saveSmBill`
+    - 사용: CERTIFICATE 관리(cfs/FCertMgt)
+- `/api/cfs/fCrtfMgt/selectFCrtfCntrList`
+    - 사용: CERTIFICATE 관리(cfs/FCertMgt)
+- `/api/cfs/fCrtfMgt/selectFCrtfMgtList`
+    - 사용: CERTIFICATE 관리(cfs/FCertMgt)
+- `/api/cfs/fCrtfMgt/selectPrintBillList`
+    - 사용: CERTIFICATE 관리(cfs/FCertMgt)
+- `/api/cfs/fCrtfMgt/selectPrintCertList`
+    - 사용: CERTIFICATE 관리(cfs/FCertMgt)
+- `/api/cfs/fCrtfMgt/updateCrtfNoMgt`
+    - 사용: CERTIFICATE 관리(cfs/FCertMgt)
+- `/api/cfs/fSalesTaxMgt/cancelAccounting`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fSalesTaxMgt/cancelTaxBill`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fSalesTaxMgt/issueModiBill`
+- `/api/cfs/fSalesTaxMgt/issueTaxBill`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fSalesTaxMgt/resendMail`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fSalesTaxMgt/saveAccounting`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fSalesTaxMgt/saveRemark`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fSalesTaxMgt/selectBillList`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fSalesTaxMgt/selectBillTaxCntrList`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fSalesTaxMgt/selectLogisBill`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fSalesTaxMgt/selectTaxMgtList`
+    - 사용: 매출세금계산서 관리(cfs/FSalesTaxMgt)
+- `/api/cfs/fShprMgt/insertFShprMgt`
+    - 사용: cfs/popup/FShprRegPopup
+- `/api/cfs/fShprMgt/saveFShprMgt`
+    - 사용: CFS 화주 관리(cfs/FShprMgt)
+- `/api/cfs/fShprMgt/selectFShprMgt`
+    - 사용: CFS 화주 관리(cfs/FShprMgt)
+- `/api/cfs/fStcStt/selectInOutStockStatusList`
+    - 사용: cfs/FInOutStcSchMgt
+- `/api/cfs/fStcStt/selectPrintInOutStockStatusList`
+    - 사용: cfs/FInOutStcSchMgt
+- `/api/cfs/fStcStt/selectStockStatusList`
+    - 사용: cfs/FStockStatus
+- `/api/cfs/fTotSaleStatus/selectTotalSalesList`
+    - 사용: 통합 매출 조회(cfs/FTotSaleStatus)
+- `/api/cfs/im/deleteImOut`
+    - 사용: cfs/FBndExportMgt, cfs/FDomesticExportMgt
+- `/api/cfs/im/saveDomesticOutCor`
+    - 사용: cfs/FDomesticExportCorrMgt
+- `/api/cfs/im/saveImOut`
+    - 사용: cfs/FBndExportMgt, cfs/FDomesticExportMgt
+- `/api/cfs/im/saveImOutCor`
+    - 사용: cfs/FBndExportCorrMgt
+- `/api/cfs/im/selectDomesticOutCorList`
+    - 사용: cfs/FDomesticExportCorrMgt
+- `/api/cfs/im/selectDomesticOutCorLogList`
+    - 사용: cfs/FDomesticExportCorrMgt
+- `/api/cfs/im/selectDomesticOutCorrectDtlList`
+    - 사용: cfs/FDomesticExportCorrMgt
+- `/api/cfs/im/selectDomesticOutList`
+    - 사용: cfs/FDomesticExportMgt
+- `/api/cfs/im/selectImOutCorList`
+    - 사용: cfs/FBndExportCorrMgt
+- `/api/cfs/im/selectImOutCorLogList`
+    - 사용: cfs/FBndExportCorrMgt
+- `/api/cfs/im/selectImOutCorrectDtlList`
+    - 사용: cfs/FBndExportCorrMgt
+- `/api/cfs/im/selectImOutDetail`
+    - 사용: cfs/FBndExportMgt, cfs/FDomesticExportMgt
+- `/api/cfs/im/selectImOutList`
+    - 사용: cfs/FBndExportMgt
+- `/api/cfs/im/transDomesticOut`
+    - 사용: cfs/FDomesticExportMgt
+- `/api/cfs/im/transDomesticOutCor`
+    - 사용: cfs/FDomesticExportCorrMgt
+- `/api/cfs/im/transImOut`
+    - 사용: cfs/FBndExportMgt
+- `/api/cfs/im/transImOutCor`
+    - 사용: cfs/FBndExportCorrMgt
+- `/api/cfs/imagree/deleteImAgrMgt`
+    - 사용: cfs/FAgreeMgt
+- `/api/cfs/imagree/saveImAgrMgt`
+    - 사용: cfs/FAgreeMgt
+- `/api/cfs/imagree/selectImAgrMgtList`
+    - 사용: cfs/FAgreeMgt
+- `/api/cfs/imagree/updateAgreeFile`
+    - 사용: cfs/FAgreeMgt
+- `/api/cfs/imcord/saveImcOrd`
+    - 사용: 내장통관직상차 관리(cfs/FOrdMgt)
+- `/api/cfs/imcord/selectImcOrdList`
+    - 사용: 내장통관직상차 관리(cfs/FOrdMgt)
+- `/api/cfs/imorder/deleteImIn`
+    - 사용: cfs/FBndImportMgt, cfs/FDomesticImportMgt
+- `/api/cfs/imorder/saveDomesticInCor`
+    - 사용: cfs/FDomesticImportCorrMgt
+- `/api/cfs/imorder/saveImIn`
+    - 사용: cfs/FBndImportMgt, cfs/FDomesticImportMgt
+- `/api/cfs/imorder/saveImInCor`
+    - 사용: cfs/FBndImportCorrMgt
+- `/api/cfs/imorder/selectDomesticInCorList`
+    - 사용: cfs/FDomesticImportCorrMgt
+- `/api/cfs/imorder/selectDomesticInCorLogList`
+    - 사용: cfs/FDomesticImportCorrMgt
+- `/api/cfs/imorder/selectDomesticInCorrectDtlList`
+    - 사용: cfs/FDomesticImportCorrMgt
+- `/api/cfs/imorder/selectDomesticInList`
+    - 사용: cfs/FDomesticImportMgt
+- `/api/cfs/imorder/selectErrList`
+    - 사용: bws/popup/BwsBndErrDetailPopup, cfs/popup/FBndImportExportErrDetailPopup
+- `/api/cfs/imorder/selectImInCorList`
+    - 사용: cfs/FBndImportCorrMgt
+- `/api/cfs/imorder/selectImInCorLogList`
+    - 사용: cfs/FBndImportCorrMgt
+- `/api/cfs/imorder/selectImInCorrectDtlList`
+    - 사용: cfs/FBndImportCorrMgt
+- `/api/cfs/imorder/selectImInDtl`
+    - 사용: cfs/FBndImportMgt, cfs/FDomesticImportMgt
+- `/api/cfs/imorder/selectImInList`
+    - 사용: cfs/FBndImportMgt
+- `/api/cfs/imorder/selectNotInCntrList`
+    - 사용: cfs/FBndImportMgt, cfs/FDomesticImportMgt
+- `/api/cfs/imorder/transDomesticIn`
+    - 사용: cfs/FDomesticImportMgt
+- `/api/cfs/imorder/transDomesticInCor`
+    - 사용: cfs/FDomesticImportCorrMgt
+- `/api/cfs/imorder/transImIn`
+    - 사용: cfs/FBndImportMgt, wms/receipt/WmsAgrMgt, wms/receipt/WmsEgrMgt
+- `/api/cfs/imorder/transImInCor`
+    - 사용: cfs/FBndImportCorrMgt
+- `/api/cfs/inplan/deleteCePlan`
+    - 사용: cfs/FCfsZcePlanMgt
+- `/api/cfs/inplan/saveCePlan`
+    - 사용: cfs/FCfsZcePlanMgt
+- `/api/cfs/inplan/selectCePlanDetailList`
+    - 사용: cfs/FCfsZcePlanMgt
+- `/api/cfs/inplan/selectCePlanHdList`
+    - 사용: cfs/FCfsZcePlanMgt
+- `/api/cfs/inplan/selectCePlanList`
+    - 사용: cfs/FCfsZcePlanSearch
+- `/api/cfs/inplan/selectInPlanList`
+    - 사용: cfs/FUniPassImpSchMgt
+- `/api/cfs/prism/saveGateLog`
+    - 사용: 게이트로그 프리즘 3.0(cfs/FPrismGateLogMgt)
+- `/api/cfs/prism/saveStTrmn`
+    - 사용: 게이트로그 프리즘 3.0(cfs/FPrismGateLogMgt)
+- `/api/cfs/prism/selectGateLogList`
+    - 사용: 게이트로그 프리즘 3.0(cfs/FPrismGateLogMgt)
+- `/api/cfs/prism/updateStTrmn`
+    - 사용: 게이트로그 프리즘 3.0(cfs/FPrismGateLogMgt)
+- `/api/cfs/sales/deleteAcct`
+    - 사용: 보관료 정산관리(영업창고)(cfs/FCfsSalesAcct)
+- `/api/cfs/sales/deleteIn`
+    - 사용: 반입관리(영업창고)(cfs/FCfsSalesInMgt)
+- `/api/cfs/sales/deleteOut`
+    - 사용: 반출관리(영업창고)(cfs/FCfsSalesOutMgt)
+- `/api/cfs/sales/printAcct`
+    - 사용: 보관료 정산관리(영업창고)(cfs/FCfsSalesAcct)
+- `/api/cfs/sales/saveAcct`
+    - 사용: 보관료 정산관리(영업창고)(cfs/FCfsSalesAcct)
+- `/api/cfs/sales/saveIn`
+    - 사용: 반입관리(영업창고)(cfs/FCfsSalesInMgt)
+- `/api/cfs/sales/saveOut`
+    - 사용: 반출관리(영업창고)(cfs/FCfsSalesOutMgt)
+- `/api/cfs/sales/saveZCfsItemMgt`
+    - 사용: 영업창고 상품코드(cfs/FCfsSalesItemMgt)
+- `/api/cfs/sales/selectAcct`
+    - 사용: 보관료 정산관리(영업창고)(cfs/FCfsSalesAcct)
+- `/api/cfs/sales/selectAcctList`
+    - 사용: 보관료 정산관리(영업창고)(cfs/FCfsSalesAcct)
+- `/api/cfs/sales/selectIn`
+    - 사용: 반입관리(영업창고)(cfs/FCfsSalesInMgt)
+- `/api/cfs/sales/selectInList`
+    - 사용: 반입조회(영업창고)(cfs/FCfsSalesInSearch), 반출관리(영업창고)(cfs/FCfsSalesOutMgt)
+- `/api/cfs/sales/selectOut`
+    - 사용: 반출관리(영업창고)(cfs/FCfsSalesOutMgt)
+- `/api/cfs/sales/selectOutList`
+    - 사용: 반출조회(영업창고)(cfs/FCfsSalesOutSearch), 재고조회(영업창고)(cfs/FCfsSalesStock)
+- `/api/cfs/sales/selectStockList`
+    - 사용: 재고조회(영업창고)(cfs/FCfsSalesStock)
+- `/api/cfs/sales/selectZCfsItemMgt`
+    - 사용: 영업창고 상품코드(cfs/FCfsSalesItemMgt)
+- `/api/cfs/trfCrgIsuMgt/deleteTrfCrgIsu`
+    - 사용: 기타이고반출 관리(cfs/FTrfCrgIsuMgt)
+- `/api/cfs/trfCrgIsuMgt/saveTrfCrgIsu`
+    - 사용: 기타이고반출 관리(cfs/FTrfCrgIsuMgt)
+- `/api/cfs/trfCrgIsuMgt/selectCrgIsuLog`
+    - 사용: cfs/popup/FExCrgIsuLogPopup
+- `/api/cfs/trfCrgIsuMgt/selectTrfCrgIsuList`
+    - 사용: 기타이고반출 관리(cfs/FTrfCrgIsuMgt)
+
+## /api/cms  (72)
+
+- `/api/cms/comm/changeCmsUserMgtPwd`
+    - 사용: 고객사 직원 관리(cms/comm/CmsFwdUserMgt), 협력사 직원 관리(cms/comm/CmsPtnUserMgt), 국양 직원 관리(cms/comm/CmsUserMgt)
+- `/api/cms/comm/changeMenuId`
+    - 사용: cms/comm/CmsMenuMgt, z-dev/template/containerImgUpload
+- `/api/cms/comm/checkMenuId`
+    - 사용: cms/comm/CmsMenuMgt, z-dev/template/containerImgUpload
+- `/api/cms/comm/copyCmsRoleMenuMgt`
+    - 사용: cms/comm/CmsRoleMenuMgt
+- `/api/cms/comm/deleteCmsFavoritesMgt`
+    - 사용: 즐겨찾기(cms/comm/CmsFavoritesMgt)
+- `/api/cms/comm/deleteCmsUserMgt`
+    - 사용: 고객사 직원 관리(cms/comm/CmsFwdUserMgt), 협력사 직원 관리(cms/comm/CmsPtnUserMgt), 국양 직원 관리(cms/comm/CmsUserMgt)
+- `/api/cms/comm/deleteMenuMgt`
+    - 사용: cms/comm/CmsMenuMgt, z-dev/template/containerImgUpload
+- `/api/cms/comm/saveCmsCdUserRank`
+    - 사용: allocation/popup/InstUltOrderPopup
+- `/api/cms/comm/saveCmsCorpPicMgt`
+    - 사용: cms/comm/CmsCorpPicMgt
+- `/api/cms/comm/saveCmsErrorLog`
+    - 사용: cms/comm/CmsErrorLog
+- `/api/cms/comm/saveCmsFavoritesAddPopup`
+    - 사용: order/popup/orderFavoritesAddPopup
+- `/api/cms/comm/saveCmsFavoritesMgt`
+    - 사용: 즐겨찾기(cms/comm/CmsFavoritesMgt)
+- `/api/cms/comm/saveCmsKakaoTalkMgt`
+    - 사용: cms/comm/CmsKakaoTalkMgt
+- `/api/cms/comm/saveCmsRoleButtonMgt`
+    - 사용: cms/comm/CmsRoleButtonMgt
+- `/api/cms/comm/saveCmsRoleMenuMgt`
+    - 사용: cms/comm/CmsRoleMenuMgt
+- `/api/cms/comm/saveCmsRoleUserMgt`
+    - 사용: cms/comm/CmsRoleUserMgt
+- `/api/cms/comm/saveCmsUserMgt`
+    - 사용: 고객사 직원 관리(cms/comm/CmsFwdUserMgt), 협력사 직원 관리(cms/comm/CmsPtnUserMgt), 국양 직원 관리(cms/comm/CmsUserMgt)
+- `/api/cms/comm/saveCommonCode`
+    - 사용: cms/comm/CmsCommonCode
+- `/api/cms/comm/saveDataDicMgt`
+    - 사용: cms/comm/CmsDataDicMgt
+- `/api/cms/comm/saveLangMgt`
+    - 사용: cms/comm/CmsLangMgt
+- `/api/cms/comm/saveMenuMgt`
+    - 사용: cms/comm/CmsMenuMgt, z-dev/template/containerImgUpload
+- `/api/cms/comm/saveScreenMgt`
+    - 사용: cms/comm/CmsScreenMgt
+- `/api/cms/comm/selectCmsButtonRoleList`
+    - 사용: cms/comm/CmsRoleButtonMgt
+- `/api/cms/comm/selectCmsCorpList`
+    - 사용: cms/comm/CmsCorpPicMgt
+- `/api/cms/comm/selectCmsCorpPicMgt`
+    - 사용: cms/comm/CmsCorpPicMgt
+- `/api/cms/comm/selectCmsDelLog`
+    - 사용: cms/comm/CmsDelLog
+- `/api/cms/comm/selectCmsEdiLog`
+    - 사용: cms/comm/CmsEdiLog
+- `/api/cms/comm/selectCmsErrorLog`
+    - 사용: cms/comm/CmsErrorLog
+- `/api/cms/comm/selectCmsFavoritesMgt`
+    - 사용: 즐겨찾기(cms/comm/CmsFavoritesMgt)
+- `/api/cms/comm/selectCmsKakaoTalkSkillMgt`
+    - 사용: cms/comm/CmsKakaoTalkMgt
+- `/api/cms/comm/selectCmsKakaoTalkTemplateMgt`
+    - 사용: cms/comm/CmsKakaoTalkMgt
+- `/api/cms/comm/selectCmsMenuRoleList`
+    - 사용: cms/comm/CmsRoleMenuMgt
+- `/api/cms/comm/selectCmsRoleButtonAuth`
+    - 사용: cms/comm/CmsRoleButtonMgt
+- `/api/cms/comm/selectCmsRoleButtonMgt`
+    - 사용: cms/comm/CmsRoleButtonMgt
+- `/api/cms/comm/selectCmsRoleButtonSet`
+    - 사용: cms/comm/CmsRoleButtonMgt
+- `/api/cms/comm/selectCmsRoleMenuAuth`
+    - 사용: cms/comm/CmsRoleMenuMgt
+- `/api/cms/comm/selectCmsRoleMgt`
+    - 사용: cms/comm/CmsRoleUserMgt
+- `/api/cms/comm/selectCmsRoleUserMgt`
+    - 사용: cms/comm/CmsRoleUserMgt
+- `/api/cms/comm/selectCmsUserBranch`
+    - 사용: 국양 직원 관리(cms/comm/CmsUserMgt)
+- `/api/cms/comm/selectCmsUserMgt`
+    - 사용: 고객사 직원 관리(cms/comm/CmsFwdUserMgt), 협력사 직원 관리(cms/comm/CmsPtnUserMgt), 국양 직원 관리(cms/comm/CmsUserMgt)
+- `/api/cms/comm/selectCommonCode`
+    - 사용: cms/comm/CmsCommonCode
+- `/api/cms/comm/selectCommonCodeDetail`
+    - 사용: cms/comm/CmsCommonCode
+- `/api/cms/comm/selectCommonWorkPlace`
+    - 사용: 고객사 수입 오더 상세(order/door/import/orderRequestMgt), order/popup/orderMultiModiPopup
+- `/api/cms/comm/selectCsmUserInfo`
+    - 사용: cms/popup/CmsCsmOpenPopup
+- `/api/cms/comm/selectDataDicMgt`
+    - 사용: cms/comm/CmsDataDicMgt
+- `/api/cms/comm/selectLangMgt`
+    - 사용: cms/comm/CmsLangMgt
+- `/api/cms/comm/selectMenuMgt`
+    - 사용: cms/comm/CmsMenuMgt, z-dev/template/containerImgUpload
+- `/api/cms/comm/selectScreenMgt`
+    - 사용: cms/comm/CmsScreenMgt
+- `/api/cms/comm/validCmsUserMgtId`
+    - 사용: 고객사 직원 관리(cms/comm/CmsFwdUserMgt), 협력사 직원 관리(cms/comm/CmsPtnUserMgt), 국양 직원 관리(cms/comm/CmsUserMgt)
+- `/api/cms/comm/validFavoritesCode`
+    - 사용: order/popup/orderFavoritesAddPopup
+- `/api/cms/history/selectCmsOrderHistory`
+    - 사용: cms/history/CmsOrderHistory
+- `/api/cms/history/selectCmsVisitLog`
+    - 사용: cms/history/CmsVisitLog
+- `/api/cms/popup/deleteTemplateBoardMgt`
+    - 사용: z-dev/popup/TemplateBoardPopup
+- `/api/cms/popup/saveDocumentMgt`
+    - 사용: cms/popup/CmsDocumentMgt
+- `/api/cms/popup/saveTemplateBoardMgt`
+    - 사용: z-dev/popup/TemplateBoardPopup
+- `/api/cms/popup/selectCommonPopup`
+- `/api/cms/popup/selectCommonPopupAlloTeam`
+    - 사용: allocation/popup/AlloTeamPopup
+- `/api/cms/popup/selectCommonPopupAlloTeamUserList`
+    - 사용: allocation/popup/AlloTeamPopup
+- `/api/cms/popup/selectCommonPopupAllocationTruck`
+    - 사용: allocation/popup/allocationPopup, cfs/popup/FAlloTruckPopup
+- `/api/cms/popup/selectCommonPopupBilling`
+    - 사용: 즐겨찾기(cms/comm/CmsFavoritesMgt), 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 고객사 수입 오더 상세(order/door/import/orderRequestMgt)
+- `/api/cms/popup/selectCommonPopupCorp`
+    - 사용: 배차관리(수입)(cfs/FImAlloMgt), cfs/popup/FAlloPopup, cfs/popup/FAlloShipperPopup, cfs/popup/FAlloTruckPopup
+- `/api/cms/popup/selectCommonPopupCorpUser`
+    - 사용: bws/BwsDmtAgiMgt, bws/BwsDmtAgrMgt, bws/BwsFreeAgiMgt, bws/BwsFreeAgrMgt
+- `/api/cms/popup/selectCommonPopupCpWrk`
+    - 사용: allocation/popup/AlloCopinoPopup, allocation/popup/SimulAlloCopinoPopup, sm/popup/DriverSignPopup
+- `/api/cms/popup/selectCommonPopupGroupOrderVhcReg`
+    - 사용: allocation/popup/GroupOrdAlloRegPopup
+- `/api/cms/popup/selectCommonPopupPic`
+    - 사용: dsh/dashboard/popup/orderTempPopup, 수출오더등록(order/door/export/orderRequest), 수입오더등록(order/door/import/orderRequest), 간편 오더 등록(order/door/simple/ordSimRequest), order/popup/orderTemplateAddPopup, order/template
+- `/api/cms/popup/selectDocumentMgt`
+    - 사용: cms/popup/CmsDocumentMgt
+- `/api/cms/popup/selectTemplateBoardMgt`
+    - 사용: z-dev/popup/TemplateBoardPopup
+- `/api/cms/popup/selectTextSearchCommonPopup`
+- `/api/cms/popup/updateTemplateBoardMgt`
+    - 사용: z-dev/popup/TemplateBoardPopup
+- `/api/cms/setting/saveCmsAutonoRuleMgt`
+    - 사용: cms/setting/CmsAutonoRuleMgt
+- `/api/cms/setting/selectCmsAutonoRuleList`
+    - 사용: cms/setting/CmsAutonoRuleMgt
+- `/api/cms/setting/selectCmsAutonoTypeList`
+    - 사용: cms/setting/CmsAutonoRuleMgt
+
+## /api/code  (10)
+
+- `/api/code/selectAlloPartnerCorp`
+- `/api/code/selectBlock`
+- `/api/code/selectCmsShipperMgt`
+- `/api/code/selectCntrLine`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), cfs/FClpFclSkrMgt, 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/code/selectCommonCode`
+- `/api/code/selectContainerList`
+    - 사용: 컨테이너적입관리 (FCL)(cfs/FClpFclMgt), cfs/FClpFclSkrMgt, 컨테이너적입관리 (LCL)(cfs/FClpLclMgt), cfs/FClpLclSkrMgt
+- `/api/code/selectLanguageCode`
+- `/api/code/selectUserCode`
+- `/api/code/selectUserCorpCode`
+- `/api/code/selectWhzone`
+
+## /api/contractnotiList  (1)
+
+- `/api/contractnotiList`
+
+## /api/copino  (3)
+
+- `/api/copino/cancelBookingCopino`
+    - 사용: sm/popup/DriverSignPopup
+- `/api/copino/saveBookingCopino`
+    - 사용: sm/popup/DriverSignPopup
+- `/api/copino/selectCopinoHdSch`
+    - 사용: sm/popup/DriverSignPopup
+
+## /api/custnotiList  (1)
+
+- `/api/custnotiList`
+
+## /api/cy  (142)
+
+- `/api/cy/E71A001C/delete`
+    - 사용: cy/inOutMng/E71A001C
+- `/api/cy/E71A001C/save`
+    - 사용: cy/inOutMng/E71A001C
+- `/api/cy/E71A001C/select`
+    - 사용: cy/inOutMng/E71A001C
+- `/api/cy/E71A001C/selectCarrierCd`
+    - 사용: cy/inOutMng/E71A001C
+- `/api/cy/E71A001C/selectCustCd`
+    - 사용: cy/inOutMng/E71A001C
+- `/api/cy/E71A001C/selectShipperCd`
+    - 사용: cy/inOutMng/E71A001C
+- `/api/cy/E71A001C/updateChkYn`
+    - 사용: cy/inOutMng/E71A001C
+- `/api/cy/E71A001C/updateErrYn`
+    - 사용: cy/inOutMng/E71A001C
+- `/api/cy/E71A002C/save`
+    - 사용: cy/inOutMng/E71A002C
+- `/api/cy/E71A002C/select`
+    - 사용: cy/inOutMng/E71A002C
+- `/api/cy/E71A003C/save`
+    - 사용: cy/inOutMng/E71A003C
+- `/api/cy/E71A003C/select`
+    - 사용: cy/inOutMng/E71A003C
+- `/api/cy/E71A004C/delete`
+    - 사용: cy/inOutMng/E71A004C
+- `/api/cy/E71A004C/save`
+    - 사용: cy/inOutMng/E71A004C
+- `/api/cy/E71A004C/select`
+    - 사용: cy/inOutMng/E71A004C
+- `/api/cy/E71A004C/selectBlockBay`
+    - 사용: cy/inOutMng/E71A004C
+- `/api/cy/E71A004C/selectInfo`
+    - 사용: cy/inOutMng/E71A004C
+- `/api/cy/E71A004C/updateSeq`
+    - 사용: cy/inOutMng/E71A004C
+- `/api/cy/E71A005C/delete`
+    - 사용: cy/inOutMng/E71A005C
+- `/api/cy/E71A005C/save`
+    - 사용: cy/inOutMng/E71A005C
+- `/api/cy/E71A005C/select`
+    - 사용: cy/inOutMng/E71A005C
+- `/api/cy/E71A008C/saveTerminalMgt`
+    - 사용: cy/inOutMng/E71A008C
+- `/api/cy/E71A008C/selectTerminalMgt`
+    - 사용: cy/inOutMng/E71A008C
+- `/api/cy/E71A009C/saveTerminalMgt`
+    - 사용: cy/inOutMng/E71A009C
+- `/api/cy/E71A009C/selectTerminalMgt`
+    - 사용: cy/inOutMng/E71A009C
+- `/api/cy/E71A011C/select`
+    - 사용: cy/conMng/E71A011C
+- `/api/cy/E71A012C/save`
+    - 사용: cy/popup/bulkUpdatePopup
+- `/api/cy/E71A012C/select`
+    - 사용: cy/conMng/E71A012C
+- `/api/cy/E71A013C/save`
+    - 사용: cy/conMng/E71A013C, cy/popup/E71A013CPopup
+- `/api/cy/E71A013C/select`
+    - 사용: cy/conMng/E71A013C, cy/popup/E71A013CPopup
+- `/api/cy/E71A014C/save`
+    - 사용: cy/conMng/E71A014C
+- `/api/cy/E71A014C/select`
+    - 사용: cy/conMng/E71A014C
+- `/api/cy/E71A015C/delete`
+    - 사용: cy/conMng/E71A015C
+- `/api/cy/E71A015C/save`
+    - 사용: cy/conMng/E71A015C
+- `/api/cy/E71A015C/select`
+    - 사용: cy/conMng/E71A015C
+- `/api/cy/E71A016C/delete`
+    - 사용: cy/conMng/E71A016C
+- `/api/cy/E71A016C/save`
+    - 사용: cy/conMng/E71A016C
+- `/api/cy/E71A016C/select`
+    - 사용: cy/conMng/E71A016C
+- `/api/cy/E71A101C/delete`
+    - 사용: cy/reefer/E71A101C
+- `/api/cy/E71A101C/insert`
+    - 사용: cy/reefer/E71A101C
+- `/api/cy/E71A101C/select`
+    - 사용: cy/reefer/E71A101C
+- `/api/cy/E71A101C/update`
+    - 사용: cy/reefer/E71A101C
+- `/api/cy/E71A102C/save`
+    - 사용: cy/reefer/E71A102C
+- `/api/cy/E71A102C/select`
+    - 사용: cy/reefer/E71A102C
+- `/api/cy/E71A103C/select`
+    - 사용: cy/reefer/E71A103C
+- `/api/cy/E71A104C/select`
+    - 사용: cy/reefer/E71A104C
+- `/api/cy/E71A105C/select`
+    - 사용: cy/reefer/E71A105C
+- `/api/cy/E71A106C/select`
+    - 사용: cy/reefer/E71A106C
+- `/api/cy/E71A107C/select`
+    - 사용: cy/reefer/E71A107C
+- `/api/cy/E71A107C/selectListDtl`
+    - 사용: cy/reefer/E71A107C
+- `/api/cy/E71A108C/select`
+    - 사용: cy/reefer/E71A108C
+- `/api/cy/E71B001C/refresh`
+    - 사용: cy/device/gate/E71B001C
+- `/api/cy/E71B001C/save`
+    - 사용: cy/device/gate/E71B001C
+- `/api/cy/E71C001C/UpdateEq`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/cancelComplete`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/cancelOrderList`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/cntrEOrderData`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/cntrFromChk`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/cntrInfoOne`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/cntrOrderList`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/cntrStckList`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/login`
+    - 사용: cy/device/yard/E71C001C
+- `/api/cy/E71C001C/orderComplete`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/positionChk`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/select`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71C001C/setInfo`
+    - 사용: intro/cyPage/yardDevice
+- `/api/cy/E71C001C/vhcOrderSearch`
+    - 사용: cy/device/yard/E71C001C, intro/cyPage/yardDevice
+- `/api/cy/E71D001C/deleteYardInfo`
+    - 사용: cy/yardMng/E71D001C
+- `/api/cy/E71D001C/saveYardInfo`
+    - 사용: cy/yardMng/E71D001C
+- `/api/cy/E71D001C/selectYardInfo`
+    - 사용: cy/yardMng/E71D001C
+- `/api/cy/E71E001C/delete`
+    - 사용: cy/adjustment/E71E001C
+- `/api/cy/E71E001C/save`
+    - 사용: cy/adjustment/E71E001C
+- `/api/cy/E71E001C/select`
+    - 사용: cy/adjustment/E71E001C
+- `/api/cy/E71E002C/delete`
+    - 사용: cy/adjustment/E71E002C
+- `/api/cy/E71E002C/paste`
+    - 사용: cy/adjustment/E71E002C
+- `/api/cy/E71E002C/save`
+    - 사용: cy/adjustment/E71E002C
+- `/api/cy/E71E002C/select`
+    - 사용: cy/adjustment/E71E002C
+- `/api/cy/E71E003C/save`
+    - 사용: cy/adjustment/E71E003C
+- `/api/cy/E71E003C/select`
+    - 사용: cy/adjustment/E71E003C
+- `/api/cy/E71E004C/delete`
+    - 사용: cy/adjustment/E71E004C
+- `/api/cy/E71E004C/save`
+    - 사용: cy/adjustment/E71E004C
+- `/api/cy/E71E004C/select`
+    - 사용: cy/adjustment/E71E004C
+- `/api/cy/E71E004C/selectDetail`
+    - 사용: cy/adjustment/E71E004C
+- `/api/cy/E71E005C/delete`
+    - 사용: cy/adjustment/E71E005C
+- `/api/cy/E71E005C/save`
+    - 사용: cy/adjustment/E71E005C
+- `/api/cy/E71E005C/select`
+    - 사용: cy/adjustment/E71E005C
+- `/api/cy/E71E005C/selectDetail`
+    - 사용: cy/adjustment/E71E005C
+- `/api/cy/E71E006C/billUpdate`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E006C/calculation`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E006C/delete`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E006C/deleteCntr`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E006C/process`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E006C/selectCnaccList`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E006C/selectInvCn`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E006C/selectInvLine`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E006C/selectInvoiceList`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E006C/selectTamtList`
+    - 사용: cy/adjustment/E71E006C
+- `/api/cy/E71E007C/process`
+    - 사용: cy/adjustment/E71E007C
+- `/api/cy/E71E007C/selectInvcnList`
+    - 사용: cy/adjustment/E71E007C
+- `/api/cy/E71E007C/selectInvlineList`
+    - 사용: cy/adjustment/E71E007C
+- `/api/cy/E71E007C/selectInvoiceList`
+    - 사용: cy/adjustment/E71E007C
+- `/api/cy/E71E007C/updateAppDt`
+    - 사용: cy/adjustment/E71E007C
+- `/api/cy/E71E008C/process`
+    - 사용: cy/adjustment/E71E008C
+- `/api/cy/E71E008C/selectInvcnList`
+    - 사용: cy/adjustment/E71E008C
+- `/api/cy/E71E008C/selectInvlineList`
+    - 사용: cy/adjustment/E71E008C
+- `/api/cy/E71E008C/selectInvoiceList`
+    - 사용: cy/adjustment/E71E008C
+- `/api/cy/E71F001C/delete`
+    - 사용: cy/danger/E71F001C
+- `/api/cy/E71F001C/insert`
+    - 사용: cy/danger/E71F001C
+- `/api/cy/E71F001C/select`
+    - 사용: cy/danger/E71F001C
+- `/api/cy/E71F001C/update`
+    - 사용: cy/danger/E71F001C
+- `/api/cy/E71F002C/select`
+    - 사용: cy/danger/E71F002C
+- `/api/cy/E71F003C/select`
+    - 사용: cy/danger/E71F003C
+- `/api/cy/E71F004C/select`
+    - 사용: cy/danger/E71F004C
+- `/api/cy/E71F005C/select`
+    - 사용: cy/danger/E71F005C
+- `/api/cy/E71F006C/select`
+    - 사용: cy/danger/E71F006C
+- `/api/cy/E71F007C/select`
+    - 사용: cy/danger/E71F007C
+- `/api/cy/E71F008C/select`
+    - 사용: cy/danger/E71F008C
+- `/api/cy/E71F009C/select`
+    - 사용: cy/danger/E71F009C
+- `/api/cy/E71F010C/select`
+    - 사용: cy/danger/E71F010C
+- `/api/cy/E71J001C/deleteYardOrder`
+    - 사용: cy/yardMng/E71J001C
+- `/api/cy/E71J001C/insertYardOrder`
+    - 사용: cy/yardMng/E71J001C
+- `/api/cy/E71J001C/selectOrderInfo`
+    - 사용: cy/yardMng/E71J001C
+- `/api/cy/E71J001C/selectRowInfo`
+    - 사용: cy/yardMng/E71J001C
+- `/api/cy/E71J001C/selectYardInfo`
+    - 사용: cy/yardMng/E71J001C
+- `/api/cy/E71J001C/updateHot`
+    - 사용: cy/yardMng/E71J001C
+- `/api/cy/E71J001C/updateYardOrder`
+    - 사용: cy/yardMng/E71J001C
+- `/api/cy/blockChk`
+    - 사용: cy/inOutMng/E71A005C
+- `/api/cy/cntrChk`
+    - 사용: cy/conMng/E71A015C, cy/inOutMng/E71A001C
+- `/api/cy/config/info`
+    - 사용: cy/config
+- `/api/cy/config/saveInfo`
+    - 사용: cy/config
+- `/api/cy/inv/billingBlBndLicInv`
+    - 사용: cy/adjustment/CyBlBndLicInvMgt
+- `/api/cy/inv/cancelBlBndLicInv`
+    - 사용: cy/adjustment/CyBlBndLicInvMgt
+- `/api/cy/inv/selectBlBndLicInvList`
+    - 사용: cy/adjustment/CyBlBndLicInvMgt
+- `/api/cy/order/deleteCyOrder`
+    - 사용: cy/inOutMng/E71A006C, cy/inOutMng/E71A007C
+- `/api/cy/order/saveCyOrder`
+    - 사용: cy/inOutMng/E71A006C, cy/inOutMng/E71A007C
+- `/api/cy/order/selectOrderList`
+    - 사용: cy/inOutMng/E71A006C, cy/inOutMng/E71A007C
+- `/api/cy/positionChk`
+    - 사용: cy/conMng/E71A014C
+- `/api/cy/statics/E71A021C/selectTimeList`
+    - 사용: cy/statistics/E71A021C
+- `/api/cy/statics/E71A021C/selectWeekList`
+    - 사용: cy/statistics/E71A021C
+- `/api/cy/statics/E71A022C/selectList`
+    - 사용: cy/statistics/E71A022C
+- `/api/cy/statics/E71A023C/selectList`
+    - 사용: cy/statistics/E71A023C
+- `/api/cy/statics/E71A023C/selectListDtl`
+    - 사용: cy/statistics/E71A023C
+
+## /api/db  (27)
+
+- `/api/db/faq/selectFaqList`
+    - 사용: FAQ(db/faq)
+- `/api/db/notice/deleteDBNoticePopup`
+    - 사용: db/popup/noticePopup
+- `/api/db/notice/naverOpen`
+    - 사용: admin/BoardPopup, admin/NoticePopup
+- `/api/db/notice/saveDBNotice`
+    - 사용: 공지사항(db/notice)
+- `/api/db/notice/saveDBNoticePopup`
+    - 사용: db/popup/noticePopup
+- `/api/db/notice/selectDBNotice`
+    - 사용: 공지사항(db/notice), db/popup/noticePopup
+- `/api/db/notice/selectDriverNotice`
+    - 사용: mobile/MobileDrvNotice
+- `/api/db/notice/selectDriverNoticeView`
+    - 사용: mobile/MobileDrvNotice
+- `/api/db/popup/deleteFaqPopUp`
+    - 사용: db/popup/faqPopup
+- `/api/db/popup/deleteTmpDownPopUp`
+    - 사용: db/popup/tmpDownPopup
+- `/api/db/popup/saveFaqPopUp`
+    - 사용: db/popup/faqPopup
+- `/api/db/popup/saveTmpDownPopUp`
+    - 사용: db/popup/tmpDownPopup
+- `/api/db/popup/selectFaqPopUp`
+    - 사용: db/popup/faqPopup
+- `/api/db/popup/selectTmpDownPopUp`
+    - 사용: db/popup/tmpDownPopup
+- `/api/db/popup/updateFaqPopUp`
+    - 사용: db/popup/faqPopup
+- `/api/db/popup/updateTmpDownPopUp`
+    - 사용: db/popup/tmpDownPopup
+- `/api/db/request/deleteCfsDBRequestPopup`
+    - 사용: db/popup/FCfsRequestPopup
+- `/api/db/request/deleteDBRequestPopup`
+    - 사용: db/popup/requestPopup
+- `/api/db/request/saveCfsDBRequest`
+    - 사용: db/FCfsRequest
+- `/api/db/request/saveCfsDBRequestPopup`
+    - 사용: db/popup/FCfsRequestPopup
+- `/api/db/request/saveDBRequest`
+    - 사용: 고객서비스관리(db/request)
+- `/api/db/request/saveDBRequestPopup`
+    - 사용: db/popup/requestPopup
+- `/api/db/request/selectCfsDBRequest`
+    - 사용: db/FCfsRequest, db/popup/FCfsRequestPopup
+- `/api/db/request/selectDBRequest`
+    - 사용: db/popup/requestPopup, 고객서비스관리(db/request)
+- `/api/db/request/updateCfsRequestFile`
+    - 사용: db/popup/FCfsRequestPopup
+- `/api/db/request/updateRequestFile`
+    - 사용: db/popup/requestPopup
+- `/api/db/tmpDown/selectTemplateDownloadList`
+    - 사용: db/templateDownload
+
+## /api/dev  (9)
+
+- `/api/dev/excel/upload`
+    - 사용: z-dev/template/excelImportTemplate
+- `/api/dev/template/createJsonWebToken`
+    - 사용: z-dev/template/webpush
+- `/api/dev/template/savetTemplateLayout01`
+    - 사용: z-dev/layout/layout03
+- `/api/dev/template/selectDevTestProcedure`
+- `/api/dev/template/selectTemplateLayout01`
+    - 사용: z-dev/layout/layout03
+- `/api/dev/template/selectTemplateMexg`
+- `/api/dev/template/sendMail`
+    - 사용: z-dev/template/mail
+- `/api/dev/template/sendMessage`
+    - 사용: z-dev/template/webpush
+- `/api/dev/template/transKoreanToEngTest`
+
+## /api/dr  (4)
+
+- `/api/dr/allo/cancelUltOrder`
+    - 사용: 도어배차(allocation/door/directAlloAndCopinoV2), 배차현황 팝업(allocation/popup/AlloStatusPopup)
+- `/api/dr/allo/completeUltOrder`
+    - 사용: 도어배차(allocation/door/directAlloAndCopinoV2)
+- `/api/dr/allo/sendUltAllocation`
+    - 사용: allocation/popup/AlloShareOrderPopup
+- `/api/dr/allo/sendUltOrder`
+    - 사용: allocation/popup/InstUltOrderPopup
+
+## /api/dsh  (10)
+
+- `/api/dsh/dashboard/CustomNotinaverOpen`
+    - 사용: dsh/dashboard/popup/alarmView, dsh/dashboard/popup/customNoticeView
+- `/api/dsh/dashboard/deleteCustomNoticePopup`
+    - 사용: dsh/dashboard/popup/customNoticeMgt
+- `/api/dsh/dashboard/saveCustomNoticePopup`
+    - 사용: dsh/dashboard/popup/customNoticeMgt
+- `/api/dsh/dashboard/searchFileList`
+    - 사용: dsh/dashboard/popup/alarmView, dsh/dashboard/popup/customNoticeView
+- `/api/dsh/dashboard/selectCustomNotice`
+    - 사용: Main(dsh/dashboard/Dsh01), 고객사 공지사항(dsh/dashboard/customNoticeList), dsh/dashboard/popup/customNoticeMgt
+- `/api/dsh/dashboard/selectCustomNoticeView`
+    - 사용: Main(dsh/dashboard/Dsh01), 고객사 공지사항(dsh/dashboard/customNoticeList)
+- `/api/dsh/dashboard/selectExcahgneRate`
+    - 사용: Main(dsh/dashboard/Dsh01), dsh/dashboard/popup/exchangeRatePopup, dsh/dashboard/popup/kyltPicInfoPopup, dsh/dashboard/popup/terminalPopup, dsh/dashboard/popup/webBookingPopup
+- `/api/dsh/dashboard/selectMyDashboard`
+    - 사용: Main(dsh/dashboard/Dsh01)
+- `/api/dsh/dashboard/selectOrderByShipper`
+    - 사용: dsh/dashboard/orderByShipper
+- `/api/dsh/dashboard/updateCusNoticeFile`
+    - 사용: dsh/dashboard/popup/customNoticeMgt
+
+## /api/file  (8)
+
+- `/api/file/`
+- `/api/file/base64ImageDownload`
+- `/api/file/fileDownload`
+    - 사용: bnd/popup/BndFileUploadtPopup, 파일관리팝업(cms/popup/CmsFileAgentPopup), db/popup/faqPopup, db/popup/tmpDownPopup, z-dev/popup/TemplateBoardPopup, z-dev/template/templateDownload
+- `/api/file/fileUpload`
+- `/api/file/logoImageDownload`
+- `/api/file/multiFileUpload`
+    - 사용: bnd/popup/BndFileUploadtPopup, cms/popup/CmsDocumentMgt, 파일관리팝업(cms/popup/CmsFileAgentPopup), db/popup/faqPopup, db/popup/tmpDownPopup, z-dev/popup/TemplateBoardPopup 외 3
+- `/api/file/multiFileUploadForRequest`
+    - 사용: bnd/popup/BndFileUploadtPopup, 파일관리팝업(cms/popup/CmsFileAgentPopup)
+- `/api/file/selectFileList`
+    - 사용: bnd/popup/BndFileUploadtPopup, 파일관리팝업(cms/popup/CmsFileAgentPopup)
+
+## /api/findMyId  (1)
+
+- `/api/findMyId`
+    - 사용: z-dev/sample/layout01
+
+## /api/findMyPassword  (1)
+
+- `/api/findMyPassword`
+    - 사용: z-dev/sample/layout01
+
+## /api/headerMap  (1)
+
+- `/api/headerMap`
+
+## /api/insertVisitLog  (1)
+
+- `/api/insertVisitLog`
+
+## /api/intStt  (13)
+
+- `/api/intStt/cancelAccounting`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/cancelIntSttList`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/cancelTaxBill`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/deleteTaxList`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/issueRsdnRgstTaxBill`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/issueTaxBill`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/resendMail`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/saveAccounting`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/saveIntSttList`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/saveTaxList`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/selectBranchTaxList`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/selectLogisBill`
+    - 사용: sm/IntegrateSettlement
+- `/api/intStt/selectTaxList`
+    - 사용: sm/IntegrateSettlement
+
+## /api/intro  (9)
+
+- `/api/intro/code/selectCorpCode`
+    - 사용: intro/membership/IntroJoin
+- `/api/intro/code/selectNoticeList`
+    - 사용: intro/membership/Intro
+- `/api/intro/tariff/selectIntroTariff`
+    - 사용: 안전운임제(db/tariff)
+- `/api/intro/tariff/selectIntroTariffBlock`
+    - 사용: 안전운임제(db/tariff)
+- `/api/intro/tariff/selectIntroTariffBlock_v2`
+    - 사용: 안전운임제(db/tariff)
+- `/api/intro/tariff/selectIntroTariffCity`
+    - 사용: 안전운임제(db/tariff)
+- `/api/intro/tariff/selectIntroTariffDong`
+    - 사용: 안전운임제(db/tariff), intro/membership/Intro
+- `/api/intro/tariff/selectIntroTariffSettingData`
+    - 사용: 안전운임제(db/tariff), Main(dsh/dashboard/Dsh01), intro/membership/Intro
+- `/api/intro/tariff/selectIntroTariff_v2`
+    - 사용: 안전운임제(db/tariff)
+
+## /api/languageMap  (1)
+
+- `/api/languageMap`
+
+## /api/legal  (3)
+
+- `/api/legal/perform/selectPerfromDeclare`
+    - 사용: 실적신고관리(legal/PerformDeclareMgt)
+- `/api/legal/perform/selectPerfromDeclareCntr`
+    - 사용: 실적신고관리(legal/PerformDeclareMgt)
+- `/api/legal/vhcLocTrck/selectVhcLocTrckMgtList`
+    - 사용: 차량위치추적(legal/VhcLocTrckMgt)
+
+## /api/login  (1)
+
+- `/api/login`
+    - 사용: intro/apiPage/apiautologin, intro/cyPage/cyLogin, intro/membership/IntroLogin, intro/membership/autoLogin
+
+## /api/logout  (1)
+
+- `/api/logout`
+
+## /api/mdm  (132)
+
+- `/api/mdm/bnd/saveMdmBndFacl`
+    - 사용: bnd/popup/BndAddFaclPopup, cms/popup/CmsFaclPopup, 장치장 관리(mdm/facl/MdmBndFaclMgt)
+- `/api/mdm/bnd/selectMdmBndFacl`
+    - 사용: bnd-v2/popup/BndTransMgtPopup-v2, bnd/popup/BndTransMgtPopup, cfs/popup/FBndTransRegPopup, cfs/popup/FBndTransRegPopup-v2, 장치장 관리(mdm/facl/MdmBndFaclMgt)
+- `/api/mdm/code/deleteMdmCarrierMgt`
+    - 사용: 선사/항공사 관리(mdm/code/MdmCarrierMgt)
+- `/api/mdm/code/deleteMdmLineMgt`
+    - 사용: 선사 관리(mdm/code/MdmLineMgt)
+- `/api/mdm/code/deleteMdmSelPchMgt`
+    - 사용: mdm/code/MdmSelPchMgt
+- `/api/mdm/code/dstrate/save`
+    - 사용: mdm/code/MdmTruckDistanceRate
+- `/api/mdm/code/dstrate/upload`
+    - 사용: mdm/code/MdmTruckDistanceRate
+- `/api/mdm/code/excelUploadMdmEqpRepairMgt`
+    - 사용: mdm/popup/MdmEqpRepairExcelUploadPopup
+- `/api/mdm/code/getReadLine`
+    - 사용: 선사 관리(mdm/code/MdmLineMgt)
+- `/api/mdm/code/restMdmDspVhcMgt`
+    - 사용: 배차차량 관리(mdm/code/MdmDspVhcMgt)
+- `/api/mdm/code/saerchEqpHistory`
+    - 사용: 장비관리(mdm/code/MdmEqpMgt)
+- `/api/mdm/code/saveMdmCarrierMgt`
+    - 사용: 선사/항공사 관리(mdm/code/MdmCarrierMgt)
+- `/api/mdm/code/saveMdmCfsItemMgt`
+    - 사용: mdm/code/MdmCfsItemMgt
+- `/api/mdm/code/saveMdmCountryMgt`
+    - 사용: 국가코드 관리(mdm/code/MdmCountryMgt)
+- `/api/mdm/code/saveMdmCurrencyMgt`
+    - 사용: 통화코드 관리(mdm/code/MdmCurrencyMgt)
+- `/api/mdm/code/saveMdmDspVhcMgt`
+    - 사용: 배차차량 관리(mdm/code/MdmDspVhcMgt)
+- `/api/mdm/code/saveMdmDspVhcPrtnMgt`
+    - 사용: mdm/code/MdmDspVhcPrtnMgt
+- `/api/mdm/code/saveMdmEqpCost`
+    - 사용: mdm/popup/MdmEqpCostPopup
+- `/api/mdm/code/saveMdmEqpMgt`
+    - 사용: 장비관리(mdm/code/MdmEqpMgt)
+- `/api/mdm/code/saveMdmEqpRepairMgt`
+    - 사용: 장비내역 수리관리(mdm/code/MdmEqpRepairMgt)
+- `/api/mdm/code/saveMdmExrateMgt`
+    - 사용: mdm/code/MdmExrateMgt
+- `/api/mdm/code/saveMdmHscodeMgt`
+    - 사용: mdm/code/MdmHscodeMgt
+- `/api/mdm/code/saveMdmImdgMgt`
+    - 사용: 위험물 관리(mdm/code/MdmImdgMgt)
+- `/api/mdm/code/saveMdmInternalNote`
+    - 사용: 특이사항 관리대장(mdm/others/MdmInternalNote)
+- `/api/mdm/code/saveMdmLineMgt`
+    - 사용: 선사 관리(mdm/code/MdmLineMgt)
+- `/api/mdm/code/saveMdmManifestItem`
+    - 사용: mdm/code/MdmManifestItem
+- `/api/mdm/code/saveMdmPackageUnit`
+    - 사용: mdm/code/MdmPackageUnit
+- `/api/mdm/code/saveMdmPortMgt`
+    - 사용: 포트 코드 관리(mdm/code/MdmPortMgt)
+- `/api/mdm/code/saveMdmRegionMgt`
+    - 사용: mdm/code/MdmRegionMgt
+- `/api/mdm/code/saveMdmRpaAccountMgt`
+    - 사용: mdm/code/MdmRpaAccountMgt
+- `/api/mdm/code/saveMdmSelPchMgt`
+    - 사용: mdm/code/MdmSelPchMgt
+- `/api/mdm/code/saveMdmShTransRectMgt`
+    - 사용: CFS 권역관리(mdm/code/MdmCfsRegionMgt), 셔틀 권역관리(mdm/code/MdmShtlRegionMgt)
+- `/api/mdm/code/saveMdmStorage`
+    - 사용: 보관소 관리대장(mdm/others/MdmStorage)
+- `/api/mdm/code/saveMdmVesselMgt`
+    - 사용: mdm/code/MdmVesselMgt
+- `/api/mdm/code/saveMdmVslMgt`
+    - 사용: 모선 관리(mdm/code/MdmVslMgt)
+- `/api/mdm/code/saveMdmWarehouseMgt`
+    - 사용: 창고 코드 관리(mdm/code/MdmWarehouseMgt)
+- `/api/mdm/code/selectCorpBillPicList`
+    - 사용: bws/BwsAgrTransSttMgt, bws/BwsBillCollStatus, bws/BwsBndAgiMgt, bws/BwsBndAgrMgt, bws/BwsBndEgrMgt, bws/BwsBndTransSttMgt 외 30
+- `/api/mdm/code/selectEqpHistoryList`
+    - 사용: mdm/popup/MdmEqpHistoryPopup
+- `/api/mdm/code/selectMdmCarrierMgt`
+    - 사용: 선사/항공사 관리(mdm/code/MdmCarrierMgt)
+- `/api/mdm/code/selectMdmCfsItemMgt`
+    - 사용: mdm/code/MdmCfsItemMgt
+- `/api/mdm/code/selectMdmCfsTransRectMgt`
+    - 사용: CFS 권역관리(mdm/code/MdmCfsRegionMgt)
+- `/api/mdm/code/selectMdmCountryMgt`
+    - 사용: 국가코드 관리(mdm/code/MdmCountryMgt)
+- `/api/mdm/code/selectMdmCurrencyMgt`
+    - 사용: 통화코드 관리(mdm/code/MdmCurrencyMgt)
+- `/api/mdm/code/selectMdmDspVhcMgt`
+    - 사용: 배차차량 관리(mdm/code/MdmDspVhcMgt)
+- `/api/mdm/code/selectMdmDspVhcPrtnMgt`
+    - 사용: mdm/code/MdmDspVhcPrtnMgt
+- `/api/mdm/code/selectMdmEqpCostList`
+    - 사용: mdm/popup/MdmEqpCostPopup
+- `/api/mdm/code/selectMdmEqpMgt`
+    - 사용: 장비관리(mdm/code/MdmEqpMgt)
+- `/api/mdm/code/selectMdmEqpRepairMgt`
+    - 사용: 장비내역 수리관리(mdm/code/MdmEqpRepairMgt)
+- `/api/mdm/code/selectMdmExrateMgt`
+    - 사용: mdm/code/MdmExrateMgt
+- `/api/mdm/code/selectMdmHscodeMgt`
+    - 사용: mdm/code/MdmHscodeMgt
+- `/api/mdm/code/selectMdmImdgMgt`
+    - 사용: 위험물 관리(mdm/code/MdmImdgMgt)
+- `/api/mdm/code/selectMdmInternalNote`
+    - 사용: 특이사항 관리대장(mdm/others/MdmInternalNote)
+- `/api/mdm/code/selectMdmLineMgt`
+    - 사용: 선사 관리(mdm/code/MdmLineMgt)
+- `/api/mdm/code/selectMdmManifestItem`
+    - 사용: mdm/code/MdmManifestItem
+- `/api/mdm/code/selectMdmPackageUnit`
+    - 사용: mdm/code/MdmPackageUnit
+- `/api/mdm/code/selectMdmPortMgt`
+    - 사용: 포트 코드 관리(mdm/code/MdmPortMgt)
+- `/api/mdm/code/selectMdmRegionMgt`
+    - 사용: mdm/code/MdmRegionMgt
+- `/api/mdm/code/selectMdmRpaAccountMgt`
+    - 사용: mdm/code/MdmRpaAccountMgt
+- `/api/mdm/code/selectMdmSelPchJobTax`
+    - 사용: mdm/code/MdmSelPchMgt
+- `/api/mdm/code/selectMdmSelPchMgt`
+    - 사용: mdm/code/MdmSelPchMgt
+- `/api/mdm/code/selectMdmShTransRectMgt`
+    - 사용: 셔틀 권역관리(mdm/code/MdmShtlRegionMgt), order/popup/shuttleExcelUploadPopup
+- `/api/mdm/code/selectMdmStorage`
+    - 사용: 보관소 관리대장(mdm/others/MdmStorage)
+- `/api/mdm/code/selectMdmVesselMgt`
+    - 사용: mdm/code/MdmVesselMgt
+- `/api/mdm/code/selectMdmVslMgt`
+    - 사용: 모선 관리(mdm/code/MdmVslMgt)
+- `/api/mdm/code/selectMdmWarehouseMgt`
+    - 사용: 창고 코드 관리(mdm/code/MdmWarehouseMgt)
+- `/api/mdm/code/stdrate/save`
+    - 사용: mdm/code/MdmTruckStdRateMgt
+- `/api/mdm/code/stdrate/upload`
+    - 사용: mdm/code/MdmTruckStdRateMgt, order/popup/BookingExcelUploadPopup, order/popup/shuttleExcelUploadPopup
+- `/api/mdm/code/updateEqpFileUpload`
+    - 사용: 장비관리(mdm/code/MdmEqpMgt)
+- `/api/mdm/code/validMdmDspVhcMgt`
+    - 사용: 배차차량 관리(mdm/code/MdmDspVhcMgt)
+- `/api/mdm/comm/savetMdmAlloUserMgt`
+    - 사용: 배차 팀 관리(mdm/code/MdmAlloMgt)
+- `/api/mdm/comm/savetMdmOrdUserMgt`
+    - 사용: 오더 공유팀 관리(mdm/code/MdmOrdTeamMgt)
+- `/api/mdm/comm/selectMdmAlloMgt`
+    - 사용: 배차 팀 관리(mdm/code/MdmAlloMgt)
+- `/api/mdm/comm/selectMdmAlloUserMgt`
+    - 사용: 배차 팀 관리(mdm/code/MdmAlloMgt)
+- `/api/mdm/comm/selectMdmOrdTeamMgt`
+    - 사용: 오더 공유팀 관리(mdm/code/MdmOrdTeamMgt)
+- `/api/mdm/comm/selectMdmOrdUserMgt`
+    - 사용: 오더 공유팀 관리(mdm/code/MdmOrdTeamMgt)
+- `/api/mdm/container/saveMdmContainer`
+    - 사용: mdm/container/MdmContainer
+- `/api/mdm/container/selectMdmContainer`
+    - 사용: mdm/container/MdmContainer, order/popup/shuttleExcelUploadPopup
+- `/api/mdm/contract/renewlContract`
+    - 사용: mdm/popup/MdmContractRenewlPopup
+- `/api/mdm/contract/saveMdmContract`
+    - 사용: 거래처 계약관리(mdm/customer/MdmContract), mdm/customer/MdmContractEtc
+- `/api/mdm/contract/saveMdmVhcContract`
+    - 사용: 위수탁 및 장기용차 계약관리(mdm/customer/MdmVhcContract)
+- `/api/mdm/contract/selectContractHistory`
+    - 사용: mdm/popup/MdmContractHistoryPopup
+- `/api/mdm/contract/selectMdmContract`
+    - 사용: 거래처 계약관리(mdm/customer/MdmContract), mdm/customer/MdmContractEtc
+- `/api/mdm/contract/selectMdmVhcContract`
+    - 사용: 위수탁 및 장기용차 계약관리(mdm/customer/MdmVhcContract)
+- `/api/mdm/contract/selectVhcContractHistory`
+    - 사용: mdm/popup/MdmVhcContractHistoryPopup
+- `/api/mdm/contract/updateFileDoc`
+    - 사용: 거래처 계약관리(mdm/customer/MdmContract), mdm/customer/MdmContractEtc
+- `/api/mdm/contract/updateFileDoc_VHC`
+    - 사용: 위수탁 및 장기용차 계약관리(mdm/customer/MdmVhcContract)
+- `/api/mdm/customer/deleteMdmCustomerMgt`
+    - 사용: mdm/customer/MdmCustomerMgt
+- `/api/mdm/customer/saveMdmCustomerMgt`
+    - 사용: mdm/customer/MdmCustomerMgt
+- `/api/mdm/customer/selectMdmCustomerMgt`
+    - 사용: mdm/customer/MdmCustomerMgt
+- `/api/mdm/customer/selectMdmCustomerMgtDetail`
+    - 사용: mdm/customer/MdmCustomerMgt
+- `/api/mdm/customerMail/saveMdmContract`
+    - 사용: 고객사 메일관리(mdm/customer/MdmCustomerMail)
+- `/api/mdm/customerMail/selectMdmCustomerMail`
+    - 사용: 고객사 메일관리(mdm/customer/MdmCustomerMail)
+- `/api/mdm/organization/deleteMdmCorpMgt`
+    - 사용: 회사 관리(mdm/organization/MdmCorpMgt)
+- `/api/mdm/organization/saveMdmCorpMgt`
+    - 사용: 회사 관리(mdm/organization/MdmCorpMgt)
+- `/api/mdm/organization/selectCmsCorpInfo`
+    - 사용: 회사 관리(mdm/organization/MdmCorpMgt)
+- `/api/mdm/organization/selectMainInfo`
+    - 사용: bws/BwsAcsCrgLdg, bws/BwsAcsNotiMgt, 거래명세서(sm/TransSpec), 거래명세서(협력사)(sm/TransSpecPtn), sm/generalBilling/skSettlementMgt, sm/popup/integrateOutputPopup 외 3
+- `/api/mdm/organization/selectMdmCorpMail`
+    - 사용: sm/popup/selectMailPopup
+- `/api/mdm/organization/selectMdmCorpMgt`
+    - 사용: 회사 관리(mdm/organization/MdmCorpMgt), outputs/popup/billStatusPopup, outputs/popup/usePointPopup
+- `/api/mdm/organization/updateCorpUse`
+    - 사용: 회사 관리(mdm/organization/MdmCorpMgt)
+- `/api/mdm/organization/validCorpBsnLcnNmb`
+    - 사용: 회사 관리(mdm/organization/MdmCorpMgt)
+- `/api/mdm/organization/validMdmCorpMgt`
+    - 사용: 회사 관리(mdm/organization/MdmCorpMgt)
+- `/api/mdm/shipper/deleteMdmShipperMgt`
+    - 사용: 화주 관리(mdm/customer/MdmShipper)
+- `/api/mdm/shipper/save`
+    - 사용: order/popup/shipperAddPopup
+- `/api/mdm/shipper/saveMdmShipperMgt`
+    - 사용: 화주 관리(mdm/customer/MdmShipper)
+- `/api/mdm/shipper/selectList`
+    - 사용: 화주 관리(mdm/customer/MdmShipper)
+- `/api/mdm/shipper/selectMgrList`
+    - 사용: 화주 관리(mdm/customer/MdmShipper)
+- `/api/mdm/shipper/validationBln`
+    - 사용: 화주 관리(mdm/customer/MdmShipper), order/popup/shipperAddPopup
+- `/api/mdm/shipper/validationShipper`
+    - 사용: 화주 관리(mdm/customer/MdmShipper), order/popup/shipperAddPopup
+- `/api/mdm/tariff/deleteMdmTariffMgt`
+    - 사용: mdm/tariff/MdmTariffMgt
+- `/api/mdm/tariff/saveMdmTariff`
+    - 사용: allocation/popup/tariffAddPopup
+- `/api/mdm/tariff/saveMdmTariffMgt`
+    - 사용: mdm/tariff/MdmTariffMgt
+- `/api/mdm/tariff/selectMdmTariffMgt`
+    - 사용: mdm/tariff/MdmTariffMgt
+- `/api/mdm/tariff2/deleteMdmTariffMgt`
+    - 사용: CFS 타리프 관리(mdm/tariff/MdmCfsTariffMgt), 타리프 관리(mdm/tariff/MdmTariffMgtV2)
+- `/api/mdm/tariff2/saveMdmTariffMgt`
+    - 사용: CFS 타리프 관리(mdm/tariff/MdmCfsTariffMgt), 타리프 관리(mdm/tariff/MdmTariffMgtV2)
+- `/api/mdm/tariff2/selectMdmTariffMgt`
+    - 사용: CFS 타리프 관리(mdm/tariff/MdmCfsTariffMgt), 타리프 관리(mdm/tariff/MdmTariffMgtV2)
+- `/api/mdm/terminal/saveMdmTerminalMgt`
+    - 사용: 터미널 관리(mdm/terminal/MdmTerminalMgt)
+- `/api/mdm/terminal/selectMdmTerminalMgt`
+    - 사용: 터미널 관리(mdm/terminal/MdmTerminalMgt)
+- `/api/mdm/user/saveMdmUserSetting`
+    - 사용: 사용자별 권한설정(mdm/user/MdmUserSetting)
+- `/api/mdm/user/selectMdmUserList`
+    - 사용: 사용자별 권한설정(mdm/user/MdmUserSetting)
+- `/api/mdm/user/selectMdmUserSetting`
+    - 사용: 사용자별 권한설정(mdm/user/MdmUserSetting)
+- `/api/mdm/workplace/deleteMdmWorkPlace`
+    - 사용: 작업지 관리(mdm/customer/MdmWorkPlace), order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/regionSet`
+    - 사용: order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/saveMdmWorkPlace`
+    - 사용: 작업지 관리(mdm/customer/MdmWorkPlace)
+- `/api/mdm/workplace/saveMdmWorkPlaceAddPopup`
+    - 사용: order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/selectChkLikeValue`
+    - 사용: order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/selectMdmWorkPlace`
+    - 사용: 작업지 관리(mdm/customer/MdmWorkPlace), order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/selectMdmWorkPlaceCity`
+    - 사용: bnd/popup/BndAddFaclPopup, 작업지 관리(mdm/customer/MdmWorkPlace), 장치장 관리(mdm/facl/MdmBndFaclMgt), order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/selectMdmWorkPlaceDetail`
+    - 사용: cms/popup/CmsWrkPlcMngPopup, 작업지 관리(mdm/customer/MdmWorkPlace), order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/selectMdmWorkPlaceDo`
+    - 사용: bnd/popup/BndAddFaclPopup, 작업지 관리(mdm/customer/MdmWorkPlace), 장치장 관리(mdm/facl/MdmBndFaclMgt), order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/selectMdmWorkPlaceDong`
+    - 사용: bnd/popup/BndAddFaclPopup, 작업지 관리(mdm/customer/MdmWorkPlace), 장치장 관리(mdm/facl/MdmBndFaclMgt), order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/selectMdmWorkPlaceDongList`
+    - 사용: 작업지 관리(mdm/customer/MdmWorkPlace), order/popup/orderWrkplcAddPopup
+- `/api/mdm/workplace/selectWorkPlace`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup), cms/popup/CmsWrkPlcMngPopup
+
+## /api/menuList  (1)
+
+- `/api/menuList`
+    - 사용: z-dev/layout/layout01, z-dev/layout/layout02, z-dev/sample/layout01, z-dev/sample/layout02
+
+## /api/menuMap  (1)
+
+- `/api/menuMap`
+
+## /api/mobile  (6)
+
+- `/api/mobile/deleteMobilEdu`
+    - 사용: mobile/MobileEduMgt
+- `/api/mobile/saveMobilEdu`
+    - 사용: mobile/MobileEduMgt
+- `/api/mobile/selectMobilEduDetail`
+    - 사용: mobile/MobileEduMgt
+- `/api/mobile/selectMobilEduList`
+    - 사용: mobile/MobileEduMgt
+- `/api/mobile/selectMobileAciList`
+    - 사용: mobile/MobileAciList
+- `/api/mobile/updateMobileEduFile`
+    - 사용: mobile/MobileEduMgt
+
+## /api/notiList  (1)
+
+- `/api/notiList`
+
+## /api/openOnlyPage  (1)
+
+- `/api/openOnlyPage`
+    - 사용: 도어배차(allocation/door/directAlloAndCopinoV2)
+
+## /api/order  (59)
+
+- `/api/order/`
+- `/api/order/confirmExportOrder`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 고객사 수출 오더 상세(order/door/export/orderRequestMgt)
+- `/api/order/confirmImportOrder`
+    - 사용: 고객사 수입 오더 상세(order/door/import/orderRequestMgt)
+- `/api/order/deleteExportOrder`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 수출오더조회(order/door/export/orderSearch), 고객사 수출 오더 조회(order/door/export/orderSearchMgt)
+- `/api/order/deleteImportOrder`
+    - 사용: 수입오더등록(order/door/import/orderRequest), 고객사 수입 오더 상세(order/door/import/orderRequestMgt), 수입오더조회(order/door/import/orderSearch), 고객사 수입 오더 조회(order/door/import/orderSearchMgt), 통합 오더 조회(order/door/total/orderSearchMgt)
+- `/api/order/deleteSimpleOrder`
+    - 사용: 간편 오더 등록(order/door/simple/ordSimRequest)
+- `/api/order/deleteUserOrder`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 수입오더등록(order/door/import/orderRequest)
+- `/api/order/excelUpload/selectExcelUpload`
+    - 사용: order/door/excelUpload
+- `/api/order/getExportCargoView`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 간편 오더 등록(order/door/simple/ordSimRequest)
+- `/api/order/getExportEtrans`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 간편 오더 등록(order/door/simple/ordSimRequest)
+- `/api/order/getImportCargoView`
+    - 사용: 수입오더등록(order/door/import/orderRequest), 고객사 수입 오더 상세(order/door/import/orderRequestMgt), 간편 오더 등록(order/door/simple/ordSimRequest)
+- `/api/order/getImportEtrans`
+    - 사용: 수입오더등록(order/door/import/orderRequest), 고객사 수입 오더 상세(order/door/import/orderRequestMgt), 간편 오더 등록(order/door/simple/ordSimRequest)
+- `/api/order/getImportEtransEmptyCntr`
+    - 사용: 고객사 수입 오더 상세(order/door/import/orderRequestMgt)
+- `/api/order/saveBillingList`
+    - 사용: order/popup/billingPopup
+- `/api/order/saveCstmExportOrder`
+    - 사용: 수출오더등록(order/door/export/orderRequest)
+- `/api/order/saveCstmImportOrder`
+    - 사용: 수입오더등록(order/door/import/orderRequest)
+- `/api/order/saveExportExcel`
+    - 사용: order/popup/BookingExcelUploadPopup
+- `/api/order/saveExportOrder`
+    - 사용: 고객사 수출 오더 상세(order/door/export/orderRequestMgt)
+- `/api/order/saveImportOrder`
+    - 사용: 고객사 수입 오더 상세(order/door/import/orderRequestMgt)
+- `/api/order/saveSimpleOrder`
+    - 사용: 간편 오더 등록(order/door/simple/ordSimRequest)
+- `/api/order/saveUserOrder`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 수입오더등록(order/door/import/orderRequest)
+- `/api/order/saveXrayCorpInfo`
+    - 사용: order/popup/searchXrayCorpModPopup
+- `/api/order/saveXrayInfoList`
+    - 사용: order/popup/searchXrayInfoPopup
+- `/api/order/selectBillingList`
+    - 사용: order/popup/billingPopup
+- `/api/order/selectBillngTariffList`
+    - 사용: 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 고객사 수입 오더 상세(order/door/import/orderRequestMgt), order/popup/billingPopup
+- `/api/order/selectCstmExportOrder`
+    - 사용: 수출오더등록(order/door/export/orderRequest)
+- `/api/order/selectCstmImportOrder`
+    - 사용: 수입오더등록(order/door/import/orderRequest)
+- `/api/order/selectExportOrder`
+    - 사용: 고객사 수출 오더 상세(order/door/export/orderRequestMgt)
+- `/api/order/selectImportOrder`
+    - 사용: 고객사 수입 오더 상세(order/door/import/orderRequestMgt)
+- `/api/order/selectSimpleOrder`
+    - 사용: 간편 오더 등록(order/door/simple/ordSimRequest)
+- `/api/order/selectTransTariffList`
+    - 사용: order/popup/transTariffPopup
+- `/api/order/sendCofirmMail`
+    - 사용: 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 고객사 수입 오더 상세(order/door/import/orderRequestMgt)
+- `/api/order/sendSimpleOrder`
+    - 사용: 간편 오더 등록(order/door/simple/ordSimRequest)
+- `/api/order/shuttle/cancelShuttleOrderCntrPtn`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/order/shuttle/deleteShuttleOrder`
+    - 사용: 셔틀오더 등록 및 조회(order/shuttle/orderRequestMgt)
+- `/api/order/shuttle/getBptCntrList`
+    - 사용: order/popup/shuttleRegBptPopup
+- `/api/order/shuttle/saveBndCntrList`
+    - 사용: 전배보세 등록(order/shuttle/BndCntrMgt)
+- `/api/order/shuttle/saveShuttleBpt`
+    - 사용: order/popup/shuttleRegBptPopup
+- `/api/order/shuttle/saveShuttleExcel`
+    - 사용: order/popup/shuttleExcelUploadPopup
+- `/api/order/shuttle/saveShuttleOrder`
+    - 사용: 셔틀오더 등록 및 조회(order/shuttle/orderRequestMgt)
+- `/api/order/shuttle/saveShuttleSkr`
+    - 사용: order/popup/shuttleRegSkrPopup
+- `/api/order/shuttle/selectBndCntrList`
+    - 사용: 전배보세 등록(order/shuttle/BndCntrMgt)
+- `/api/order/shuttle/selectHasDailyClosing`
+    - 사용: 셔틀 Daily Closing List(order/shuttle/orderClosingList)
+- `/api/order/shuttle/selectHasShuttleOrder`
+    - 사용: order/popup/shuttleRegSkrPopup
+- `/api/order/shuttle/selectShuttleCntr`
+    - 사용: 셔틀오더 등록 및 조회(order/shuttle/orderRequestMgt)
+- `/api/order/shuttle/selectShuttleOrder`
+    - 사용: 셔틀오더 등록 및 조회(order/shuttle/orderRequestMgt)
+- `/api/order/shuttle/selectShuttleOrderCntrPtn`
+    - 사용: allocation/popup/AlloShareOrderPopup, order/popup/doorAlloPtnPopup, order/popup/shuttleAlloPtnPopup
+- `/api/order/shuttle/selectShuttleVesselList`
+    - 사용: order/popup/shuttleRegSkrPopup, order/popup/vslSkrHasListPopup
+- `/api/order/shuttle/selectSkrDailyClosing`
+    - 사용: 셔틀 Daily Closing List(order/shuttle/orderClosingList)
+- `/api/order/shuttle/selectSkrShuttleOrder`
+    - 사용: order/popup/shuttleRegSkrPopup
+- `/api/order/shuttle/selectSuttleOrderDetail`
+    - 사용: 셔틀오더 등록 및 조회(order/shuttle/orderRequestMgt)
+- `/api/order/shuttle/shuttleCntrValidation`
+    - 사용: order/popup/shuttleExcelUploadPopup, order/popup/shuttleRegBptPopup, order/popup/shuttleRegSkrPopup
+- `/api/order/shuttle/updateShuttleOrderBillModi`
+    - 사용: order/popup/shuttleOrderBillModiPopup
+- `/api/order/shuttle/updateShuttleOrderCntrPtn`
+    - 사용: order/popup/shuttleAlloPtnPopup
+- `/api/order/shuttle/updateShuttleOrderModi`
+    - 사용: order/popup/shuttleOrderModiPopup
+- `/api/order/shuttle/updateShuttleOrderWeigthType`
+    - 사용: 셔틀오더 등록 및 조회(order/shuttle/orderRequestMgt)
+- `/api/order/updateOrderFileDoc`
+    - 사용: 배차현황 팝업(allocation/popup/AlloStatusPopup), 수출오더등록(order/door/export/orderRequest), 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 수입오더등록(order/door/import/orderRequest), 고객사 수입 오더 상세(order/door/import/orderRequestMgt)
+- `/api/order/updateSearchOrderMgt`
+    - 사용: order/popup/searchOrderModiPopup
+- `/api/order/validUnpayUser`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 수입오더등록(order/door/import/orderRequest)
+
+## /api/orderList  (13)
+
+- `/api/orderList/searchXrayInfoList`
+    - 사용: order/popup/searchXrayInfoPopup
+- `/api/orderList/selectCstmExportOrderCntr`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 수출오더조회(order/door/export/orderSearch)
+- `/api/orderList/selectCstmImportOrderCntr`
+    - 사용: 수입오더등록(order/door/import/orderRequest), 수입오더조회(order/door/import/orderSearch)
+- `/api/orderList/selectCstmOrderList`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 수출오더조회(order/door/export/orderSearch), 수입오더등록(order/door/import/orderRequest), 수입오더조회(order/door/import/orderSearch), 간편 오더 조회(order/door/simple/ordSimSearch)
+- `/api/orderList/selectExportOrderCntr`
+    - 사용: 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 고객사 수출 오더 조회(order/door/export/orderSearchMgt)
+- `/api/orderList/selectExportOrderList`
+    - 사용: 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 고객사 수출 오더 조회(order/door/export/orderSearchMgt)
+- `/api/orderList/selectImportOrderCntr`
+    - 사용: 고객사 수입 오더 상세(order/door/import/orderRequestMgt), 고객사 수입 오더 조회(order/door/import/orderSearchMgt), 통합 오더 조회(order/door/total/orderSearchMgt)
+- `/api/orderList/selectImportOrderList`
+    - 사용: 고객사 수입 오더 상세(order/door/import/orderRequestMgt), 고객사 수입 오더 조회(order/door/import/orderSearchMgt)
+- `/api/orderList/selectKakaoExportOrder`
+    - 사용: order/door/export/kakaoOrderList
+- `/api/orderList/selectKakaoImportOrder`
+    - 사용: order/door/import/kakaoOrderList
+- `/api/orderList/selectOrderBookList`
+    - 사용: 고객사 수출 오더 조회(order/door/export/orderSearchMgt), 고객사 수입 오더 조회(order/door/import/orderSearchMgt), 통합 오더 조회(order/door/total/orderSearchMgt)
+- `/api/orderList/selectSimOrderCntr`
+    - 사용: 간편 오더 조회(order/door/simple/ordSimSearch)
+- `/api/orderList/selectTotalOrderList`
+    - 사용: 통합 오더 조회(order/door/total/orderSearchMgt)
+
+## /api/orderTemplate  (6)
+
+- `/api/orderTemplate/deleteOrderTemplate`
+    - 사용: order/popup/orderTemplateAddPopup, order/template
+- `/api/orderTemplate/saveOrderTemplate`
+    - 사용: dsh/dashboard/popup/orderTempPopup, order/popup/orderTemplateAddPopup, order/template
+- `/api/orderTemplate/selectOrderTemplate`
+    - 사용: order/popup/orderTemplateAddPopup, order/template
+- `/api/orderTemplate/selectOrderTemplateDetail`
+    - 사용: 수출오더등록(order/door/export/orderRequest), 수입오더등록(order/door/import/orderRequest)
+- `/api/orderTemplate/selectOrderTemplateDetailByDashBoard`
+    - 사용: dsh/dashboard/popup/orderTempPopup
+- `/api/orderTemplate/validRepresentativeUser`
+    - 사용: dsh/dashboard/popup/orderTempPopup, order/popup/orderTemplateAddPopup, order/template
+
+## /api/outputs  (66)
+
+- `/api/outputs/billingTotal/selectBillTotByAccList`
+    - 사용: 거래처별 청구집계(outputs/billingTot/billTotByAcc)
+- `/api/outputs/cancelPayCf`
+    - 사용: 실적통합관리(셔틀)(outputs/shutTotalOutputMgt), 실적통합관리(outputs/totalOutputMgt)
+- `/api/outputs/deleteBilling`
+    - 사용: 실적통합관리(셔틀)(outputs/shutTotalOutputMgt), 실적통합관리(outputs/totalOutputMgt)
+- `/api/outputs/deletePayment`
+    - 사용: 실적통합관리(셔틀)(outputs/shutTotalOutputMgt), 실적통합관리(outputs/totalOutputMgt)
+- `/api/outputs/getDept`
+    - 사용: 하불승인(outputs/payApprMgt)
+- `/api/outputs/management/SendEtransDrv`
+    - 사용: 차량별 지급 공제관리(outputs/management/vhcPayDdcMgt)
+- `/api/outputs/management/checkSendTalkClPay`
+    - 사용: 차량별 지급 공제관리(outputs/management/vhcPayDdcMgt)
+- `/api/outputs/management/deleteVhcTrcMemo`
+    - 사용: outputs/popup/vhcTrcMonthMemoPopup
+- `/api/outputs/management/insertVhcTrcMemo`
+    - 사용: outputs/popup/vhcTrcMonthMemoPopup
+- `/api/outputs/management/saveMgtRmkMgt`
+    - 사용: 용차사 매출입현황(outputs/management/hiredCarCorpBillPaySt), 차량별 지급 공제관리(outputs/management/vhcPayDdcMgt)
+- `/api/outputs/management/saveRtVhcRevSt`
+    - 사용: 실시간 차량 매출 현황(outputs/management/rtVhcRevSt)
+- `/api/outputs/management/selectHiredCarCorpBillPayStList`
+    - 사용: 용차사 매출입현황(outputs/management/hiredCarCorpBillPaySt)
+- `/api/outputs/management/selectOrdersList`
+    - 사용: 오더접수현황(outputs/management/orderRecvSt)
+- `/api/outputs/management/selectProfitDetailList`
+    - 사용: 손익현황(outputs/management/profitNLossStat)
+- `/api/outputs/management/selectProfitNLossStatList`
+    - 사용: 손익현황(outputs/management/profitNLossStat)
+- `/api/outputs/management/selectRtVhcRevStList`
+    - 사용: 실시간 차량 매출 현황(outputs/management/rtVhcRevSt)
+- `/api/outputs/management/selectVhcPayDdcMgtList`
+    - 사용: 차량별 지급 공제관리(outputs/management/vhcPayDdcMgt)
+- `/api/outputs/management/selectVhcTrcMemo`
+    - 사용: outputs/popup/vhcTrcMonthMemoPopup
+- `/api/outputs/management/selectVhcTrcMemoDetail`
+    - 사용: outputs/popup/vhcTrcMonthMemoPopup
+- `/api/outputs/management/selectVhcTrcStatList`
+    - 사용: 차량별 운행실적 (배차형평성)(outputs/management/vhcTrcStat)
+- `/api/outputs/management/selectVhcsalesList`
+    - 사용: 차량매출(outputs/management/vhcSales)
+- `/api/outputs/management/selectordStPopupList`
+    - 사용: outputs/popup/ordStSearchPopup
+- `/api/outputs/management/sendTalkClPay`
+    - 사용: 차량별 지급 공제관리(outputs/management/vhcPayDdcMgt)
+- `/api/outputs/paymentTotal/selectPayCorpStatusList`
+    - 사용: 매입처현황(outputs/payTot/payCorpStatus)
+- `/api/outputs/paymentTotal/selectStateOfAccByVehicleList`
+    - 사용: 차량별 정산서(outputs/payTot/stateOfAccByVehicle)
+- `/api/outputs/paymentTotal/selectStateOfDtl1List`
+    - 사용: 차량별 정산서(outputs/payTot/stateOfAccByVehicle)
+- `/api/outputs/paymentTotal/selectStateOfDtl2List`
+    - 사용: 차량별 정산서(outputs/payTot/stateOfAccByVehicle)
+- `/api/outputs/point/saveMonPointSt`
+    - 사용: 당월 포인트 현황(outputs/monPointSt)
+- `/api/outputs/point/selectMonPointStList`
+    - 사용: 당월 포인트 현황(outputs/monPointSt)
+- `/api/outputs/point/selectPoint`
+    - 사용: admin/AdminUserInfo
+- `/api/outputs/point/selectPointLogList`
+    - 사용: outputs/popup/pointLogPopup
+- `/api/outputs/point/selectPointMgtList`
+    - 사용: admin/pointHistoryPopup
+- `/api/outputs/point/selectUsePointLogList`
+    - 사용: outputs/popup/usePointPopup
+- `/api/outputs/point/updateUsePoint`
+    - 사용: outputs/popup/usePointPopup
+- `/api/outputs/point/validSalesPic`
+    - 사용: 당월 포인트 현황(outputs/monPointSt)
+- `/api/outputs/save`
+    - 사용: 실적통합관리(셔틀)(outputs/shutTotalOutputMgt), 실적통합관리(outputs/totalOutputMgt)
+- `/api/outputs/saveBillInfo`
+    - 사용: outputs/popup/billStatusPopup
+- `/api/outputs/saveMultiPayAppr`
+    - 사용: outputs/popup/multiPayApprPopup
+- `/api/outputs/savePayApprList`
+    - 사용: 하불승인(outputs/payApprMgt)
+- `/api/outputs/savePayApprRemark`
+    - 사용: 하불승인(outputs/payApprMgt)
+- `/api/outputs/savePayCf`
+    - 사용: 실적통합관리(셔틀)(outputs/shutTotalOutputMgt), 실적통합관리(outputs/totalOutputMgt)
+- `/api/outputs/savePayCf_ALL`
+    - 사용: 실적통합관리(outputs/totalOutputMgt)
+- `/api/outputs/savePayInfo`
+    - 사용: outputs/popup/payStatusPopup
+- `/api/outputs/selectBillList`
+    - 사용: 실적통합관리(셔틀)(outputs/shutTotalOutputMgt), 실적통합관리(outputs/totalOutputMgt)
+- `/api/outputs/selectBillingHistory`
+    - 사용: outputs/popup/billLogPopup, outputs/popup/billStatusPopup
+- `/api/outputs/selectPayApprDetail`
+    - 사용: 하불승인(outputs/payApprMgt)
+- `/api/outputs/selectPayApprList`
+    - 사용: 하불승인(outputs/payApprMgt)
+- `/api/outputs/selectPayHistory`
+    - 사용: outputs/popup/payLogPopup
+- `/api/outputs/selectPayHistory_only`
+    - 사용: outputs/popup/payStatusPopup
+- `/api/outputs/selectPayList`
+    - 사용: 실적통합관리(셔틀)(outputs/shutTotalOutputMgt), 실적통합관리(outputs/totalOutputMgt)
+- `/api/outputs/selectTotalOutputsList`
+    - 사용: 실적통합관리(셔틀)(outputs/shutTotalOutputMgt), 실적통합관리(outputs/totalOutputMgt)
+- `/api/outputs/statssales/selectCorpUnpaidList`
+    - 사용: 청구처별 미수현황(outputs/statistics/billCorpByUnpaidSt)
+- `/api/outputs/statssales/selectManOutsList`
+    - 사용: 영업사원 실적현황(outputs/statistics/opPicPFMSt)
+- `/api/outputs/statssales/selectManSalesList`
+    - 사용: 영업담당자별 매출현황(outputs/statistics/opPicByBillSt)
+- `/api/outputs/statssales/selectMonCorpOutsList`
+    - 사용: 월별&업체별 실적현황(outputs/statistics/monNCorpPFMSt)
+- `/api/outputs/statssales/selectMonCorpSalesList`
+    - 사용: 월별&업체별 매출현황(outputs/statistics/monNCorpBillSt)
+- `/api/outputs/statssales/selectOPManOutsList`
+    - 사용: (영업) 영업사원 실적현황(outputs/statistics/opOpPicPFMSt)
+- `/api/outputs/statssales/selectOPMonCorpOutsList`
+    - 사용: (영업) 월별&업체별 실적현황(outputs/statistics/opMonNCorpPFMSt)
+- `/api/outputs/statssales/selectPointByPFMStDetail`
+    - 사용: 점소별 영업이익 현황(outputs/statistics/pointByPFMSt)
+- `/api/outputs/statssales/selectPointByPFMStList`
+    - 사용: 점소별 영업이익 현황(outputs/statistics/pointByPFMSt)
+- `/api/outputs/statssales/selectTermNCorpPayStList`
+    - 사용: 기간별&업체별 하불현황(outputs/statistics/termNCorpPaySt)
+- `/api/outputs/updateTotalOutputModi`
+    - 사용: outputs/popup/toutMultiModiPopup
+- `/api/outputs/validMultiPayAppr`
+    - 사용: allocation/popup/directAlloPaymentPopup, allocation/popup/multiAlloPayPopup, allocation/popup/multiPaymentPopup
+- `/api/outputs/validPayAppr`
+    - 사용: allocation/popup/paymentPopup
+- `/api/outputs/validTotalOutputsPayAppr`
+    - 사용: outputs/popup/toutMultiModiPopup
+- `/api/outputs/validationPay`
+    - 사용: 실적통합관리(셔틀)(outputs/shutTotalOutputMgt), 실적통합관리(outputs/totalOutputMgt)
+
+## /api/picList  (1)
+
+- `/api/picList`
+
+## /api/popButtonMap  (1)
+
+- `/api/popButtonMap`
+
+## /api/registMyMenu  (1)
+
+- `/api/registMyMenu`
+
+## /api/reorderMyMenu  (1)
+
+- `/api/reorderMyMenu`
+
+## /api/requestApi  (3)
+
+- `/api/requestApi/E71B001Csave`
+    - 사용: intro/cyPage/gateDevice
+- `/api/requestApi/findMyPayList`
+    - 사용: intro/apiPage/apiRequestPage1
+- `/api/requestApi/findMyPayList_Car`
+    - 사용: intro/apiPage/apiRequestPage2
+
+## /api/saveHeaderMap  (1)
+
+- `/api/saveHeaderMap`
+
+## /api/session  (1)
+
+- `/api/session`
+
+## /api/shuttle  (52)
+
+- `/api/shuttle/allocation/copino`
+    - 사용: allocation/popup/AlloCopinoPopup, allocation/popup/SimulAlloCopinoPopup, allocation/popup/shutAlloCopinoPopup, 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/deleteShuttleCntr`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/getShuttleBillTariff`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck), 셔틀오더 등록 및 조회(order/shuttle/orderRequestMgt)
+- `/api/shuttle/allocation/getShuttlePayTariff`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/saveAllocationTruck`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/saveCopinoId`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/saveOutTmInfo`
+    - 사용: allocation/popup/OutTmPopup
+- `/api/shuttle/allocation/saveShutAlloGroupOrder`
+    - 사용: allocation/popup/shutMultiAlloPopup
+- `/api/shuttle/allocation/saveShutMultiAllo`
+    - 사용: allocation/popup/shutMultiAlloPopup
+- `/api/shuttle/allocation/saveShutMultiModi`
+    - 사용: allocation/popup/shutMultiModiPopup
+- `/api/shuttle/allocation/searchInTmlVslVoy`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/searchOutTmlVslVoy`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/searchTerminalEta`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/searchTerminalYardLoc`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/searchTmlInOutTime`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/selectAllocationTruckList`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/selectOutTmInfo`
+    - 사용: allocation/popup/OutTmPopup
+- `/api/shuttle/allocation/selectShutAlloInfo`
+    - 사용: allocation/popup/shutAlloCopinoPopup
+- `/api/shuttle/allocation/selectShutAlloStatusList`
+    - 사용: allocation/popup/shutAlloStatusPopup
+- `/api/shuttle/allocation/sendTssCopino`
+    - 사용: allocation/popup/shutTssCopinoPopup, 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/sendTssCopinoV2`
+    - 사용: allocation/popup/shutTssCopinoPopup
+- `/api/shuttle/allocation/updateAlloCancel`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/updateAlloStatus`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/updateHoldingOff`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/allocation/updateHoldingOn`
+    - 사용: 셔틀배차(allocation/shuttle/allocationTruck)
+- `/api/shuttle/groupOrder/deleteGroupOrder`
+    - 사용: 그룹오더배차(allocation/shuttle/GroupOrderAllocation)
+- `/api/shuttle/groupOrder/deleteGroupOrderRegistCntr`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist)
+- `/api/shuttle/groupOrder/deleteGroupOrderVhcList`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist)
+- `/api/shuttle/groupOrder/groupOrderModifyValidation`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/groupOrderValidation`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist), 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/removeGroupOrderModCntrValid`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/saveBundle`
+    - 사용: 그룹오더배차(allocation/shuttle/GroupOrderAllocation)
+- `/api/shuttle/groupOrder/saveGroupOrderRegist`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist)
+- `/api/shuttle/groupOrder/saveGroupOrderVhcReg`
+    - 사용: allocation/popup/GroupOrdAlloRegPopup
+- `/api/shuttle/groupOrder/savePreExImInfo`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist)
+- `/api/shuttle/groupOrder/selectGroupOrderAlloList`
+    - 사용: 그룹오더배차(allocation/shuttle/GroupOrderAllocation)
+- `/api/shuttle/groupOrder/selectGroupOrderCntrList`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/selectGroupOrderRegistCntrList`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist), 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/selectGroupOrderRegistList`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist)
+- `/api/shuttle/groupOrder/selectGroupOrderRegistVhcList`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist), 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/selectGroupOrderStatusList`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/selectGroupOrderVhcList`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/updateGroupOrderList`
+    - 사용: 그룹오더배차(allocation/shuttle/GroupOrderAllocation)
+- `/api/shuttle/groupOrder/updateGroupOrderStatus`
+    - 사용: 그룹오더배차(allocation/shuttle/GroupOrderAllocation), 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/updateTssGroupOrder`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/validGroupOrder`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist)
+- `/api/shuttle/groupOrder/validGroupOrderCntrRemove`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/validGroupOrderMultiCntrRemove`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/validGroupOrderVhcRemove`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/validModify`
+    - 사용: 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/validRegist`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist), 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+- `/api/shuttle/groupOrder/validRegistVhcList`
+    - 사용: 그룹오더생성(allocation/shuttle/GroupOrderRegist), 그룹오더 진행상태 및 변경(allocation/shuttle/GroupOrderStatus)
+
+## /api/sm  (70)
+
+- `/api/sm/TrkPaymentList/selectTrkPaymentList`
+    - 사용: sm/TrkPaymentList
+- `/api/sm/carryBill/carryBillListApprSave`
+    - 사용: 미청구 및 이월청구 조회(sm/generalBilling/carrybillingList)
+- `/api/sm/carryBill/carryBillListRmkSave`
+    - 사용: 미청구 및 이월청구 조회(sm/generalBilling/carrybillingList)
+- `/api/sm/carryBill/carryBillListSearch`
+    - 사용: 미청구 및 이월청구 조회(sm/generalBilling/carrybillingList)
+- `/api/sm/collect/selectBillCollectByAccDtlList`
+    - 사용: 거래처별 청구수금 명세서(sm/collect/billCollectByAcc)
+- `/api/sm/collect/selectBillCollectByAccList`
+    - 사용: 거래처별 청구수금 명세서(sm/collect/billCollectByAcc)
+- `/api/sm/generalBilling/billingClosingExcel`
+    - 사용: 청구마감(sm/generalBilling/billingClosing)
+- `/api/sm/generalBilling/cancelAccounting`
+    - 사용: 청구현황(sm/generalBilling/billingStatus)
+- `/api/sm/generalBilling/cancelBillingClose`
+    - 사용: 청구현황(sm/generalBilling/billingStatus)
+- `/api/sm/generalBilling/cancelSKClosing`
+    - 사용: 청구현황(sm/generalBilling/billingStatus)
+- `/api/sm/generalBilling/cancelSkInvList`
+    - 사용: sm/generalBilling/skSettlementMgt
+- `/api/sm/generalBilling/changeMergeBilling`
+    - 사용: sm/popup/billMergePopup
+- `/api/sm/generalBilling/executeSKClosing`
+    - 사용: 청구현황(sm/generalBilling/billingStatus)
+- `/api/sm/generalBilling/issueSkInvList`
+    - 사용: sm/generalBilling/skSettlementMgt
+- `/api/sm/generalBilling/saveAccounting`
+    - 사용: 청구현황(sm/generalBilling/billingStatus)
+- `/api/sm/generalBilling/saveTax`
+    - 사용: 청구마감(대용량)(sm/generalBilling/LargeBillingClosing), 청구마감(sm/generalBilling/billingClosing)
+- `/api/sm/generalBilling/selectBillingClosingBillPicList`
+    - 사용: allocation/popup/registShuttleOrderPopup, allocation/popup/shutMultiModiPopup, 고객사 수출 오더 상세(order/door/export/orderRequestMgt), 고객사 수입 오더 상세(order/door/import/orderRequestMgt), order/popup/shuttleExcelUploadPopup, order/popup/shuttleOrderBillModiPopup 외 11
+- `/api/sm/generalBilling/selectBillingClosingCorpList`
+    - 사용: 청구마감(대용량)(sm/generalBilling/LargeBillingClosing), 청구마감(sm/generalBilling/billingClosing)
+- `/api/sm/generalBilling/selectBillingClosingList`
+    - 사용: 청구마감(대용량)(sm/generalBilling/LargeBillingClosing), 청구마감(sm/generalBilling/billingClosing)
+- `/api/sm/generalBilling/selectBillingDetailList`
+    - 사용: 거래명세서(sm/TransSpec), sm/TransSpecShp, sm/popup/integrateOutputPopup
+- `/api/sm/generalBilling/selectBillingStatusDetail`
+    - 사용: 거래명세서(sm/TransSpec), sm/TransSpecShp, 청구현황(sm/generalBilling/billingStatus)
+- `/api/sm/generalBilling/selectBillingStatusList`
+    - 사용: 청구현황(sm/generalBilling/billingStatus)
+- `/api/sm/generalBilling/selectSkBillingStatusList`
+    - 사용: sm/generalBilling/skSettlementMgt
+- `/api/sm/generalBilling/selectTaxInfo`
+    - 사용: sm/popup/updateTaxInfoPopup
+- `/api/sm/generalBilling/sendMonthlyBillingStatement`
+    - 사용: sm/popup/sendMonBillStPopup, sm/popup/vendorFileAgentPopup
+- `/api/sm/generalBilling/updateBillDt`
+    - 사용: sm/popup/updateBillDtPopup
+- `/api/sm/generalBilling/updateBillngClosing`
+    - 사용: 청구마감(대용량)(sm/generalBilling/LargeBillingClosing), 청구마감(sm/generalBilling/billingClosing)
+- `/api/sm/generalBilling/updateCarryOver`
+    - 사용: 청구마감(대용량)(sm/generalBilling/LargeBillingClosing), 청구마감(sm/generalBilling/billingClosing)
+- `/api/sm/generalBilling/updateRargeBillngClosing`
+    - 사용: 청구마감(대용량)(sm/generalBilling/LargeBillingClosing)
+- `/api/sm/generalBilling/updateTaxInfo`
+    - 사용: sm/popup/updateTaxInfoPopup
+- `/api/sm/generalBilling/updatewrkDt`
+    - 사용: sm/popup/wrkDtModiPopup
+- `/api/sm/generalBilling/validBilling`
+    - 사용: 청구마감(대용량)(sm/generalBilling/LargeBillingClosing)
+- `/api/sm/generalPayment/cancelAccounting`
+    - 사용: 매입세금계산서(sm/generalPayment/taxMgt)
+- `/api/sm/generalPayment/cancelPaymentClose`
+    - 사용: 매입세금계산서(sm/generalPayment/taxMgt)
+- `/api/sm/generalPayment/changeMergePayment`
+    - 사용: sm/popup/payMergeMsgPopup, sm/popup/payMergePopup
+- `/api/sm/generalPayment/saveAccounting`
+    - 사용: 매입세금계산서(sm/generalPayment/taxMgt)
+- `/api/sm/generalPayment/saveMergeAccounting`
+    - 사용: 매입세금계산서(sm/generalPayment/taxMgt)
+- `/api/sm/generalPayment/saveTax`
+    - 사용: 하불마감 및 현황(sm/generalPayment/paymentClosing)
+- `/api/sm/generalPayment/selectPayDivList`
+    - 사용: 거래명세서(협력사)(sm/TransSpecPtn), 하불마감 및 현황(sm/generalPayment/paymentClosing)
+- `/api/sm/generalPayment/selectPaymentClosingDetailList`
+    - 사용: 거래명세서(협력사)(sm/TransSpecPtn), sm/popup/payClsSpecificationPopup
+- `/api/sm/generalPayment/selectPaymentClosingList`
+    - 사용: 하불마감 및 현황(sm/generalPayment/paymentClosing)
+- `/api/sm/generalPayment/selectPaymentConfirmList`
+    - 사용: 하불확정(대용량)(sm/generalPayment/paymentConf)
+- `/api/sm/generalPayment/selectPaymentTaxDetail`
+    - 사용: 매입세금계산서(sm/generalPayment/taxMgt)
+- `/api/sm/generalPayment/selectPaymentTaxDetailList`
+    - 사용: sm/popup/payClsSpecificationPopup, sm/popup/taxInvoicePopup
+- `/api/sm/generalPayment/selectPaymentTaxList`
+    - 사용: 매입세금계산서(sm/generalPayment/taxMgt)
+- `/api/sm/generalPayment/updatePaymentClosing`
+    - 사용: 하불마감 및 현황(sm/generalPayment/paymentClosing)
+- `/api/sm/generalPayment/updatePaymentConfirm`
+    - 사용: 하불확정(대용량)(sm/generalPayment/paymentConf)
+- `/api/sm/lineBillMgt/applyForeignBillAmount`
+    - 사용: BILL청구(sm/lineBill/billMgt)
+- `/api/sm/lineBillMgt/cancelLineBill`
+    - 사용: BILL청구(sm/lineBill/billMgt)
+- `/api/sm/lineBillMgt/saveLineBill`
+    - 사용: BILL청구(sm/lineBill/billMgt)
+- `/api/sm/lineBillMgt/selectCntrDetail`
+    - 사용: BILL청구(sm/lineBill/billMgt)
+- `/api/sm/lineBillMgt/selectLineBillMgtList`
+    - 사용: BILL청구(sm/lineBill/billMgt)
+- `/api/sm/lineBillMgt/selectLineBillPrintCntrList`
+    - 사용: BILL청구(sm/lineBill/billMgt), sm/popup/billMgtPrintPopup
+- `/api/sm/lineBillMgt/updateForeignBillAmount`
+    - 사용: BILL청구(sm/lineBill/billMgt)
+- `/api/sm/lineBillMgt/updateTotalBillingAmount`
+    - 사용: BILL청구(sm/lineBill/billMgt)
+- `/api/sm/proxy/proxyApprovalCancel`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/proxyApprovalSave`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/proxyConfirmCancel`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/proxyConfirmSave`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/proxyDepositCancel`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/proxyDepositSave`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/proxyDivSave`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/proxyListSearch`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/proxyListSearchDetail`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/proxyRmkSave`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/selectProxyPrintList`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/proxy/updateFileDoc`
+    - 사용: 대납리스트(sm/proxy/proxyList)
+- `/api/sm/transSpec/selectTransSpecList`
+    - 사용: 거래명세서(sm/TransSpec)
+- `/api/sm/transSpec/selectTransSpecPtnList`
+    - 사용: 거래명세서(협력사)(sm/TransSpecPtn)
+- `/api/sm/transSpec/selectTransSpecShpList`
+    - 사용: sm/TransSpecShp
+
+## /api/sso  (1)
+
+- `/api/sso/ssoLogin`
+    - 사용: cms/popup/CmsCsmOpenPopup
+
+## /api/tax  (4)
+
+- `/api/tax/issueRsdnRgstTaxBill`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+- `/api/tax/issueTaxBill`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+- `/api/tax/resendMail`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+- `/api/tax/selectLogisBill`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt), sm/popup/logisbillOpenPopup
+
+## /api/taxMgt  (8)
+
+- `/api/taxMgt/cancelAccounting`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+- `/api/taxMgt/cancelTaxBill`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+- `/api/taxMgt/issueModiBill`
+- `/api/taxMgt/saveAccounting`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+- `/api/taxMgt/saveRemark`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+- `/api/taxMgt/selectBillList`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+- `/api/taxMgt/selectBillTaxCntrList`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+- `/api/taxMgt/selectMgtList`
+    - 사용: 전자세금계산서 관리(sm/generalBilling/taxMgt)
+
+## /api/template  (4)
+
+- `/api/template/board/excelUpTemplateBoardMgt`
+    - 사용: z-dev/template/board/boardMgt, z-dev/template/faq, z-dev/template/templateDownload
+- `/api/template/board/saveTemplateBoardMgt`
+    - 사용: z-dev/template/board/boardMgt, z-dev/template/faq, z-dev/template/templateDownload
+- `/api/template/board/selectTemplateBoardMgt`
+    - 사용: z-dev/template/board/boardMgt, z-dev/template/faq, z-dev/template/templateDownload
+- `/api/template/board/sendTemplateBoardMgtEmail`
+    - 사용: z-dev/template/board/boardMgt, z-dev/template/faq, z-dev/template/templateDownload
+
+## /api/tms  (2)
+
+- `/api/tms/dr/allo/selectDoorAlloInfo`
+    - 사용: sm/popup/DriverSignPopup
+- `/api/tms/st/allo/copino`
+    - 사용: sm/popup/DriverSignPopup
+
+## /api/updateChgPwTm  (1)
+
+- `/api/updateChgPwTm`
+    - 사용: admin/AdminChangePW
+
+## /api/updatePassword  (1)
+
+- `/api/updatePassword`
+    - 사용: admin/AdminChangePW
+
+## /api/updateUser  (1)
+
+- `/api/updateUser`
+    - 사용: admin/AdminUserInfo
+
+## /api/webpush  (1)
+
+- `/api/webpush/register`
+
+## /api/withdrawalUser  (1)
+
+- `/api/withdrawalUser`
+    - 사용: admin/AdminUserInfo
+
+## /api/wms  (117)
+
+- `/api/wms/Tariff/saveCfsTariff`
+    - 사용: wms/Settlement/WmsTariffMgt
+- `/api/wms/Tariff/selectCfsTariffDetailCopyList`
+    - 사용: wms/Settlement/WmsTariffMgt
+- `/api/wms/Tariff/selectCfsTariffDetailList`
+    - 사용: wms/Settlement/WmsTariffMgt
+- `/api/wms/Tariff/selectCfsTariffHdList`
+    - 사용: wms/Settlement/WmsTariffMgt
+- `/api/wms/Tariff/selectTariffList_v2`
+    - 사용: wms/issue/WmsAgiMgt, wms/receipt/WmsAgrMgt
+- `/api/wms/WmsInvEndMgt/saveInvEndMgt`
+    - 사용: wms/Settlement/WmsInvEndMgt
+- `/api/wms/WmsInvEndMgt/selectInvEndMgt`
+    - 사용: wms/Settlement/WmsInvEndMgt
+- `/api/wms/configuration/deleteWareHouseConfigInfo`
+    - 사용: wms/Monitoring/WmsWhConfiguration
+- `/api/wms/configuration/saveGateInfoByWhId`
+    - 사용: wms/popup/WmsWhGatePopup
+- `/api/wms/configuration/saveWareHouseConfigInfo`
+    - 사용: wms/Monitoring/WmsWhConfiguration
+- `/api/wms/configuration/selectGateInfoByWhId`
+    - 사용: wms/popup/WmsWhGatePopup
+- `/api/wms/configuration/selectWareHouseConfig`
+    - 사용: wms/Monitoring/WmsWhConfiguration
+- `/api/wms/monitoring/selectInventoryInfo`
+    - 사용: wms/Monitoring/WmsWhMonitoring
+- `/api/wms/monitoring/selectWareHouseInfo`
+    - 사용: wms/Monitoring/WmsWhMonitoring
+- `/api/wms/monitoring/selectWhStatusList`
+    - 사용: wms/Monitoring/WmsWhMonitoring
+- `/api/wms/wmsAgiMgt/deleteAgiMgt`
+    - 사용: wms/issue/WmsAgiMgt
+- `/api/wms/wmsAgiMgt/saveAgiInvDtl`
+    - 사용: wms/issue/WmsAgiMgt
+- `/api/wms/wmsAgiMgt/saveAgiMgt`
+    - 사용: wms/issue/WmsAgiMgt
+- `/api/wms/wmsAgiMgt/selectAgiDtlList`
+    - 사용: wms/issue/WmsAgiMgt
+- `/api/wms/wmsAgiMgt/selectAgiInvDtlList`
+    - 사용: wms/issue/WmsAgiMgt
+- `/api/wms/wmsAgiMgt/selectAgiMgtList`
+    - 사용: wms/issue/WmsAgiMgt
+- `/api/wms/wmsAgrMgt/deleteAgrMgt`
+    - 사용: wms/receipt/WmsAgrMgt
+- `/api/wms/wmsAgrMgt/saveAgrDim`
+    - 사용: wms/popup/FDimensionPopup
+- `/api/wms/wmsAgrMgt/saveAgrInvDtl`
+    - 사용: wms/receipt/WmsAgrMgt
+- `/api/wms/wmsAgrMgt/saveAgrMgt`
+    - 사용: wms/receipt/WmsAgrMgt
+- `/api/wms/wmsAgrMgt/saveAgrMgtAtWrk`
+    - 사용: wms/popup/WmsAgrMgtPopup
+- `/api/wms/wmsAgrMgt/saveInventoryLocation`
+    - 사용: wms/popup/WmsAgrInvenLocaPopup
+- `/api/wms/wmsAgrMgt/selectAgrDimList`
+    - 사용: wms/popup/FDimensionPopup
+- `/api/wms/wmsAgrMgt/selectAgrDtlList`
+    - 사용: wms/popup/WmsAgrMgtPopup, wms/receipt/WmsAgrMgt
+- `/api/wms/wmsAgrMgt/selectAgrInvDtlList`
+    - 사용: wms/receipt/WmsAgrMgt
+- `/api/wms/wmsAgrMgt/selectAgrMgtList`
+    - 사용: wms/receipt/WmsAgrMgt
+- `/api/wms/wmsAgrMgt/selectAgrWrkList`
+    - 사용: wms/AppView/WmsAgrWrkList
+- `/api/wms/wmsAgrMgt/selectWhDetailInfo`
+    - 사용: wms/popup/WmsAgrInvenLocaPopup
+- `/api/wms/wmsAgrMgt/selectWhList`
+    - 사용: wms/popup/WmsAgrInvenLocaPopup
+- `/api/wms/wmsAgrMgt/updateAgrInvenInfo`
+    - 사용: wms/popup/WmsUpdateAgrInvenPopup
+- `/api/wms/wmsClpMgt/deleteClpMgt`
+    - 사용: wms/issue/WmsClpMgt
+- `/api/wms/wmsClpMgt/saveClpMgt`
+    - 사용: wms/issue/WmsClpMgt, wms/popup/WmsAgiClpPopup
+- `/api/wms/wmsClpMgt/selectAgiWrkList`
+    - 사용: wms/AppView/WmsAgiWrkList
+- `/api/wms/wmsClpMgt/selectClpMgtDtlList`
+    - 사용: wms/issue/WmsClpMgt, wms/popup/WmsAgiClpPopup
+- `/api/wms/wmsClpMgt/selectClpMgtList`
+    - 사용: wms/issue/WmsClpMgt
+- `/api/wms/wmsClpMgt/selectClpMgtNotDtlList`
+    - 사용: wms/issue/WmsClpMgt
+- `/api/wms/wmsClpMgt/updateClpNotState`
+    - 사용: wms/issue/WmsClpMgt
+- `/api/wms/wmsClpMgt/updateClpState`
+    - 사용: wms/issue/WmsClpMgt, wms/popup/WmsAgiClpPopup
+- `/api/wms/wmsClpMgt/updatePick`
+    - 사용: wms/popup/WmsAgiClpPopup
+- `/api/wms/wmsEgiMgt/deleteEgiMgt`
+    - 사용: wms/issue/WmsEgiMgt
+- `/api/wms/wmsEgiMgt/saveEgiMgt`
+    - 사용: wms/issue/WmsEgiMgt
+- `/api/wms/wmsEgiMgt/selectEgiDtlList`
+    - 사용: wms/issue/WmsEgiMgt
+- `/api/wms/wmsEgiMgt/selectEgiMgtList`
+    - 사용: wms/issue/WmsEgiMgt
+- `/api/wms/wmsEgrMgt/callCntrMgtList`
+    - 사용: wms/receipt/WmsEgrMgt
+- `/api/wms/wmsEgrMgt/copyEgrMgt`
+    - 사용: wms/receipt/WmsEgrMgt
+- `/api/wms/wmsEgrMgt/deleteEgrMgt`
+    - 사용: wms/receipt/WmsEgrMgt
+- `/api/wms/wmsEgrMgt/saveEgrMgt`
+    - 사용: wms/receipt/WmsEgrMgt
+- `/api/wms/wmsEgrMgt/selectEgrDtlList`
+    - 사용: wms/receipt/WmsEgrMgt
+- `/api/wms/wmsEgrMgt/selectEgrMgtList`
+    - 사용: wms/receipt/WmsEgrMgt
+- `/api/wms/wmsEgrMgt/selectEgrTrkList`
+    - 사용: wms/receipt/WmsEgrMgt
+- `/api/wms/wmsEtcInvMgt/deleteEtcInvMgt`
+    - 사용: wms/Settlement/WmsEtcInvMgt
+- `/api/wms/wmsEtcInvMgt/saveEtcInvMgt`
+    - 사용: wms/Settlement/WmsEtcInvMgt
+- `/api/wms/wmsEtcInvMgt/selectEtcInvMgtDtlList`
+    - 사용: wms/Settlement/WmsEtcInvMgt
+- `/api/wms/wmsEtcInvMgt/selectEtcInvMgtList`
+    - 사용: wms/Settlement/WmsEtcInvMgt
+- `/api/wms/wmsEtcInvMgt/selectEtcInvMgtPrintList`
+    - 사용: wms/Settlement/WmsEtcInvMgt
+- `/api/wms/wmsGrgiList/selectGrgiList`
+    - 사용: wms/Inventory/WmsGrgiList
+- `/api/wms/wmsInvConfrimMgt/delete`
+    - 사용: wms/Settlement/WmsInvConfrimMgt
+- `/api/wms/wmsInvConfrimMgt/save`
+    - 사용: wms/Settlement/WmsInvConfrimMgt
+- `/api/wms/wmsInvConfrimMgt/selectGrpInvPrintList`
+    - 사용: wms/Settlement/WmsInvConfrimMgt
+- `/api/wms/wmsInvConfrimMgt/selectInvList`
+    - 사용: wms/Settlement/WmsInvConfrimMgt
+- `/api/wms/wmsInvConfrimMgt/selectInvPrintList`
+    - 사용: wms/Settlement/WmsInvConfrimMgt
+- `/api/wms/wmsInvConfrimMgt/updateInvPrintDt`
+    - 사용: wms/Settlement/WmsInvConfrimMgt
+- `/api/wms/wmsInvList/delete`
+    - 사용: wms/Settlement/WmsInvList
+- `/api/wms/wmsInvList/save`
+    - 사용: wms/Settlement/WmsInvList
+- `/api/wms/wmsInvList/selectGrpInvPrintList`
+    - 사용: wms/Settlement/WmsInvList
+- `/api/wms/wmsInvList/selectInvList`
+    - 사용: wms/Settlement/WmsInvList
+- `/api/wms/wmsInvList/selectInvPrintList`
+    - 사용: wms/Settlement/WmsInvList
+- `/api/wms/wmsInvList/selectPrchsTotalInvPrintList`
+    - 사용: wms/popup/WmsPrchsInvPrintPopup
+- `/api/wms/wmsInvList/updateFileDoc`
+    - 사용: wms/Settlement/WmsInvList
+- `/api/wms/wmsInvList/updateInvPrintDt`
+    - 사용: wms/Settlement/WmsInvList
+- `/api/wms/wmsInvMgt/deleteInvMgt`
+    - 사용: wms/Settlement/WmsInvMgt
+- `/api/wms/wmsInvMgt/saveInvMgt`
+    - 사용: wms/Settlement/WmsInvMgt
+- `/api/wms/wmsInvMgt/selectInvMgtList`
+    - 사용: wms/Settlement/WmsInvMgt
+- `/api/wms/wmsInvMgt/selectInvMgtPrintList`
+    - 사용: wms/Settlement/WmsInvMgt
+- `/api/wms/wmsInvPrchsgMgt/deleteInvPrchsMgt`
+    - 사용: wms/Settlement/WmsPrchsInvMgt
+- `/api/wms/wmsInvPrchsgMgt/saveInvPrchsMgt`
+    - 사용: wms/Settlement/WmsPrchsInvMgt
+- `/api/wms/wmsInvPrchsgMgt/selectInvPrchsMgtDtlList`
+    - 사용: wms/Settlement/WmsPrchsInvMgt
+- `/api/wms/wmsInvPrchsgMgt/selectInvPrchsMgtList`
+    - 사용: wms/Settlement/WmsPrchsInvMgt
+- `/api/wms/wmsInvPrchsgMgt/selectInvPrchsMgtPrintList`
+    - 사용: wms/Settlement/WmsPrchsInvMgt
+- `/api/wms/wmsInvPrchsgMgt/selectStDayCalc`
+    - 사용: wms/Settlement/WmsPrchsInvMgt
+- `/api/wms/wmsInvPrchsgMgt/updateFileDoc`
+    - 사용: wms/Settlement/WmsEtcInvMgt, wms/Settlement/WmsPrchsInvMgt
+- `/api/wms/wmsInvStrgMgt/deleteInvStrgMgt`
+    - 사용: wms/Settlement/WmsStrgInvMgt
+- `/api/wms/wmsInvStrgMgt/saveInvStrgMgt`
+    - 사용: wms/Settlement/WmsStrgInvMgt
+- `/api/wms/wmsInvStrgMgt/selectInvStrgMgtDtlList`
+    - 사용: wms/Settlement/WmsStrgInvMgt
+- `/api/wms/wmsInvStrgMgt/selectInvStrgMgtList`
+    - 사용: wms/Settlement/WmsStrgInvMgt
+- `/api/wms/wmsInvStrgMgt/selectInvStrgMgtPrintList`
+    - 사용: wms/Settlement/WmsStrgInvMgt
+- `/api/wms/wmsInvStrgMgt/selectStDayCalc`
+    - 사용: wms/Settlement/WmsStrgInvMgt, wms/issue/WmsAgiMgt
+- `/api/wms/wmsIvnList/selectIvnList`
+    - 사용: wms/Inventory/WmsIvnList
+- `/api/wms/wmsIvnList/selectLocationDtlList`
+    - 사용: wms/AppView/WmsLocStt
+- `/api/wms/wmsIvnList/selectLocationList`
+    - 사용: wms/AppView/WmsLocStt
+- `/api/wms/wmsPerformance/selectCustSaleList`
+    - 사용: wms/Performance/WmsCustSaleList
+- `/api/wms/wmsPerformance/selectFrtSaleList`
+    - 사용: wms/Performance/WmsFrtSaleList
+- `/api/wms/wmsPerformance/selectMonPtnList`
+    - 사용: wms/Performance/WmsMonPtnList
+- `/api/wms/wmsPerformance/selectTotalsaleList`
+    - 사용: wms/Performance/WmsTotalSaleList
+- `/api/wms/wmsPftCustList/selectBuyDetailList`
+    - 사용: wms/Settlement/WmsPftCustList
+- `/api/wms/wmsPftCustList/selectDetailList`
+    - 사용: wms/Settlement/WmsPftCustList
+- `/api/wms/wmsPftCustList/selectList`
+    - 사용: wms/Settlement/WmsPftCustList
+- `/api/wms/wmsTaxMgt/cancelAccounting`
+    - 사용: wms/Settlement/WmsTaxMgt
+- `/api/wms/wmsTaxMgt/cancelTaxBill`
+    - 사용: wms/Settlement/WmsTaxMgt
+- `/api/wms/wmsTaxMgt/issueModiBill`
+- `/api/wms/wmsTaxMgt/issueTaxBill`
+    - 사용: wms/Settlement/WmsTaxMgt
+- `/api/wms/wmsTaxMgt/saveAccounting`
+    - 사용: wms/Settlement/WmsTaxMgt
+- `/api/wms/wmsTaxMgt/saveRemark`
+    - 사용: wms/Settlement/WmsTaxMgt
+- `/api/wms/wmsTaxMgt/selectBillList`
+    - 사용: wms/Settlement/WmsTaxMgt
+- `/api/wms/wmsTaxMgt/selectLogisBill`
+    - 사용: wms/Settlement/WmsTaxMgt
+- `/api/wms/wmsTaxMgt/selectTaxMgtList`
+    - 사용: wms/Settlement/WmsTaxMgt
+- `/api/wms/wmsTrfInvMgt/delete`
+    - 사용: wms/Settlement/WmsTrfInvMgt
+- `/api/wms/wmsTrfInvMgt/searchInvDtlList`
+    - 사용: wms/Settlement/WmsTrfInvMgt
+- `/api/wms/wmsTrfInvMgt/searchTariffList`
+    - 사용: wms/Settlement/WmsTrfInvMgt
+- `/api/wms/wmsTrfInvMgt/selectTariff`
+    - 사용: wms/Settlement/WmsTrfInvMgt
+- `/api/wms/wmsTrfInvMgt/selectTrfInvList`
+    - 사용: wms/Settlement/WmsTrfInvMgt
+- `/api/wms/wmsTrfInvMgt/updateInvDtl`
+    - 사용: wms/Settlement/WmsTrfInvMgt
