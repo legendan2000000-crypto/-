@@ -3,306 +3,643 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>배차일보 (샘플)</title>
+<title>배차일보</title>
 <style>
   :root{
-    --bg:#f4f6f9; --panel:#fff; --line:#e3e8ef; --text:#1a2233; --muted:#68758a;
-    --accent:#2563eb; --accent-soft:#e8f0fe; --ok:#16a34a; --bad:#dc2626; --warn:#d97706;
-    --shadow:0 1px 3px rgba(20,30,50,.08),0 1px 2px rgba(20,30,50,.04);
+    --bg:#eef1f6; --panel:#fff; --line:#e2e7ef; --text:#1a2233; --muted:#6a7789;
+    --accent:#2563eb; --accent-soft:#e8f0fe; --ok:#15a34a; --bad:#dc2626; --warn:#e08600; --gray:#9aa6b6;
+    --shadow:0 1px 3px rgba(20,30,50,.08),0 1px 2px rgba(20,30,50,.05);
     --io-i:#0369a1; --io-i-bg:#e0f2fe; --io-o:#9333ea; --io-o-bg:#f3e8ff;
+    --usr:#0d7a53; --usr-bg:#e5f6ee;
   }
   @media (prefers-color-scheme:dark){
-    :root{--bg:#0f1420;--panel:#171d2b;--line:#28303f;--text:#e6ebf3;--muted:#8b97ad;
-      --accent:#5b8cff;--accent-soft:#1b2740;--io-i-bg:#0c2233;--io-o-bg:#241033;--shadow:none;}
+    :root{--bg:#0e131e;--panel:#161c29;--line:#28303f;--text:#e6ebf3;--muted:#8b97ad;
+      --accent:#5b8cff;--accent-soft:#1b2740;--io-i-bg:#0c2233;--io-o-bg:#241033;--usr-bg:#0e2a1f;--shadow:none;--gray:#5a6675;}
   }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%}
   body{background:var(--bg);color:var(--text);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Malgun Gothic","Apple SD Gothic Neo",sans-serif}
-  header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
-  .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px}
-  .bar h1{font-size:16px;margin:0 8px 0 0;font-weight:700;white-space:nowrap}
-  .tabs{display:flex;gap:4px;background:var(--bg);border-radius:9px;padding:3px}
-  .tabs button{border:0;background:transparent;color:var(--muted);padding:6px 14px;border-radius:7px;cursor:pointer;font-weight:600;font-size:13px}
+  header{position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+  .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:9px 14px}
+  .bar h1{font-size:16px;margin:0 6px 0 0;font-weight:800;white-space:nowrap}
+  .tabs{display:flex;gap:3px;background:var(--bg);border-radius:9px;padding:3px}
+  .tabs button{border:0;background:transparent;color:var(--muted);padding:6px 13px;border-radius:7px;cursor:pointer;font-weight:700;font-size:13px}
   .tabs button.on{background:var(--panel);color:var(--accent);box-shadow:var(--shadow)}
   .grow{flex:1}
-  input,select{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 10px;outline:none}
-  input:focus,select:focus{border-color:var(--accent)}
-  .search{min-width:200px;flex:1;max-width:340px}
-  .date{width:140px}
-  button.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:600}
+  input,select,textarea{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 10px;outline:none}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+  button.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:700}
   button.btn:hover{border-color:var(--accent);color:var(--accent)}
   button.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+  button.btn.pri:hover{color:#fff;filter:brightness(1.05)}
+  button.btn.sm{padding:4px 9px;font-size:12.5px}
   .chk{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;cursor:pointer;user-select:none}
-  .filters{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 10px}
-  .fdrop{position:relative}
-  .fdrop>button{font-size:12.5px;padding:5px 10px}
-  .fdrop>button .cnt{color:var(--accent);font-weight:700}
-  .fmenu{position:absolute;top:calc(100% + 4px);left:0;z-index:30;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(20,30,50,.16);padding:8px;min-width:180px;max-height:320px;overflow:auto;display:none}
-  .fmenu.open{display:block}
-  .fmenu label{display:flex;gap:8px;align-items:center;padding:4px 6px;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap}
-  .fmenu label:hover{background:var(--bg)}
-  .fmenu .tools{display:flex;justify-content:space-between;padding:2px 4px 6px;border-bottom:1px solid var(--line);margin-bottom:4px}
-  .fmenu .tools a{color:var(--accent);cursor:pointer;font-size:12px}
-  main{padding:12px 14px 40px}
-  .meta{color:var(--muted);font-size:12.5px;margin:2px 2px 10px;display:flex;gap:14px;flex-wrap:wrap}
+  main{padding:12px 14px 60px;max-width:1400px;margin:0 auto}
+  .view{display:none} .view.on{display:block}
+  .meta{color:var(--muted);font-size:12.5px;margin:2px 2px 10px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
   .meta b{color:var(--text)}
-  .tablewrap{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:auto;box-shadow:var(--shadow)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+  /* 당일배차 */
+  .dayhead{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  .dayhead .d{font-size:20px;font-weight:800}
+  .dayhead .dow{color:var(--muted);font-weight:600;font-size:14px}
+  .tablewrap{overflow:auto;border-radius:12px}
   table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap}
   th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line)}
   th{position:sticky;top:0;background:var(--panel);z-index:5;font-weight:700;font-size:12px;color:var(--muted);cursor:pointer}
-  th:hover{color:var(--accent)}
   tbody tr:hover{background:var(--accent-soft)}
   td.num{text-align:right;font-variant-numeric:tabular-nums}
+  td.act{white-space:nowrap}
   .pill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11.5px;font-weight:700}
   .io-I{color:var(--io-i);background:var(--io-i-bg)} .io-O{color:var(--io-o);background:var(--io-o-bg)}
-  .div-용차{color:var(--warn)}
-  .cntr .b{font-family:ui-monospace,Menlo,Consolas,monospace}
-  .cbadge{margin-left:5px;font-size:11px;font-weight:700}
-  .cbadge.ok{color:var(--ok)} .cbadge.bad{color:var(--bad)} .cbadge.na{color:var(--muted)}
+  .tag-user{color:var(--usr);background:var(--usr-bg);padding:0 6px;border-radius:5px;font-size:10.5px;font-weight:800;margin-left:6px}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+  .cbadge{margin-left:5px;font-size:11px;font-weight:800}
+  .cbadge.ok{color:var(--ok)} .cbadge.bad{color:var(--bad)} .cbadge.warn{color:var(--warn)} .cbadge.na{color:var(--gray)}
   .amt-hide .amt{display:none !important}
-  .foot{display:flex;justify-content:center;gap:8px;align-items:center;padding:14px}
-  .foot span{color:var(--muted);font-size:13px}
-  tr.det td{background:var(--bg);white-space:normal}
-  .dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px 18px;padding:4px 2px}
-  .dl div{font-size:12.5px} .dl b{color:var(--muted);font-weight:600;margin-right:6px}
-  /* cards (mobile) */
+  .empty{padding:44px 16px;text-align:center;color:var(--muted)}
+  .empty b{display:block;font-size:16px;color:var(--text);margin-bottom:6px}
+  /* form */
+  .formgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px 16px;padding:16px}
+  .fld{display:flex;flex-direction:column;gap:4px;position:relative}
+  .fld label{font-size:12px;color:var(--muted);font-weight:700}
+  .fld.wide{grid-column:1/-1}
+  .fld .hint{font-size:11.5px;color:var(--muted)}
+  .conf-low{background:#fff8e1;border-color:var(--warn)!important}
+  @media (prefers-color-scheme:dark){.conf-low{background:#2a2410}}
+  .sug{position:absolute;top:100%;left:0;right:0;z-index:40;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(20,30,50,.18);margin-top:2px;max-height:230px;overflow:auto;display:none}
+  .sug.open{display:block}
+  .sug div{padding:7px 10px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;gap:8px}
+  .sug div:hover,.sug div.hi{background:var(--accent-soft)}
+  .sug div small{color:var(--muted)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips button{border:1px solid var(--line);background:var(--bg);border-radius:20px;padding:3px 10px;font-size:12px;cursor:pointer}
+  .chips button:hover{border-color:var(--accent);color:var(--accent)}
+  .cntrbox{display:flex;flex-direction:column;gap:6px}
+  .cntrrow{display:flex;gap:8px;align-items:center}
+  .cntrrow input{flex:1;text-transform:uppercase;font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.5px}
+  .cntrmsg{font-size:12px;font-weight:700;min-width:150px}
+  .cntrmsg.ok{color:var(--ok)} .cntrmsg.bad{color:var(--bad)} .cntrmsg.warn{color:var(--warn)} .cntrmsg.na{color:var(--gray)}
+  .drop{border:2px dashed var(--line);border-radius:12px;padding:14px;text-align:center;color:var(--muted);cursor:pointer;background:var(--bg)}
+  .drop.hot{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+  .paste{width:100%;min-height:70px;resize:vertical}
+  .formbar{display:flex;gap:10px;justify-content:flex-end;padding:0 16px 16px;flex-wrap:wrap}
+  .note{margin:0 16px 12px;padding:9px 12px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font-size:12.5px}
+  .note.warn{background:#fff4e0;color:#a35a00}
+  @media (prefers-color-scheme:dark){.note.warn{background:#2a2010;color:#e0a75a}}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .fdrop{position:relative}
+  .fmenu{position:absolute;top:calc(100% + 4px);left:0;z-index:30;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(20,30,50,.16);padding:8px;min-width:170px;max-height:300px;overflow:auto;display:none}
+  .fmenu.open{display:block}
+  .fmenu label{display:flex;gap:8px;align-items:center;padding:4px 6px;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap}
+  .fmenu label:hover{background:var(--bg)}
   .cards{display:none}
-  @media (max-width:820px){
-    .tablewrap{display:none}
+  @media (max-width:860px){
+    .tablewrap table{display:none}
     .cards{display:grid;gap:10px}
     .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--shadow)}
     .card .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-    .card .who{font-weight:700;font-size:15px}
-    .card .row2{color:var(--muted);font-size:12.5px;margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 12px}
-    .card .amt{font-variant-numeric:tabular-nums}
-    .search{max-width:none}
+    .card .who{font-weight:800;font-size:15px}
+    .card .r{color:var(--muted);font-size:12.5px;margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 12px}
+    .formgrid{grid-template-columns:1fr 1fr}
+    .fld.wide{grid-column:1/-1}
   }
 </style>
 </head>
 <body class="amt-hide">
 <header>
   <div class="bar">
-    <h1>배차일보 <span style="color:var(--muted);font-weight:500;font-size:12px">샘플</span></h1>
-    <div class="tabs">
-      <button data-view="ledger" class="on">배차대장</button>
-      <button data-view="summary">요약</button>
+    <h1>배차일보</h1>
+    <div class="tabs" id="tabs">
+      <button data-v="day" class="on">당일배차</button>
+      <button data-v="input">＋ 입력</button>
+      <button data-v="sum">요약</button>
+      <button data-v="find">조회</button>
     </div>
     <span class="grow"></span>
-    <input class="date" type="date" id="dfrom" title="시작일">
-    <span style="color:var(--muted)">~</span>
-    <input class="date" type="date" id="dto" title="종료일">
-    <input class="search" id="q" placeholder="검색 — 화주·지역·차량·컨번호·B/L (예: 청주SDI)">
-    <label class="chk"><input type="checkbox" id="amt"> 금액표시</label>
-    <button class="btn" id="csv">CSV</button>
-    <button class="btn" id="reset">초기화</button>
+    <label class="chk"><input type="checkbox" id="amt"> 금액</label>
+    <span id="storeinfo" class="chk" style="cursor:default"></span>
   </div>
-  <div class="filters" id="filters"></div>
 </header>
 <main>
-  <div class="meta" id="meta"></div>
-  <div id="ledger">
-    <div class="tablewrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
-    <div class="cards" id="cards"></div>
-    <div class="foot" id="foot"></div>
-  </div>
-  <div id="summary" style="display:none">
-    <div class="bar" style="padding:0 0 10px">
-      <span style="color:var(--muted)">기준</span>
-      <select id="grpby">
-        <option value="2">차량번호</option>
-        <option value="0">날짜</option>
-        <option value="5">화주</option>
-        <option value="4">청구처</option>
-        <option value="9">선사</option>
-        <option value="24">구분(자/용차)</option>
-      </select>
-      <span style="color:var(--muted);font-size:12.5px">현재 필터·검색 상태 그대로 집계</span>
+  <!-- 당일배차 -->
+  <section class="view on" id="v-day">
+    <div class="dayhead">
+      <button class="btn sm" id="dprev">◀</button>
+      <input type="date" id="dsel">
+      <button class="btn sm" id="dnext">▶</button>
+      <button class="btn sm" id="dlast">최근일</button>
+      <span class="d" id="dbig"></span><span class="dow" id="ddow"></span>
+      <span class="grow"></span>
+      <span class="meta" id="daymeta" style="margin:0"></span>
+      <button class="btn pri" id="addBtn">＋ 새 배차</button>
     </div>
-    <div class="tablewrap"><table id="stbl"><thead></thead><tbody></tbody></table></div>
-  </div>
+    <div class="panel tablewrap">
+      <table id="dtbl"><thead></thead><tbody></tbody></table>
+      <div class="cards" id="dcards"></div>
+      <div class="empty" id="dempty" style="display:none"><b>이 날짜에 배차가 없습니다</b>＋ 새 배차로 추가하세요</div>
+    </div>
+  </section>
+
+  <!-- 입력 -->
+  <section class="view" id="v-input">
+    <div class="panel" style="margin-bottom:14px">
+      <div style="padding:14px 16px 6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <b>빠른 입력</b><span class="hint" style="color:var(--muted)">메신저 내용을 그대로 붙여넣거나, D/O·PDF를 올리면 자동으로 아래 폼을 채웁니다.</span>
+      </div>
+      <div style="padding:0 16px 14px;display:grid;grid-template-columns:1fr;gap:10px">
+        <textarea class="paste" id="pasteBox" placeholder="여기에 메신저 내용을 붙여넣고 [자동 파싱] — 필터 없이 통째로 붙여도 됩니다."></textarea>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn pri" id="parseBtn">자동 파싱</button>
+          <div class="drop grow" id="drop">📄 D/O · PDF · 이미지 파일을 여기에 끌어다 놓기 (또는 클릭)</div>
+          <input type="file" id="file" accept=".pdf,image/*,.txt" style="display:none">
+        </div>
+        <div id="parseInfo" class="hint" style="color:var(--muted)"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="note" id="editNote" style="display:none"></div>
+      <div class="formgrid" id="form"></div>
+      <div class="formbar">
+        <span class="grow hint" style="color:var(--muted)" id="formStatus"></span>
+        <button class="btn" id="clearForm">폼 비우기</button>
+        <button class="btn pri" id="saveBtn">저장</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 요약 -->
+  <section class="view" id="v-sum">
+    <div class="meta">
+      <span>기준</span>
+      <select id="grpby">
+        <option value="vno">차량번호</option><option value="date">날짜</option>
+        <option value="shipper">화주</option><option value="billto">청구처</option>
+        <option value="line">선사</option><option value="div">구분(자/용차)</option>
+      </select>
+      <input type="date" id="sfrom" class="sm"><span>~</span><input type="date" id="sto">
+      <span class="hint">기간 내 집계</span>
+    </div>
+    <div class="panel tablewrap"><table id="stbl"><thead></thead><tbody></tbody></table></div>
+  </section>
+
+  <!-- 조회 -->
+  <section class="view" id="v-find">
+    <div class="bar" style="padding:0 0 10px">
+      <input id="q" placeholder="검색 — 화주·지역·차량·컨번호·B/L (예: 청주SDI)" style="flex:1;max-width:380px">
+      <input type="date" id="ffrom"><span>~</span><input type="date" id="fto">
+      <button class="btn sm" id="csv">CSV</button>
+      <button class="btn sm" id="aliasBtn">별칭 관리</button>
+      <button class="btn sm" id="freset">초기화</button>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="meta" id="fmeta"></div>
+    <div class="panel tablewrap"><table id="ftbl"><thead></thead><tbody></tbody></table><div class="cards" id="fcards"></div></div>
+    <div style="text-align:center;padding:14px" id="ffoot"></div>
+  </section>
 </main>
 <script src="data.js"></script>
 <script>
-const D=window.__DISPATCH__, COL=D.columns, LAB=D.labels, ROWS=D.rows;
-const idx=Object.fromEntries(COL.map((c,i)=>[c,i]));
+/* ============ 데이터 ============ */
+const D=window.__DISPATCH__, COL=D.columns, LAB=D.labels;
+const LKEY='bcm_entries_v1', AKEY='bcm_alias_v1';
 const won=n=>n==null||n===''?'':Number(n).toLocaleString('ko-KR');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const DOW=['일','월','화','수','목','금','토'];
+const srcTag=r=>r._src==='user'?(r._over?'<span class="tag-user">수정</span>':'<span class="tag-user">신규</span>'):'';
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
 
-// ---- ISO 6346 컨테이너 체크디짓 ----
+let BASE=D.rows.map((r,i)=>{const o={_src:'base',_id:'b'+i};COL.forEach((c,j)=>o[c]=r[j]);return o;});
+let USER=load(LKEY,[]);
+let ALIAS=load(AKEY,{shipper:{},region:{'청주':['오창'],'안산':['반월']}}); // 지역 별칭 예시 seed
+let ALL=[];
+function rebuild(){
+  // USER 항목은 신규이거나, 기존(base) 건을 덮어쓰는 수정본(_over)일 수 있다.
+  const over=new Set(USER.filter(u=>u._over).map(u=>u._over));           // 수정/삭제된 base id
+  const tomb=new Set(USER.filter(u=>u._deleted).map(u=>u._over));        // 삭제된 base id
+  ALL=BASE.filter(b=>!over.has(b._id))                                    // 덮인 base 제외
+        .concat(USER.filter(u=>!u._deleted));                            // 삭제표식 제외
+  buildMasters();buildTokens();
+}
+function load(k,def){try{return JSON.parse(localStorage.getItem(k))??def;}catch(e){return def;}}
+function saveUser(){localStorage.setItem(LKEY,JSON.stringify(USER));rebuild();refreshStore();}
+function saveAlias(){localStorage.setItem(AKEY,JSON.stringify(ALIAS));buildTokens();}
+
+/* ============ ISO 6346 ============ */
 const CV={A:10,B:12,C:13,D:14,E:15,F:16,G:17,H:18,I:19,J:20,K:21,L:23,M:24,N:25,O:26,P:27,Q:28,R:29,S:30,T:31,U:32,V:34,W:35,X:36,Y:37,Z:38};
-function cntrCheck(s){
+function cntrState(s){ // '' na warn ok bad
   s=(s||'').toString().toUpperCase().replace(/\s+/g,'');
-  if(!/^[A-Z]{4}[0-9]{7}$/.test(s)) return 'na';
-  let sum=0; for(let i=0;i<10;i++){const c=s[i];const v=i<4?CV[c]:+c;sum+=v*Math.pow(2,i);}
-  let cd=sum%11; if(cd===10)cd=0;
-  return cd===+s[10]?'ok':'bad';
+  if(s.length===0)return {st:'',msg:''};
+  if(s.length<=10)return {st:'na',msg:'입력 중…'};
+  if(!/^[A-Z]{4}[0-9]{7}$/.test(s))return {st:'warn',msg:'형식: 영문4 + 숫자7'};
+  let sum=0;for(let i=0;i<10;i++){const c=s[i];const v=i<4?CV[c]:+c;sum+=v*Math.pow(2,i);}
+  let cd=sum%11;if(cd===10)cd=0;
+  return cd===+s[10]?{st:'ok',msg:'✓ 정상'}:{st:'bad',msg:'✕ 번호를 다시 확인하세요'};
 }
 function cntrCell(v){
-  if(v==null||v==='') return '';
-  const parts=String(v).split(/[\n,]/).map(x=>x.trim()).filter(Boolean);
-  return parts.map(p=>{const st=cntrCheck(p);const sym=st==='ok'?'✓':st==='bad'?'✕':'';
-    const cls=st;return `<span class="b">${esc(p)}</span>${sym?`<span class="cbadge ${cls}">${sym}</span>`:''}`;}).join('<br>');
-}
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-
-// ---- 상태 ----
-const FILTER_COLS=[['io','수출입'],['div','구분'],['size','사이즈'],['type','타입'],['line','선사'],['billto','청구처']];
-const state={q:'',from:'',to:'',sort:{col:0,dir:1},filters:{},page:1,per:120,view:'ledger'};
-FILTER_COLS.forEach(([k])=>state.filters[k]=new Set());
-
-// 날짜 범위 기본값
-const dates=ROWS.map(r=>r[0]).filter(Boolean).sort();
-document.getElementById('dfrom').value=dates[0];
-document.getElementById('dto').value=dates[dates.length-1];
-state.from=dates[0]; state.to=dates[dates.length-1];
-
-// ---- 필터 UI ----
-const fWrap=document.getElementById('filters');
-FILTER_COLS.forEach(([key,label])=>{
-  const ci=idx[key];
-  const vals=[...new Set(ROWS.map(r=>r[ci]).map(v=>v==null?'(빈값)':String(v)))].sort((a,b)=>a.localeCompare(b,'ko'));
-  const d=document.createElement('div');d.className='fdrop';
-  d.innerHTML=`<button class="btn">${label} <span class="cnt"></span> ▾</button>
-    <div class="fmenu"><div class="tools"><a data-all>전체</a><a data-none>해제</a></div>
-    ${vals.map(v=>`<label><input type="checkbox" value="${esc(v)}"> ${esc(v)}</label>`).join('')}</div>`;
-  fWrap.appendChild(d);
-  const btn=d.querySelector('button'),menu=d.querySelector('.fmenu');
-  btn.onclick=e=>{e.stopPropagation();document.querySelectorAll('.fmenu.open').forEach(m=>m!==menu&&m.classList.remove('open'));menu.classList.toggle('open');};
-  menu.onclick=e=>e.stopPropagation();
-  d.querySelector('[data-all]').onclick=()=>{menu.querySelectorAll('input').forEach(c=>c.checked=false);state.filters[key].clear();sync();};
-  d.querySelector('[data-none]').onclick=()=>{state.filters[key]=new Set(vals);menu.querySelectorAll('input').forEach(c=>c.checked=true);sync();};
-  menu.querySelectorAll('input').forEach(c=>c.onchange=()=>{c.checked?state.filters[key].add(c.value):state.filters[key].delete(c.value);sync();});
-  d._refresh=()=>{const n=state.filters[key].size;d.querySelector('.cnt').textContent=n?`(${n})`:'';};
-});
-document.body.onclick=()=>document.querySelectorAll('.fmenu.open').forEach(m=>m.classList.remove('open'));
-
-// ---- 필터링 ----
-function passFilters(r){
-  for(const [key] of FILTER_COLS){const s=state.filters[key];if(s.size){const v=r[idx[key]];if(!s.has(v==null?'(빈값)':String(v)))return false;}}
-  return true;
-}
-const SEARCH_COLS=['shipper','addr','billto','vno','cntr','bl','do','load','unload','line'].map(k=>idx[k]);
-function passSearch(r){
-  if(!state.q)return true;
-  const terms=state.q.toLowerCase().split(/\s+/).filter(Boolean);
-  const hay=SEARCH_COLS.map(i=>r[i]==null?'':String(r[i]).toLowerCase()).join(' ');
-  return terms.every(t=>hay.includes(t));
-}
-function passDate(r){const d=r[0];if(!d)return true;return (!state.from||d>=state.from)&&(!state.to||d<=state.to);}
-function filtered(){
-  let a=ROWS.filter(r=>passDate(r)&&passFilters(r)&&passSearch(r));
-  const {col,dir}=state.sort;
-  a.sort((x,y)=>{let u=x[col],v=y[col];if(u==null)return 1;if(v==null)return -1;
-    if(typeof u==='number'&&typeof v==='number')return (u-v)*dir;return String(u).localeCompare(String(v),'ko')*dir;});
-  return a;
+  if(v==null||v==='')return '';
+  return String(v).split(/[\n,]/).map(x=>x.trim()).filter(Boolean).map(p=>{
+    const {st}=cntrState(p);const sym=st==='ok'?'✓':st==='bad'?'✕':st==='warn'?'!':'';
+    return `<span class="mono">${esc(p)}</span>${sym?`<span class="cbadge ${st}">${sym}</span>`:''}`;
+  }).join('<br>');
 }
 
-// ---- 렌더: 배차대장 ----
-const SHOW=[['date','날짜'],['io','수출입'],['vno','차량'],['div','구분'],['shipper','화주'],['billto','청구처'],['load','상차지'],['unload','하차지'],['spec','규격'],['cntr','컨번호'],['bl','B/L'],['charge','청구'],['pay','하불']];
-const AMT=new Set(['charge','pay']);
-function renderLedger(rows){
-  const thead=document.querySelector('#tbl thead');
-  thead.innerHTML='<tr>'+SHOW.map(([k,l])=>`<th data-c="${idx[k]}" class="${AMT.has(k)?'amt num':''}">${l}</th>`).join('')+'</tr>';
-  thead.querySelectorAll('th').forEach(th=>th.onclick=()=>{const c=+th.dataset.c;state.sort.dir=(state.sort.col===c?-state.sort.dir:1);state.sort.col=c;render();});
-  const start=(state.page-1)*state.per, pageRows=rows.slice(start,start+state.per);
-  const tb=document.querySelector('#tbl tbody');
-  tb.innerHTML=pageRows.map((r,i)=>{
-    const cells=SHOW.map(([k])=>{
-      const v=r[idx[k]];
-      if(k==='io')return `<td><span class="pill io-${v}">${v==='I'?'수입':v==='O'?'수출':esc(v)}</span></td>`;
-      if(k==='cntr')return `<td class="cntr">${cntrCell(v)}</td>`;
-      if(k==='div')return `<td class="div-${esc(v)}">${esc(v)}</td>`;
-      if(AMT.has(k))return `<td class="amt num">${won(v)}</td>`;
-      return `<td>${esc(v)}</td>`;
+/* ============ 마스터 ============ */
+let M={};
+function topKey(map){let best=null,n=-1;for(const [k,c] of map)if(c>n){n=c;best=k;}return best;}
+function buildMasters(){
+  const veh=new Map(),shp=new Map(),lines=new Map(),loads=new Map(),unloads=new Map(),bills=new Map();
+  const inc=(m,k)=>{if(k==null||k==='')return;m.set(k,(m.get(k)||0)+1);};
+  for(const r of ALL){
+    // vehicle
+    if(r.vno!=null&&r.vno!==''){const key=String(r.vno);let v=veh.get(key);if(!v){v={key,div:new Map(),chassis:new Map(),n:0};veh.set(key,v);}v.n++;inc(v.div,r.div);inc(v.chassis,r.chassis);}
+    // shipper
+    if(r.shipper){let s=shp.get(r.shipper);if(!s){s={name:r.shipper,addr:new Map(),tel:new Map(),bill:new Map(),n:0};shp.set(r.shipper,s);}s.n++;inc(s.addr,r.addr);inc(s.tel,r.tel);inc(s.bill,r.billto);}
+    inc(lines,r.line);inc(loads,r.load);inc(unloads,r.unload);inc(bills,r.billto);
+  }
+  M={veh,shp,lines,loads,unloads,bills};
+}
+function vehInfo(key){const v=M.veh.get(String(key));if(!v)return null;
+  return {div:topKey(v.div),chassis:[...v.chassis.entries()].sort((a,b)=>b[1]-a[1]).slice(0,4).map(x=>x[0]),n:v.n};}
+function shpInfo(name){const s=M.shp.get(name);if(!s)return null;
+  return {addrs:[...s.addr.entries()].sort((a,b)=>b[1]-a[1]).map(x=>x[0]),tel:topKey(s.tel),bill:topKey(s.bill),n:s.n};}
+
+/* ============ 지역토큰 + 검색토큰(별칭 곱) ============ */
+function regionTokens(addr){
+  if(!addr)return [];
+  const out=new Set();
+  for(const w of String(addr).split(/\s+/)){
+    const m=w.match(/^(.+?)(특별자치시|특별자치도|특별시|광역시|시|군|구|읍|면|동|리|도)$/);
+    if(m&&m[1].length>=1){out.add(m[1]);out.add(w);}
+  }
+  return [...out];
+}
+let TOK=new Map(); // _id -> lowercased blob
+function buildTokens(){
+  TOK=new Map();
+  for(const r of ALL){
+    const regs=new Set(regionTokens(r.addr));
+    // 지역 별칭 확장
+    for(const rg of [...regs]){(ALIAS.region[rg]||[]).forEach(a=>regs.add(a));}
+    const names=new Set([r.shipper].filter(Boolean));
+    (ALIAS.shipper[r.shipper]||[]).forEach(a=>names.add(a));
+    const parts=[r.date,r.vno,r.shipper,r.billto,r.line,r.load,r.unload,r.bl,r.do,r.cntr,r.addr];
+    for(const n of names)for(const rg of regs){parts.push(rg+''+n);parts.push(n+''+rg);}
+    parts.push(...regs,...names);
+    TOK.set(r._id,parts.filter(Boolean).join(' ').toLowerCase());
+  }
+}
+function matchQuery(r,q){
+  if(!q)return true;
+  const blob=TOK.get(r._id)||'';
+  return q.toLowerCase().split(/\s+/).filter(Boolean).every(t=>blob.includes(t));
+}
+
+/* ============ 초기화 ============ */
+rebuild();
+function refreshStore(){document.getElementById('storeinfo').textContent=`내 입력 ${USER.length}건 · 전체 ${ALL.length.toLocaleString()}건`;}
+refreshStore();
+const allDates=ALL.map(r=>r.date).filter(Boolean).sort();
+let selDate=allDates[allDates.length-1]||today();
+
+/* ============ 당일배차 ============ */
+const DSHOW=[['time','시간'],['io','수출입'],['vno','차량'],['div','구분'],['shipper','화주'],['load','상차'],['unload','하차'],['spec','규격'],['cntr','컨번호'],['bl','B/L'],['charge','청구'],['pay','하불']];
+function specOf(r){return r.spec||[r.size,r.type].filter(Boolean).join('');}
+function renderDay(){
+  document.getElementById('dsel').value=selDate;
+  const dt=new Date(selDate+'T00:00');
+  document.getElementById('dbig').textContent=selDate;
+  document.getElementById('ddow').textContent='('+DOW[dt.getDay()]+')';
+  let rows=ALL.filter(r=>r.date===selDate).sort((a,b)=>String(a.time||'').localeCompare(String(b.time||'')));
+  const c=rows.reduce((s,r)=>s+(+r.charge||0),0),p=rows.reduce((s,r)=>s+(+r.pay||0),0);
+  document.getElementById('daymeta').innerHTML=`<span><b>${rows.length}</b>건</span><span class="amt">청구 <b>${won(c)}</b></span><span class="amt">하불 <b>${won(p)}</b></span>`;
+  const thead=document.querySelector('#dtbl thead');
+  thead.innerHTML='<tr>'+DSHOW.map(([k,l])=>`<th class="${k==='charge'||k==='pay'?'amt num':''}">${l}</th>`).join('')+'<th></th></tr>';
+  const tb=document.querySelector('#dtbl tbody');
+  document.getElementById('dempty').style.display=rows.length?'none':'';
+  tb.innerHTML=rows.map(r=>{
+    const cells=DSHOW.map(([k])=>{
+      if(k==='io')return `<td><span class="pill io-${r.io}">${r.io==='I'?'수입':r.io==='O'?'수출':esc(r.io)}</span></td>`;
+      if(k==='cntr')return `<td>${cntrCell(r.cntr)}</td>`;
+      if(k==='spec')return `<td>${esc(specOf(r))}</td>`;
+      if(k==='charge'||k==='pay')return `<td class="amt num">${won(r[k])}</td>`;
+      if(k==='shipper')return `<td>${esc(r.shipper)}${srcTag(r)}</td>`;
+      return `<td>${esc(r[k])}</td>`;
     }).join('');
-    return `<tr data-ri="${start+i}">${cells}</tr>`;
+    const act=`<td class="act"><button class="btn sm" data-edit="${r._id}">편집</button> <button class="btn sm" data-del="${r._id}">삭제</button> <button class="btn sm" data-dup="${r._id}">복제</button></td>`;
+    return `<tr>${cells}${act}</tr>`;
   }).join('');
-  tb.querySelectorAll('tr').forEach(tr=>tr.onclick=()=>toggleDetail(tr,rows[+tr.dataset.ri]));
-  // cards
-  document.getElementById('cards').innerHTML=pageRows.map(r=>{
-    return `<div class="card"><div class="top"><span class="who">${esc(r[idx.shipper])}</span>
-      <span class="pill io-${r[idx.io]}">${r[idx.io]==='I'?'수입':'수출'}</span></div>
-      <div class="row2"><span>📅 ${esc(r[idx.date])} ${esc(r[idx.time]||'')}</span><span>🚛 ${esc(r[idx.vno])} (${esc(r[idx.div])})</span><span>${esc(r[idx.spec])}</span></div>
-      <div class="row2"><span>${esc(r[idx.load])} → ${esc(r[idx.unload])}</span></div>
-      <div class="row2 cntr">${cntrCell(r[idx.cntr])}</div>
-      <div class="row2 amt"><span>청구 ${won(r[idx.charge])}</span><span>하불 ${won(r[idx.pay])}</span></div></div>`;
-  }).join('');
-  // foot
-  const pages=Math.max(1,Math.ceil(rows.length/state.per));
-  document.getElementById('foot').innerHTML=
-    `<button class="btn" ${state.page<=1?'disabled':''} id="prev">이전</button>
-     <span>${state.page} / ${pages}</span>
-     <button class="btn" ${state.page>=pages?'disabled':''} id="next">다음</button>`;
-  const pv=document.getElementById('prev'),nx=document.getElementById('next');
-  if(pv)pv.onclick=()=>{state.page--;render();scrollTo(0,0);};
-  if(nx)nx.onclick=()=>{state.page++;render();scrollTo(0,0);};
+  document.getElementById('dcards').innerHTML=rows.map(r=>`<div class="card"><div class="top"><span class="who">${esc(r.shipper)}${srcTag(r)}</span><span class="pill io-${r.io}">${r.io==='I'?'수입':'수출'}</span></div>
+    <div class="r"><span>🕐 ${esc(r.time||'-')}</span><span>🚛 ${esc(r.vno)} (${esc(r.div||'')})</span><span>${esc(specOf(r))}</span></div>
+    <div class="r"><span>${esc(r.load)} → ${esc(r.unload)}</span></div><div class="r">${cntrCell(r.cntr)}</div>
+    <div class="r amt"><span>청구 ${won(r.charge)}</span><span>하불 ${won(r.pay)}</span></div>
+    <div class="r"><button class="btn sm" data-edit="${r._id}">편집</button> <button class="btn sm" data-del="${r._id}">삭제</button> <button class="btn sm" data-dup="${r._id}">복제</button></div></div>`).join('');
+  bindRowActions();
 }
-function toggleDetail(tr,r){
-  const nx=tr.nextElementSibling;
-  if(nx&&nx.classList.contains('det')){nx.remove();return;}
-  const extra=[['time','시간'],['chassis','샤시'],['addr','주소'],['tel','전화'],['do','D/O'],['seal','봉인/자가통관'],['tare','테어'],['bonded','메모(보세근거)'],['memo','비고'],['etc','기타']];
-  const td=`<tr class="det"><td colspan="${SHOW.length}"><div class="dl">${extra.map(([k,l])=>`<div><b>${l}</b>${esc(r[idx[k]])}</div>`).join('')}</div></td></tr>`;
-  tr.insertAdjacentHTML('afterend',td);
+function bindRowActions(){
+  document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openForm(ALL.find(x=>x._id===b.dataset.edit)));
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>delRow(b.dataset.del));
+  document.querySelectorAll('[data-dup]').forEach(b=>b.onclick=()=>{const r=ALL.find(x=>x._id===b.dataset.dup);openForm(Object.assign({},r,{_src:'user',_id:null,_over:null,_deleted:false}));});
+}
+function delRow(id){
+  if(!confirm('삭제할까요?'))return;
+  if(id.startsWith('u')){USER=USER.filter(x=>x._id!==id);}          // 내 입력 삭제
+  else{USER.push({_src:'user',_id:'u'+Date.now(),_over:id,_deleted:true});} // 기존 건은 삭제표식(원본은 보존)
+  saveUser();renderDay();
+}
+function shiftDay(n){const d=new Date(selDate+'T00:00');d.setDate(d.getDate()+n);selDate=d.toISOString().slice(0,10);renderDay();}
+document.getElementById('dprev').onclick=()=>shiftDay(-1);
+document.getElementById('dnext').onclick=()=>shiftDay(1);
+document.getElementById('dlast').onclick=()=>{selDate=allDates[allDates.length-1];renderDay();};
+document.getElementById('dsel').onchange=e=>{selDate=e.target.value;renderDay();};
+document.getElementById('addBtn').onclick=()=>{openForm(null);};
+
+/* ============ 입력 폼 ============ */
+const FIELDS=[
+  {k:'date',l:'날짜',t:'date',w:0},{k:'time',l:'시간',t:'time',w:0},
+  {k:'io',l:'수출입',t:'sel',opts:[['I','수입'],['O','수출']]},
+  {k:'div',l:'차량구분',t:'sel',opts:[['자차','자차'],['용차','용차']]},
+  {k:'vno',l:'차량번호(뒷4자리/용차사)',t:'vno'},{k:'chassis',l:'샤시번호',t:'chassis'},
+  {k:'shipper',l:'화주',t:'shipper',w:0},{k:'billto',l:'청구처',t:'ac',src:'bills'},
+  {k:'addr',l:'주소',t:'text',w:1},{k:'tel',l:'연락처',t:'text',w:1},
+  {k:'line',l:'선사',t:'ac',src:'lines'},{k:'load',l:'상차지',t:'ac',src:'loads'},{k:'unload',l:'하차지',t:'ac',src:'unloads'},
+  {k:'size',l:'사이즈',t:'sel',opts:[['20','20'],['40','40'],['45','45']]},
+  {k:'type',l:'타입',t:'sel',opts:[['D','D'],['H','H'],['RE','RE'],['FR','FR'],['OT','OT']]},
+  {k:'bl',l:'B/L or B/K',t:'text'},{k:'do',l:'D/O',t:'text'},
+  {k:'cntr',l:'컨번호 (실시간 검증)',t:'cntr',w:1},
+  {k:'selfc',l:'자가',t:'bool'},{k:'customs',l:'통관',t:'bool'},{k:'seal',l:'실봉인번호',t:'text'},
+  {k:'tare',l:'테어(숫자)',t:'num'},{k:'memo',l:'비고/메모',t:'text',w:1},
+  {k:'charge',l:'청구예정',t:'num'},{k:'pay',l:'하불예정',t:'num'},
+];
+let editing=null;
+function openForm(rec){
+  const en=document.getElementById('editNote');en.className='note';
+  if(!rec){editing={_src:'user',_id:null,date:selDate,io:'I',div:'자차'};en.style.display='none';}
+  else if(rec._src==='base'){editing=Object.assign({},rec,{_src:'user',_id:null,_over:rec._id,_deleted:false});
+    en.style.display='';en.textContent='기존 배차일보 건을 편집합니다 — 원본은 보존되고 수정본으로 저장됩니다.';}
+  else if(rec._id){editing=Object.assign({},rec);en.style.display='';en.textContent='내 입력 건을 편집 중입니다.';}
+  else{editing=Object.assign({},rec);en.style.display='';en.textContent='복제해서 새 건으로 입력합니다.';}
+  buildFormDom();switchTab('input');
+}
+function buildFormDom(){
+  const g=document.getElementById('form');g.innerHTML='';
+  for(const f of FIELDS){
+    const wrap=document.createElement('div');wrap.className='fld'+(f.w?' wide':'');
+    const val=editing[f.k];
+    let ctl='';
+    if(f.t==='sel')ctl=`<select data-k="${f.k}"><option value="">-</option>${f.opts.map(([v,t])=>`<option value="${v}" ${val===v?'selected':''}>${t}</option>`).join('')}</select>`;
+    else if(f.t==='bool')ctl=`<label class="chk"><input type="checkbox" data-k="${f.k}" ${val?'checked':''}> 예</label>`;
+    else if(f.t==='cntr')ctl=`<div class="cntrbox" id="cntrbox"></div>`;
+    else ctl=`<input data-k="${f.k}" type="${f.t==='date'?'date':f.t==='time'?'time':f.t==='num'?'number':'text'}" value="${val==null?'':esc(val)}" autocomplete="off">`;
+    wrap.innerHTML=`<label>${f.l}</label>${ctl}<div class="sug"></div>`;
+    g.appendChild(wrap);
+    const inp=wrap.querySelector('[data-k]');
+    if(inp&&f.t!=='bool'&&f.t!=='sel'&&f.t!=='cntr'){
+      inp.oninput=()=>{editing[f.k]=inp.value;if(['vno','shipper','billto','line','load','unload'].includes(f.k))suggest(f,inp,wrap.querySelector('.sug'));};
+      inp.onfocus=()=>{if(['vno','shipper','billto','line','load','unload'].includes(f.k))suggest(f,inp,wrap.querySelector('.sug'));};
+      inp.onblur=()=>setTimeout(()=>wrap.querySelector('.sug').classList.remove('open'),160);
+    } else if(inp){inp.onchange=()=>{editing[f.k]=f.t==='bool'?inp.checked:inp.value;};}
+  }
+  renderCntr();
+}
+function setField(k,v){editing[k]=v;const el=document.querySelector(`#form [data-k="${k}"]`);if(el){if(el.type==='checkbox')el.checked=!!v;else el.value=v==null?'':v;}}
+/* 자동완성 */
+function suggest(f,inp,box){
+  const q=(inp.value||'').trim().toLowerCase();
+  let items=[];
+  if(f.k==='vno'){
+    const arr=[...M.veh.values()];
+    items=arr.filter(v=>v.key.toLowerCase().includes(q)).sort((a,b)=>b.n-a.n).slice(0,8)
+      .map(v=>({val:v.key,sub:`${topKey(v.div)||''} · ${v.n}건`}));
+  }else if(f.k==='shipper'){
+    items=[...M.shp.values()].filter(s=>s.name.toLowerCase().includes(q)).sort((a,b)=>b.n-a.n).slice(0,8)
+      .map(s=>({val:s.name,sub:`${s.n}건`}));
+  }else{
+    const m=M[f.src];if(m)items=[...m.keys()].filter(k=>String(k).toLowerCase().includes(q)).slice(0,8).map(k=>({val:k,sub:''}));
+  }
+  if(!items.length||!q){box.classList.remove('open');return;}
+  box.innerHTML=items.map(it=>`<div data-val="${esc(it.val)}">${esc(it.val)}<small>${esc(it.sub)}</small></div>`).join('');
+  box.classList.add('open');
+  box.querySelectorAll('div').forEach(d=>d.onmousedown=e=>{e.preventDefault();pick(f.k,d.dataset.val);box.classList.remove('open');});
+}
+function pick(k,val){
+  setField(k,val);
+  if(k==='vno'){const vi=vehInfo(val);if(vi){if(vi.div)setField('div',vi.div);chassisChips(vi.chassis);}}
+  if(k==='shipper'){const si=shpInfo(val);if(si){if(si.addrs.length){setField('addr',si.addrs[0]);}if(si.tel)setField('tel',si.tel);if(si.bill)setField('billto',si.bill);
+    if(si.addrs.length>1)addrChips(si.addrs);}}
+}
+function chassisChips(list){
+  let host=document.getElementById('chassisChips');
+  const fld=[...document.querySelectorAll('#form .fld')].find(x=>x.querySelector('[data-k="chassis"]'));
+  if(!fld)return;host&&host.remove();
+  if(!list||!list.length)return;
+  host=document.createElement('div');host.className='chips';host.id='chassisChips';host.style.marginTop='4px';
+  host.innerHTML='<span class="hint" style="color:var(--muted)">최근:</span>'+list.map(c=>`<button type="button">${esc(c)}</button>`).join('');
+  fld.appendChild(host);
+  host.querySelectorAll('button').forEach(b=>b.onclick=()=>setField('chassis',b.textContent));
+}
+function addrChips(list){
+  const fld=[...document.querySelectorAll('#form .fld')].find(x=>x.querySelector('[data-k="addr"]'));
+  if(!fld)return;let host=document.getElementById('addrChips');host&&host.remove();
+  host=document.createElement('div');host.className='chips';host.id='addrChips';host.style.marginTop='4px';
+  host.innerHTML='<span class="hint" style="color:var(--muted)">사업장:</span>'+list.slice(0,6).map(a=>`<button type="button" title="${esc(a)}">${esc(a.length>18?a.slice(0,18)+'…':a)}</button>`).join('');
+  fld.appendChild(host);
+  host.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>setField('addr',list[i]));
+}
+/* 컨번호 실시간 */
+function renderCntr(){
+  const box=document.getElementById('cntrbox');if(!box)return;
+  let list=(editing.cntr!=null&&editing.cntr!=='')?String(editing.cntr).split(/[\n,]/).map(x=>x.trim()):[];
+  if(!list.length)list=[''];
+  box.innerHTML='';
+  list.forEach((v,i)=>{
+    const row=document.createElement('div');row.className='cntrrow';
+    row.innerHTML=`<input value="${esc(v)}" maxlength="11" placeholder="ABCU1234567"><span class="cntrmsg"></span><button class="btn sm" type="button" tabindex="-1">＋</button>`;
+    box.appendChild(row);
+    const inp=row.querySelector('input'),msg=row.querySelector('.cntrmsg');
+    const upd=()=>{inp.value=inp.value.toUpperCase();const st=cntrState(inp.value);msg.className='cntrmsg '+st.st;msg.textContent=st.msg;
+      list[i]=inp.value.trim();editing.cntr=list.filter(Boolean).join(', ');
+      if(st.st==='ok'){const nx=box.querySelectorAll('input')[i+1];if(nx)nx.focus();}};
+    inp.oninput=upd;upd();
+    row.querySelector('button').onclick=()=>{list.splice(i+1,0,'');editing.cntr=list.filter(Boolean).join(', ');renderCntr();box.querySelectorAll('input')[i+1].focus();};
+  });
+}
+document.getElementById('clearForm').onclick=()=>{editing={_src:'user',_id:null,date:selDate,io:'I',div:'자차'};buildFormDom();document.getElementById('editNote').style.display='none';};
+document.getElementById('saveBtn').onclick=()=>{
+  if(!editing.date){alert('날짜를 입력하세요');return;}
+  if(!editing.shipper&&!editing.vno){alert('최소한 화주나 차량은 입력하세요');return;}
+  editing.spec=[editing.size,editing.type].filter(Boolean).join('');
+  if(editing._id){const i=USER.findIndex(x=>x._id===editing._id);USER[i]=editing;}
+  else{editing._id='u'+Date.now();USER.push(editing);}
+  saveUser();
+  selDate=editing.date;
+  document.getElementById('formStatus').textContent='저장됨 ✓';
+  setTimeout(()=>document.getElementById('formStatus').textContent='',1500);
+  switchTab('day');renderDay();
+};
+
+/* ============ 파싱 (메신저/파일) ============ */
+function parseText(text){
+  const res={};const info=[];
+  const cntrs=[...new Set([...text.matchAll(/\b([A-Z]{4}\d{7})\b/g)].map(m=>m[1]))];
+  if(cntrs.length){const allok=cntrs.every(c=>cntrState(c).st==='ok');
+    res.cntr={v:cntrs.join(', '),c:allok?1:0.5};info.push(`컨번호 ${cntrs.length}${allok?'':' (검증 필요)'}`);}
+  const tel=text.match(/01[016789][-.\s]?\d{3,4}[-.\s]?\d{4}/);if(tel){res.tel={v:tel[0],c:1};info.push('연락처');}
+  let dm=text.match(/(20\d{2})[-.\/](\d{1,2})[-.\/](\d{1,2})/);
+  if(!dm){const m2=text.match(/\b(\d{1,2})[.\/](\d{1,2})\b/);if(m2)dm=[m2[0],String(new Date().getFullYear()),m2[1],m2[2]];}
+  if(dm){res.date={v:`${dm[1]}-${String(dm[2]).padStart(2,'0')}-${String(dm[3]).padStart(2,'0')}`,c:1};info.push('날짜');}
+  const tm=text.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);if(tm){res.time={v:tm[0].padStart(5,'0'),c:1};info.push('시간');}
+  if(/수입|import|반입/i.test(text)){res.io={v:'I',c:1};}else if(/수출|export|반출/i.test(text)){res.io={v:'O',c:1};}
+  const sz=text.match(/\b(20|40|45)\b/);if(sz){res.size={v:sz[1],c:.6};}
+  const tp=text.match(/\b(RF|RH|HC|OT|FR|DV|GP)\b/i)||text.match(/(리퍼|오픈탑|플랫)/);
+  if(tp){const map={RF:'RE',RH:'RE',리퍼:'RE',OT:'OT',오픈탑:'OT',FR:'FR',플랫:'FR'};res.type={v:map[tp[1].toUpperCase?tp[1].toUpperCase():tp[1]]||(sz&&sz[1]?'':'H'),c:.5};}
+  // 차량 뒷4자리: 마스터에 있는 4자리
+  const nums=[...text.matchAll(/\b(\d{4})\b/g)].map(m=>m[1]).filter(n=>M.veh.has(n));
+  if(nums.length){res.vno={v:nums[0],c:.7};info.push('차량후보');}
+  // 화주 마스터 매칭 (긴 이름 우선)
+  for(const s of [...M.shp.keys()].sort((a,b)=>b.length-a.length)){if(s&&s.length>=2&&text.includes(s)){res.shipper={v:s,c:.8};break;}}
+  // 상차/하차: 라벨(상차/하차) 뒤에 오는 터미널 우선, 없으면 첫 매칭
+  const findTerm=(map,labels,exclude)=>{
+    for(const lb of labels){const gi=text.indexOf(lb);if(gi>=0){const seg=text.slice(gi,gi+18);
+      for(const t of map.keys()){if(t&&t.length>=2&&t!==exclude&&seg.includes(t))return t;}}}
+    for(const t of map.keys()){if(t&&t.length>=2&&t!==exclude&&text.includes(t))return t;}
+    return null;
+  };
+  const ld=findTerm(M.loads,['상차','상차지','싣','출발'],null);
+  if(ld)res.load={v:ld,c:.6};
+  const ul=findTerm(M.unloads,['하차','하차지','하치','도착','→'],null);
+  if(ul)res.unload={v:ul,c:.6};
+  const bl=text.match(/\b[A-Z]{3,4}[A-Z0-9]{6,}\b/);if(bl&&!cntrs.includes(bl[0])){res.bl={v:bl[0],c:.5};}
+  return {res,info};
+}
+function applyParse(text){
+  if(!editing)editing={_src:'user',_id:null,date:selDate,io:'I',div:'자차'};
+  const {res,info}=parseText(text);
+  for(const k in res){editing[k]=res[k].v;}
+  if(res.vno){const vi=vehInfo(res.vno.v);if(vi&&vi.div)editing.div=vi.div;}
+  if(res.shipper){const si=shpInfo(res.shipper.v);if(si){if(si.addrs[0])editing.addr=si.addrs[0];if(si.tel)editing.tel=si.tel;if(si.bill)editing.billto=si.bill;}}
+  buildFormDom();
+  // 확신 낮은 필드 노랑
+  for(const k in res){if(res[k].c<0.75){const el=document.querySelector(`#form [data-k="${k}"]`);if(el)el.classList.add('conf-low');}}
+  document.getElementById('parseInfo').innerHTML=info.length?`파싱됨: ${info.join(' · ')} <span style="color:var(--warn)">— 노란 칸은 확인 필요</span>`:'인식된 값이 없습니다. 직접 입력하세요.';
+}
+document.getElementById('parseBtn').onclick=()=>{const t=document.getElementById('pasteBox').value.trim();if(t)applyParse(t);};
+/* 파일 드롭 */
+const drop=document.getElementById('drop'),fileInp=document.getElementById('file');
+drop.onclick=()=>fileInp.click();
+['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('hot');}));
+['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('hot');}));
+drop.addEventListener('drop',ev=>handleFile(ev.dataTransfer.files[0]));
+fileInp.onchange=()=>handleFile(fileInp.files[0]);
+async function handleFile(f){
+  if(!f)return;const info=document.getElementById('parseInfo');
+  if(f.type==='text/plain'||f.name.endsWith('.txt')){const t=await f.text();document.getElementById('pasteBox').value=t;applyParse(t);return;}
+  if(f.type==='application/pdf'||f.name.toLowerCase().endsWith('.pdf')){
+    if(!window.pdfjsLib){info.innerHTML='<span style="color:var(--warn)">PDF 판독기(pdf.js)를 불러오지 못했습니다. 온라인 상태에서 다시 시도하거나 텍스트를 붙여넣으세요.</span>';return;}
+    info.textContent='PDF 텍스트 추출 중…';
+    try{
+      const buf=await f.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+      let txt='';for(let p=1;p<=Math.min(pdf.numPages,3);p++){const pg=await pdf.getPage(p);const c=await pg.getTextContent();txt+=c.items.map(i=>i.str).join(' ')+'\n';}
+      document.getElementById('pasteBox').value=txt.trim();
+      if(txt.replace(/\s/g,'').length<10){info.innerHTML='<span style="color:var(--warn)">글자가 거의 없는 스캔 PDF입니다. 실제 앱에서는 이미지를 Claude Vision으로 판독합니다.</span>';}
+      else applyParse(txt);
+    }catch(e){info.innerHTML='<span style="color:var(--bad)">PDF 처리 실패: '+esc(e.message)+'</span>';}
+    return;
+  }
+  if(f.type.startsWith('image/')){
+    info.innerHTML='📷 이미지(D/O 등)는 <b>실제 앱에서 Claude Vision</b>으로 판독해 자동 입력됩니다. 지금 샘플에서는 브라우저만으로 한글 OCR을 하지 않으니, 내용을 텍스트로 붙여넣어 주세요.';
+    return;
+  }
+  info.textContent='지원하지 않는 형식입니다.';
 }
 
-// ---- 렌더: 요약 ----
-function renderSummary(rows){
-  const gi=+document.getElementById('grpby').value;
+/* ============ 요약 ============ */
+function renderSum(){
+  const gi=document.getElementById('grpby').value;
+  const f=document.getElementById('sfrom').value,t=document.getElementById('sto').value;
+  let rows=ALL.filter(r=>(!f||r.date>=f)&&(!t||r.date<=t));
   const m=new Map();
-  for(const r of rows){const key=r[gi]==null?'(빈값)':String(r[gi]);
-    const o=m.get(key)||{n:0,c:0,p:0};o.n++;o.c+=+r[idx.charge]||0;o.p+=+r[idx.pay]||0;m.set(key,o);}
+  for(const r of rows){const key=r[gi]==null||r[gi]===''?'(빈값)':String(r[gi]);const o=m.get(key)||{n:0,c:0,p:0};o.n++;o.c+=+r.charge||0;o.p+=+r.pay||0;m.set(key,o);}
   const arr=[...m.entries()].sort((a,b)=>b[1].n-a[1].n);
   const tot=arr.reduce((s,[,o])=>({n:s.n+o.n,c:s.c+o.c,p:s.p+o.p}),{n:0,c:0,p:0});
-  const th=document.querySelector('#stbl thead');
-  th.innerHTML=`<tr><th>${LAB[gi]}</th><th class="num">건수</th><th class="num amt">청구 합계</th><th class="num amt">하불 합계</th></tr>`;
-  document.querySelector('#stbl tbody').innerHTML=
-    `<tr style="font-weight:700"><td>합계 (${arr.length}종)</td><td class="num">${tot.n.toLocaleString()}</td><td class="num amt">${won(tot.c)}</td><td class="num amt">${won(tot.p)}</td></tr>`+
+  const lab={vno:'차량',date:'날짜',shipper:'화주',billto:'청구처',line:'선사',div:'구분'}[gi];
+  document.querySelector('#stbl thead').innerHTML=`<tr><th>${lab}</th><th class="num">건수</th><th class="num amt">청구</th><th class="num amt">하불</th></tr>`;
+  document.querySelector('#stbl tbody').innerHTML=`<tr style="font-weight:800"><td>합계 (${arr.length}종)</td><td class="num">${tot.n.toLocaleString()}</td><td class="num amt">${won(tot.c)}</td><td class="num amt">${won(tot.p)}</td></tr>`+
     arr.map(([k,o])=>`<tr><td>${esc(k)}</td><td class="num">${o.n.toLocaleString()}</td><td class="num amt">${won(o.c)}</td><td class="num amt">${won(o.p)}</td></tr>`).join('');
 }
+document.getElementById('grpby').onchange=renderSum;
+document.getElementById('sfrom').onchange=renderSum;document.getElementById('sto').onchange=renderSum;
 
-// ---- 메타/공통 ----
-function render(){
-  const rows=filtered();
-  const c=rows.reduce((s,r)=>s+(+r[idx.charge]||0),0), p=rows.reduce((s,r)=>s+(+r[idx.pay]||0),0);
-  document.getElementById('meta').innerHTML=
-    `<span><b>${rows.length.toLocaleString()}</b> 건</span>`+
-    `<span class="amt">청구 <b>${won(c)}</b></span><span class="amt">하불 <b>${won(p)}</b></span>`+
-    `<span>전체 ${ROWS.length.toLocaleString()}건 중</span>`;
-  if(state.view==='ledger')renderLedger(rows); else renderSummary(rows);
-  fWrap.querySelectorAll('.fdrop').forEach(d=>d._refresh&&d._refresh());
+/* ============ 조회 ============ */
+const FSHOW=[['date','날짜'],['io','수출입'],['vno','차량'],['shipper','화주'],['load','상차'],['unload','하차'],['spec','규격'],['cntr','컨번호'],['bl','B/L'],['charge','청구'],['pay','하불']];
+const FILTER_COLS=[['io','수출입'],['div','구분'],['size','사이즈'],['line','선사']];
+const fstate={q:'',from:'',to:'',page:1,per:100,filters:{}};
+FILTER_COLS.forEach(([k])=>fstate.filters[k]=new Set());
+function buildFilterUI(){
+  const w=document.getElementById('filters');w.innerHTML='';
+  FILTER_COLS.forEach(([key,label])=>{
+    const vals=[...new Set(ALL.map(r=>r[key]).map(v=>v==null||v===''?'(빈값)':String(v)))].sort();
+    const d=document.createElement('div');d.className='fdrop';
+    d.innerHTML=`<button class="btn sm">${label} ▾</button><div class="fmenu">${vals.map(v=>`<label><input type="checkbox" value="${esc(v)}"> ${esc(v)}</label>`).join('')}</div>`;
+    w.appendChild(d);const btn=d.querySelector('button'),menu=d.querySelector('.fmenu');
+    btn.onclick=e=>{e.stopPropagation();document.querySelectorAll('.fmenu.open').forEach(m=>m!==menu&&m.classList.remove('open'));menu.classList.toggle('open');};
+    menu.onclick=e=>e.stopPropagation();
+    menu.querySelectorAll('input').forEach(c=>c.onchange=()=>{c.checked?fstate.filters[key].add(c.value):fstate.filters[key].delete(c.value);fstate.page=1;renderFind();});
+  });
 }
-function sync(){state.page=1;render();}
+document.body.onclick=()=>document.querySelectorAll('.fmenu.open').forEach(m=>m.classList.remove('open'));
+function findRows(){
+  return ALL.filter(r=>{
+    if(fstate.from&&r.date<fstate.from)return false;if(fstate.to&&r.date>fstate.to)return false;
+    for(const [k] of FILTER_COLS){const s=fstate.filters[k];if(s.size&&!s.has(r[k]==null||r[k]===''?'(빈값)':String(r[k])))return false;}
+    return matchQuery(r,fstate.q);
+  }).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+}
+function renderFind(){
+  const rows=findRows();
+  const c=rows.reduce((s,r)=>s+(+r.charge||0),0),p=rows.reduce((s,r)=>s+(+r.pay||0),0);
+  document.getElementById('fmeta').innerHTML=`<span><b>${rows.length.toLocaleString()}</b>건</span><span class="amt">청구 <b>${won(c)}</b></span><span class="amt">하불 <b>${won(p)}</b></span>`;
+  document.querySelector('#ftbl thead').innerHTML='<tr>'+FSHOW.map(([k,l])=>`<th class="${k==='charge'||k==='pay'?'amt num':''}">${l}</th>`).join('')+'</tr>';
+  const st=(fstate.page-1)*fstate.per,pg=rows.slice(st,st+fstate.per);
+  document.querySelector('#ftbl tbody').innerHTML=pg.map(r=>'<tr>'+FSHOW.map(([k])=>{
+    if(k==='io')return `<td><span class="pill io-${r.io}">${r.io==='I'?'수입':r.io==='O'?'수출':esc(r.io)}</span></td>`;
+    if(k==='cntr')return `<td>${cntrCell(r.cntr)}</td>`;if(k==='spec')return `<td>${esc(specOf(r))}</td>`;
+    if(k==='charge'||k==='pay')return `<td class="amt num">${won(r[k])}</td>`;
+    if(k==='shipper')return `<td>${esc(r.shipper)}${srcTag(r)}</td>`;
+    return `<td>${esc(r[k])}</td>`;}).join('')+'</tr>').join('');
+  document.getElementById('fcards').innerHTML=pg.map(r=>`<div class="card"><div class="top"><span class="who">${esc(r.shipper)}</span><span class="pill io-${r.io}">${r.io==='I'?'수입':'수출'}</span></div><div class="r"><span>${esc(r.date)}</span><span>🚛 ${esc(r.vno)}</span><span>${esc(specOf(r))}</span></div><div class="r"><span>${esc(r.load)} → ${esc(r.unload)}</span></div><div class="r">${cntrCell(r.cntr)}</div></div>`).join('');
+  const pages=Math.max(1,Math.ceil(rows.length/fstate.per));
+  document.getElementById('ffoot').innerHTML=`<button class="btn sm" ${fstate.page<=1?'disabled':''} id="fp">이전</button> <span class="hint">${fstate.page}/${pages}</span> <button class="btn sm" ${fstate.page>=pages?'disabled':''} id="fn">다음</button>`;
+  const fp=document.getElementById('fp'),fn=document.getElementById('fn');
+  if(fp)fp.onclick=()=>{fstate.page--;renderFind();};if(fn)fn.onclick=()=>{fstate.page++;renderFind();};
+}
+let qt;document.getElementById('q').oninput=e=>{clearTimeout(qt);qt=setTimeout(()=>{fstate.q=e.target.value.trim();fstate.page=1;renderFind();},180);};
+document.getElementById('ffrom').onchange=e=>{fstate.from=e.target.value;renderFind();};
+document.getElementById('fto').onchange=e=>{fstate.to=e.target.value;renderFind();};
+document.getElementById('freset').onclick=()=>{fstate.q='';fstate.from='';fstate.to='';FILTER_COLS.forEach(([k])=>fstate.filters[k].clear());document.querySelectorAll('#filters input').forEach(c=>c.checked=false);document.getElementById('q').value='';document.getElementById('ffrom').value='';document.getElementById('fto').value='';fstate.page=1;renderFind();};
+document.getElementById('csv').onclick=()=>{const rows=findRows();const head=FSHOW.map(([,l])=>l);const body=rows.map(r=>FSHOW.map(([k])=>{let v=k==='spec'?specOf(r):r[k];v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(','));const blob=new Blob(['﻿'+[head.join(','),...body].join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='배차조회.csv';a.click();};
+/* 별칭 관리 */
+document.getElementById('aliasBtn').onclick=()=>{
+  const cur=JSON.stringify(ALIAS,null,2);
+  const v=prompt('별칭(JSON). 거래처/지역 별칭을 곱해서 검색 토큰을 만듭니다.\n예: {"shipper":{"삼성SDI":["SDI"]},"region":{"청주":["오창"]}}',cur);
+  if(v==null)return;try{ALIAS=JSON.parse(v);saveAlias();alert('저장됨. 검색에 반영됩니다.');renderFind();}catch(e){alert('JSON 오류: '+e.message);}
+};
 
-// 검색/날짜/토글
-let qt;document.getElementById('q').oninput=e=>{clearTimeout(qt);qt=setTimeout(()=>{state.q=e.target.value.trim();sync();},180);};
-document.getElementById('dfrom').onchange=e=>{state.from=e.target.value;sync();};
-document.getElementById('dto').onchange=e=>{state.to=e.target.value;sync();};
+/* ============ 탭 ============ */
+function switchTab(v){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));
+  if(v==='day')renderDay();if(v==='sum'){if(!document.getElementById('sfrom').value){document.getElementById('sfrom').value=allDates[0];document.getElementById('sto').value=allDates[allDates.length-1];}renderSum();}
+  if(v==='find')renderFind();if(v==='input'&&!editing)openForm(null);
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{if(b.dataset.v==='input'){openForm(null);}else switchTab(b.dataset.v);});
 document.getElementById('amt').onchange=e=>document.body.classList.toggle('amt-hide',!e.target.checked);
-document.getElementById('grpby').onchange=render;
-document.getElementById('reset').onclick=()=>{
-  state.q='';document.getElementById('q').value='';
-  FILTER_COLS.forEach(([k])=>state.filters[k].clear());
-  fWrap.querySelectorAll('input').forEach(c=>c.checked=false);
-  state.from=dates[0];state.to=dates[dates.length-1];
-  document.getElementById('dfrom').value=state.from;document.getElementById('dto').value=state.to;
-  sync();
-};
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-  state.view=b.dataset.view;
-  document.getElementById('ledger').style.display=state.view==='ledger'?'':'none';
-  document.getElementById('summary').style.display=state.view==='summary'?'':'none';
-  render();
-});
-// CSV (현재 필터 결과)
-document.getElementById('csv').onclick=()=>{
-  const rows=filtered();
-  const head=SHOW.map(([,l])=>l);
-  const body=rows.map(r=>SHOW.map(([k])=>{let v=r[idx[k]];v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(','));
-  const blob=new Blob(['﻿'+[head.join(','),...body].join('\n')],{type:'text/csv;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='배차일보_'+state.from+'_'+state.to+'.csv';a.click();
-};
 
-render();
+/* start */
+buildFilterUI();renderDay();
 </script>
+<!-- PDF 판독기 (로컬 번들). 단일파일 빌드에서는 인라인 + Blob 워커로 대체됨 -->
+<script src="vendor/pdf.min.js" onerror="window.__nopdf=1"></script>
+<script>try{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='vendor/pdf.worker.min.js';}catch(e){}</script>
 </body>
 </html>
