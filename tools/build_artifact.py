@@ -6,20 +6,58 @@ data.js는 인라인, pdf.js는 제외(CSP/용량), body.amt-hide는 스크립�
 
 사용법: python tools/build_artifact.py [출력경로]
 """
-import sys, os, re
+import sys, os, re, json
 APP = os.path.join(os.path.dirname(__file__), '..', 'app')
+
+# 반복 많은 문자열 컬럼을 사전 인코딩해 용량을 줄인다(모바일 로딩 부담↓).
+# 앱(index.html)이 D.dicts를 보고 원본 rows로 복원한다.
+DICT_COLS = ['io','vno','chassis','billto','shipper','addr','tel','line',
+             'load','spec','unload','div','size','type','bonded']
+
+def encode(data_js):
+    i = data_js.index('{'); obj = json.loads(data_js[i:data_js.rindex('}') + 1])
+    cols, rows = obj['columns'], obj['rows']
+    ci = {c: cols.index(c) for c in DICT_COLS if c in cols}
+    dicts = {}
+    for c, j in ci.items():
+        seen = {}
+        for r in rows:
+            v = r[j]
+            if v is not None and v not in seen:
+                seen[v] = len(seen)
+        dicts[c] = list(seen.keys())
+    di = {c: {v: k for k, v in enumerate(dicts[c])} for c in ci}
+    enc = []
+    for r in rows:
+        nr = list(r)
+        for c, j in ci.items():
+            v = r[j]
+            nr[j] = (di[c][v] if v is not None else None)
+        while nr and nr[-1] is None:  # 뒤쪽 null 제거
+            nr.pop()
+        enc.append(nr)
+    out = {'columns': cols, 'labels': obj['labels'],
+           'dictCols': list(ci.keys()), 'dicts': dicts, 'rows': enc}
+    return 'window.__DISPATCH__=' + json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';'
 
 def main(out=None):
     html = open(os.path.join(APP, 'index.html'), encoding='utf-8').read()
     data = open(os.path.join(APP, 'data.js'), encoding='utf-8').read()
+    data = encode(data)  # 사전 인코딩(경량화)
     style = re.search(r'<style>.*?</style>', html, re.S).group(0)
     body = re.search(r'<body[^>]*>(.*?)</body>', html, re.S).group(1)
     # data.js 인라인
     body = body.replace('<script src="data.js"></script>', '<script>' + data + '</script>')
     # pdf.js 블록 제거
     body = re.sub(r'<!-- PDF 판독기.*?onerror="window\.__nopdf=1"></script>\s*<script>try\{if\(window\.pdfjsLib\)pdfjsLib\.GlobalWorkerOptions\.workerSrc=\'vendor/pdf\.worker\.min\.js\';\}catch\(e\)\{\}</script>', '', body, flags=re.S)
-    # body.amt-hide 부여 + 아티팩트 안내
-    init = '<script>document.body.classList.add("amt-hide");window.__nopdf=1;</script>'
+    # 아티팩트는 <head>를 떼므로 viewport 메타를 런타임에 주입(모바일 필수) + body 클래스/설정
+    init = ('<script>(function(){'
+            'try{if(!document.querySelector("meta[name=viewport]")){'
+            'var m=document.createElement("meta");m.name="viewport";'
+            'm.content="width=device-width, initial-scale=1, viewport-fit=cover";'
+            'document.head.appendChild(m);}}catch(e){}'
+            'document.body.classList.add("amt-hide");window.__nopdf=1;'
+            '})();</script>')
     content = style + '\n' + body + '\n' + init
     out = out or os.path.join(APP, '..', '배차일보_artifact.html')
     open(out, 'w', encoding='utf-8').write(content)

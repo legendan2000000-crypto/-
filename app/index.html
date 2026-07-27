@@ -207,6 +207,10 @@
 <script>
 /* ============ 데이터 ============ */
 const D=window.__DISPATCH__, COL=D.columns, LAB=D.labels;
+/* 경량 배포용 사전(dictionary) 인코딩이면 원본 rows로 복원 (없으면 그대로) */
+if(D.dicts){const DC=D.dictCols,DI=D.dicts,CI=DC.map(c=>COL.indexOf(c)),N=COL.length;
+  D.rows=D.rows.map(r=>{const o=r.slice();while(o.length<N)o.push(null);
+    DC.forEach((c,k)=>{const j=CI[k],v=o[j];o[j]=(v==null?null:DI[c][v]);});return o;});}
 const LKEY='bcm_entries_v1', AKEY='bcm_alias_v1';
 const won=n=>n==null||n===''?'':Number(n).toLocaleString('ko-KR');
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
