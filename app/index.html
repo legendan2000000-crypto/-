@@ -109,6 +109,18 @@
     .formgrid{grid-template-columns:1fr 1fr}
     .fld.wide{grid-column:1/-1}
   }
+  /* 폰: 오더 입력 폼을 한 열로(가로 한 화면에 딱 맞게) */
+  @media (max-width:600px){
+    .bar{padding:8px 10px}
+    main{padding:10px 10px 60px}
+    .formgrid{grid-template-columns:1fr;gap:10px;padding:12px}
+    .formbar{padding:0 12px 14px}
+    .formbar .btn{flex:1;padding:11px 12px;font-size:15px}
+    .cntrrow{flex-wrap:wrap}
+    .cntrrow input{flex:1 1 100%}
+    .cntrmsg{min-width:0;flex:1 1 100%}
+    .sug{max-height:180px}
+  }
 </style>
 </head>
 <body class="amt-hide">
@@ -272,6 +284,14 @@ function vehInfo(key){const v=M.veh.get(String(key));if(!v)return null;
   return {div:topKey(v.div),chassis:[...v.chassis.entries()].sort((a,b)=>b[1]-a[1]).slice(0,4).map(x=>x[0]),n:v.n};}
 function shpInfo(name){const s=M.shp.get(name);if(!s)return null;
   return {addrs:[...s.addr.entries()].sort((a,b)=>b[1]-a[1]).map(x=>x[0]),tel:topKey(s.tel),bill:topKey(s.bill),n:s.n};}
+// 화주 정규화: 대소문자·공백 무시, 1글자 오타 허용 → 마스터 표준명 반환(없으면 null)
+function canonShipper(name){
+  if(!name)return null;if(M.shp.has(name))return name;
+  const n=name.toLowerCase().replace(/\s/g,'');
+  for(const k of M.shp.keys()){if(k.toLowerCase().replace(/\s/g,'')===n)return k;}
+  if(name.length>=3)for(const k of M.shp.keys()){if(k.length===name.length){let d=0;for(let i=0;i<k.length;i++)if(k[i]!==name[i]){if(++d>1)break;}if(d===1)return k;}}
+  return null;
+}
 
 /* ============ 지역토큰 + 검색토큰(별칭 곱) ============ */
 function regionTokens(addr){
@@ -615,18 +635,24 @@ function parseText(text){
   // 차량 뒷4자리: 마스터에 있는 4자리
   const nums=[...text.matchAll(/\b(\d{4})\b/g)].map(m=>m[1]).filter(n=>M.veh.has(n));
   if(nums.length){res.vno={v:nums[0],c:.7};info.push('차량후보');}
-  // 화주 마스터 매칭 (긴 이름 우선)
-  for(const s of [...M.shp.keys()].sort((a,b)=>b.length-a.length)){if(s&&s.length>=2&&text.includes(s)){res.shipper={v:s,c:.8};break;}}
-  // 마스터에 없는 새 화주: 짧은 오더면 앞쪽 명사 토큰을 후보로 (놓치지 않게)
+  // ① 명시 라벨 "화주 XXX" / "화주:XXX" / "화주명 XXX" 최우선 (마스터로 정규화)
+  const shLabel=text.match(/화주(?:명)?\s*[:\-]?\s*([가-힣A-Za-z0-9()·&]{2,})/);
+  if(shLabel){const c=canonShipper(shLabel[1]);res.shipper={v:c||shLabel[1],c:c?.9:.8};}
+  // ② 마스터 매칭 (라벨 없을 때, 대소문자 무시·긴 이름 우선)
+  if(!res.shipper){const T=text.toUpperCase();
+    for(const s of [...M.shp.keys()].sort((a,b)=>b.length-a.length)){if(s&&s.length>=2&&T.includes(s.toUpperCase())){res.shipper={v:s,c:.8};break;}}}
+  // ③ 마스터에 없는 새 화주: 짧은 오더면 앞쪽 명사를 후보로 (단, 터미널·경로·잡토큰 제외)
   if(!res.shipper){
-    const STOP=/^(내일|모레|오늘|글피|이번주|금주|다음주|담주|차주|다담주|오전|오후|아침|저녁|밤|새벽|낮|수입|수출|반입|반출|들어온|들어옴|들어온거|입항|출항|선적|컨테이너|컨|박스|피트|기준|담당|안녕하세요|안녕하세용|있어요|있음)$/;
+    const STOP=/^(내일|모레|오늘|글피|이번주|금주|다음주|담주|차주|다담주|오전|오후|아침|저녁|밤|새벽|낮|수입|수출|반입|반출|들어온|들어옴|들어온거|입항|출항|선적|도착|출발|컨테이너|컨|박스|피트|기준|담당|화주|화주명|안녕하세요|안녕하세용|있어요|있음)$/;
+    const isTerm=t=>t.split(/[-→~>]/).some(x=>x&&(M.loads.has(x)||M.unloads.has(x)));
     const toks=text.replace(/[()\[\]:·,\/\n]/g,' ').split(/\s+/).filter(Boolean);
     if(toks.length<=6){
       for(const t of toks){
         if(t.length<2||STOP.test(t))continue;
-        if(/^\d/.test(t)||/\d(대|개|시|분|피트|월|일|톤)/.test(t))continue; // 수량/시간/날짜 토큰 제외
+        if(/^\d/.test(t)||/\d(대|개|시|분|피트|월|일|톤)/.test(t))continue; // 수량/시간/날짜 제외
         if(/^[A-Z]{4}\d{7}$/.test(t)||/요일$/.test(t))continue;               // 컨번호/요일 제외
-        res.shipper={v:t,c:.45};break;
+        if(/입니다$|건$|도착|출발/.test(t)||isTerm(t))continue;               // 서술어·터미널·경로 제외
+        const c=canonShipper(t);res.shipper={v:c||t,c:c?.7:.45};break;
       }
     }
   }
