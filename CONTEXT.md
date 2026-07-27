@@ -407,22 +407,36 @@ Claude API 2차 (상하차지·화주·비고 등)      ← 흐물흐물한 것�
   → **7월 실적이 35건뿐인 이유가 이것.** 7월 배차 774건 중 청구된 건만 잡힘
 - `월별&업체별 실적현황`과 `월별&업체별 매출현황`은 별개 메뉴 (혼동 주의)
 
-### 우리가 쓸 핵심 엔드포인트 (모두 `POST`, JSON) ★
+### KYSS 엔드포인트의 위치 — **대조(대사)용 참조일 뿐, 앱의 중심이 아니다** ★
 
-| 화면 | 엔드포인트 | 용도 |
+> **1단계는 배차일보 그 자체다.** KYSS API는 앱을 구동하는 데이터원이 아니라,
+> 배차일보 데이터를 KYSS 실적과 **맞춰보는(대사) 참조**로만 쓴다.
+> 궁극적으로 KYSS 연계지만, 지금 만드는 것은 배차일보다.
+> 그래서 KYSS 조회 화면 1,300여 개 중 **대사에 필요한 것은 사실상 하나뿐**이다.
+
+**대사에 실제로 쓰는 엔드포인트 (단 하나)**
+
+| 화면 | 엔드포인트 | 왜 이것만 |
 |---|---|---|
-| 실적통합관리 `OP_100010` | `/api/outputs/selectTotalOutputsList` | **행단위 실적** (우리가 받은 `실적통합관리` 엑셀의 원본) |
-| 월별&업체별 실적현황 `OP_140020` | `/api/outputs/statssales/selectMonCorpOutsList` | 집계 실적 (스킬이 받던 화면) |
-| 월별&업체별 매출현황 `OP_140010` | `/api/outputs/statssales/selectMonCorpSalesList` | 집계 매출 (별개 메뉴) |
-| 통합 오더 조회 `OP_100020` | `/api/orderList/selectTotalOrderList` | 오더 목록 |
-| 로그인 | `/api/login` → `/api/session` / `/api/menuMap` | 세션·메뉴 |
+| 실적통합관리 `OP_100010` | `POST /api/outputs/selectTotalOutputsList` | **행단위 실적.** 우리가 받은 `실적통합관리` 엑셀의 원본이자, 대사 키(컨번호·BL·날짜·차량·청구/하불)를 전부 담은 유일한 행단위 소스 |
 
-**`selectTotalOutputsList` 검색 파라미터** (실적통합관리):
+**`selectTotalOutputsList` 검색 파라미터** (대사 범위를 맞출 때 쓸 것):
 `BRANCH`(사무소) · `DATE_FM`/`DATE_TO` · `OP_SCH_DATE_TYPE`(기본 `BILL_CF_DT`=청구확정일) ·
 `ORDER_DS_DIV`(오더구분, 기본 `"D"`=도어) · `ORDER_TYPE`(수출입) · `BILL_CORP`(청구처) ·
 `EXC_SCH_TYPE`(기본 `"B"`) · `SEARCH_TYPE`(기본 `"W"`) · `KEYWORD` 등
-→ **`OP_SCH_DATE_TYPE=BILL_CF_DT` 기본값이 "실적=청구일자 기준"의 근거.** 배차일자 기준으로 받으려면 이 값을 바꿔야 한다.
-→ **`ORDER_DS_DIV="D"`(도어)가 기본이라 도어만 담겼던 것.** 계근·셔틀은 다른 구분 코드로 조회해야 잡힌다.
+→ **`OP_SCH_DATE_TYPE=BILL_CF_DT` 기본값이 "실적=청구일자 기준"의 근거.** 배차일자 기준으로 대사하려면 이 값을 바꿔야 한다.
+→ **`ORDER_DS_DIV="D"`(도어)가 기본이라 도어만 담겼던 것.** 계근·셔틀까지 대사하려면 다른 구분 코드로도 조회해야 한다.
+
+**지금은 API를 직접 호출하지 않는다.** 1단계 대사는 위 엔드포인트의 출력물인
+**`실적통합관리` 엑셀을 그대로 받아** 배차일보와 맞춘다. `.env`(계정)와 중계 함수는
+대사를 자동화하는 4단계에 가서 붙인다. 이 엔드포인트는 그때를 위한 명세로 적어둔 것.
+
+**참고(1단계 아님) — 대사에는 안 쓰는 것들**
+- `월별&업체별 실적현황` `OP_140020` `/api/outputs/statssales/selectMonCorpOutsList` — 집계표라 행단위 대사 불가
+- `월별&업체별 매출현황` `OP_140010` `/api/outputs/statssales/selectMonCorpSalesList` — 매출 집계(별개 메뉴)
+- `통합 오더 조회` `OP_100020` `/api/orderList/selectTotalOrderList` — 오더 목록
+- 로그인 계열 `/api/login` → `/api/session` / `/api/menuMap` — 4단계 중계 함수에서만 필요
+- 전체 목록은 `kyss-api/`에 있다. 대사와 무관하니 지금은 열지 않는다.
 
 ### 인증 방식 (확인됨 — 중계 함수 설계 근거)
 
@@ -511,6 +525,7 @@ data/  (엑셀은 gitignore, 별도 관리)
 | 날짜 | 내용 |
 |---|---|
 | 2026-07-27 | 배차일보 분석·정리, KYSS 실적 2파일 대사, 마스터 후보 추출, 이 문서 작성 |
-| 2026-07-27 | KYSS API 전수 분석본(`kyss-api/`) 리포 반영. 인증(세션 쿠키)·핵심 엔드포인트·실적통합관리 검색 파라미터 확정. §9 갱신. `.env.example`/`.gitignore` 추가 (실제 `.env`는 나중에) |
+| 2026-07-27 | KYSS API 전수 분석본(`kyss-api/`) 리포 반영. 인증(세션 쿠키)·실적통합관리 검색 파라미터 확정. `.env.example`/`.gitignore` 추가 (실제 `.env`는 나중에) |
+| 2026-07-27 | §9 재정리 — **1단계는 배차일보, KYSS는 대사용 참조.** 대사 엔드포인트는 `selectTotalOutputsList` 하나로 좁힘. 나머지 조회 API는 4단계용 참고로 강등 |
 
 > 세션 종료 시 위 표에 한 줄 추가하고, 바뀐 결정은 본문에 반영한다.
