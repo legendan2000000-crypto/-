@@ -136,6 +136,7 @@ const $ = (id) => document.getElementById(id);
 const show = (v) => ['loginView','adminView','driverView'].forEach(x => $(x).classList.toggle('hidden', x !== v));
 const toast = (m) => { const t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),4000); };
 const emailOf = (p) => `${String(p).replace(/\D/g,'')}@kukyang.driver`;
+const pwOf = (pin) => 'kk-' + String(pin); // Firebase 비번 최소 6자 충족(짧은 PIN 허용)
 const esc = (s)=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 let me = null, swReg = null;
@@ -145,7 +146,7 @@ $('loginBtn').onclick = async () => {
   $('loginErr').textContent = '';
   const phone = $('loginPhone').value.trim(), pin = $('loginPin').value;
   if (!phone || !pin) { $('loginErr').textContent='전화번호와 PIN을 입력하세요.'; return; }
-  try { await signInWithEmailAndPassword(auth, emailOf(phone), pin); }
+  try { await signInWithEmailAndPassword(auth, emailOf(phone), pwOf(pin)); }
   catch (e) { $('loginErr').textContent = '로그인 실패 — 전화번호/PIN을 확인하세요.'; }
 };
 $('adminLogout').onclick = () => signOut(auth);

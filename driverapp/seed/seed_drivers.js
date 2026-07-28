@@ -24,15 +24,16 @@ const auth = admin.auth();
 const db = admin.firestore();
 
 const emailOf = (phone) => `${String(phone).replace(/\D/g, '')}@kukyang.driver`;
+const pwOf = (pin) => 'kk-' + String(pin); // Firebase 비번 최소 6자 충족(앱 로그인과 동일 규칙)
 
 async function upsert(person, role) {
   const email = emailOf(person.phone);
   let user;
   try {
     user = await auth.getUserByEmail(email);
-    await auth.updateUser(user.uid, { password: String(person.pin) });
+    await auth.updateUser(user.uid, { password: pwOf(person.pin) });
   } catch (e) {
-    user = await auth.createUser({ email, password: String(person.pin), displayName: person.name });
+    user = await auth.createUser({ email, password: pwOf(person.pin), displayName: person.name });
   }
   await db.collection('users').doc(user.uid).set(
     { role, name: person.name || '', phone: String(person.phone), vno: person.vno || '' },
