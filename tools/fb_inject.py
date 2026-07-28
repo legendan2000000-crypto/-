@@ -25,7 +25,7 @@ INJECT = r'''
   var emailOf=function(p){return String(p).replace(/\D/g,'')+'@kukyang.driver';};
   var pwOf=function(p){return 'kk-'+String(p);};
   var E=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
-  var toast=function(m,bad){var t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:'+(bad?'#c0392b':'#2563eb')+';color:#fff;padding:10px 16px;border-radius:10px;z-index:100010;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.3);max-width:90vw';document.body.appendChild(t);setTimeout(function(){t.remove();},3800);};
+  var toast=function(m,bad,persist){var t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:'+(bad?'#c0392b':'#2563eb')+';color:#fff;padding:10px 16px;border-radius:10px;z-index:100010;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.3);max-width:90vw';document.body.appendChild(t);if(!persist)setTimeout(function(){t.remove();},4200);return t;};
 
   // ---- 플로팅 버튼(로그인/상태) ----
   var btn=document.createElement('button');
@@ -97,13 +97,47 @@ INJECT = r'''
   function sendOne(r, st){
     if(!r){return;}
     var vno=r.vno?String(r.vno):''; if(!vno){ toast('차량이 지정되지 않은 배차입니다 — 먼저 차량 배정',true); return; }
+    var chk=toast('🔎 기사 확인 중… ('+vno+')',false,true);
+    // 1) 사전 실조회: 이 차량으로 가입·'승인(role=driver)'된 기사가 실제로 있는지 (기사앱과 같은 백엔드)
+    db.collection('users').where('vno','==',vno).get().then(function(qs){
+      chk.remove();
+      var drivers=[]; qs.forEach(function(x){ var u=x.data(); if(u.role==='driver') drivers.push(u.name||u.phone||''); });
+      if(!drivers.length){
+        if(!confirm('⚠️ 차량 '+vno+' 으로 가입·승인된 기사가 없습니다.\n지금 보내도 기사폰(기사앱)으로는 알림이 가지 않습니다.\n\n그래도 배차 문서만 저장할까요?')){ toast('전송 취소',true); return; }
+      }
+      doSend(r, st, vno, drivers);
+    }).catch(function(e){
+      chk.remove();
+      if(confirm('기사 조회 실패('+(e.code||e.message)+').\n관리자 계정인지 확인하세요. 그래도 전송을 시도할까요?')) doSend(r, st, vno, []);
+    });
+  }
+  function doSend(r, st, vno, drivers){
+    var sending=toast('📡 전송 중… 기사 도달 확인 중 ('+vno+')',false,true);
     db.collection('dispatches').add({
       vno:vno, date:r.date||'', time:r.time||'', shipper:r.shipper||'',
       load:r.load||'', unload:r.unload||r.addr||'', cntr:(r.cntr==null?'':String(r.cntr)),
       memo:(r.memo||r.etc||''), status:(st||'확정'), read:false, done:false,
       createdAt:firebase.firestore.FieldValue.serverTimestamp(), createdBy:auth.currentUser.uid, source:'배차일보'
-    }).then(function(){ toast((st==='선배차'?'선배차':'배차')+' 전송됨 → '+vno+' 기사 알림'); })
-      .catch(function(e){ toast('전송 실패: '+e.message,true); });
+    }).then(function(ref){ watchDelivery(ref, vno, drivers, st, sending); })
+      .catch(function(e){ sending.remove(); toast('저장 실패: '+e.message,true); });
+  }
+  function watchDelivery(ref, vno, drivers, st, sending){
+    var settled=false, who=(drivers&&drivers.length)?drivers.join(', '):vno;
+    // 2) 함수가 발송 시도 후 문서에 되기록한 '진짜 결과(delivery)'를 실시간으로 받음
+    var unsub=ref.onSnapshot(function(s){
+      var d=s.data()||{}; if(!d.delivery) return;
+      settled=true; try{unsub();}catch(e){} sending.remove();
+      var w=(d.deliveredTo&&d.deliveredTo.length)?d.deliveredTo.join(', '):who;
+      if(d.delivery==='sent') toast('✅ '+w+' 기사에게 실제 발송됨'+(d.deliveryCount?(' ('+d.deliveryCount+'대 수신)'):''));
+      else if(d.delivery==='no_driver') toast('⚠️ 차량 '+vno+': 가입·승인된 기사 없음 — 알림 미발송',true);
+      else if(d.delivery==='no_token') toast('⚠️ '+w+' 기사가 알림을 안 켬 — 기사앱에서 알림 허용 필요',true);
+      else toast('⚠️ 발송 실패(토큰 만료 등) — 기사앱 재실행/알림 재허용 필요',true);
+    }, function(){ /* snapshot 오류 무시 */ });
+    // 함수 되기록이 없거나 지연되면(예: 함수 미배포) 사전조회 결과로 정직하게 안내
+    setTimeout(function(){ if(settled)return; try{unsub();}catch(e){} sending.remove();
+      if(drivers&&drivers.length) toast('💾 저장됨('+(st==='선배차'?'선배차':'확정')+') → '+who+'. 도달 결과 확인 지연(함수 상태 확인)',true);
+      else toast('💾 저장만 됨 — 이 차량 승인 기사 없음(기사폰 알림 미발송)',true);
+    }, 12000);
   }
 
   // ---- 줄의 '🔔 기사전송' 버튼(재렌더돼도 유지되도록 위임) ----
