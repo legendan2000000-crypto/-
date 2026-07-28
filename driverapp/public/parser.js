@@ -1,6 +1,6 @@
-/* 배차일보 파서 (자동 추출) — 마스터 없이 동작(실데이터 미포함, 공개앱 안전) */
-window.M = { shp:new Map(), veh:new Map(), loads:new Map(), unloads:new Map(), lines:new Map(), bills:new Map() };
-var M = window.M;
+/* 배차일보 파서 (자동 추출) — 마스터 없이 동작(실데이터 미포함) */
+window.M={shp:new Map(),veh:new Map(),loads:new Map(),unloads:new Map(),lines:new Map(),bills:new Map()};
+var M=window.M;
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
 const CV={A:10,B:12,C:13,D:14,E:15,F:16,G:17,H:18,I:19,J:20,K:21,L:23,M:24,N:25,O:26,P:27,Q:28,R:29,S:30,T:31,U:32,V:34,W:35,X:36,Y:37,Z:38};
@@ -111,15 +111,14 @@ function parseText(text){
   if(!res.shipper){
     const STOP=/^(내일|모레|오늘|글피|이번주|금주|다음주|담주|차주|다담주|오전|오후|아침|저녁|밤|새벽|낮|수입|수출|반입|반출|들어온|들어옴|들어온거|입항|출항|선적|도착|출발|컨테이너|컨|박스|피트|기준|담당|화주|화주명|안녕하세요|안녕하세용|있어요|있음)$/;
     const isTerm=t=>t.split(/[-→~>]/).some(x=>x&&(M.loads.has(x)||M.unloads.has(x)));
-    const toks=text.replace(/[()\[\]:·,\/\n]/g,' ').split(/\s+/).filter(Boolean);
-    if(toks.length<=6){
-      for(const t of toks){
-        if(t.length<2||STOP.test(t))continue;
-        if(/^\d/.test(t)||/\d(대|개|시|분|피트|월|일|톤)/.test(t))continue; // 수량/시간/날짜 제외
-        if(/^[A-Z]{4}\d{7}$/.test(t)||/요일$/.test(t))continue;               // 컨번호/요일 제외
-        if(/입니다$|건$|도착|출발/.test(t)||isTerm(t))continue;               // 서술어·터미널·경로 제외
-        const c=canonShipper(t);res.shipper={v:c||t,c:c?.7:.45};break;
-      }
+    const toks=text.replace(/[()\[\]:·,\/\n"]/g,' ').split(/\s+/).filter(Boolean);
+    // 오더는 대개 '맨 앞'이 화주 → 앞쪽 몇 토큰만 후보(대화체 노이즈 방지)
+    for(const t of toks.slice(0,4)){
+      if(t.length<2||STOP.test(t))continue;
+      if(/^\d/.test(t)||/\d(대|개|시|분|피트|월|일|톤)/.test(t)||/^\d+$/.test(t))continue; // 수량/시간/날짜/숫자 제외
+      if(/^[A-Z]{4}\d{7}$/.test(t)||/^[A-Z0-9]{9,}$/.test(t)||/요일$/.test(t))continue;      // 컨번호/코드/요일 제외
+      if(/입니다$|건$|도착|출발/.test(t)||isTerm(t))continue;                                 // 서술어·터미널·경로 제외
+      const c=canonShipper(t);res.shipper={v:c||t,c:c?.7:.45};break;
     }
   }
   // 상차/하차: 라벨(상차/하차) 뒤에 오는 터미널 우선, 없으면 첫 매칭
@@ -166,4 +165,4 @@ async function readDocx(buf){
   return xml.replace(/<[^>]+>/g,'').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')
     .replace(/&#(\d+);/g,(m,d)=>String.fromCharCode(+d)).replace(/&amp;/g,'&');
 }
-window.BCM = { parseText: parseText, readDocx: readDocx, cntrState: cntrState };
+window.BCM={parseText:parseText,readDocx:readDocx,cntrState:cntrState};
