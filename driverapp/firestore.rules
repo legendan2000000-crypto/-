@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 로그인한 본인 문서 조회용
+    function me() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { return isSignedIn() && me().role == 'admin'; }
+
+    // 사용자: 본인 것만 읽기, 관리자는 전체. 생성/수정은 관리자(또는 서버)만.
+    match /users/{uid} {
+      allow read: if isSignedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    // 배차: 관리자는 전체 읽기/쓰기. 기사는 '본인 차량번호' 건만 읽기 + 읽음표시(read)만 수정.
+    match /dispatches/{id} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.vno == me().vno);
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin()
+        || (isSignedIn() && resource.data.vno == me().vno
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read','readAt']));
+    }
+
+    // FCM 토큰: 본인 것만
+    match /fcmTokens/{uid} {
+      allow read, write: if isSignedIn() && request.auth.uid == uid;
+    }
+  }
+}

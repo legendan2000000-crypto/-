@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<link rel="manifest" href="/manifest.json">
+<title>국양로지텍 배차</title>
+<style>
+  :root{--bg:#0e131e;--panel:#161c29;--line:#28303f;--text:#e6ebf3;--muted:#8b97ad;--accent:#5b8cff;--ok:#15a34a;--warn:#e0a75a;--bad:#ef5350;--soft:#1b2740}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+  header{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--line);padding:11px 14px;display:flex;align-items:center;gap:10px}
+  header h1{font-size:16px;margin:0;font-weight:800}
+  header .who{margin-left:auto;color:var(--muted);font-size:13px}
+  header button{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer}
+  main{padding:14px;max-width:720px;margin:0 auto}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+  label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin:0 0 4px}
+  input,select,textarea{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;outline:none}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn{width:100%;background:var(--accent);color:#fff;border:0;border-radius:11px;padding:13px;font-size:16px;font-weight:800;cursor:pointer;margin-top:8px}
+  .btn.sub{background:transparent;border:1px solid var(--line);color:var(--text)}
+  .seg{display:flex;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:4px}
+  .seg button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:800;padding:9px;border-radius:8px;cursor:pointer}
+  .seg button.on{background:var(--accent);color:#fff}
+  .seg.pre button.on{background:var(--warn);color:#111}
+  .disp{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:var(--panel)}
+  .disp.pre{border-color:var(--warn);background:#241f12}
+  .disp .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .disp .who{font-weight:800;font-size:16px}
+  .badge{font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px}
+  .badge.ok{background:#0e2a1f;color:#5fd39b}
+  .badge.pre{background:#3a2e12;color:#f0c674}
+  .disp .r{color:var(--muted);font-size:13.5px;margin-top:4px}
+  .disp .r b{color:var(--text)}
+  .hint{color:var(--muted);font-size:12.5px}
+  .empty{text-align:center;color:var(--muted);padding:40px 10px}
+  .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--accent);color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;box-shadow:0 8px 30px rgba(0,0,0,.4);z-index:50;max-width:90%}
+  .notice{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--muted);margin-bottom:10px}
+  .err{color:var(--bad);font-size:13px;margin-top:6px;min-height:16px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- 로그인 -->
+  <div id="loginView">
+    <header><h1>🚚 국양로지텍 배차</h1></header>
+    <main>
+      <div class="card">
+        <div class="notice">회사에서 발급받은 <b>전화번호 + PIN</b>으로 로그인하세요.</div>
+        <label>전화번호</label>
+        <input id="loginPhone" type="tel" inputmode="numeric" placeholder="01012345678" autocomplete="username">
+        <label style="margin-top:10px">PIN(비밀번호)</label>
+        <input id="loginPin" type="password" inputmode="numeric" placeholder="****" autocomplete="current-password">
+        <button class="btn" id="loginBtn">로그인</button>
+        <div class="err" id="loginErr"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 관리자(배차) -->
+  <div id="adminView" class="hidden">
+    <header><h1>배차 보내기</h1><span class="who" id="adminWho"></span><button id="adminLogout">로그아웃</button></header>
+    <main>
+      <div class="card">
+        <label>메신저/오더 붙여넣기 (선택 — 자동으로 아래 칸 채움)</label>
+        <textarea id="pasteBox" rows="3" placeholder="카톡/문자 오더를 붙여넣고 '자동 채우기'"></textarea>
+        <button class="btn sub" id="parseBtn">자동 채우기</button>
+      </div>
+      <div class="card">
+        <label>차량(기사) 선택</label>
+        <select id="vnoSel"></select>
+        <div class="row" style="margin-top:10px">
+          <div><label>날짜</label><input id="fDate" type="date"></div>
+          <div><label>시간</label><input id="fTime" type="time"></div>
+        </div>
+        <div style="margin-top:10px"><label>화주</label><input id="fShipper" type="text"></div>
+        <div class="row" style="margin-top:10px">
+          <div><label>상차지</label><input id="fLoad" type="text"></div>
+          <div><label>하차지</label><input id="fUnload" type="text"></div>
+        </div>
+        <div style="margin-top:10px"><label>컨번호</label><input id="fCntr" type="text" placeholder="ABCU1234567"></div>
+        <div style="margin-top:10px"><label>메모</label><input id="fMemo" type="text"></div>
+        <div style="margin-top:12px">
+          <label>배차 상태</label>
+          <div class="seg pre" id="statusSeg">
+            <button data-st="확정" class="on">확정 배차</button>
+            <button data-st="선배차">선배차 (서류 준비중)</button>
+          </div>
+          <div class="hint" id="statusHint" style="margin-top:6px"></div>
+        </div>
+        <button class="btn" id="sendBtn">이 기사에게 배차 보내기 (알림 발송)</button>
+        <div class="err" id="sendErr"></div>
+      </div>
+      <div class="card">
+        <label>최근 보낸 배차</label>
+        <div id="adminList"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 기사(차량) -->
+  <div id="driverView" class="hidden">
+    <header><h1>내 배차</h1><span class="who" id="driverWho"></span><button id="driverLogout">로그아웃</button></header>
+    <main>
+      <div id="permCard" class="card hidden">
+        <div class="notice">배차 알림을 받으려면 <b>알림 허용</b>이 필요합니다.</div>
+        <button class="btn" id="permBtn">🔔 알림 켜기</button>
+      </div>
+      <div id="driverList"></div>
+    </main>
+  </div>
+</div>
+
+<script src="/config.js"></script>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc, addDoc, collection, query, where, orderBy,
+  onSnapshot, serverTimestamp, updateDoc, getDocs, limit }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getMessaging, getToken, onMessage }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js';
+
+const app = initializeApp(window.FB_CONFIG);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const messaging = getMessaging(app);
+
+const $ = (id) => document.getElementById(id);
+const show = (v) => ['loginView','adminView','driverView'].forEach(x => $(x).classList.toggle('hidden', x !== v));
+const toast = (m) => { const t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),4000); };
+const emailOf = (p) => `${String(p).replace(/\D/g,'')}@kukyang.driver`;
+const esc = (s)=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let me = null, swReg = null;
+
+// ── 로그인
+$('loginBtn').onclick = async () => {
+  $('loginErr').textContent = '';
+  const phone = $('loginPhone').value.trim(), pin = $('loginPin').value;
+  if (!phone || !pin) { $('loginErr').textContent='전화번호와 PIN을 입력하세요.'; return; }
+  try { await signInWithEmailAndPassword(auth, emailOf(phone), pin); }
+  catch (e) { $('loginErr').textContent = '로그인 실패 — 전화번호/PIN을 확인하세요.'; }
+};
+$('adminLogout').onclick = () => signOut(auth);
+$('driverLogout').onclick = () => signOut(auth);
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { me=null; show('loginView'); return; }
+  const uref = doc(db, 'users', user.uid);
+  const usnap = await getDoc(uref);
+  me = usnap.exists() ? { uid:user.uid, ...usnap.data() } : { uid:user.uid, role:'driver' };
+  if (me.role === 'admin') startAdmin(); else startDriver();
+});
+
+// ── 관리자
+let statusVal = '확정';
+$('statusSeg').querySelectorAll('button').forEach(b => b.onclick = () => {
+  statusVal = b.dataset.st;
+  $('statusSeg').querySelectorAll('button').forEach(x=>x.classList.toggle('on', x===b));
+  $('statusHint').textContent = statusVal==='선배차'
+    ? '기사에게 "⚠️ 선배차 — 서류 준비중, 예정 건"으로 알림이 갑니다.'
+    : '기사에게 "🚚 새 배차"로 알림이 갑니다.';
+});
+$('statusSeg').querySelector('button').click();
+
+async function startAdmin() {
+  $('adminWho').textContent = (me.name||'관리자');
+  show('adminView');
+  // 기사 목록 → 차량 선택
+  const ds = await getDocs(query(collection(db,'users'), where('role','==','driver')));
+  const sel = $('vnoSel'); sel.innerHTML='';
+  ds.forEach(d => { const u=d.data(); const o=document.createElement('option'); o.value=u.vno||''; o.textContent=`${u.name||''} (${u.vno||'차량번호없음'})`; sel.appendChild(o); });
+  if (!$('fDate').value) $('fDate').value = new Date().toISOString().slice(0,10);
+  // 최근 보낸 배차
+  onSnapshot(query(collection(db,'dispatches'), orderBy('createdAt','desc'), limit(15)), (snap)=>{
+    $('adminList').innerHTML = snap.empty ? '<div class="empty">아직 없음</div>' :
+      snap.docs.map(d=>dispCard(d.data())).join('');
+  });
+}
+$('parseBtn').onclick = () => { const r = parsePaste($('pasteBox').value);
+  if (r.date) $('fDate').value=r.date; if (r.time) $('fTime').value=r.time;
+  if (r.shipper) $('fShipper').value=r.shipper; if (r.cntr) $('fCntr').value=r.cntr;
+  if (r.load) $('fLoad').value=r.load; if (r.unload) $('fUnload').value=r.unload;
+  toast('붙여넣은 내용에서 채웠습니다 — 확인 후 보내세요');
+};
+$('sendBtn').onclick = async () => {
+  $('sendErr').textContent='';
+  const vno = $('vnoSel').value;
+  if (!vno) { $('sendErr').textContent='차량(기사)을 선택하세요.'; return; }
+  const d = {
+    vno, date:$('fDate').value, time:$('fTime').value, shipper:$('fShipper').value.trim(),
+    load:$('fLoad').value.trim(), unload:$('fUnload').value.trim(), cntr:$('fCntr').value.trim(),
+    memo:$('fMemo').value.trim(), status:statusVal, read:false,
+    createdAt:serverTimestamp(), createdBy:me.uid
+  };
+  if (!d.date || !d.shipper) { $('sendErr').textContent='최소 날짜·화주는 입력하세요.'; return; }
+  try { await addDoc(collection(db,'dispatches'), d);
+    toast(statusVal==='선배차'?'선배차 발송됨 — 기사에게 알림':'배차 발송됨 — 기사에게 알림');
+    ['pasteBox','fShipper','fLoad','fUnload','fCntr','fMemo','fTime'].forEach(id=>$(id).value='');
+  } catch(e){ $('sendErr').textContent='발송 실패: '+e.message; }
+};
+
+// ── 기사
+async function startDriver() {
+  $('driverWho').textContent = `${me.name||''} · ${me.vno||''}`;
+  show('driverView');
+  await ensurePush();               // 알림 권한/토큰
+  if (!me.vno) { $('driverList').innerHTML='<div class="empty">차량번호가 등록되지 않았습니다. 배차담당에게 문의하세요.</div>'; return; }
+  onSnapshot(query(collection(db,'dispatches'), where('vno','==',me.vno), orderBy('date','desc')), (snap)=>{
+    $('driverList').innerHTML = snap.empty ? '<div class="empty">아직 받은 배차가 없습니다.</div>' :
+      snap.docs.map(d=>dispCard(d.data(), d.id)).join('');
+    // 안 읽은 건 읽음 처리
+    snap.docs.forEach(d=>{ if(d.data().read===false) updateDoc(doc(db,'dispatches',d.id),{read:true,readAt:serverTimestamp()}).catch(()=>{}); });
+  });
+}
+async function ensurePush() {
+  $('permCard').classList.add('hidden');
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted') return saveToken();
+  $('permCard').classList.remove('hidden');
+}
+$('permBtn').onclick = async () => {
+  const p = await Notification.requestPermission();
+  if (p === 'granted') { $('permCard').classList.add('hidden'); await saveToken(); toast('알림이 켜졌습니다'); }
+  else toast('알림이 차단되어 있습니다. 브라우저 설정에서 허용해 주세요.');
+};
+async function saveToken() {
+  try {
+    if (!swReg) swReg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+    const token = await getToken(messaging, { vapidKey: window.FB_VAPID_KEY, serviceWorkerRegistration: swReg });
+    if (token) await setDoc(doc(db,'fcmTokens',me.uid), { tokens: await arrayUnionLocal(token) }, { merge:true });
+  } catch(e){ console.warn('토큰 저장 실패', e); }
+}
+// 간단 arrayUnion(로컬 병합) — 기존 토큰 유지
+async function arrayUnionLocal(token){ const s=await getDoc(doc(db,'fcmTokens',me.uid)); const cur=(s.exists()&&s.data().tokens)||[]; return [...new Set([...cur, token])]; }
+
+// 포그라운드(앱 켜져있을 때) 메시지 → 화면 토스트
+onMessage(messaging, (payload) => {
+  const n = payload.notification || {};
+  toast((n.title||'새 배차') + ' — ' + (n.body||''));
+});
+
+// ── 공통: 배차 카드
+function dispCard(d, id){
+  const pre = d.status==='선배차';
+  const route = [d.load,d.unload].filter(Boolean).map(esc).join(' → ');
+  return `<div class="disp ${pre?'pre':''}">
+    <div class="top"><span class="who">${esc(d.shipper||'(화주미정)')}</span>
+      <span class="badge ${pre?'pre':'ok'}">${pre?'선배차·서류준비중':'확정'}</span></div>
+    <div class="r">📅 <b>${esc(d.date||'')}</b>${d.time?(' · 🕐 '+esc(d.time)):''}</div>
+    ${route?`<div class="r">📍 ${route}</div>`:''}
+    ${d.cntr?`<div class="r">🔢 ${esc(d.cntr)}</div>`:''}
+    ${d.memo?`<div class="r">📝 ${esc(d.memo)}</div>`:''}
+  </div>`;
+}
+
+// ── 아주 가벼운 오더 파서(붙여넣기용, 관리자 편의)
+function parsePaste(text){
+  const r={};
+  const cn=text.match(/\b([A-Z]{4}\d{7})\b/); if(cn) r.cntr=cn[1];
+  const tm=text.match(/(오전|오후)?\s*(\d{1,2})\s*시\s*(반|(\d{1,2})\s*분)?/);
+  if(tm){let h=+tm[2]; if(/오후/.test(tm[1]||'')&&h<12)h+=12; const mn=tm[3]==='반'?30:(tm[4]?+tm[4]:0); r.time=String(h).padStart(2,'0')+':'+String(mn).padStart(2,'0');}
+  else{const t2=text.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/); if(t2)r.time=t2[0];}
+  const md=text.match(/(\d{1,2})\s*\/\s*(\d{1,2})\s*일?/)||text.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일/);
+  const rel=/오늘|내일|모레|다음주|담주|이번주|요일/.test(text);
+  const base=new Date(); const fmt=(x)=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+  if(rel){ const add=(n)=>{const x=new Date(base);x.setDate(x.getDate()+n);return x;};
+    if(/모레/.test(text))r.date=fmt(add(2)); else if(/내일/.test(text))r.date=fmt(add(1)); else if(/오늘/.test(text))r.date=fmt(base);
+    const DK={일:0,월:1,화:2,수:3,목:4,금:5,토:6}; const wm=text.replace(/\d{1,2}\s*월\s*\d{1,2}\s*일\s*[월화수목금토일]\s*요일/g,' ').match(/(이번주|다음주|담주)?\s*([월화수목금토일])\s*요일/);
+    if(wm){const td=DK[wm[2]],cur=base.getDay(); if(wm[1]){const mon=add(-(cur===0?6:cur-1));const wk=/다음주|담주/.test(wm[1])?7:0;const x=new Date(mon);x.setDate(x.getDate()+wk+(td===0?6:td-1));r.date=fmt(x);} else {let g=(td-cur+7)%7;if(!g)g=7;r.date=fmt(add(g));}}
+  } else if(md){ r.date=base.getFullYear()+'-'+String(md[1]).padStart(2,'0')+'-'+String(md[2]).padStart(2,'0'); }
+  const sh=text.match(/화주(?:명)?\s*[:\-]?\s*([가-힣A-Za-z0-9()·&]{2,})/); if(sh)r.shipper=sh[1];
+  return r;
+}
+</script>
+</body>
+</html>
