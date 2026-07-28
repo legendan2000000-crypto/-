@@ -147,7 +147,19 @@ $('loginBtn').onclick = async () => {
   const phone = $('loginPhone').value.trim(), pin = $('loginPin').value;
   if (!phone || !pin) { $('loginErr').textContent='전화번호와 PIN을 입력하세요.'; return; }
   try { await signInWithEmailAndPassword(auth, emailOf(phone), pwOf(pin)); }
-  catch (e) { $('loginErr').textContent = '로그인 실패 — 전화번호/PIN을 확인하세요.'; }
+  catch (e) {
+    const map = {
+      'auth/invalid-credential': '전화번호 또는 PIN이 틀렸거나, 계정이 아직 없습니다.',
+      'auth/user-not-found': '등록되지 않은 번호입니다 — 계정을 먼저 만들어야 합니다(seed).',
+      'auth/wrong-password': 'PIN이 틀렸습니다.',
+      'auth/invalid-email': '전화번호 형식을 확인하세요(숫자만).',
+      'auth/operation-not-allowed': '콘솔에서 "이메일/비밀번호" 로그인을 켜야 합니다.',
+      'auth/invalid-api-key': '앱 설정(config) 오류 — 관리자에게 문의.',
+      'auth/network-request-failed': '네트워크 오류 — 인터넷을 확인하세요.',
+      'auth/too-many-requests': '시도가 많아 잠시 차단됨 — 잠시 후 다시.'
+    };
+    $('loginErr').textContent = (map[e.code] || ('로그인 실패: ' + (e.code || e.message)));
+  }
 };
 $('adminLogout').onclick = () => signOut(auth);
 $('driverLogout').onclick = () => signOut(auth);
