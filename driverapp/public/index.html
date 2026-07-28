@@ -70,6 +70,9 @@
         <label>메신저/오더 붙여넣기 (선택 — 자동으로 아래 칸 채움)</label>
         <textarea id="pasteBox" rows="3" placeholder="카톡/문자 오더를 붙여넣고 '자동 채우기'"></textarea>
         <button class="btn sub" id="parseBtn">자동 채우기</button>
+        <div id="dropZone" style="margin-top:8px;border:2px dashed var(--line);border-radius:10px;padding:12px;text-align:center;color:var(--muted);cursor:pointer">📄 D/O·PDF·워드(.docx) 파일 끌어다 놓기 (또는 클릭)</div>
+        <input type="file" id="fileInp" accept=".pdf,.docx,.txt" style="display:none">
+        <div id="parseInfo" class="hint" style="margin-top:6px"></div>
       </div>
       <div class="card">
         <label>차량(기사) 선택</label>
@@ -117,6 +120,9 @@
 </div>
 
 <script src="/config.js"></script>
+<script src="/parser.js"></script>
+<script src="/vendor/pdf.min.js" onerror="window.__nopdf=1"></script>
+<script>try{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='/vendor/pdf.worker.min.js';}catch(e){}</script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
@@ -197,12 +203,58 @@ async function startAdmin() {
       snap.docs.map(d=>dispCard(d.data())).join('');
   });
 }
-$('parseBtn').onclick = () => { const r = parsePaste($('pasteBox').value);
-  if (r.date) $('fDate').value=r.date; if (r.time) $('fTime').value=r.time;
-  if (r.shipper) $('fShipper').value=r.shipper; if (r.cntr) $('fCntr').value=r.cntr;
-  if (r.load) $('fLoad').value=r.load; if (r.unload) $('fUnload').value=r.unload;
-  toast('붙여넣은 내용에서 채웠습니다 — 확인 후 보내세요');
-};
+// 배차일보 파서로 폼 채우기(마스터 없이도 날짜·시간·화주·경로·컨번호·수량·주소·청구 등)
+function fillFromParse(text) {
+  if (!window.BCM) { toast('파서 로딩 중 — 잠시 후 다시'); return; }
+  const { res, info } = window.BCM.parseText(text);
+  const set = (id, v) => { if (v != null && v !== '') $(id).value = v; };
+  set('fDate', res.date && res.date.v); set('fTime', res.time && res.time.v);
+  set('fShipper', res.shipper && res.shipper.v);
+  set('fLoad', res.load && res.load.v); set('fUnload', res.unload && res.unload.v);
+  set('fCntr', res.cntr && res.cntr.v);
+  // 폼에 칸 없는 항목은 메모로
+  const extra = [];
+  if (res.billto) extra.push('청구처 ' + res.billto.v);
+  if (res.charge) extra.push('청구가 ' + res.charge.v);
+  if (res.addr) extra.push('주소 ' + res.addr.v);
+  if (res.bl) extra.push('B/L ' + res.bl.v);
+  if (res.size || res.type) extra.push('규격 ' + [(res.size && res.size.v), (res.type && res.type.v)].filter(Boolean).join(''));
+  if (extra.length && !$('fMemo').value) $('fMemo').value = extra.join(' / ');
+  // 차량번호 자동선택(파싱된 vno가 등록 기사면)
+  if (res.vno && res.vno.v) { const opt = [...$('vnoSel').options].find(o => o.value === res.vno.v); if (opt) $('vnoSel').value = res.vno.v; }
+  const qty = (res._qty && res._qty > 1) ? ` · 수량 ${res._qty}대(각각 보내려면 여러 번 전송)` : '';
+  $('parseInfo').innerHTML = (info && info.length ? '인식: ' + info.join(' · ') : '인식된 값 없음 — 직접 입력') + qty;
+}
+$('parseBtn').onclick = () => { const t = $('pasteBox').value.trim(); if (t) { fillFromParse(t); toast('내용에서 채웠습니다 — 확인 후 보내세요'); } };
+// 파일 드롭/선택 (PDF·워드·txt)
+$('dropZone').onclick = () => $('fileInp').click();
+$('dropZone').ondragover = (e) => { e.preventDefault(); $('dropZone').style.borderColor = 'var(--accent)'; };
+$('dropZone').ondragleave = () => { $('dropZone').style.borderColor = 'var(--line)'; };
+$('dropZone').ondrop = (e) => { e.preventDefault(); $('dropZone').style.borderColor = 'var(--line)'; if (e.dataTransfer.files[0]) handleAdminFile(e.dataTransfer.files[0]); };
+$('fileInp').onchange = () => { if ($('fileInp').files[0]) handleAdminFile($('fileInp').files[0]); };
+async function handleAdminFile(f) {
+  const info = $('parseInfo'); const nm = f.name.toLowerCase();
+  try {
+    if (nm.endsWith('.txt')) { const t = await f.text(); $('pasteBox').value = t; fillFromParse(t); return; }
+    if (nm.endsWith('.docx')) { info.textContent = '워드 읽는 중…'; const t = await window.BCM.readDocx(await f.arrayBuffer()); $('pasteBox').value = t.trim(); fillFromParse(t); return; }
+    if (nm.endsWith('.pdf') || f.type === 'application/pdf') {
+      if (!window.pdfjsLib) { info.textContent = 'PDF 판독기 로딩 실패 — 텍스트로 붙여넣어 주세요.'; return; }
+      info.textContent = 'PDF 읽는 중…';
+      const pdf = await pdfjsLib.getDocument({ data: await f.arrayBuffer() }).promise;
+      let txt = '';
+      for (let p = 1; p <= Math.min(pdf.numPages, 3); p++) {
+        const pg = await pdf.getPage(p); const c = await pg.getTextContent();
+        txt += c.items.map(i => i.str).join(' ') + '\n';
+        try { const an = await pg.getAnnotations(); for (const a of an) { const s = (a.contentsObj && a.contentsObj.str) || a.contents || ''; if (s) txt += '\n' + s; } } catch (e) {}
+      }
+      $('pasteBox').value = txt.trim();
+      if (txt.replace(/\s/g, '').length < 8) info.textContent = '글자가 거의 없는 스캔 PDF입니다 — 텍스트로 붙여넣어 주세요.';
+      else fillFromParse(txt);
+      return;
+    }
+    info.textContent = '지원하지 않는 형식입니다.';
+  } catch (e) { info.textContent = '파일 처리 실패: ' + e.message; }
+}
 $('sendBtn').onclick = async () => {
   $('sendErr').textContent='';
   const vno = $('vnoSel').value;
