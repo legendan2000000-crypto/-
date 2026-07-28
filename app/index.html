@@ -379,7 +379,9 @@ function delRow(id){
   else{USER.push({_src:'user',_id:'u'+Date.now(),_over:id,_deleted:true});} // 기존 건은 삭제표식(원본은 보존)
   saveUser();renderDay();
 }
-function shiftDay(n){const d=new Date(selDate+'T00:00');d.setDate(d.getDate()+n);selDate=d.toISOString().slice(0,10);renderDay();}
+function shiftDay(n){const d=new Date(selDate+'T00:00');d.setDate(d.getDate()+n);
+  selDate=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); // UTC 변환(toISOString) 쓰면 KST에서 하루 밀림
+  renderDay();}
 document.getElementById('dprev').onclick=()=>shiftDay(-1);
 document.getElementById('dnext').onclick=()=>shiftDay(1);
 document.getElementById('dlast').onclick=()=>{selDate=allDates[allDates.length-1];renderDay();};
