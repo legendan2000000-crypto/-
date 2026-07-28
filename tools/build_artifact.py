@@ -63,7 +63,39 @@ def main(out=None):
             'document.head.appendChild(m);}}catch(e){}'
             'document.body.classList.add("amt-hide");'
             '})();</script>')
-    content = style + '\n' + body + '\n' + init
+    # 상단 앱탭: 배차일보 | 내륙운송 견적(견적툴을 iframe으로 격리 — 변수/CSS 충돌 방지, 탭 클릭 시 지연로딩)
+    qpath = os.path.join(APP, '..', 'quote', 'index.html')
+    apptab_css = ('<style>'
+        '#apptabs{position:sticky;top:0;z-index:100;display:flex;gap:4px;background:var(--panel);'
+        'border-bottom:2px solid var(--line);padding:5px 10px;box-shadow:var(--shadow)}'
+        '.apptab{border:0;background:transparent;color:var(--muted);font-weight:800;font-size:15px;'
+        'padding:8px 16px;border-radius:9px;cursor:pointer}'
+        '.apptab.on{background:var(--accent);color:#fff}'
+        '#app-dispatch header{top:44px}'
+        '#quoteframe{width:100%;border:0;display:block;height:calc(100vh - 46px)}'
+        '@media(max-width:600px){.apptab{font-size:14px;padding:7px 11px}}'
+        '</style>')
+    apptab_bar = ('<div id="apptabs">'
+        '<button class="apptab on" data-app="dispatch">🚚 배차일보</button>'
+        '<button class="apptab" data-app="quote">🧮 내륙운송 견적</button></div>')
+    if os.path.exists(qpath):
+        # </script>는 text/plain 컨테이너를 조기 종료시키므로 플레이스홀더로 치환 → srcdoc 넣을 때 원복
+        qhtml = open(qpath, encoding='utf-8').read().replace('</script>', '@@ENDSCRIPT@@')
+        quote_block = ('<div id="app-quote" style="display:none"><iframe id="quoteframe" title="내륙운송 견적"></iframe></div>'
+            '<script type="text/plain" id="quotesrc">' + qhtml + '</script>')
+    else:
+        quote_block = '<div id="app-quote" style="display:none"></div>'
+    switch_js = ('<script>(function(){var qf=document.getElementById("quoteframe"),loaded=false;'
+        'document.querySelectorAll(".apptab").forEach(function(b){b.onclick=function(){'
+        'document.querySelectorAll(".apptab").forEach(function(x){x.classList.toggle("on",x===b);});'
+        'var q=b.dataset.app==="quote";'
+        'document.getElementById("app-dispatch").style.display=q?"none":"";'
+        'document.getElementById("app-quote").style.display=q?"block":"none";'
+        'if(q&&qf&&!loaded){loaded=true;qf.srcdoc=document.getElementById("quotesrc").textContent.split("@@ENDSCRIPT@@").join("</scr"+"ipt>");}'
+        '};});})();</script>')
+    content = (style + apptab_css + '\n' + apptab_bar
+               + '<div id="app-dispatch">' + body + '</div>'
+               + quote_block + '\n' + init + switch_js)
     out = out or os.path.join(APP, '..', '배차일보_artifact.html')
     open(out, 'w', encoding='utf-8').write(content)
     print(f'아티팩트 본문: {round(os.path.getsize(out)/1024/1024,2)} MB -> {out}')

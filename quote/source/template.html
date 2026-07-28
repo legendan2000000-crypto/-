@@ -1,0 +1,513 @@
+<title>컨테이너 안전운임 조회</title>
+<style>
+  :root{
+    --bg:#f4f6f8; --panel:#ffffff; --ink:#182430; --muted:#5f7180;
+    --line:#dbe3ea; --line-strong:#c3cfd9;
+    --accent:#0f6b74; --accent-soft:#e2f0f1;
+    --c40:#0f6b74; --c40-soft:#e2f0f1;
+    --c20:#8a5a1a; --c20-soft:#f6ecda;
+    --chip:#eef2f5; --chip-on:#0f6b74; --chip-on-ink:#ffffff;
+    --shadow:0 1px 2px rgba(20,40,60,.06),0 6px 20px rgba(20,40,60,.05);
+    --hi:#fff8e6; --tabbg:#e7edf1;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0d151b; --panel:#131f28; --ink:#e6eef3; --muted:#93a6b3;
+      --line:#243642; --line-strong:#31485777;
+      --accent:#4bc3cd; --accent-soft:#12333a;
+      --c40:#4bc3cd; --c40-soft:#12333a;
+      --c20:#e0a95a; --c20-soft:#3a2c14;
+      --chip:#1c2b35; --chip-on:#2f9aa4; --chip-on-ink:#03161a;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+      --hi:#2a2410; --tabbg:#101b23;
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f6f8; --panel:#ffffff; --ink:#182430; --muted:#5f7180;
+    --line:#dbe3ea; --line-strong:#c3cfd9;
+    --accent:#0f6b74; --accent-soft:#e2f0f1;
+    --c40:#0f6b74; --c40-soft:#e2f0f1; --c20:#8a5a1a; --c20-soft:#f6ecda;
+    --chip:#eef2f5; --chip-on:#0f6b74; --chip-on-ink:#fff; --shadow:0 1px 2px rgba(20,40,60,.06),0 6px 20px rgba(20,40,60,.05); --hi:#fff8e6; --tabbg:#e7edf1;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d151b; --panel:#131f28; --ink:#e6eef3; --muted:#93a6b3;
+    --line:#243642; --line-strong:#31485777;
+    --accent:#4bc3cd; --accent-soft:#12333a;
+    --c40:#4bc3cd; --c40-soft:#12333a; --c20:#e0a95a; --c20-soft:#3a2c14;
+    --chip:#1c2b35; --chip-on:#2f9aa4; --chip-on-ink:#03161a; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35); --hi:#2a2410; --tabbg:#101b23;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px}
+  header.top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+  header.top h1{font-size:1.5rem;margin:0;letter-spacing:-.01em;font-weight:700}
+  header.top .sub{color:var(--muted);font-size:.85rem}
+  .eyebrow{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:4px;width:100%}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+  .panel + .panel{margin-top:20px}
+  .panel-body{padding:20px 22px}
+  .field-label{display:flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 0 10px}
+  .field-label .count{color:var(--accent);font-variant-numeric:tabular-nums}
+  /* mode tabs */
+  .modetabs{display:inline-flex;background:var(--tabbg);border-radius:11px;padding:4px;gap:4px;margin-bottom:20px}
+  .modetab{border:none;background:none;color:var(--muted);font-family:inherit;font-size:.9rem;font-weight:600;
+    padding:8px 16px;border-radius:8px;cursor:pointer;transition:background .12s,color .12s;white-space:nowrap}
+  .modetab[aria-selected="true"]{background:var(--panel);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  .modetab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  /* chips */
+  .ports{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    border:1px solid var(--line-strong);background:var(--chip);color:var(--ink);
+    padding:7px 13px;border-radius:999px;font-size:.85rem;cursor:pointer;
+    transition:background .12s,color .12s,border-color .12s;user-select:none;font-weight:500;
+  }
+  .chip:hover{border-color:var(--accent)}
+  .chip[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink);border-color:var(--chip-on)}
+  .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .port-tools{display:flex;gap:14px;margin-top:12px}
+  .linkbtn{background:none;border:none;color:var(--accent);font-size:.8rem;cursor:pointer;padding:2px 0;font-weight:600}
+  .linkbtn:hover{text-decoration:underline}
+  /* destination selects */
+  .dest{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:640px){.dest{grid-template-columns:1fr}.wrap{padding:20px 14px 60px}}
+  .dest label{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px}
+  select{
+    width:100%;padding:10px 12px;border:1px solid var(--line-strong);border-radius:9px;
+    background:var(--panel);color:var(--ink);font-size:.92rem;font-family:inherit;cursor:pointer;
+  }
+  select:disabled{opacity:.5;cursor:not-allowed}
+  select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  /* results */
+  .result-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .result-head h2{font-size:1.05rem;margin:0;font-weight:700}
+  .result-head .where{color:var(--muted);font-size:.85rem}
+  .dlbtn{
+    border:1px solid var(--accent);background:var(--accent);color:#fff;
+    padding:8px 15px;border-radius:9px;font-size:.85rem;font-weight:600;cursor:pointer;
+    font-family:inherit;white-space:nowrap;transition:opacity .12s;
+  }
+  :root[data-theme="dark"] .dlbtn{color:#03161a}
+  @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .dlbtn{color:#03161a}}
+  .dlbtn:hover{opacity:.88}
+  .dlbtn:disabled{opacity:.4;cursor:not-allowed}
+  .dlbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .dlbtn.ghost{background:none;color:var(--accent)}
+  :root[data-theme="dark"] .dlbtn.ghost{color:var(--accent)}
+  @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .dlbtn.ghost{color:var(--accent)}}
+  .dlbtn.ghost:hover{background:var(--accent-soft);opacity:1}
+  /* quote bar */
+  .quote-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+  .quote-bar input[type="text"]{flex:1;min-width:160px;padding:9px 12px;border:1px solid var(--line-strong);
+    border-radius:9px;background:var(--panel);color:var(--ink);font-size:.88rem;font-family:inherit}
+  .quote-bar .qdate{font-size:.78rem;color:var(--muted);font-weight:600;display:inline-flex;align-items:center;gap:6px}
+  .quote-bar input[type="date"]{padding:8px 10px;border:1px solid var(--line-strong);border-radius:9px;
+    background:var(--panel);color:var(--ink);font-size:.85rem;font-family:inherit}
+  .quote-bar .qbtns{display:flex;gap:8px;margin-left:auto}
+  .quote-bar input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  /* percent measure chips */
+  .measure-pct{display:inline-flex;align-items:center;gap:0;border:1px solid var(--line-strong);
+    background:var(--chip);border-radius:999px;overflow:hidden}
+  .measure-pct .chip{border:none;border-radius:0;background:none}
+  .measure-pct .chip[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink)}
+  .measure-pct .pctbox{display:inline-flex;align-items:center;gap:2px;padding:0 10px 0 8px;
+    border-left:1px solid var(--line-strong);color:var(--muted);font-size:.82rem}
+  .measure-pct .pctbox input{width:38px;padding:5px 2px;border:1px solid var(--line-strong);border-radius:6px;
+    background:var(--panel);color:var(--ink);font-size:.82rem;font-family:inherit;text-align:right;
+    font-variant-numeric:tabular-nums}
+  .measure-pct .pctbox input:disabled{opacity:.4}
+  /* print view */
+  #printArea{display:none}
+  @media print{
+    body{background:#fff}
+    .wrap{display:none !important}
+    #printArea{display:block !important}
+    @page{margin:16mm}
+  }
+  #printArea{color:#111;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+  #printArea .q-title{font-size:1.7rem;font-weight:800;letter-spacing:.35em;text-align:center;margin:0 0 4px}
+  #printArea .q-rule{height:3px;background:#111;margin:6px 0 18px}
+  #printArea .q-meta{display:flex;justify-content:space-between;gap:20px;font-size:.9rem;margin-bottom:6px}
+  #printArea .q-client{font-size:1.05rem;font-weight:700;margin:14px 0 4px}
+  #printArea .q-cond{font-size:.9rem;color:#333;margin-bottom:14px}
+  #printArea .q-cond b{color:#111}
+  #printArea table{border-collapse:collapse;width:100%;font-size:.82rem}
+  #printArea th,#printArea td{border:1px solid #999;padding:7px 9px;text-align:right;white-space:nowrap;
+    font-variant-numeric:tabular-nums}
+  #printArea th.l,#printArea td.l{text-align:left}
+  #printArea thead th{background:#eee !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printArea td.hl{font-weight:700}
+  #printArea .q-foot{margin-top:16px;font-size:.72rem;color:#555;line-height:1.6}
+  #printArea .q-sign{margin-top:26px;text-align:right;font-size:.85rem;color:#333}
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
+  thead th{background:var(--panel);position:sticky;top:0}
+  th,td{padding:11px 13px;text-align:right;white-space:nowrap}
+  th.l,td.l{text-align:left}
+  th.l,td.port{width:1px}                 /* 항만 컬럼: 내용 폭까지만 (좁게) */
+  thead .grp th{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+  thead .grp .g40,thead .grp .g20{text-align:center}   /* 40/20FT 헤더 가운데 정렬 */
+  thead .grp .g40{color:var(--c40)}
+  thead .grp .g20{color:var(--c20)}
+  thead .sub th{font-size:.72rem;color:var(--muted);font-weight:600;border-bottom:2px solid var(--line-strong)}
+  tbody td{border-bottom:1px solid var(--line-strong);font-variant-numeric:tabular-nums}
+  tbody tr:last-child td{border-bottom:none}
+  /* 컬럼 세로 구분선 */
+  .tbl-scroll table th,.tbl-scroll table td{border-right:1px solid var(--line-strong)}
+  .tbl-scroll table tr>*:last-child{border-right:none}
+  /* 40FT ↔ 20FT 두꺼운 구분선 */
+  .tbl-scroll table .sep{border-left:3px solid var(--muted)}
+  tbody tr:hover td{background:var(--accent-soft)}
+  td.port{font-weight:600;text-align:left}
+  td.dist{color:var(--muted)}
+  .c40cell{background:color-mix(in srgb,var(--c40-soft) 55%,transparent)}
+  .c20cell{background:color-mix(in srgb,var(--c20-soft) 55%,transparent)}
+  td.won{font-weight:600}
+  td.hl{font-weight:700}
+  .empty{padding:44px 20px;text-align:center;color:var(--muted);font-size:.92rem}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:.75rem;color:var(--muted)}
+  .legend b{color:var(--ink);font-weight:600}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:3px;vertical-align:middle;margin-right:5px}
+  .foot{margin-top:26px;font-size:.75rem;color:var(--muted);line-height:1.7}
+  .foot .modenote{display:none}
+  .foot .modenote.on{display:block}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>컨테이너 안전운임 조회</h1>
+    <span class="sub">항만·노선 선택 + 도착지 선택 → 40FT / 20FT 운임</span>
+  </header>
+
+  <div class="modetabs" role="tablist" aria-label="운임 종류">
+    <button class="modetab" role="tab" id="tab-oneway" aria-selected="true">왕복 운임</button>
+    <button class="modetab" role="tab" id="tab-rt" aria-selected="false">편도 운임</button>
+  </div>
+
+  <section class="panel">
+    <div class="panel-body">
+      <div class="eyebrow" id="step1label">1 · 출발 항만 선택 (다중 가능)</div>
+      <p class="field-label"><span id="unitname">항만</span> <span class="count" id="portCount">0곳 선택</span></p>
+      <div class="ports" id="ports"></div>
+      <div class="port-tools">
+        <button class="linkbtn" id="selAll">전체 선택</button>
+        <button class="linkbtn" id="selNone">선택 해제</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-body">
+      <div class="eyebrow">2 · 도착지 선택</div>
+      <div class="dest">
+        <div>
+          <label for="sido">시 · 도</label>
+          <select id="sido"><option value="">선택하세요</option></select>
+        </div>
+        <div>
+          <label for="sigungu">시 · 군 · 구</label>
+          <select id="sigungu" disabled><option value="">—</option></select>
+        </div>
+        <div>
+          <label for="dong">읍 · 면 · 동</label>
+          <select id="dong" disabled><option value="">—</option></select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-body">
+      <div class="eyebrow">3 · 운임 종류 선택 (표시할 항목)</div>
+      <div class="ports" id="types"></div>
+    </div>
+  </section>
+
+  <section class="panel" style="margin-top:24px">
+    <div class="panel-body">
+      <div class="result-head">
+        <div>
+          <h2>조회 결과</h2>
+          <span class="where" id="where"></span>
+        </div>
+      </div>
+      <div class="quote-bar">
+        <input id="clientName" type="text" placeholder="거래처명 (견적서용, 선택)" autocomplete="off">
+        <label class="qdate">견적일자 <input id="quoteDate" type="date"></label>
+        <span class="qbtns">
+          <button class="dlbtn ghost" id="download" disabled>⭳ CSV</button>
+          <button class="dlbtn" id="quoteBtn" disabled>🧾 견적서 (인쇄/PDF)</button>
+        </span>
+      </div>
+      <div id="resultArea"></div>
+      <div class="legend">
+        <span><span class="dot" style="background:var(--c40)"></span><b>40FT</b> 컨테이너</span>
+        <span><span class="dot" style="background:var(--c20)"></span><b>20FT</b> 컨테이너</span>
+        <span><b>안전운송운임</b> = 운수사업자→화물차주 지급 (굵게 표시)</span>
+      </div>
+    </div>
+  </section>
+
+  <p class="foot">
+    운임 3종 — <b style="color:var(--ink)">안전위탁운임</b>: 화주→운수사업자 지급 최저운임 ·
+    <b style="color:var(--ink)">운수사업자 간 운임</b>: 사업자 간 하도급 운임 ·
+    <b style="color:var(--ink)">안전운송운임</b>: 운수사업자→화물차주 지급 운임. 단위: 원.
+    <span class="modenote on" id="note-oneway"><br><b style="color:var(--ink)">왕복</b>: 항만↔도착지 왕복 운임. 거리는 해당 항만↔도착지 기준(km). 전국 3,480개 지역.</span>
+    <span class="modenote" id="note-rt"><br><b style="color:var(--ink)">편도</b>: 짐을 실은 구간(적컨) + 빈 컨테이너 회송 구간(공컨)으로 구성된 편도 운임. 구간거리=적컨+공컨. 수도권 중심 1,213개 지역.</span>
+  </p>
+</div>
+
+<div id="printArea"></div>
+
+<script>
+const DB_OW = __DATA_OW__;
+const DB_RT = __DATA_RT__;
+const won = n => n==null ? '—' : n.toLocaleString('ko-KR');
+// 한글 가나다순 정렬 (ㄱ이 맨 위)
+const koCol = new Intl.Collator('ko',{numeric:true});
+const koSort = (a,b)=>koCol.compare(a,b);
+
+// ---- rate-type / measure selection (shared) ----
+// rates[] layout: 40FT = [위탁, 사간, 안전] at offset 0 ; 20FT = same at offset 3
+const MEASURES=[
+  {id:'t0', short:'안전위탁',      full:'안전위탁운임',            calc:(r,o)=>r[o]},
+  {id:'t1', short:'사업자간',      full:'운수사업자 간 운임',       calc:(r,o)=>r[o+1]},
+  {id:'t2', short:'안전운송',      full:'안전운송운임', hl:true,    calc:(r,o)=>r[o+2]},
+  {id:'m01',short:'위탁~사간 중간', full:'위탁·사업자간 중간값',     calc:(r,o)=>Math.round((r[o]+r[o+1])/2)},
+  {id:'m12',short:'사간~안전 중간', full:'사업자간·안전운송 중간값', calc:(r,o)=>Math.round((r[o+1]+r[o+2])/2)},
+  {id:'p0', pct:true, from:0, to:1, short:'위탁', full:'위탁기준(위탁→사간)'},
+  {id:'p1', pct:true, from:1, to:2, short:'사간', full:'사간기준(사간→안전)'},
+];
+const pctVals={p0:50, p1:50};
+const selectedMeasures=new Set(['t0','t1','t2']);
+const mById=id=>MEASURES.find(m=>m.id===id);
+const shortHdr=m=>m.pct?`${m.short} ${pctVals[m.id]}%`:m.short;
+const fullHdr =m=>m.pct?`${m.full} ${pctVals[m.id]}%`:m.full;
+// 비율 측정치는 두 운임 사이의 보간값: from + (to - from) × pct%
+const calcVal =(m,rates,o)=>m.pct
+  ? Math.round(rates[o+m.from] + (rates[o+m.to]-rates[o+m.from])*pctVals[m.id]/100)
+  : m.calc(rates,o);
+const activeMeasures=()=>MEASURES.filter(m=>selectedMeasures.has(m.id));
+
+const typesEl=document.getElementById('types');
+MEASURES.forEach(m=>{
+  const on=selectedMeasures.has(m.id);
+  const toggle=()=>{
+    if(selectedMeasures.has(m.id)){ if(selectedMeasures.size===1)return false; selectedMeasures.delete(m.id); return false; }
+    selectedMeasures.add(m.id); return true;
+  };
+  if(!m.pct){
+    const b=document.createElement('button');
+    b.className='chip';b.type='button';b.textContent=m.short;b.setAttribute('aria-pressed',on);
+    b.onclick=()=>{b.setAttribute('aria-pressed',toggle());render();};
+    typesEl.appendChild(b);
+  }else{
+    const wrap=document.createElement('span');wrap.className='measure-pct';
+    const b=document.createElement('button');
+    b.className='chip';b.type='button';b.textContent=`${m.short} 기준`;b.setAttribute('aria-pressed',on);
+    const box=document.createElement('span');box.className='pctbox';
+    const inp=document.createElement('input');
+    inp.type='number';inp.min='10';inp.max='90';inp.step='1';inp.value=pctVals[m.id];inp.disabled=!on;
+    const pc=document.createElement('span');pc.textContent='%';
+    box.appendChild(inp);box.appendChild(pc);
+    b.onclick=()=>{const now=toggle();b.setAttribute('aria-pressed',now);inp.disabled=!now;render();};
+    inp.onchange=()=>{
+      let v=Math.round(+inp.value||0); if(v<10)v=10; if(v>90)v=90; inp.value=v; pctVals[m.id]=v;
+      if(selectedMeasures.has(m.id))render();
+    };
+    inp.onclick=e=>e.stopPropagation();
+    wrap.appendChild(b);wrap.appendChild(box);typesEl.appendChild(wrap);
+  }
+});
+
+// ---- mode state ----
+let mode='oneway';                 // 'oneway' | 'rt'
+const selectedPorts=new Set();     // indices into current unit list
+let curIdx=null;                   // index into current locs
+let tree={};                       // sido->sigungu->[{d,idx}]
+
+const portsEl=document.getElementById('ports');
+const sidoSel=document.getElementById('sido'), guSel=document.getElementById('sigungu'), dongSel=document.getElementById('dong');
+const step1label=document.getElementById('step1label'), unitname=document.getElementById('unitname');
+
+function activeDB(){return mode==='oneway'?DB_OW:DB_RT;}
+function unitList(){return mode==='oneway'?DB_OW.ports:DB_RT.routes;}
+
+function buildTree(){
+  tree={};
+  activeDB().locs.forEach((l,idx)=>{
+    const[s,g,d]=l;
+    (tree[s]=tree[s]||{});
+    (tree[s][g]=tree[s][g]||[]).push({d,idx});
+  });
+}
+function buildPorts(){
+  portsEl.innerHTML='';selectedPorts.clear();updateCount();
+  unitList().forEach((p,i)=>{
+    const b=document.createElement('button');
+    b.className='chip';b.type='button';b.textContent=p;b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',()=>{
+      if(selectedPorts.has(i)){selectedPorts.delete(i);b.setAttribute('aria-pressed','false');}
+      else{selectedPorts.add(i);b.setAttribute('aria-pressed','true');}
+      updateCount();render();
+    });
+    portsEl.appendChild(b);
+  });
+}
+function buildDest(){
+  sidoSel.innerHTML='';guSel.innerHTML='';dongSel.innerHTML='';
+  guSel.disabled=true;dongSel.disabled=true;curIdx=null;
+  sidoSel.add(new Option('선택하세요',''));
+  Object.keys(tree).sort(koSort).forEach(s=>sidoSel.add(new Option(s,s)));
+  guSel.add(new Option('—',''));dongSel.add(new Option('—',''));
+}
+function updateCount(){document.getElementById('portCount').textContent=selectedPorts.size+'개 선택';}
+
+document.getElementById('selAll').onclick=()=>{unitList().forEach((_,i)=>selectedPorts.add(i));[...portsEl.children].forEach(c=>c.setAttribute('aria-pressed','true'));updateCount();render();};
+document.getElementById('selNone').onclick=()=>{selectedPorts.clear();[...portsEl.children].forEach(c=>c.setAttribute('aria-pressed','false'));updateCount();render();};
+
+sidoSel.onchange=()=>{
+  guSel.innerHTML='';dongSel.innerHTML='';dongSel.disabled=true;curIdx=null;
+  if(!sidoSel.value){guSel.disabled=true;guSel.add(new Option('—',''));render();return;}
+  guSel.disabled=false;guSel.add(new Option('선택하세요',''));
+  Object.keys(tree[sidoSel.value]).sort(koSort).forEach(g=>guSel.add(new Option(g,g)));
+  dongSel.add(new Option('—',''));render();
+};
+guSel.onchange=()=>{
+  dongSel.innerHTML='';curIdx=null;
+  if(!guSel.value){dongSel.disabled=true;dongSel.add(new Option('—',''));render();return;}
+  dongSel.disabled=false;dongSel.add(new Option('선택하세요',''));
+  tree[sidoSel.value][guSel.value].slice().sort((a,b)=>koSort(a.d,b.d)).forEach(o=>dongSel.add(new Option(o.d,o.idx)));
+  render();
+};
+dongSel.onchange=()=>{curIdx=dongSel.value===''?null:+dongSel.value;render();};
+
+// ---- mode switching ----
+const tabOW=document.getElementById('tab-oneway'), tabRT=document.getElementById('tab-rt');
+function setMode(m){
+  mode=m;
+  tabOW.setAttribute('aria-selected',m==='oneway');
+  tabRT.setAttribute('aria-selected',m==='rt');
+  step1label.textContent = m==='oneway' ? '1 · 왕복 항만 선택 (다중 가능)' : '1 · 편도 항만 선택 (다중 가능)';
+  unitname.textContent = '항만';
+  document.getElementById('note-oneway').classList.toggle('on',m==='oneway');
+  document.getElementById('note-rt').classList.toggle('on',m==='rt');
+  buildTree();buildPorts();buildDest();render();
+}
+tabOW.onclick=()=>setMode('oneway');
+tabRT.onclick=()=>setMode('rt');
+
+// ---- shared state + table builder ----
+const area=document.getElementById('resultArea');
+const whereEl=document.getElementById('where');
+const dlBtn=document.getElementById('download');
+const quoteBtn=document.getElementById('quoteBtn');
+
+function getState(){
+  if(selectedPorts.size===0||curIdx==null)return null;
+  const db=activeDB(), ms=activeMeasures();
+  const rows=[...selectedPorts].sort((a,b)=>a-b).map(pi=>{
+    const key=unitList()[pi], pd=db.data[key];
+    const r={name:key,rates:pd.rates[curIdx]};
+    r.dist = mode==='oneway' ? [pd.dist[curIdx]] : [pd.laden[curIdx],pd.empty[curIdx],pd.total[curIdx]];
+    return r;
+  });
+  const[s,g,d]=db.locs[curIdx];
+  return {rows, ms, dest:`${s} ${g} ${d}`, sido:s, gu:g, dong:d};
+}
+const distHeadsHTML = ()=> mode==='oneway' ? ['거리<br>(km)'] : ['적컨<br>(km)','공컨<br>(km)','구간<br>(km)'];
+const distColsCSV   = ()=> mode==='oneway' ? ['거리(km)']    : ['적컨거리(km)','공컨거리(km)','구간거리(km)'];
+
+function tableHTML(rows,ms){
+  const span=ms.length, dh=distHeadsHTML();
+  let subHead='';
+  for(let k=0;k<2;k++) ms.forEach((m,i)=>subHead+=`<th class="${k===1&&i===0?'sep':''}">${shortHdr(m)}</th>`);
+  let h=`<table>
+    <thead>
+      <tr class="grp">
+        <th class="l" rowspan="2">항만</th>
+        ${dh.map(x=>`<th rowspan="2">${x}</th>`).join('')}
+        <th class="g40" colspan="${span}">40FT 컨테이너</th>
+        <th class="g20 sep" colspan="${span}">20FT 컨테이너</th>
+      </tr>
+      <tr class="sub">${subHead}</tr>
+    </thead><tbody>`;
+  rows.forEach(r=>{
+    let cells='';
+    ms.forEach(m=>cells+=`<td class="c40cell won${m.hl?' hl':''}">${won(calcVal(m,r.rates,0))}</td>`);
+    ms.forEach((m,i)=>cells+=`<td class="c20cell won${m.hl?' hl':''}${i===0?' sep':''}">${won(calcVal(m,r.rates,3))}</td>`);
+    const distCells=r.dist.map(d=>`<td class="dist">${d}</td>`).join('');
+    h+=`<tr><td class="port">${r.name}</td>${distCells}${cells}</tr>`;
+  });
+  return h+'</tbody></table>';
+}
+
+function render(){
+  if(curIdx!=null){const[s,g,d]=activeDB().locs[curIdx];whereEl.textContent=`${s} ${g} ${d}`;}
+  else whereEl.textContent='';
+  const st=getState();
+  dlBtn.disabled=!st;quoteBtn.disabled=!st;
+  if(selectedPorts.size===0){area.innerHTML='<div class="empty">항만을(를) 하나 이상 선택하세요.</div>';return;}
+  if(curIdx==null){area.innerHTML='<div class="empty">도착지(읍·면·동)까지 선택하면 운임이 표시됩니다.</div>';return;}
+  area.innerHTML=`<div class="tbl-scroll">${tableHTML(st.rows,st.ms)}</div>`;
+}
+
+// ---- CSV ----
+dlBtn.addEventListener('click',()=>{
+  const st=getState(); if(!st)return;
+  const distCols=distColsCSV();
+  const header1=['도착지','항만',...distCols];
+  const header2=header1.map(()=>'');
+  ['40FT','20FT'].forEach(c=>st.ms.forEach(m=>{header1.push(c);header2.push(fullHdr(m));}));
+  const esc=v=>{v=(v==null?'':String(v));return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
+  const lines=[header1.map(esc).join(','),header2.map(esc).join(',')];
+  st.rows.forEach(r=>{
+    const row=[st.dest,r.name,...r.dist];
+    st.ms.forEach(m=>row.push(calcVal(m,r.rates,0)));
+    st.ms.forEach(m=>row.push(calcVal(m,r.rates,3)));
+    lines.push(row.map(esc).join(','));
+  });
+  const csv='﻿'+lines.join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`컨테이너운임_${mode==='oneway'?'왕복':'편도'}_${st.gu}_${st.dong}.csv`;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+
+// ---- 견적서 (print / PDF) ----
+const clientEl=document.getElementById('clientName');
+const dateEl=document.getElementById('quoteDate');
+const printArea=document.getElementById('printArea');
+// default 견적일자 = 오늘 (로컬)
+(function(){const t=new Date();const p=n=>String(n).padStart(2,'0');
+  dateEl.value=`${t.getFullYear()}-${p(t.getMonth()+1)}-${p(t.getDate())}`;})();
+
+quoteBtn.addEventListener('click',()=>{
+  const st=getState(); if(!st)return;
+  const client=(clientEl.value||'').trim();
+  const dateStr=dateEl.value ? dateEl.value.replace(/-/g,'. ')+'.' : '';
+  const modeWord = mode==='oneway' ? '왕복' : '편도';
+  const measureNames = st.ms.map(fullHdr).join(', ');
+  printArea.innerHTML=`
+    <div class="q-title">견 적 서</div>
+    <div class="q-rule"></div>
+    <div class="q-meta"><span>견적일자: <b>${dateStr}</b></span><span>구분: <b>${modeWord} 컨테이너 안전운임</b></span></div>
+    <div class="q-client">${client?client+' 귀하':'거래처: __________ 귀하'}</div>
+    <div class="q-cond">아래와 같이 운임을 견적합니다. &nbsp; 도착지: <b>${st.dest}</b></div>
+    ${tableHTML(st.rows,st.ms)}
+    <div class="q-foot">
+      · 운임 종류: ${measureNames} · 단위: 원 (부가세 별도) · 40FT/20FT는 컨테이너 규격.<br>
+      · 본 견적은 화물자동차 안전운임 기준 자료이며, 실제 계약 운임은 협의에 따라 달라질 수 있습니다.
+    </div>
+    <div class="q-sign">발행일: ${dateStr}</div>`;
+  window.print();
+});
+
+// init
+setMode('oneway');
+</script>
