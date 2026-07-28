@@ -168,8 +168,8 @@
         <textarea class="paste" id="pasteBox" placeholder="여기에 메신저 내용을 붙여넣고 [자동 파싱] — 필터 없이 통째로 붙여도 됩니다."></textarea>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button class="btn pri" id="parseBtn">자동 파싱</button>
-          <div class="drop grow" id="drop">📄 D/O · PDF · 이미지 파일을 여기에 끌어다 놓기 (또는 클릭)</div>
-          <input type="file" id="file" accept=".pdf,image/*,.txt" style="display:none">
+          <div class="drop grow" id="drop">📄 D/O · PDF · 워드(.docx) · 이미지 파일을 여기에 끌어다 놓기 (또는 클릭)</div>
+          <input type="file" id="file" accept=".pdf,.docx,image/*,.txt" style="display:none">
         </div>
         <div id="parseInfo" class="hint" style="color:var(--muted)"></div>
       </div>
@@ -585,7 +585,7 @@ function parseText(text){
   const tel=text.match(/01[016789][-.\s]?\d{3,4}[-.\s]?\d{4}/);if(tel){res.tel={v:tel[0],c:1};info.push('연락처');}
   const bt=text.match(/청구처\s*[:\-]?\s*([가-힣A-Za-z0-9()·&]{2,})/);if(bt){res.billto={v:bt[1],c:.85};info.push('청구처');}
   const cg=text.match(/청구\s*[가액]\s*[:\-]?\s*([\d,]{4,})\s*원?/);if(cg){res.charge={v:cg[1].replace(/,/g,''),c:.8};info.push('청구가');}
-  const am=text.match(/(서울|경기|인천|충남|충북|전남|전북|경남|경북|강원|대전|대구|부산|울산|광주|제주|세종)[가-힣0-9\s\-()번길로동리읍면구시군동]{4,45}/);
+  const am=text.match(/(서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주|경상[남북]도|전라[남북]도|충청[남북]도|경기도|강원도|제주도)\s*[가-힣]{1,4}(시|군|구)\s*[가-힣0-9\s\-()]{2,40}/);
   if(am){let a=am[0].replace(/\s+/g,' ').trim();
     a=a.split(/\s0?1[016789][-.\s]?\d/)[0].trim();   // 전화번호 앞에서 자름
     a=a.replace(/\s+[A-Za-z].*$/,'').trim();          // 뒤쪽 영문코드(DWS 등) 제거
@@ -710,9 +710,42 @@ drop.onclick=()=>fileInp.click();
 ['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('hot');}));
 drop.addEventListener('drop',ev=>handleFile(ev.dataTransfer.files[0]));
 fileInp.onchange=()=>handleFile(fileInp.files[0]);
+// .docx(워드) 텍스트 추출 — 외부 라이브러리 없이 ZIP 파싱 + 브라우저 내장 압축해제
+async function readDocx(buf){
+  const dv=new DataView(buf),u8=new Uint8Array(buf),td=new TextDecoder();
+  let eocd=-1;
+  for(let i=u8.length-22;i>=0&&i>u8.length-22-65536;i--){if(dv.getUint32(i,true)===0x06054b50){eocd=i;break;}}
+  if(eocd<0)throw new Error('ZIP 형식 아님');
+  let cd=dv.getUint32(eocd+16,true);const n=dv.getUint16(eocd+10,true);
+  let off=-1,csize=0,method=8;
+  for(let e=0;e<n&&dv.getUint32(cd,true)===0x02014b50;e++){
+    const m=dv.getUint16(cd+10,true),cs=dv.getUint32(cd+20,true);
+    const fnl=dv.getUint16(cd+28,true),efl=dv.getUint16(cd+30,true),cml=dv.getUint16(cd+32,true);
+    const lo=dv.getUint32(cd+42,true),name=td.decode(u8.subarray(cd+46,cd+46+fnl));
+    if(name==='word/document.xml'){off=lo;csize=cs;method=m;}
+    cd+=46+fnl+efl+cml;
+  }
+  if(off<0)throw new Error('document.xml 없음');
+  const lfnl=dv.getUint16(off+26,true),lefl=dv.getUint16(off+28,true);
+  const start=off+30+lfnl+lefl,comp=u8.subarray(start,start+csize);
+  let bytes=comp;
+  if(method===8){const ds=new DecompressionStream('deflate-raw');
+    bytes=new Uint8Array(await new Response(new Blob([comp]).stream().pipeThrough(ds)).arrayBuffer());}
+  let xml=td.decode(bytes).replace(/<\/w:p>/g,'\n').replace(/<w:tab\/>/g,'\t').replace(/<w:br\s*\/?>/g,'\n');
+  return xml.replace(/<[^>]+>/g,'').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')
+    .replace(/&#(\d+);/g,(m,d)=>String.fromCharCode(+d)).replace(/&amp;/g,'&');
+}
 async function handleFile(f){
   if(!f)return;const info=document.getElementById('parseInfo');
   if(f.type==='text/plain'||f.name.endsWith('.txt')){const t=await f.text();document.getElementById('pasteBox').value=t;applyParse(t);return;}
+  if(f.name.toLowerCase().endsWith('.docx')){
+    info.textContent='워드 문서 읽는 중…';
+    try{const t=await readDocx(await f.arrayBuffer());document.getElementById('pasteBox').value=t.trim();
+      if(t.replace(/\s/g,'').length<5)info.innerHTML='<span style="color:var(--warn)">문서에서 글자를 찾지 못했습니다.</span>';
+      else applyParse(t);
+    }catch(e){info.innerHTML='<span style="color:var(--bad)">워드 처리 실패: '+esc(e.message)+'</span>';}
+    return;
+  }
   if(f.type==='application/pdf'||f.name.toLowerCase().endsWith('.pdf')){
     if(!window.pdfjsLib){info.innerHTML='<span style="color:var(--warn)">PDF 판독기(pdf.js)를 불러오지 못했습니다. 온라인 상태에서 다시 시도하거나 텍스트를 붙여넣으세요.</span>';return;}
     info.textContent='PDF 텍스트 추출 중…';
