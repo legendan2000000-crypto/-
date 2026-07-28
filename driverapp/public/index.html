@@ -50,14 +50,31 @@
   <div id="loginView">
     <header><h1>🚚 국양로지텍 배차</h1></header>
     <main>
-      <div class="card">
-        <div class="notice">회사에서 발급받은 <b>전화번호 + PIN</b>으로 로그인하세요.</div>
+      <!-- 로그인 -->
+      <div class="card" id="loginCard">
+        <div class="notice">전화번호 + PIN으로 로그인하세요.</div>
         <label>전화번호</label>
         <input id="loginPhone" type="tel" inputmode="numeric" placeholder="01012345678" autocomplete="username">
         <label style="margin-top:10px">PIN(비밀번호)</label>
-        <input id="loginPin" type="password" inputmode="numeric" placeholder="****" autocomplete="current-password">
+        <input id="loginPin" type="password" inputmode="numeric" placeholder="숫자 4자리 이상" autocomplete="current-password">
         <button class="btn" id="loginBtn">로그인</button>
         <div class="err" id="loginErr"></div>
+        <div style="text-align:center;margin-top:12px"><a href="#" id="toSignup" style="color:var(--accent);font-size:14px">기사 회원가입 →</a></div>
+      </div>
+      <!-- 회원가입 -->
+      <div class="card hidden" id="signupCard">
+        <div class="notice">기사 <b>회원가입</b> — 가입 후 <b>관리자 승인</b>이 되면 배차를 받습니다.</div>
+        <label>이름</label>
+        <input id="suName" type="text" placeholder="홍길동">
+        <label style="margin-top:10px">전화번호</label>
+        <input id="suPhone" type="tel" inputmode="numeric" placeholder="01012345678">
+        <label style="margin-top:10px">차량번호</label>
+        <input id="suVno" type="text" placeholder="부산80바1234">
+        <label style="margin-top:10px">PIN(비밀번호)</label>
+        <input id="suPin" type="password" inputmode="numeric" placeholder="숫자 4자리 이상">
+        <button class="btn" id="signupBtn">회원가입 신청</button>
+        <div class="err" id="signupErr"></div>
+        <div style="text-align:center;margin-top:12px"><a href="#" id="toLogin" style="color:var(--accent);font-size:14px">← 로그인으로</a></div>
       </div>
     </main>
   </div>
@@ -66,6 +83,10 @@
   <div id="adminView" class="hidden">
     <header><h1>배차 보내기</h1><span class="who" id="adminWho"></span><button id="adminLogout">로그아웃</button></header>
     <main>
+      <div class="card hidden" id="approveCard" style="border-color:var(--warn)">
+        <label style="color:var(--warn)">🖐 가입 승인 대기 <span id="pendCount"></span></label>
+        <div id="pendList"></div>
+      </div>
       <div class="card">
         <label>메신저/오더 붙여넣기 (선택 — 자동으로 아래 칸 채움)</label>
         <textarea id="pasteBox" rows="3" placeholder="카톡/문자 오더를 붙여넣고 '자동 채우기'"></textarea>
@@ -122,6 +143,19 @@
       <div id="driverList"></div>
     </main>
   </div>
+
+  <!-- 승인 대기 -->
+  <div id="pendingView" class="hidden">
+    <header><h1>🚚 국양로지텍 배차</h1><button id="pendLogout" style="margin-left:auto">로그아웃</button></header>
+    <main>
+      <div class="card" style="text-align:center;padding:30px 16px">
+        <div style="font-size:44px">⏳</div>
+        <div style="font-weight:800;font-size:18px;margin:10px 0">가입 신청 완료 — 승인 대기중</div>
+        <div class="hint" id="pendWho"></div>
+        <div class="notice" style="margin-top:14px">배차담당(관리자)이 승인하면 배차를 받을 수 있습니다.<br>승인되면 이 화면이 자동으로 바뀝니다.</div>
+      </div>
+    </main>
+  </div>
 </div>
 
 <script src="/config.js"></script>
@@ -130,10 +164,10 @@
 <script>try{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='/vendor/pdf.worker.min.js';}catch(e){}</script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, doc, getDoc, setDoc, addDoc, collection, query, where, orderBy,
-  onSnapshot, serverTimestamp, updateDoc, getDocs, limit }
+  onSnapshot, serverTimestamp, updateDoc, getDocs, limit, deleteDoc }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 import { getMessaging, getToken, onMessage }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js';
@@ -144,7 +178,7 @@ const db = getFirestore(app);
 const messaging = getMessaging(app);
 
 const $ = (id) => document.getElementById(id);
-const show = (v) => ['loginView','adminView','driverView'].forEach(x => $(x).classList.toggle('hidden', x !== v));
+const show = (v) => ['loginView','adminView','driverView','pendingView'].forEach(x => $(x).classList.toggle('hidden', x !== v));
 const toast = (m) => { const t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),4000); };
 const emailOf = (p) => `${String(p).replace(/\D/g,'')}@kukyang.driver`;
 const pwOf = (pin) => 'kk-' + String(pin); // Firebase 비번 최소 6자 충족(짧은 PIN 허용)
@@ -174,13 +208,39 @@ $('loginBtn').onclick = async () => {
 };
 $('adminLogout').onclick = () => signOut(auth);
 $('driverLogout').onclick = () => signOut(auth);
+$('pendLogout').onclick = () => signOut(auth);
 
+// ── 로그인/가입 화면 전환
+$('toSignup').onclick = (e) => { e.preventDefault(); $('loginCard').classList.add('hidden'); $('signupCard').classList.remove('hidden'); };
+$('toLogin').onclick = (e) => { e.preventDefault(); $('signupCard').classList.add('hidden'); $('loginCard').classList.remove('hidden'); };
+
+// ── 회원가입(기사) — role='pending'로 생성 → 관리자 승인 대기
+$('signupBtn').onclick = async () => {
+  $('signupErr').textContent = '';
+  const name=$('suName').value.trim(), phone=$('suPhone').value.trim(), vno=$('suVno').value.trim(), pin=$('suPin').value;
+  if (!name || !phone || !vno || !pin) { $('signupErr').textContent='모든 칸을 입력하세요.'; return; }
+  if (String(pin).length < 4) { $('signupErr').textContent='PIN은 4자리 이상.'; return; }
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, emailOf(phone), pwOf(pin));
+    await setDoc(doc(db,'users',cred.user.uid), { role:'pending', name, phone, vno, createdAt: serverTimestamp() });
+    // onAuthStateChanged가 pending 화면으로 전환
+  } catch (e) {
+    const m = { 'auth/email-already-in-use':'이미 가입된 전화번호입니다. 로그인하세요.', 'auth/weak-password':'PIN이 너무 짧습니다.' };
+    $('signupErr').textContent = m[e.code] || ('가입 실패: ' + (e.code||e.message));
+  }
+};
+
+let meUnsub = null;
 onAuthStateChanged(auth, async (user) => {
+  if (meUnsub) { meUnsub(); meUnsub = null; }
   if (!user) { me=null; show('loginView'); return; }
-  const uref = doc(db, 'users', user.uid);
-  const usnap = await getDoc(uref);
-  me = usnap.exists() ? { uid:user.uid, ...usnap.data() } : { uid:user.uid, role:'driver' };
-  if (me.role === 'admin') startAdmin(); else startDriver();
+  // 본인 문서를 실시간 구독 → 승인(role 변경) 시 화면 자동 전환
+  meUnsub = onSnapshot(doc(db,'users',user.uid), (snap) => {
+    me = snap.exists() ? { uid:user.uid, ...snap.data() } : { uid:user.uid, role:'pending' };
+    if (me.role === 'admin') startAdmin();
+    else if (me.role === 'driver') startDriver();
+    else { $('pendWho').textContent = `${me.name||''} · ${me.vno||''}`; show('pendingView'); }
+  });
 });
 
 // ── 관리자
@@ -194,20 +254,48 @@ $('statusSeg').querySelectorAll('button').forEach(b => b.onclick = () => {
 });
 $('statusSeg').querySelector('button').click();
 
-async function startAdmin() {
-  $('adminWho').textContent = (me.name||'관리자');
-  show('adminView');
-  // 기사 목록 → 차량 선택
+let adminReady = false;
+async function loadVehicles() {
   const ds = await getDocs(query(collection(db,'users'), where('role','==','driver')));
   const sel = $('vnoSel'); sel.innerHTML='';
   ds.forEach(d => { const u=d.data(); const o=document.createElement('option'); o.value=u.vno||''; o.textContent=`${u.name||''} (${u.vno||'차량번호없음'})`; sel.appendChild(o); });
+}
+async function startAdmin() {
+  $('adminWho').textContent = (me.name||'관리자');
+  show('adminView');
+  if (adminReady) return;
+  adminReady = true;
+  await loadVehicles();
   if (!$('fDate').value) $('fDate').value = new Date().toISOString().slice(0,10);
-  // 최근 보낸 배차
+  // 최근 보낸 배차(실시간)
   onSnapshot(query(collection(db,'dispatches'), orderBy('createdAt','desc'), limit(15)), (snap)=>{
     $('adminList').innerHTML = snap.empty ? '<div class="empty">아직 없음</div>' :
       snap.docs.map(d=>dispCard(d.data(), d.id, true)).join('');
   });
+  // 가입 승인 대기(실시간)
+  onSnapshot(query(collection(db,'users'), where('role','==','pending')), (snap)=>{
+    $('approveCard').classList.toggle('hidden', snap.empty);
+    $('pendCount').textContent = snap.empty ? '' : `(${snap.size})`;
+    $('pendList').innerHTML = snap.docs.map(d=>{ const u=d.data(); return `
+      <div style="border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px">
+        <div style="font-weight:800">${esc(u.name||'')} <span class="hint">${esc(u.phone||'')}</span></div>
+        <div class="r" style="color:var(--muted);font-size:13px;margin:3px 0">🚛 차량 ${esc(u.vno||'(미입력)')}</div>
+        <div style="display:flex;gap:6px;margin-top:6px">
+          <button class="btn" style="flex:1;padding:8px;background:var(--ok)" onclick="window.__approve('${d.id}')">✅ 승인</button>
+          <button class="btn sub" style="flex:1;padding:8px" onclick="window.__reject('${d.id}','${esc(u.name||'')}')">거절</button>
+        </div>
+      </div>`; }).join('');
+  });
 }
+window.__approve = async (uid) => {
+  try { await updateDoc(doc(db,'users',uid), { role:'driver', approvedAt: serverTimestamp() }); await loadVehicles(); toast('승인 완료 — 이제 배차를 받습니다'); }
+  catch(e){ toast('승인 실패: ' + e.message); }
+};
+window.__reject = async (uid, name) => {
+  if (!confirm(`${name} 가입을 거절할까요? (목록에서 제거)`)) return;
+  try { await deleteDoc(doc(db,'users',uid)); toast('거절 처리됨'); }
+  catch(e){ toast('처리 실패: ' + e.message); }
+};
 // 배차일보 파서로 폼 채우기(마스터 없이도 날짜·시간·화주·경로·컨번호·수량·주소·청구 등)
 function fillFromParse(text) {
   if (!window.BCM) { toast('파서 로딩 중 — 잠시 후 다시'); return; }
