@@ -19,7 +19,7 @@ service cloud.firestore {
       allow create, delete: if isAdmin();
       allow update: if isAdmin()
         || (isSignedIn() && resource.data.vno == me().vno
-            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read','readAt']));
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read','readAt','done','completedAt']));
     }
 
     // FCM 토큰: 본인 것만

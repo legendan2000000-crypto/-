@@ -284,10 +284,11 @@ async function startDriver() {
   await ensurePush();               // 알림 권한/토큰
   if (!me.vno) { $('driverList').innerHTML='<div class="empty">차량번호가 등록되지 않았습니다. 배차담당에게 문의하세요.</div>'; return; }
   onSnapshot(query(collection(db,'dispatches'), where('vno','==',me.vno), orderBy('date','desc')), (snap)=>{
-    $('driverList').innerHTML = snap.empty ? '<div class="empty">아직 받은 배차가 없습니다.</div>' :
-      snap.docs.map(d=>dispCard(d.data(), d.id)).join('');
-    // 안 읽은 건 읽음 처리
-    snap.docs.forEach(d=>{ if(d.data().read===false) updateDoc(doc(db,'dispatches',d.id),{read:true,readAt:serverTimestamp()}).catch(()=>{}); });
+    const docs = snap.docs.filter(d => d.data().status !== '회수'); // 회수된 배차는 기사에게 숨김
+    $('driverList').innerHTML = docs.length ? docs.map(d=>dispCard(d.data(), d.id)).join('')
+      : '<div class="empty">아직 받은 배차가 없습니다.</div>';
+    // 안 읽은 건 읽음 처리(회수 제외)
+    docs.forEach(d=>{ if(d.data().read===false) updateDoc(doc(db,'dispatches',d.id),{read:true,readAt:serverTimestamp()}).catch(()=>{}); });
   });
 }
 function setNotifUI(state, msg){ // 'on' | 'off' | 'na'
@@ -350,9 +351,13 @@ onMessage(messaging, (payload) => {
 function dispCard(d, id, isAdmin){
   const cancelled = d.status==='회수';
   const pre = d.status==='선배차';
+  const done = !!d.done;
   const route = [d.load,d.unload].filter(Boolean).map(esc).join(' → ');
-  const badge = cancelled ? '<span class="badge" style="background:#3a1414;color:#ff8a8a">❌ 취소됨</span>'
-    : (pre ? '<span class="badge pre">선배차·서류준비중</span>' : '<span class="badge ok">확정</span>');
+  let badge;
+  if (cancelled) badge = '<span class="badge" style="background:#3a1414;color:#ff8a8a">❌ 취소됨</span>';
+  else if (done) badge = '<span class="badge" style="background:#0e2a1f;color:#5fd39b">✅ 배차완료</span>';
+  else if (pre) badge = '<span class="badge pre">선배차·서류준비중</span>';
+  else badge = '<span class="badge ok">확정</span>';
   const body = `<div style="${cancelled?'opacity:.5;text-decoration:line-through':''}">
     <div class="top"><span class="who">${esc(d.shipper||'(화주미정)')}</span>${badge}</div>
     <div class="r">📅 <b>${esc(d.date||'')}</b>${d.time?(' · 🕐 '+esc(d.time)):''}</div>
@@ -360,14 +365,22 @@ function dispCard(d, id, isAdmin){
     ${d.cntr?`<div class="r">🔢 ${esc(d.cntr)}</div>`:''}
     ${d.memo?`<div class="r">📝 ${esc(d.memo)}</div>`:''}
   </div>`;
-  const recall = (isAdmin && id && !cancelled)
-    ? `<button class="btn sub" style="margin-top:8px;padding:8px;font-size:14px" onclick="window.__recall('${id}')">↩ 배차 회수(취소)</button>` : '';
-  return `<div class="disp ${pre?'pre':''}">${body}${recall}</div>`;
+  let action = '';
+  if (isAdmin && id && !cancelled) {
+    action = `<button class="btn sub" style="margin-top:8px;padding:8px;font-size:14px" onclick="window.__recall('${id}')">↩ 배차 회수(취소)</button>`;
+  } else if (!isAdmin && id && !done && d.status==='확정') {
+    action = `<button class="btn" style="margin-top:8px;background:var(--ok)" onclick="window.__done('${id}')">✅ 배차완료 누르기</button>`;
+  }
+  return `<div class="disp ${pre?'pre':''}">${body}${action}</div>`;
 }
 window.__recall = async (id) => {
-  if (!confirm('이 배차를 회수(취소)할까요?\n기사 화면에 "취소됨"으로 표시됩니다.')) return;
+  if (!confirm('이 배차를 회수(취소)할까요?\n기사 화면에서는 사라집니다.')) return;
   try { await updateDoc(doc(db,'dispatches',id), { status:'회수', canceledAt: serverTimestamp() }); toast('배차를 회수했습니다'); }
   catch(e){ toast('회수 실패: ' + e.message); }
+};
+window.__done = async (id) => {
+  try { await updateDoc(doc(db,'dispatches',id), { done:true, completedAt: serverTimestamp() }); toast('배차완료 처리됨 ✅'); }
+  catch(e){ toast('처리 실패: ' + e.message); }
 };
 
 // ── 아주 가벼운 오더 파서(붙여넣기용, 관리자 편의)
