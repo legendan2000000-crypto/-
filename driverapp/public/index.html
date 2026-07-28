@@ -200,7 +200,7 @@ async function startAdmin() {
   // 최근 보낸 배차
   onSnapshot(query(collection(db,'dispatches'), orderBy('createdAt','desc'), limit(15)), (snap)=>{
     $('adminList').innerHTML = snap.empty ? '<div class="empty">아직 없음</div>' :
-      snap.docs.map(d=>dispCard(d.data())).join('');
+      snap.docs.map(d=>dispCard(d.data(), d.id, true)).join('');
   });
 }
 // 배차일보 파서로 폼 채우기(마스터 없이도 날짜·시간·화주·경로·컨번호·수량·주소·청구 등)
@@ -313,18 +313,28 @@ onMessage(messaging, (payload) => {
 });
 
 // ── 공통: 배차 카드
-function dispCard(d, id){
+function dispCard(d, id, isAdmin){
+  const cancelled = d.status==='회수';
   const pre = d.status==='선배차';
   const route = [d.load,d.unload].filter(Boolean).map(esc).join(' → ');
-  return `<div class="disp ${pre?'pre':''}">
-    <div class="top"><span class="who">${esc(d.shipper||'(화주미정)')}</span>
-      <span class="badge ${pre?'pre':'ok'}">${pre?'선배차·서류준비중':'확정'}</span></div>
+  const badge = cancelled ? '<span class="badge" style="background:#3a1414;color:#ff8a8a">❌ 취소됨</span>'
+    : (pre ? '<span class="badge pre">선배차·서류준비중</span>' : '<span class="badge ok">확정</span>');
+  const body = `<div style="${cancelled?'opacity:.5;text-decoration:line-through':''}">
+    <div class="top"><span class="who">${esc(d.shipper||'(화주미정)')}</span>${badge}</div>
     <div class="r">📅 <b>${esc(d.date||'')}</b>${d.time?(' · 🕐 '+esc(d.time)):''}</div>
     ${route?`<div class="r">📍 ${route}</div>`:''}
     ${d.cntr?`<div class="r">🔢 ${esc(d.cntr)}</div>`:''}
     ${d.memo?`<div class="r">📝 ${esc(d.memo)}</div>`:''}
   </div>`;
+  const recall = (isAdmin && id && !cancelled)
+    ? `<button class="btn sub" style="margin-top:8px;padding:8px;font-size:14px" onclick="window.__recall('${id}')">↩ 배차 회수(취소)</button>` : '';
+  return `<div class="disp ${pre?'pre':''}">${body}${recall}</div>`;
 }
+window.__recall = async (id) => {
+  if (!confirm('이 배차를 회수(취소)할까요?\n기사 화면에 "취소됨"으로 표시됩니다.')) return;
+  try { await updateDoc(doc(db,'dispatches',id), { status:'회수', canceledAt: serverTimestamp() }); toast('배차를 회수했습니다'); }
+  catch(e){ toast('회수 실패: ' + e.message); }
+};
 
 // ── 아주 가벼운 오더 파서(붙여넣기용, 관리자 편의)
 function parsePaste(text){

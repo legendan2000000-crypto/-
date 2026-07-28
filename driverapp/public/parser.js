@@ -133,6 +133,11 @@ function parseText(text){
   if(ld)res.load={v:ld,c:.6};
   const ul=findTerm(M.unloads,['하차','하차지','하치','도착','→'],false); // 하차 라벨 있을 때만(없으면 주소=하차지)
   if(ul)res.unload={v:ul,c:.5};
+  // 라벨 뒤 자유 텍스트 상/하차지(마스터에 없어도 잡기)
+  if(!res.load){const m=text.match(/(상차지|상차|출고지|상차장소)\s*[:\-]?\s*([가-힣A-Za-z0-9()]{2,20})/);
+    if(m&&!/^(후|시|시간|완료|장소|지$)/.test(m[2]))res.load={v:m[2],c:.5};}
+  if(!res.unload){const m=text.match(/(하차지|하차|도착지|하치장|납품지|납품처)\s*[:\-]?\s*([가-힣A-Za-z0-9()]{2,20})/);
+    if(m&&!/^(후|시|시간|완료|지$)/.test(m[2]))res.unload={v:m[2],c:.5};}
   const bl=text.match(/\b[A-Z]{3,4}[A-Z0-9]{6,}\b/);if(bl&&!cntrs.includes(bl[0])){res.bl={v:bl[0],c:.5};}
   return {res,info};
 }
