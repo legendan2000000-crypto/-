@@ -1,0 +1,12 @@
+# 실데이터(화주·연락처·금액) — 개인정보, 커밋 금지
+data.js
+app/data.js
+
+# 빌드/실행 산출물
+dist/
+build/
+*.spec
+__pycache__/
+*.pyc
+전국컨테이너_선박검색.exe
+ShipSearch.exe
