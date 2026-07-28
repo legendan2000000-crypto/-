@@ -138,26 +138,46 @@
   .livedot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;animation:lp 1.6s infinite;margin-right:5px;vertical-align:middle}
   @keyframes lp{0%{opacity:.35}50%{opacity:1}100%{opacity:.35}}
   #cmeta b{color:var(--text)} #cmeta{line-height:1.7}
+  /* 최상위 3탭 */
+  .toptabs{display:flex;gap:4px;background:var(--bg);border-radius:11px;padding:4px}
+  .toptabs button{border:0;background:transparent;color:var(--muted);padding:8px 18px;border-radius:8px;cursor:pointer;font-weight:800;font-size:14.5px}
+  .toptabs button.on{background:var(--panel);color:var(--accent);box-shadow:var(--shadow)}
+  .subbar{padding:2px 14px 9px}
+  .top-view{display:none} .top-view.on{display:block}
+  .embed{width:100%;height:calc(100vh - 132px);min-height:520px;border:0;border-radius:12px;background:var(--panel);box-shadow:var(--shadow)}
+  @media (max-width:600px){
+    .toptabs button{padding:7px 12px;font-size:13.5px}
+    .embed{height:calc(100vh - 150px)}
+  }
 </style>
 </head>
 <body class="amt-hide">
 <header>
   <div class="bar">
-    <h1>배차일보</h1>
+    <h1>🚛 물류허브</h1>
+    <div class="toptabs" id="toptabs">
+      <button data-top="dispatch" class="on">배차일보</button>
+      <button data-top="quote">내륙운송견적</button>
+      <button data-top="ship">선명확인</button>
+    </div>
+    <span class="grow"></span>
+    <span id="dispatchTools">
+      <label class="chk"><input type="checkbox" id="amt"> 금액</label>
+      <span id="storeinfo" class="chk" style="cursor:default"></span>
+    </span>
+  </div>
+  <div class="bar subbar" id="dispatchSubbar">
     <div class="tabs" id="tabs">
       <button data-v="day" class="on">당일배차</button>
       <button data-v="input">＋ 입력</button>
       <button data-v="sum">요약</button>
       <button data-v="find">조회</button>
-      <button data-v="cntr">🚢 전국컨테이너 현황</button>
     </div>
-    <span class="grow"></span>
-    <a class="btn sm" href="견적_안전운임조회.html" title="컨테이너 안전운임 견적" style="text-decoration:none">💰 운임견적</a>
-    <label class="chk"><input type="checkbox" id="amt"> 금액</label>
-    <span id="storeinfo" class="chk" style="cursor:default"></span>
   </div>
 </header>
 <main>
+ <!-- ══ 배차일보 ══ -->
+ <div class="top-view on" id="top-dispatch">
   <!-- 당일배차 -->
   <section class="view on" id="v-day">
     <div class="dayhead">
@@ -233,9 +253,16 @@
     <div class="panel tablewrap"><table id="ftbl"><thead></thead><tbody></tbody></table><div class="cards" id="fcards"></div></div>
     <div style="text-align:center;padding:14px" id="ffoot"></div>
   </section>
+ </div><!-- /top-dispatch -->
 
-  <!-- 전국컨테이너 현황 -->
-  <section class="view" id="v-cntr">
+ <!-- ══ 내륙운송견적 ══ -->
+ <div class="top-view" id="top-quote">
+   <iframe id="quoteFrame" class="embed" title="내륙운송견적"></iframe>
+ </div>
+
+ <!-- ══ 선명확인 (전국 컨테이너 터미널 선석스케줄) ══ -->
+ <div class="top-view" id="top-ship">
+  <section id="v-cntr">
     <div class="bar" style="padding:0 0 10px;gap:8px;flex-wrap:wrap">
       <input type="search" id="cq" placeholder="선박명 검색 (실시간)" style="flex:1;min-width:200px;max-width:300px" autocomplete="off">
       <label class="chk">대상 <select id="cfield" class="sm"><option value="선명">선명</option><option value="">전체</option></select></label>
@@ -255,6 +282,7 @@
     </div>
     <div style="text-align:center;padding:10px" class="hint" id="cfoot"></div>
   </section>
+ </div><!-- /top-ship -->
 </main>
 <script>
 /* ============ 기본(샘플) 데이터 ============
@@ -913,8 +941,17 @@ function switchTab(v){
   document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));
   if(v==='day')renderDay();if(v==='sum'){if(!document.getElementById('sfrom').value){document.getElementById('sfrom').value=allDates[0];document.getElementById('sto').value=allDates[allDates.length-1];}renderSum();}
   if(v==='find')renderFind();if(v==='input'&&!editing)openForm(null);
-  if(v==='cntr'&&window.__CNTR_OPEN)window.__CNTR_OPEN();
 }
+/* 최상위 3탭: 배차일보 / 내륙운송견적 / 선명확인 */
+function switchTop(name){
+  document.querySelectorAll('#toptabs button').forEach(b=>b.classList.toggle('on',b.dataset.top===name));
+  document.querySelectorAll('.top-view').forEach(v=>v.classList.toggle('on',v.id==='top-'+name));
+  document.getElementById('dispatchSubbar').style.display=(name==='dispatch')?'':'none';
+  document.getElementById('dispatchTools').style.display=(name==='dispatch')?'':'none';
+  if(name==='quote'){const f=document.getElementById('quoteFrame');if(!f.getAttribute('src'))f.src='내륙운송견적.html';}
+  if(name==='ship'&&window.__CNTR_OPEN)window.__CNTR_OPEN();
+}
+document.querySelectorAll('#toptabs button').forEach(b=>b.onclick=()=>switchTop(b.dataset.top));
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{if(b.dataset.v==='input'){openForm(null);}else switchTab(b.dataset.v);});
 document.getElementById('amt').onchange=e=>document.body.classList.toggle('amt-hide',!e.target.checked);
 
