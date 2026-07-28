@@ -1,11 +1,11 @@
-// ⚠️ Firebase 콘솔에서 받은 값으로 채우세요 (SETUP.md 3번 참고).
-// 웹앱 등록 시 나오는 firebaseConfig 를 그대로, vapidKey 는 클라우드 메시징 > 웹 푸시 인증서 값.
+// Firebase 웹 설정 (공개용 값 — 보안은 Firestore 규칙/Auth가 담당)
 window.FB_CONFIG = {
-  apiKey: "여기에_apiKey",
-  authDomain: "여기에_PROJECT.firebaseapp.com",
-  projectId: "여기에_PROJECT_ID",
-  storageBucket: "여기에_PROJECT.appspot.com",
-  messagingSenderId: "여기에_SENDER_ID",
-  appId: "여기에_APP_ID"
+  apiKey: "AIzaSyCm50tqmzElMrVZT90js1e1tRQI7E9gTNs",
+  authDomain: "kukyang-dispatch.firebaseapp.com",
+  projectId: "kukyang-dispatch",
+  storageBucket: "kukyang-dispatch.firebasestorage.app",
+  messagingSenderId: "1004468642041",
+  appId: "1:1004468642041:web:d9cd78e2d04106880a4228"
 };
+// ⚠️ 아직 미입력: Cloud Messaging > 웹 푸시 인증서 키를 여기에.
 window.FB_VAPID_KEY = "여기에_웹푸시_VAPID_공개키";
