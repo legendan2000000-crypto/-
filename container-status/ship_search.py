@@ -15,7 +15,7 @@
 
 사용: 실행.bat 더블클릭 → 브라우저가 자동으로 열림. 검은 창은 열어두세요(닫으면 갱신 멈춤).
 """
-import os, re, json, time, threading, datetime, webbrowser, ssl
+import os, sys, re, json, time, threading, datetime, webbrowser, ssl
 import urllib.request, urllib.parse, http.cookiejar
 from html.parser import HTMLParser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -585,9 +585,16 @@ def main():
     url = "http://localhost:%d/" % PORT
     srv = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
     print(" 준비 완료 →", url)
-    print(" 브라우저가 자동으로 열립니다. 화면은 %d초마다 자동 갱신됩니다." % REFRESH_SEC)
+    print(" 화면은 %d초마다 자동 갱신됩니다." % REFRESH_SEC)
     print(" ※ 이 검은 창은 열어두세요. 닫으면 갱신이 멈춥니다. (종료: Ctrl+C)")
-    threading.Timer(0.8, lambda: webbrowser.open(url)).start()
+    # 배차일보 런처에서 띄울 때는 자체 페이지를 열지 않는다(--server-only / SHIP_SERVER_ONLY=1).
+    # 단독 실행 시에는 기존처럼 자체 검색 페이지를 자동으로 연다.
+    server_only = ("--server-only" in sys.argv) or os.environ.get("SHIP_SERVER_ONLY") == "1"
+    if server_only:
+        print(" (서버 전용 모드 — 배차일보 '전국컨테이너 현황' 탭에서 사용하세요)")
+    else:
+        print(" 브라우저가 자동으로 열립니다.")
+        threading.Timer(0.8, lambda: webbrowser.open(url)).start()
     try:
         srv.serve_forever()
     except KeyboardInterrupt:
