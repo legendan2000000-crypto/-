@@ -110,9 +110,9 @@
   <div id="driverView" class="hidden">
     <header><h1>내 배차</h1><span class="who" id="driverWho"></span><button id="driverLogout">로그아웃</button></header>
     <main>
-      <div id="permCard" class="card hidden">
-        <div class="notice">배차 알림을 받으려면 <b>알림 허용</b>이 필요합니다.</div>
-        <button class="btn" id="permBtn">🔔 알림 켜기</button>
+      <div id="permCard" class="card">
+        <div id="notifMsg" class="notice">알림 상태 확인 중…</div>
+        <button class="btn hidden" id="permBtn">🔔 알림 켜기</button>
       </div>
       <div id="driverList"></div>
     </main>
@@ -285,23 +285,41 @@ async function startDriver() {
     snap.docs.forEach(d=>{ if(d.data().read===false) updateDoc(doc(db,'dispatches',d.id),{read:true,readAt:serverTimestamp()}).catch(()=>{}); });
   });
 }
+function setNotif(msg, showBtn){ $('notifMsg').innerHTML = msg; $('permBtn').classList.toggle('hidden', !showBtn); }
 async function ensurePush() {
-  $('permCard').classList.add('hidden');
-  if (!('Notification' in window)) return;
-  if (Notification.permission === 'granted') return saveToken();
-  $('permCard').classList.remove('hidden');
+  const supported = ('Notification' in window) && ('serviceWorker' in navigator) && ('PushManager' in window);
+  if (!supported) {
+    setNotif('📱 이 화면에선 알림을 못 켭니다.<br><b>아이폰</b>이면: 사파리에서 <b>공유(⬆️) → "홈 화면에 추가"</b> → 홈의 <b>아이콘으로 열어서</b> 다시 로그인하세요. (iOS 16.4↑)', false);
+    return;
+  }
+  if (Notification.permission === 'granted') { await saveToken(); return; }
+  if (Notification.permission === 'denied') {
+    setNotif('🔕 알림이 <b>차단</b>돼 있어요. 주소창 왼쪽 자물쇠 🔒 → 알림 → "허용"으로 바꾸고 새로고침하세요.', false);
+    return;
+  }
+  setNotif('배차 알림을 받으려면 <b>알림 허용</b>이 필요합니다. 아래 버튼을 누르세요.', true);
 }
 $('permBtn').onclick = async () => {
-  const p = await Notification.requestPermission();
-  if (p === 'granted') { $('permCard').classList.add('hidden'); await saveToken(); toast('알림이 켜졌습니다'); }
-  else toast('알림이 차단되어 있습니다. 브라우저 설정에서 허용해 주세요.');
+  try {
+    const p = await Notification.requestPermission();
+    if (p === 'granted') await saveToken();
+    else setNotif('🔕 허용이 안 됐어요. 다시 "알림 켜기"를 누르거나 브라우저 알림 설정을 확인하세요.', true);
+  } catch (e) { setNotif('알림 요청 실패: ' + (e.message || e), true); }
 };
 async function saveToken() {
+  setNotif('알림 등록 중…', false);
   try {
     if (!swReg) swReg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
     const token = await getToken(messaging, { vapidKey: window.FB_VAPID_KEY, serviceWorkerRegistration: swReg });
-    if (token) await setDoc(doc(db,'fcmTokens',me.uid), { tokens: await arrayUnionLocal(token) }, { merge:true });
-  } catch(e){ console.warn('토큰 저장 실패', e); }
+    if (token) {
+      await setDoc(doc(db,'fcmTokens',me.uid), { tokens: await arrayUnionLocal(token) }, { merge:true });
+      setNotif('🔔 알림 <b>켜짐 ✓</b> — 새 배차가 오면 이 폰으로 알림이 옵니다.', false);
+    } else {
+      setNotif('⚠️ 알림 토큰을 못 받았어요. 새로고침 후 다시 시도하거나, 홈 화면에 추가해 여세요.', true);
+    }
+  } catch (e) {
+    setNotif('⚠️ 알림 등록 실패: ' + (e && e.message ? e.message : e) + '<br>다시 "알림 켜기"를 눌러보세요.', true);
+  }
 }
 // 간단 arrayUnion(로컬 병합) — 기존 토큰 유지
 async function arrayUnionLocal(token){ const s=await getDoc(doc(db,'fcmTokens',me.uid)); const cur=(s.exists()&&s.data().tokens)||[]; return [...new Set([...cur, token])]; }
