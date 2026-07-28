@@ -111,8 +111,13 @@
     <header><h1>내 배차</h1><span class="who" id="driverWho"></span><button id="driverLogout">로그아웃</button></header>
     <main>
       <div id="permCard" class="card">
-        <div id="notifMsg" class="notice">알림 상태 확인 중…</div>
-        <button class="btn hidden" id="permBtn">🔔 알림 켜기</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:150px"><b>🔔 배차 알림</b><div id="notifMsg" class="hint" style="margin-top:3px">확인 중…</div></div>
+          <div class="seg" id="notifSeg" style="flex:0 0 auto;width:160px">
+            <button id="notifOn">켜짐</button>
+            <button id="notifOff">꺼짐</button>
+          </div>
+        </div>
       </div>
       <div id="driverList"></div>
     </main>
@@ -285,41 +290,52 @@ async function startDriver() {
     snap.docs.forEach(d=>{ if(d.data().read===false) updateDoc(doc(db,'dispatches',d.id),{read:true,readAt:serverTimestamp()}).catch(()=>{}); });
   });
 }
-function setNotif(msg, showBtn){ $('notifMsg').innerHTML = msg; $('permBtn').classList.toggle('hidden', !showBtn); }
+function setNotifUI(state, msg){ // 'on' | 'off' | 'na'
+  $('notifMsg').innerHTML = msg;
+  $('notifOn').classList.toggle('on', state === 'on');
+  $('notifOff').classList.toggle('on', state === 'off');
+  const dis = state === 'na';
+  $('notifOn').disabled = dis; $('notifOff').disabled = dis;
+}
+function notifPref(){ try { return localStorage.getItem('notifPref'); } catch(e){ return null; } }
+function setNotifPref(v){ try { localStorage.setItem('notifPref', v); } catch(e){} }
 async function ensurePush() {
   const supported = ('Notification' in window) && ('serviceWorker' in navigator) && ('PushManager' in window);
-  if (!supported) {
-    setNotif('📱 이 화면에선 알림을 못 켭니다.<br><b>아이폰</b>이면: 사파리에서 <b>공유(⬆️) → "홈 화면에 추가"</b> → 홈의 <b>아이콘으로 열어서</b> 다시 로그인하세요. (iOS 16.4↑)', false);
-    return;
-  }
-  if (Notification.permission === 'granted') { await saveToken(); return; }
-  if (Notification.permission === 'denied') {
-    setNotif('🔕 알림이 <b>차단</b>돼 있어요. 주소창 왼쪽 자물쇠 🔒 → 알림 → "허용"으로 바꾸고 새로고침하세요.', false);
-    return;
-  }
-  setNotif('배차 알림을 받으려면 <b>알림 허용</b>이 필요합니다. 아래 버튼을 누르세요.', true);
+  if (!supported) { setNotifUI('na', '📱 이 화면에선 알림 불가 — <b>아이폰</b>은 공유(⬆️)→"홈 화면에 추가" 후 아이콘으로 여세요. (iOS 16.4↑)'); return; }
+  if (notifPref() === 'off') { setNotifUI('off', '알림이 꺼져 있어요. "켜짐"을 누르면 이 폰으로 배차 알림이 옵니다.'); return; }
+  if (Notification.permission === 'granted') { await enableNotif(); return; }
+  if (Notification.permission === 'denied') { setNotifUI('off', '🔕 브라우저에서 알림이 차단됨 — 자물쇠🔒→알림→허용 후 새로고침하세요.'); return; }
+  setNotifUI('off', '"켜짐"을 누르면 알림 허용을 요청합니다.');
 }
-$('permBtn').onclick = async () => {
+$('notifOn').onclick = async () => {
+  setNotifPref('on');
   try {
-    const p = await Notification.requestPermission();
-    if (p === 'granted') await saveToken();
-    else setNotif('🔕 허용이 안 됐어요. 다시 "알림 켜기"를 누르거나 브라우저 알림 설정을 확인하세요.', true);
-  } catch (e) { setNotif('알림 요청 실패: ' + (e.message || e), true); }
-};
-async function saveToken() {
-  setNotif('알림 등록 중…', false);
-  try {
-    if (!swReg) swReg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
-    const token = await getToken(messaging, { vapidKey: window.FB_VAPID_KEY, serviceWorkerRegistration: swReg });
-    if (token) {
-      await setDoc(doc(db,'fcmTokens',me.uid), { tokens: await arrayUnionLocal(token) }, { merge:true });
-      setNotif('🔔 알림 <b>켜짐 ✓</b> — 새 배차가 오면 이 폰으로 알림이 옵니다.', false);
-    } else {
-      setNotif('⚠️ 알림 토큰을 못 받았어요. 새로고침 후 다시 시도하거나, 홈 화면에 추가해 여세요.', true);
+    if (Notification.permission !== 'granted') {
+      const p = await Notification.requestPermission();
+      if (p !== 'granted') { setNotifUI('off', '🔕 허용이 안 됐어요. 다시 "켜짐"을 누르거나 브라우저 알림 설정을 확인하세요.'); return; }
     }
-  } catch (e) {
-    setNotif('⚠️ 알림 등록 실패: ' + (e && e.message ? e.message : e) + '<br>다시 "알림 켜기"를 눌러보세요.', true);
-  }
+    await enableNotif();
+  } catch (e) { setNotifUI('off', '알림 켜기 실패: ' + (e.message || e)); }
+};
+$('notifOff').onclick = async () => { setNotifPref('off'); await disableNotif(); setNotifUI('off', '알림을 껐습니다. 이 폰으론 배차 알림이 오지 않습니다.'); };
+async function currentToken(){
+  if (!swReg) swReg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+  return getToken(messaging, { vapidKey: window.FB_VAPID_KEY, serviceWorkerRegistration: swReg });
+}
+async function enableNotif() {
+  setNotifUI('on', '알림 등록 중…');
+  try {
+    const token = await currentToken();
+    if (token) { await setDoc(doc(db,'fcmTokens',me.uid), { tokens: await arrayUnionLocal(token) }, { merge:true });
+      setNotifUI('on', '🔔 <b>켜짐 ✓</b> — 새 배차가 오면 이 폰으로 알림이 옵니다.'); }
+    else setNotifUI('off', '⚠️ 토큰을 못 받았어요. 새로고침 후 다시 시도하세요.');
+  } catch (e) { setNotifUI('off', '⚠️ 등록 실패: ' + (e && e.message ? e.message : e)); }
+}
+async function disableNotif() {
+  try { const token = await currentToken();
+    if (token) { const s = await getDoc(doc(db,'fcmTokens',me.uid)); const cur = (s.exists() && s.data().tokens) || [];
+      await setDoc(doc(db,'fcmTokens',me.uid), { tokens: cur.filter(t => t !== token) }, { merge:true }); }
+  } catch (e) {}
 }
 // 간단 arrayUnion(로컬 병합) — 기존 토큰 유지
 async function arrayUnionLocal(token){ const s=await getDoc(doc(db,'fcmTokens',me.uid)); const cur=(s.exists()&&s.data().tokens)||[]; return [...new Set([...cur, token])]; }
