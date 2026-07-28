@@ -13,15 +13,15 @@
 //
 // 로그인은 '전화번호 + PIN'. 내부적으로 {phone}@kukyang.driver 이메일로 저장된다.
 
-const admin = require('firebase-admin');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getAuth } = require('firebase-admin/auth');
+const { getFirestore } = require('firebase-admin/firestore');
 const fs = require('fs');
 const path = require('path');
 
-admin.initializeApp({
-  credential: admin.credential.cert(require('./serviceAccountKey.json')),
-});
-const auth = admin.auth();
-const db = admin.firestore();
+initializeApp({ credential: cert(require('./serviceAccountKey.json')) });
+const auth = getAuth();
+const db = getFirestore();
 
 const emailOf = (phone) => `${String(phone).replace(/\D/g, '')}@kukyang.driver`;
 const pwOf = (pin) => 'kk-' + String(pin); // Firebase 비번 최소 6자 충족(앱 로그인과 동일 규칙)
