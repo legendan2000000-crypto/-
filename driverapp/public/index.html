@@ -140,6 +140,14 @@
           </div>
         </div>
       </div>
+      <div id="dvFilter" class="card" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <b style="font-size:14px">📅 내역</b>
+        <button id="dvPrev" title="이전 달" style="padding:6px 10px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7;cursor:pointer">◀</button>
+        <input type="month" id="dvMonth" style="padding:6px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7">
+        <button id="dvNext" title="다음 달" style="padding:6px 10px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7;cursor:pointer">▶</button>
+        <button id="dvAll" style="padding:6px 12px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7;cursor:pointer;font-weight:700">전체</button>
+        <span id="dvSummary" class="hint" style="margin-left:auto;font-weight:700"></span>
+      </div>
       <div id="driverList"></div>
     </main>
   </div>
@@ -373,12 +381,32 @@ async function startDriver() {
   if (!me.vno) { $('driverList').innerHTML='<div class="empty">차량번호가 등록되지 않았습니다. 배차담당에게 문의하세요.</div>'; return; }
   onSnapshot(query(collection(db,'dispatches'), where('vno','==',me.vno), orderBy('date','desc')), (snap)=>{
     const docs = snap.docs.filter(d => d.data().status !== '회수'); // 회수된 배차는 기사에게 숨김
-    $('driverList').innerHTML = docs.length ? docs.map(d=>dispCard(d.data(), d.id)).join('')
-      : '<div class="empty">아직 받은 배차가 없습니다.</div>';
+    driverDocs = docs.map(d=>({ id:d.id, data:d.data() }));
+    renderDriver();
     // 안 읽은 건 읽음 처리(회수 제외)
     docs.forEach(d=>{ if(d.data().read===false) updateDoc(doc(db,'dispatches',d.id),{read:true,readAt:serverTimestamp()}).catch(()=>{}); });
   });
 }
+// 기사 화면: 월별/전체 내역 조회
+let driverDocs = [];        // 회수 제외한 내 배차 전체
+let dvMonth = '';           // '' = 전체, 'YYYY-MM' = 해당 월만
+function thisMonth(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
+function shiftMonth(ym, n){ const [y,m]=ym.split('-').map(Number); const d=new Date(y, m-1+n, 1); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
+function won(v){ return (Number(v)||0).toLocaleString(); }
+function renderDriver(){
+  const list = dvMonth ? driverDocs.filter(x => String(x.data.date||'').slice(0,7) === dvMonth) : driverDocs;
+  $('driverList').innerHTML = list.length ? list.map(x=>dispCard(x.data, x.id)).join('')
+    : `<div class="empty">${dvMonth ? dvMonth.replace('-','년 ')+'월 배차가 없습니다.' : '아직 받은 배차가 없습니다.'}</div>`;
+  const done = list.filter(x=>x.data.done).length;
+  const pay = list.reduce((s,x)=>s+(Number(x.data.pay)||0),0);
+  $('dvSummary').textContent = `총 ${list.length}건 · 완료 ${done} · 진행 ${list.length-done}` + (pay?` · 하불 ${won(pay)}`:'');
+  $('dvAll').style.background = dvMonth ? '#0e131e' : '#2563eb';
+  $('dvMonth').value = dvMonth || '';
+}
+$('dvMonth').onchange = (e)=>{ dvMonth = e.target.value || ''; renderDriver(); };
+$('dvPrev').onclick = ()=>{ dvMonth = shiftMonth(dvMonth||thisMonth(), -1); renderDriver(); };
+$('dvNext').onclick = ()=>{ dvMonth = shiftMonth(dvMonth||thisMonth(), +1); renderDriver(); };
+$('dvAll').onclick  = ()=>{ dvMonth = ''; renderDriver(); };
 function setNotifUI(state, msg){ // 'on' | 'off' | 'na'
   $('notifMsg').innerHTML = msg;
   $('notifOn').classList.toggle('on', state === 'on');
