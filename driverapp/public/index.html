@@ -46,8 +46,16 @@
 </head>
 <body>
 <div id="app">
+  <!-- 로딩 스플래시(세션 확인 중) -->
+  <div id="splashView">
+    <main><div class="card" style="text-align:center;padding:44px 16px">
+      <div style="font-size:40px">🚚</div>
+      <div style="font-weight:800;margin-top:10px">국양로지텍 배차</div>
+      <div class="hint" style="margin-top:8px">불러오는 중…</div>
+    </div></main>
+  </div>
   <!-- 로그인 -->
-  <div id="loginView">
+  <div id="loginView" class="hidden">
     <header><h1>🚚 국양로지텍 배차</h1></header>
     <main>
       <!-- 로그인 -->
@@ -172,7 +180,8 @@
 <script>try{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='/vendor/pdf.worker.min.js';}catch(e){}</script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword }
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword,
+  setPersistence, browserLocalPersistence, indexedDBLocalPersistence }
   from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, doc, getDoc, setDoc, addDoc, collection, query, where, orderBy,
   onSnapshot, serverTimestamp, updateDoc, getDocs, limit, deleteDoc }
@@ -182,11 +191,13 @@ import { getMessaging, getToken, onMessage }
 
 const app = initializeApp(window.FB_CONFIG);
 const auth = getAuth(app);
+// 로그인 세션 지속(새로고침/앱 재실행해도 유지) — 안드로이드 등에서 확실히
+setPersistence(auth, indexedDBLocalPersistence).catch(()=>setPersistence(auth, browserLocalPersistence).catch(()=>{}));
 const db = getFirestore(app);
 const messaging = getMessaging(app);
 
 const $ = (id) => document.getElementById(id);
-const show = (v) => ['loginView','adminView','driverView','pendingView'].forEach(x => $(x).classList.toggle('hidden', x !== v));
+const show = (v) => ['splashView','loginView','adminView','driverView','pendingView'].forEach(x => $(x).classList.toggle('hidden', x !== v));
 const toast = (m) => { const t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),4000); };
 const emailOf = (p) => `${String(p).replace(/\D/g,'')}@kukyang.driver`;
 const pwOf = (pin) => 'kk-' + String(pin); // Firebase 비번 최소 6자 충족(짧은 PIN 허용)
