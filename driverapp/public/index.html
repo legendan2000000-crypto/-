@@ -495,8 +495,11 @@ function dispCard(d, id, isAdmin){
   let action = '';
   if (isAdmin && id && !cancelled) {
     action = `<button class="btn sub" style="margin-top:8px;padding:8px;font-size:14px" onclick="window.__recall('${id}')">↩ 배차 회수(취소)</button>`;
-  } else if (!isAdmin && id && !done && d.status==='확정') {
-    action = `<button class="btn" style="margin-top:8px;background:var(--ok)" onclick="window.__done('${id}')">✅ 배차완료 누르기</button>`;
+  } else if (!isAdmin && id && !cancelled) {
+    const addr = d.unload || d.load || '';
+    const nav = addr ? `<a class="btn sub" style="margin-top:8px;padding:8px;font-size:14px;display:block;text-align:center;text-decoration:none;box-sizing:border-box" href="https://map.kakao.com/link/search/${encodeURIComponent(addr)}" target="_blank" rel="noopener">🗺 길찾기 · ${esc(addr)}</a>` : '';
+    const doneBtn = (!done && d.status==='확정') ? `<button class="btn" style="margin-top:8px;background:var(--ok)" onclick="window.__done('${id}')">✅ 배차완료 누르기</button>` : '';
+    action = nav + doneBtn;
   }
   return `<div class="disp ${pre?'pre':''}">${body}${action}</div>`;
 }
