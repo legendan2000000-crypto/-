@@ -17,6 +17,14 @@
   header button{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer}
   main{padding:14px;max-width:720px;margin:0 auto}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+  .dash{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .tile{text-align:left;background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:13px;cursor:pointer;color:var(--text);transition:.12s}
+  .tile.on{border-color:var(--accent);background:var(--soft)}
+  .tile .tno{display:inline-flex;width:20px;height:20px;align-items:center;justify-content:center;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:12px;margin-right:6px}
+  .tile .tlabel{font-weight:800;font-size:15px}
+  .tile .tcount{margin-top:8px;font-weight:900;font-size:24px;line-height:1}
+  .tile .tsub{margin-top:5px;color:var(--muted);font-size:12px}
+  .tile.on .tcount{color:var(--accent)}
   label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin:0 0 4px}
   input,select,textarea{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;outline:none}
   input:focus,select:focus,textarea:focus{border-color:var(--accent)}
@@ -150,16 +158,27 @@
     </header>
     <div id="notifMsg" class="hint" style="display:none;padding:8px 14px;font-size:12px;line-height:1.5;border-bottom:1px solid var(--line);background:var(--panel)"></div>
     <main>
-      <div id="dvFilter" class="card" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <button id="dvPrev" title="이전" style="padding:6px 10px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7;cursor:pointer">◀</button>
-        <input type="date" id="dvDay" style="padding:6px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7">
-        <button id="dvNext" title="다음" style="padding:6px 10px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7;cursor:pointer">▶</button>
-        <button id="dvToday" style="padding:6px 12px;border:1px solid #2a3550;border-radius:8px;background:#2563eb;color:#fff;cursor:pointer;font-weight:800">오늘</button>
-        <span style="width:1px;height:22px;background:#2a3550;margin:0 2px"></span>
-        <input type="month" id="dvMonth" style="padding:6px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7">
-        <button id="dvAll" style="padding:6px 12px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7;cursor:pointer;font-weight:700">전체</button>
+      <!-- 대시보드 타일 -->
+      <div class="dash">
+        <button class="tile" id="tileDay">
+          <div><span class="tno">1</span><span class="tlabel">당일배차</span></div>
+          <div class="tcount" id="tileDayCount">0건</div>
+          <div class="tsub" id="tileDaySub">오늘</div>
+        </button>
+        <button class="tile" id="tileMonth">
+          <div><span class="tno">2</span><span class="tlabel">월배차내역</span></div>
+          <div class="tcount" id="tileMonthCount">0건</div>
+          <div class="tsub" id="tileMonthSub">이번 달</div>
+        </button>
       </div>
-      <div id="dvSummary" class="card" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 14px"></div>
+      <!-- 날짜 이동 + 매출 -->
+      <div class="card" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 12px">
+        <button id="dvPrev" title="이전" style="padding:6px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800">◀</button>
+        <input type="date" id="dvDay" style="padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text)">
+        <input type="month" id="dvMonth" style="display:none;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text)">
+        <button id="dvNext" title="다음" style="padding:6px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800">▶</button>
+        <div id="dvSummary" style="margin-left:auto;text-align:right"></div>
+      </div>
       <div id="driverList"></div>
     </main>
   </div>
@@ -403,9 +422,9 @@ async function startDriver() {
     docs.forEach(d=>{ if(d.data().read===false) updateDoc(doc(db,'dispatches',d.id),{read:true,readAt:serverTimestamp()}).catch(()=>{}); });
   });
 }
-// 기사 화면: 당일(기본)/월/전체 조회 + 매출(하불)
+// 기사 대시보드: ①당일배차 ②월배차내역
 let driverDocs = [];        // 회수 제외한 내 배차 전체
-let dvMode = 'day';         // 'day' | 'month' | 'all'
+let dvMode = 'day';         // 'day' | 'month'
 function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function thisMonth(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
 let dvDay = todayStr();      // 'YYYY-MM-DD'
@@ -413,30 +432,39 @@ let dvMonth = thisMonth();   // 'YYYY-MM'
 function shiftMonth(ym, n){ const [y,m]=ym.split('-').map(Number); const d=new Date(y, m-1+n, 1); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
 function shiftDay(ds, n){ const [y,m,d]=ds.split('-').map(Number); const x=new Date(y, m-1, d+n); return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0'); }
 function won(v){ return (Number(v)||0).toLocaleString(); }
+function dayLabel(ds){ const [y,m,d]=ds.split('-').map(Number); const w=['일','월','화','수','목','금','토'][new Date(y,m-1,d).getDay()]; return `${m}월 ${d}일 (${w})`; }
 function renderDriver(){
-  let list, empty, sumLabel;
-  if(dvMode==='month'){ list=driverDocs.filter(x=>String(x.data.date||'').slice(0,7)===dvMonth); empty=`${dvMonth.replace('-','년 ')}월 배차가 없습니다.`; sumLabel='월 매출(하불)'; }
-  else if(dvMode==='all'){ list=driverDocs; empty='아직 받은 배차가 없습니다.'; sumLabel='누적 하불'; }
-  else { list=driverDocs.filter(x=>String(x.data.date||'')===dvDay); empty=`${dvDay} 배차가 없습니다.`; sumLabel='일 매출(하불)'; }
+  // 타일 카운트(당일/이번달) — 항상 최신 기준으로 표시
+  const dayList = driverDocs.filter(x=>String(x.data.date||'')===dvDay);
+  const monList = driverDocs.filter(x=>String(x.data.date||'').slice(0,7)===dvMonth);
+  $('tileDayCount').textContent = dayList.length + '건';
+  $('tileMonthCount').textContent = monList.length + '건';
+  $('tileDaySub').textContent = (dvMode==='day') ? dayLabel(dvDay) : '오늘';
+  $('tileMonthSub').textContent = dvMonth.replace('-','년 ') + '월';
+  $('tileDay').classList.toggle('on', dvMode==='day');
+  $('tileMonth').classList.toggle('on', dvMode==='month');
+
+  const isMonth = dvMode==='month';
+  const list = isMonth ? monList : dayList;
+  const empty = isMonth ? `${dvMonth.replace('-','년 ')}월 배차가 없습니다.` : `${dayLabel(dvDay)} 배차가 없습니다.`;
+  const sumLabel = isMonth ? '월 매출(하불)' : '일 매출(하불)';
   $('driverList').innerHTML = list.length ? list.map(x=>dispCard(x.data, x.id)).join('')
     : `<div class="empty">${empty}</div>`;
-  const done = list.filter(x=>x.data.done).length;
   const pay = list.reduce((s,x)=>s+(Number(x.data.pay)||0),0);
-  $('dvSummary').innerHTML =
-    `<div><div class="hint">건수</div><div style="font-weight:800;font-size:18px">${list.length}건</div></div>`+
-    `<div><div class="hint">완료 / 진행</div><div style="font-weight:800;font-size:18px">${done} / ${list.length-done}</div></div>`+
-    `<div style="margin-left:auto;text-align:right"><div class="hint">${sumLabel}</div><div style="font-weight:900;font-size:20px;color:var(--ok)">₩ ${won(pay)}</div></div>`;
-  $('dvToday').style.background = (dvMode==='day')   ? '#2563eb' : '#0e131e';
-  $('dvAll').style.background   = (dvMode==='all')   ? '#2563eb' : '#0e131e';
+  $('dvSummary').innerHTML = `<div class="hint">${sumLabel}</div><div style="font-weight:900;font-size:19px;color:var(--ok)">₩ ${won(pay)}</div>`;
+
+  // 날짜/월 입력 전환
+  $('dvDay').style.display   = isMonth ? 'none' : '';
+  $('dvMonth').style.display = isMonth ? '' : 'none';
   $('dvDay').value = dvDay;
-  $('dvMonth').value = (dvMode==='month') ? dvMonth : '';
+  $('dvMonth').value = dvMonth;
 }
+$('tileDay').onclick   = ()=>{ dvMode='day'; dvDay=todayStr(); renderDriver(); };
+$('tileMonth').onclick = ()=>{ dvMode='month'; dvMonth=thisMonth(); renderDriver(); };
 $('dvDay').onchange = (e)=>{ if(e.target.value){ dvMode='day'; dvDay=e.target.value; renderDriver(); } };
-$('dvPrev').onclick = ()=>{ if(dvMode==='month'){ dvMonth=shiftMonth(dvMonth,-1); } else { dvMode='day'; dvDay=shiftDay(dvDay,-1); } renderDriver(); };
-$('dvNext').onclick = ()=>{ if(dvMode==='month'){ dvMonth=shiftMonth(dvMonth,+1); } else { dvMode='day'; dvDay=shiftDay(dvDay,+1); } renderDriver(); };
-$('dvToday').onclick= ()=>{ dvMode='day'; dvDay=todayStr(); renderDriver(); };
 $('dvMonth').onchange = (e)=>{ if(e.target.value){ dvMode='month'; dvMonth=e.target.value; renderDriver(); } };
-$('dvAll').onclick  = ()=>{ dvMode='all'; renderDriver(); };
+$('dvPrev').onclick = ()=>{ if(dvMode==='month'){ dvMonth=shiftMonth(dvMonth,-1); } else { dvDay=shiftDay(dvDay,-1); } renderDriver(); };
+$('dvNext').onclick = ()=>{ if(dvMode==='month'){ dvMonth=shiftMonth(dvMonth,+1); } else { dvDay=shiftDay(dvDay,+1); } renderDriver(); };
 function setNotifUI(state, msg){ // 'on' | 'off' | 'na'
   $('notifMsg').innerHTML = msg;
   $('notifMsg').style.display = (state === 'on') ? 'none' : 'block'; // 정상(켜짐)이면 숨김, 문제 있을 때만 안내 표시
