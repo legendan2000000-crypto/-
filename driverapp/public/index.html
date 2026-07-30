@@ -26,6 +26,8 @@
   .seg{display:flex;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:4px}
   .seg button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:800;padding:9px;border-radius:8px;cursor:pointer}
   .seg button.on{background:var(--accent);color:#fff}
+  .seg.mini{padding:2px;gap:2px;flex:0 0 auto}
+  .seg.mini button{flex:0 0 auto;padding:5px 9px;font-size:12px}
   .seg.pre button.on{background:var(--warn);color:#111}
   .disp{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:var(--panel)}
   .disp.pre{border-color:var(--warn);background:#241f12}
@@ -137,17 +139,17 @@
 
   <!-- 기사(차량) -->
   <div id="driverView" class="hidden">
-    <header><h1>내 배차</h1><span class="who" id="driverWho"></span><button id="driverLogout">로그아웃</button></header>
-    <main>
-      <div id="permCard" class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-          <div style="flex:1;min-width:150px"><b>🔔 배차 알림</b><div id="notifMsg" class="hint" style="margin-top:3px">확인 중…</div></div>
-          <div class="seg" id="notifSeg" style="flex:0 0 auto;width:160px">
-            <button id="notifOn">켜짐</button>
-            <button id="notifOff">꺼짐</button>
-          </div>
-        </div>
+    <header>
+      <h1>내 배차</h1>
+      <span class="who" id="driverWho"></span>
+      <div class="seg mini" id="notifSeg" title="배차 알림 켜기/끄기">
+        <button id="notifOn">🔔 켜짐</button>
+        <button id="notifOff">꺼짐</button>
       </div>
+      <button id="driverLogout">로그아웃</button>
+    </header>
+    <div id="notifMsg" class="hint" style="display:none;padding:8px 14px;font-size:12px;line-height:1.5;border-bottom:1px solid var(--line);background:var(--panel)"></div>
+    <main>
       <div id="dvFilter" class="card" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         <button id="dvPrev" title="이전" style="padding:6px 10px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7;cursor:pointer">◀</button>
         <input type="date" id="dvDay" style="padding:6px;border:1px solid #2a3550;border-radius:8px;background:#0e131e;color:#e8edf7">
@@ -437,6 +439,7 @@ $('dvMonth').onchange = (e)=>{ if(e.target.value){ dvMode='month'; dvMonth=e.tar
 $('dvAll').onclick  = ()=>{ dvMode='all'; renderDriver(); };
 function setNotifUI(state, msg){ // 'on' | 'off' | 'na'
   $('notifMsg').innerHTML = msg;
+  $('notifMsg').style.display = (state === 'on') ? 'none' : 'block'; // 정상(켜짐)이면 숨김, 문제 있을 때만 안내 표시
   $('notifOn').classList.toggle('on', state === 'on');
   $('notifOff').classList.toggle('on', state === 'off');
   const dis = state === 'na';
