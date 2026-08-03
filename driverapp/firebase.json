@@ -14,10 +14,7 @@
       { "source": "/baecha", "destination": "/baecha.html", "type": 302 },
       { "source": "/배차일보", "destination": "/baecha.html", "type": 302 }
     ],
-    "rewrites": [
-      { "source": "/baecha.html", "destination": "/baecha.html" },
-      { "source": "**", "destination": "/index.html" }
-    ],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }],
     "headers": [
       {
         "source": "/firebase-messaging-sw.js",
