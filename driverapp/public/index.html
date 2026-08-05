@@ -574,7 +574,7 @@ function dispCard(d, id, isAdmin){
   if (isAdmin && id && !cancelled) {
     action = `<button class="btn sub" style="margin-top:8px;padding:8px;font-size:14px" onclick="event.stopPropagation();window.__recall('${id}')">↩ 배차 회수(취소)</button>`;
   } else if (!isAdmin && id && !cancelled) {
-    const addr = d.unload || d.load || '';
+    const addr = d.addr || d.unload || d.load || '';
     const nav = addr ? `<a class="btn sub" style="margin-top:8px;padding:8px;font-size:14px;display:block;text-align:center;text-decoration:none;box-sizing:border-box" href="https://map.kakao.com/link/search/${encodeURIComponent(addr)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">🗺 길찾기 · ${esc(addr)}</a>` : '';
     const doneBtn = (!done && d.status==='확정') ? `<button class="btn" style="margin-top:8px;background:var(--ok)" onclick="event.stopPropagation();window.__done('${id}')">✅ 배차완료 누르기</button>` : '';
     action = nav + doneBtn;
@@ -613,6 +613,7 @@ window.__detail = (id) => {
     ['🚚','차량', d.vno],
     ['🏭','상차지', d.load],
     ['🎯','하차지', d.unload],
+    ['📍','주소', d.addr],
     ['📦','규격', sizeTxt],
     ['🔢','컨번호', d.cntr],
     ['🚢','선사', d.line],
@@ -626,10 +627,10 @@ window.__detail = (id) => {
     const html = v[0]===HTML ? v.slice(1) : esc(v);
     return `<dt>${r[0]} ${r[1]}</dt><dd>${html}</dd>`;
   }).join('');
-  // 하단 액션
-  const addr = d.unload || d.load || '';
+  // 하단 액션 (길찾기는 실주소 우선)
+  const addr = d.addr || d.unload || d.load || '';
   let acts = '';
-  if (addr) acts += `<a class="btn sub" href="https://map.kakao.com/link/search/${encodeURIComponent(addr)}" target="_blank" rel="noopener">🗺 하차지 길찾기</a>`;
+  if (addr) acts += `<a class="btn sub" href="https://map.kakao.com/link/search/${encodeURIComponent(addr)}" target="_blank" rel="noopener">🗺 ${d.addr?'주소':'하차지'} 길찾기</a>`;
   const tel1 = firstTel(d.tel);
   if (tel1) acts += `<a class="btn sub" href="tel:${tel1}">☎️ 화주에게 전화</a>`;
   if (!isAdmin && !done && d.status==='확정') acts += `<button class="btn" style="background:var(--ok)" onclick="window.__done('${id}');window.__closeDetail()">✅ 배차완료 누르기</button>`;
