@@ -142,7 +142,9 @@
       db.collection('dispatches').add({
         vno:vno, date:r.date||'', time:r.time||'', shipper:r.shipper||'',
         load:r.load||'', unload:r.unload||r.addr||'', cntr:(r.cntr==null?'':String(r.cntr)),
-        memo:(r.memo||r.etc||''), pay:(r.pay==null?0:(Number(r.pay)||0)), status:(st||'확정'), read:false, done:false,
+        memo:(r.memo||r.etc||''), pay:(r.pay==null?0:(Number(r.pay)||0)),
+        io:(r.io||''), spec:(r.spec||r.size||''), tel:(r.tel||''), bl:(r.bl||''), line:(r.line||''),
+        status:(st||'확정'), read:false, done:false,
         createdAt:firebase.firestore.FieldValue.serverTimestamp(), createdBy:auth.currentUser.uid, source:'배차일보'
       }).then(function(ref){ watchDelivery(ref, vno, drivers, st, sending); })
         .catch(function(e){ sending.remove(); toast('저장 실패: '+e.message,true); });
