@@ -588,6 +588,13 @@ function dispCard(d, id, isAdmin){
 }
 // ── 배차 상세보기 시트
 function won2(v){ return (Number(v)||0).toLocaleString(); }
+// 연락처: 전화번호를 tel: 링크로, 줄바꿈 유지(이름+여러 번호 대응)
+function telHtml(t){
+  return esc(String(t))
+    .replace(/(0\d{1,2}[-\s]?\d{3,4}[-\s]?\d{4})/g, m => `<a href="tel:${m.replace(/[^0-9]/g,'')}">${m}</a>`)
+    .replace(/\r?\n/g, '<br>');
+}
+function firstTel(t){ const m=String(t||'').match(/0\d{1,2}[-\s]?\d{3,4}[-\s]?\d{4}/); return m ? m[0].replace(/[^0-9]/g,'') : ''; }
 window.__detail = (id) => {
   const rec = (window.__disp||{})[id]; if(!rec) return;
   const d = rec.d, isAdmin = rec.isAdmin;
@@ -597,27 +604,34 @@ window.__detail = (id) => {
   else if (done) badge = '<span class="badge" style="background:#0e2a1f;color:#5fd39b">✅ 배차완료</span>';
   else if (pre) badge = '<span class="badge pre">선배차</span>';
   else badge = '<span class="badge ok">확정</span>';
-  const spec = d.spec || d.size || '';
+  const ioTxt = d.io==='I'?'수입':d.io==='O'?'수출':(d.io||'');
+  const sizeTxt = [d.size, d.spec].filter(Boolean).join(' / ');
+  const HTML = '\x00';  // 표시용: 이 값은 이미 HTML(이스케이프 완료)이라는 표식
   const rows = [
     ['📅','날짜', [d.date, d.time].filter(Boolean).join(' · ')],
-    ['🔁','수출입', d.io],
+    ['🔁','수출입', ioTxt],
     ['🚚','차량', d.vno],
     ['🏭','상차지', d.load],
     ['🎯','하차지', d.unload],
-    ['📦','규격', spec],
+    ['📦','규격', sizeTxt],
     ['🔢','컨번호', d.cntr],
     ['🚢','선사', d.line],
     ['📄','B/L', d.bl],
-    ['☎️','연락처', d.tel ? `<a href="tel:${esc(String(d.tel).replace(/[^0-9+]/g,''))}">${esc(d.tel)}</a>` : ''],
+    ['☎️','연락처', d.tel ? HTML+telHtml(d.tel) : ''],
     ['📝','비고', d.memo],
     ['💰','하불', d.pay ? ('₩ ' + won2(d.pay)) : ''],
   ].filter(r => r[2] != null && r[2] !== '');
-  const dl = rows.map(r => `<dt>${r[0]} ${r[1]}</dt><dd>${r[1]==='연락처'?r[2]:esc(String(r[2]))}</dd>`).join('');
+  const dl = rows.map(r => {
+    const v = String(r[2]);
+    const html = v[0]===HTML ? v.slice(1) : esc(v);
+    return `<dt>${r[0]} ${r[1]}</dt><dd>${html}</dd>`;
+  }).join('');
   // 하단 액션
   const addr = d.unload || d.load || '';
   let acts = '';
   if (addr) acts += `<a class="btn sub" href="https://map.kakao.com/link/search/${encodeURIComponent(addr)}" target="_blank" rel="noopener">🗺 하차지 길찾기</a>`;
-  if (d.tel) acts += `<a class="btn sub" href="tel:${esc(String(d.tel).replace(/[^0-9+]/g,''))}">☎️ 화주에게 전화</a>`;
+  const tel1 = firstTel(d.tel);
+  if (tel1) acts += `<a class="btn sub" href="tel:${tel1}">☎️ 화주에게 전화</a>`;
   if (!isAdmin && !done && d.status==='확정') acts += `<button class="btn" style="background:var(--ok)" onclick="window.__done('${id}');window.__closeDetail()">✅ 배차완료 누르기</button>`;
   if (isAdmin && !cancelled) acts += `<button class="btn sub" onclick="window.__recall('${id}');window.__closeDetail()">↩ 배차 회수(취소)</button>`;
   $('detailPanel').innerHTML =
