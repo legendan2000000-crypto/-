@@ -251,6 +251,13 @@ const esc = (s)=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>'
 
 let me = null, swReg = null;
 
+// PWA '앱 설치'가 로그인 전에도 뜨도록 서비스워커를 시작 시 미리 등록
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then(r => { swReg = r; })
+    .catch(() => {});
+}
+
 // ── 로그인
 $('loginBtn').onclick = async () => {
   $('loginErr').textContent = '';

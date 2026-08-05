@@ -21,3 +21,8 @@ self.addEventListener('notificationclick', (e) => {
     if (clients.openWindow) return clients.openWindow('/');
   }));
 });
+
+// PWA 설치 조건 충족용 fetch 핸들러(네트워크 그대로 통과 — 캐시 안 함)
+self.addEventListener('fetch', () => {});
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
