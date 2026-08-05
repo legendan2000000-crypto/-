@@ -30,6 +30,8 @@
     if(FB_OK){ try{ firebase.initializeApp(CFG); }catch(e){} auth=firebase.auth(); db=firebase.firestore(); }
 
     var E=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+    // 값이 문자열/객체{v|text|addr}/배열 무엇이든 순수 문자열로
+    function asText(a){ if(a==null) return ''; if(typeof a==='string') return a; if(Array.isArray(a)) return a.map(asText).filter(Boolean).join(' '); if(typeof a==='object') return String(a.v!=null?a.v:(a.text!=null?a.text:(a.addr!=null?a.addr:(a.name!=null?a.name:'')))); return String(a); }
     var toast=function(m,bad,persist){var t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:'+(bad?'#c0392b':'#2563eb')+';color:#fff;padding:10px 16px;border-radius:10px;z-index:100010;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.3);max-width:90vw';document.body.appendChild(t);if(!persist)setTimeout(function(){t.remove();},4200);return t;};
 
     // ---- 복제 버튼 → 기사전송 버튼 실시간 변환 ----
@@ -144,7 +146,7 @@
         load:r.load||'', unload:r.unload||r.addr||'', cntr:(r.cntr==null?'':String(r.cntr)),
         memo:(r.memo||r.etc||''), pay:(r.pay==null?0:(Number(r.pay)||0)),
         io:(r.io==='I'?'수입':r.io==='O'?'수출':(r.io||'')), spec:(r.spec||''), size:(r.size||''),
-        tel:(r.tel||''), bl:(r.bl||''), line:(r.line||''), addr:(r.addr||r.addrs||''),
+        tel:(r.tel||''), bl:(r.bl||''), line:(r.line||''), addr:asText(r.addr!=null?r.addr:r.addrs),
         status:(st||'확정'), read:false, done:false,
         createdAt:firebase.firestore.FieldValue.serverTimestamp(), createdBy:auth.currentUser.uid, source:'배차일보'
       }).then(function(ref){ watchDelivery(ref, vno, drivers, st, sending); })
