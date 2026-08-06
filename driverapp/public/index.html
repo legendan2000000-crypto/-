@@ -191,13 +191,15 @@
           <div class="tsub" id="tileMonthSub">이번 달</div>
         </button>
       </div>
-      <!-- 날짜 이동 + 매출 -->
-      <div class="card" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 12px">
-        <button id="dvPrev" title="이전" style="padding:6px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800">◀</button>
-        <input type="date" id="dvDay" style="padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text)">
-        <input type="month" id="dvMonth" style="display:none;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text)">
-        <button id="dvNext" title="다음" style="padding:6px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800">▶</button>
-        <div id="dvSummary" style="margin-left:auto;text-align:right"></div>
+      <!-- 날짜 이동(한 줄) + 매출 -->
+      <div class="card" style="padding:10px 12px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <button id="dvPrev" style="flex:0 0 auto;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800;white-space:nowrap">전날</button>
+          <input type="date" id="dvDay" style="flex:1;min-width:0;text-align:center;padding:9px 4px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text)">
+          <input type="month" id="dvMonth" style="flex:1;min-width:0;text-align:center;display:none;padding:9px 4px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text)">
+          <button id="dvNext" style="flex:0 0 auto;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800;white-space:nowrap">다음날</button>
+        </div>
+        <div id="dvSummary" style="text-align:right;margin-top:10px"></div>
       </div>
       <div id="driverList"></div>
     </main>
@@ -483,11 +485,13 @@ function renderDriver(){
   const pay = list.reduce((s,x)=>s+(Number(x.data.pay)||0),0);
   $('dvSummary').innerHTML = `<div class="hint">${sumLabel}</div><div style="font-weight:900;font-size:19px;color:var(--ok)">₩ ${won(pay)}</div>`;
 
-  // 날짜/월 입력 전환
+  // 날짜/월 입력 전환 + 한 줄 이동 버튼 한글 라벨
   $('dvDay').style.display   = isMonth ? 'none' : '';
   $('dvMonth').style.display = isMonth ? '' : 'none';
   $('dvDay').value = dvDay;
   $('dvMonth').value = dvMonth;
+  $('dvPrev').textContent = isMonth ? '이전달' : '전날';
+  $('dvNext').textContent = isMonth ? '다음달' : '다음날';
 }
 $('tileDay').onclick   = ()=>{ dvMode='day'; dvDay=todayStr(); renderDriver(); };
 $('tileMonth').onclick = ()=>{ dvMode='month'; dvMonth=thisMonth(); renderDriver(); };
