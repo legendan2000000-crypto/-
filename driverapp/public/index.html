@@ -195,8 +195,11 @@
       <div class="card" style="padding:10px 12px">
         <div style="display:flex;align-items:center;gap:8px">
           <button id="dvPrev" style="flex:0 0 auto;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800;white-space:nowrap">전날</button>
-          <input type="date" id="dvDay" style="flex:1;min-width:0;text-align:center;padding:9px 4px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text)">
-          <input type="month" id="dvMonth" style="flex:1;min-width:0;text-align:center;display:none;padding:9px 4px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text)">
+          <div style="flex:1;min-width:0;position:relative">
+            <div id="dvDateLabel" style="text-align:center;padding:9px 4px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
+            <input type="date" id="dvDay" aria-label="날짜 선택" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;cursor:pointer">
+            <input type="month" id="dvMonth" aria-label="월 선택" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;cursor:pointer;display:none">
+          </div>
           <button id="dvNext" style="flex:0 0 auto;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800;white-space:nowrap">다음날</button>
         </div>
         <div id="dvSummary" style="text-align:right;margin-top:10px"></div>
@@ -492,6 +495,7 @@ function renderDriver(){
   $('dvMonth').value = dvMonth;
   $('dvPrev').textContent = isMonth ? '이전달' : '전날';
   $('dvNext').textContent = isMonth ? '다음달' : '다음날';
+  $('dvDateLabel').textContent = isMonth ? (dvMonth.replace('-','년 ')+'월') : dayLabel(dvDay);
 }
 $('tileDay').onclick   = ()=>{ dvMode='day'; dvDay=todayStr(); renderDriver(); };
 $('tileMonth').onclick = ()=>{ dvMode='month'; dvMonth=thisMonth(); renderDriver(); };
