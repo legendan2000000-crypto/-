@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 로그인한 본인 문서 조회용
+    function me() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { return isSignedIn() && me().role == 'admin'; }
+
+    // 사용자: 본인 읽기/관리자 전체. 본인 가입은 role='pending'로만 생성 가능(스스로 승격 불가). 승인/삭제는 관리자.
+    function isDriver() { return isSignedIn() && me().role == 'driver'; }
+    match /users/{uid} {
+      allow read: if isSignedIn() && (request.auth.uid == uid || isAdmin());
+      allow create: if isSignedIn() && request.auth.uid == uid && request.resource.data.role == 'pending';
+      allow update, delete: if isAdmin();
+    }
+
+    // 배차: 관리자 전체. '승인된(role=driver)' 기사만 본인 차량 건 조회 + 읽음/완료 표시.
+    match /dispatches/{id} {
+      allow read: if isAdmin() || (isDriver() && resource.data.vno == me().vno);
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin()
+        || (isDriver() && resource.data.vno == me().vno
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read','readAt','done','completedAt']));
+    }
+
+    // FCM 토큰: 본인 것만
+    match /fcmTokens/{uid} {
+      allow read, write: if isSignedIn() && request.auth.uid == uid;
+    }
+  }
+}

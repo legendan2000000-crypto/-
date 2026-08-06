@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="국양배차">
+<title>국양로지텍 배차</title>
+<style>
+  :root{--bg:#0e131e;--panel:#161c29;--line:#28303f;--text:#e6ebf3;--muted:#8b97ad;--accent:#5b8cff;--ok:#15a34a;--warn:#e0a75a;--bad:#ef5350;--soft:#1b2740}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+  header{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--line);padding:11px 14px;display:flex;align-items:center;gap:10px}
+  header h1{font-size:16px;margin:0;font-weight:800}
+  header .who{margin-left:auto;color:var(--muted);font-size:13px}
+  header button{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer}
+  main{padding:14px;max-width:720px;margin:0 auto}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+  .dash{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .tile{text-align:left;background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:13px;cursor:pointer;color:var(--text);transition:.12s}
+  .tile.on{border-color:var(--accent);background:var(--soft)}
+  .tile .tno{display:inline-flex;width:20px;height:20px;align-items:center;justify-content:center;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:12px;margin-right:6px}
+  .tile .tlabel{font-weight:800;font-size:15px}
+  .tile .tcount{margin-top:8px;font-weight:900;font-size:24px;line-height:1}
+  .tile .tsub{margin-top:5px;color:var(--muted);font-size:12px}
+  .tile.on .tcount{color:var(--accent)}
+  label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin:0 0 4px}
+  input,select,textarea{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;outline:none}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn{width:100%;background:var(--accent);color:#fff;border:0;border-radius:11px;padding:13px;font-size:16px;font-weight:800;cursor:pointer;margin-top:8px}
+  .btn.sub{background:transparent;border:1px solid var(--line);color:var(--text)}
+  .seg{display:flex;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:4px}
+  .seg button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:800;padding:9px;border-radius:8px;cursor:pointer}
+  .seg button.on{background:var(--accent);color:#fff}
+  .seg.mini{padding:2px;gap:2px;flex:0 0 auto}
+  .seg.mini button{flex:0 0 auto;padding:5px 9px;font-size:12px}
+  .seg.pre button.on{background:var(--warn);color:#111}
+  .disp{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:var(--panel)}
+  .disp.pre{border-color:var(--warn);background:#241f12}
+  .disp .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .disp .who{font-weight:800;font-size:16px}
+  .badge{font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px}
+  .badge.ok{background:#0e2a1f;color:#5fd39b}
+  .badge.pre{background:#3a2e12;color:#f0c674}
+  .disp .r{color:var(--muted);font-size:13.5px;margin-top:4px}
+  .disp .r b{color:var(--text)}
+  .disp.tap{cursor:pointer}
+  .disp.tap:active{transform:scale(.995);opacity:.92}
+  .hint{color:var(--muted);font-size:12.5px}
+  /* 배차 상세 시트 */
+  .sheet{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center}
+  .sheet.hidden{display:none}
+  .sheet .panel{width:100%;max-width:720px;max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+  @media(min-width:560px){.sheet{align-items:center}.sheet .panel{border-radius:18px}}
+  .sheet .sh-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .sheet .sh-top .who{font-weight:900;font-size:19px;flex:1}
+  .sheet .sh-x{border:0;background:var(--bg);color:var(--muted);width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
+  .dl{display:grid;grid-template-columns:76px 1fr;gap:2px 10px;margin-top:12px}
+  .dl dt{color:var(--muted);font-size:13px;font-weight:700;padding:7px 0}
+  .dl dd{margin:0;padding:7px 0;font-size:15px;font-weight:600;border-bottom:1px solid var(--line);word-break:break-word}
+  .dl dd a{color:var(--accent);text-decoration:none;font-weight:800}
+  .sheet .sh-act{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+  .sheet .sh-act a.btn{display:block;text-align:center;text-decoration:none;box-sizing:border-box}
+  .empty{text-align:center;color:var(--muted);padding:40px 10px}
+  .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--accent);color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;box-shadow:0 8px 30px rgba(0,0,0,.4);z-index:50;max-width:90%}
+  .notice{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--muted);margin-bottom:10px}
+  .err{color:var(--bad);font-size:13px;margin-top:6px;min-height:16px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- 로딩 스플래시(세션 확인 중) -->
+  <div id="splashView">
+    <main><div class="card" style="text-align:center;padding:44px 16px">
+      <div style="font-size:40px">🚚</div>
+      <div style="font-weight:800;margin-top:10px">국양로지텍 배차</div>
+      <div class="hint" style="margin-top:8px">불러오는 중…</div>
+    </div></main>
+  </div>
+  <!-- 로그인 -->
+  <div id="loginView" class="hidden">
+    <header><h1>🚚 국양로지텍 배차</h1></header>
+    <main>
+      <!-- 로그인 -->
+      <div class="card" id="loginCard">
+        <div class="notice">전화번호 + PIN으로 로그인하세요.</div>
+        <label>전화번호</label>
+        <input id="loginPhone" type="tel" inputmode="numeric" placeholder="01012345678" autocomplete="username">
+        <label style="margin-top:10px">PIN(비밀번호)</label>
+        <input id="loginPin" type="password" inputmode="numeric" placeholder="숫자 4자리 이상" autocomplete="current-password">
+        <button class="btn" id="loginBtn">로그인</button>
+        <div class="err" id="loginErr"></div>
+        <div style="text-align:center;margin-top:12px"><a href="#" id="toSignup" style="color:var(--accent);font-size:14px">기사 회원가입 →</a></div>
+      </div>
+      <!-- 회원가입 -->
+      <div class="card hidden" id="signupCard">
+        <div class="notice">기사 <b>회원가입</b> — 가입 후 <b>관리자 승인</b>이 되면 배차를 받습니다.</div>
+        <label>이름</label>
+        <input id="suName" type="text" placeholder="홍길동">
+        <label style="margin-top:10px">전화번호</label>
+        <input id="suPhone" type="tel" inputmode="numeric" placeholder="01012345678">
+        <label style="margin-top:10px">차량번호</label>
+        <input id="suVno" type="text" placeholder="부산80바1234">
+        <label style="margin-top:10px">PIN(비밀번호)</label>
+        <input id="suPin" type="password" inputmode="numeric" placeholder="숫자 4자리 이상">
+        <button class="btn" id="signupBtn">회원가입 신청</button>
+        <div class="err" id="signupErr"></div>
+        <div style="text-align:center;margin-top:12px"><a href="#" id="toLogin" style="color:var(--accent);font-size:14px">← 로그인으로</a></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 관리자(배차) -->
+  <div id="adminView" class="hidden">
+    <header><h1>배차 보내기</h1><span class="who" id="adminWho"></span><button id="adminLogout">로그아웃</button></header>
+    <main>
+      <div class="card hidden" id="approveCard" style="border-color:var(--warn)">
+        <label style="color:var(--warn)">🖐 가입 승인 대기 <span id="pendCount"></span></label>
+        <div id="pendList"></div>
+      </div>
+      <div class="card">
+        <label>메신저/오더 붙여넣기 (선택 — 자동으로 아래 칸 채움)</label>
+        <textarea id="pasteBox" rows="3" placeholder="카톡/문자 오더를 붙여넣고 '자동 채우기'"></textarea>
+        <button class="btn sub" id="parseBtn">자동 채우기</button>
+        <div id="dropZone" style="margin-top:8px;border:2px dashed var(--line);border-radius:10px;padding:12px;text-align:center;color:var(--muted);cursor:pointer">📄 D/O·PDF·워드(.docx) 파일 끌어다 놓기 (또는 클릭)</div>
+        <input type="file" id="fileInp" accept=".pdf,.docx,.txt" style="display:none">
+        <div id="parseInfo" class="hint" style="margin-top:6px"></div>
+      </div>
+      <div class="card">
+        <label>차량(기사) 선택</label>
+        <select id="vnoSel"></select>
+        <div class="row" style="margin-top:10px">
+          <div><label>날짜</label><input id="fDate" type="date"></div>
+          <div><label>시간</label><input id="fTime" type="time"></div>
+        </div>
+        <div style="margin-top:10px"><label>화주</label><input id="fShipper" type="text"></div>
+        <div class="row" style="margin-top:10px">
+          <div><label>상차지</label><input id="fLoad" type="text"></div>
+          <div><label>하차지</label><input id="fUnload" type="text"></div>
+        </div>
+        <div style="margin-top:10px"><label>컨번호</label><input id="fCntr" type="text" placeholder="ABCU1234567"></div>
+        <div style="margin-top:10px"><label>메모</label><input id="fMemo" type="text"></div>
+        <div style="margin-top:12px">
+          <label>배차 상태</label>
+          <div class="seg pre" id="statusSeg">
+            <button data-st="확정" class="on">확정 배차</button>
+            <button data-st="선배차">선배차 (서류 준비중)</button>
+          </div>
+          <div class="hint" id="statusHint" style="margin-top:6px"></div>
+        </div>
+        <button class="btn" id="sendBtn">이 기사에게 배차 보내기 (알림 발송)</button>
+        <div class="err" id="sendErr"></div>
+      </div>
+      <div class="card">
+        <label>최근 보낸 배차</label>
+        <div id="adminList"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 기사(차량) -->
+  <div id="driverView" class="hidden">
+    <header>
+      <h1>내 배차</h1>
+      <span class="who" id="driverWho"></span>
+      <div class="seg mini" id="notifSeg" title="배차 알림 켜기/끄기">
+        <button id="notifOn">🔔 켜짐</button>
+        <button id="notifOff">꺼짐</button>
+      </div>
+      <button id="driverLogout">로그아웃</button>
+    </header>
+    <div id="notifMsg" class="hint" style="display:none;padding:8px 14px;font-size:12px;line-height:1.5;border-bottom:1px solid var(--line);background:var(--panel)"></div>
+    <main>
+      <!-- 대시보드 타일 -->
+      <div class="dash">
+        <button class="tile" id="tileDay">
+          <div><span class="tno">1</span><span class="tlabel">당일배차</span></div>
+          <div class="tcount" id="tileDayCount">0건</div>
+          <div class="tsub" id="tileDaySub">오늘</div>
+        </button>
+        <button class="tile" id="tileMonth">
+          <div><span class="tno">2</span><span class="tlabel">월배차내역</span></div>
+          <div class="tcount" id="tileMonthCount">0건</div>
+          <div class="tsub" id="tileMonthSub">이번 달</div>
+        </button>
+      </div>
+      <!-- 날짜 이동(한 줄) + 매출 -->
+      <div class="card" style="padding:10px 12px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <button id="dvPrev" style="flex:0 0 auto;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800;white-space:nowrap">전날</button>
+          <div style="flex:1;min-width:0;position:relative">
+            <div id="dvDateLabel" style="text-align:center;padding:9px 4px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
+            <input type="date" id="dvDay" aria-label="날짜 선택" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;cursor:pointer">
+            <input type="month" id="dvMonth" aria-label="월 선택" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;cursor:pointer;display:none">
+          </div>
+          <button id="dvNext" style="flex:0 0 auto;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-weight:800;white-space:nowrap">다음날</button>
+        </div>
+        <div id="dvSummary" style="text-align:right;margin-top:10px"></div>
+      </div>
+      <div id="driverList"></div>
+    </main>
+  </div>
+
+  <!-- 배차 상세 시트(기사/관리자 공용) -->
+  <div id="detailSheet" class="sheet hidden"><div class="panel" id="detailPanel"></div></div>
+
+  <!-- 승인 대기 -->
+  <div id="pendingView" class="hidden">
+    <header><h1>🚚 국양로지텍 배차</h1><button id="pendLogout" style="margin-left:auto">로그아웃</button></header>
+    <main>
+      <div class="card" style="text-align:center;padding:30px 16px">
+        <div style="font-size:44px">⏳</div>
+        <div style="font-weight:800;font-size:18px;margin:10px 0">가입 신청 완료 — 승인 대기중</div>
+        <div class="hint" id="pendWho"></div>
+        <div class="notice" style="margin-top:14px">배차담당(관리자)이 승인하면 배차를 받을 수 있습니다.<br>승인되면 이 화면이 자동으로 바뀝니다.</div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/config.js"></script>
+<script src="/parser.js"></script>
+<script src="/vendor/pdf.min.js" onerror="window.__nopdf=1"></script>
+<script>try{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='/vendor/pdf.worker.min.js';}catch(e){}</script>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword,
+  setPersistence, browserLocalPersistence, indexedDBLocalPersistence }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc, addDoc, collection, query, where, orderBy,
+  onSnapshot, serverTimestamp, updateDoc, getDocs, limit, deleteDoc }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getMessaging, getToken, onMessage }
+  from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js';
+
+const app = initializeApp(window.FB_CONFIG);
+const auth = getAuth(app);
+// 로그인 세션 지속(새로고침/앱 재실행해도 유지) — 안드로이드 등에서 확실히
+setPersistence(auth, indexedDBLocalPersistence).catch(()=>setPersistence(auth, browserLocalPersistence).catch(()=>{}));
+const db = getFirestore(app);
+const messaging = getMessaging(app);
+
+const $ = (id) => document.getElementById(id);
+const show = (v) => ['splashView','loginView','adminView','driverView','pendingView'].forEach(x => $(x).classList.toggle('hidden', x !== v));
+const toast = (m) => { const t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),4000); };
+const emailOf = (p) => `${String(p).replace(/\D/g,'')}@kukyang.driver`;
+const pwOf = (pin) => 'kk-' + String(pin); // Firebase 비번 최소 6자 충족(짧은 PIN 허용)
+const esc = (s)=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let me = null, swReg = null;
+
+// PWA '앱 설치'가 로그인 전에도 뜨도록 서비스워커를 시작 시 미리 등록
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then(r => { swReg = r; })
+    .catch(() => {});
+}
+
+// ── 로그인
+$('loginBtn').onclick = async () => {
+  $('loginErr').textContent = '';
+  const phone = $('loginPhone').value.trim(), pin = $('loginPin').value;
+  if (!phone || !pin) { $('loginErr').textContent='전화번호와 PIN을 입력하세요.'; return; }
+  try { await signInWithEmailAndPassword(auth, emailOf(phone), pwOf(pin)); }
+  catch (e) {
+    const map = {
+      'auth/invalid-credential': '전화번호 또는 PIN이 틀렸거나, 계정이 아직 없습니다.',
+      'auth/user-not-found': '등록되지 않은 번호입니다 — 계정을 먼저 만들어야 합니다(seed).',
+      'auth/wrong-password': 'PIN이 틀렸습니다.',
+      'auth/invalid-email': '전화번호 형식을 확인하세요(숫자만).',
+      'auth/operation-not-allowed': '콘솔에서 "이메일/비밀번호" 로그인을 켜야 합니다.',
+      'auth/invalid-api-key': '앱 설정(config) 오류 — 관리자에게 문의.',
+      'auth/network-request-failed': '네트워크 오류 — 인터넷을 확인하세요.',
+      'auth/too-many-requests': '시도가 많아 잠시 차단됨 — 잠시 후 다시.'
+    };
+    $('loginErr').textContent = (map[e.code] || ('로그인 실패: ' + (e.code || e.message)));
+  }
+};
+$('adminLogout').onclick = () => signOut(auth);
+$('driverLogout').onclick = () => signOut(auth);
+$('pendLogout').onclick = () => signOut(auth);
+
+// ── 로그인/가입 화면 전환
+$('toSignup').onclick = (e) => { e.preventDefault(); $('loginCard').classList.add('hidden'); $('signupCard').classList.remove('hidden'); };
+$('toLogin').onclick = (e) => { e.preventDefault(); $('signupCard').classList.add('hidden'); $('loginCard').classList.remove('hidden'); };
+
+// ── 회원가입(기사) — role='pending'로 생성 → 관리자 승인 대기
+$('signupBtn').onclick = async () => {
+  $('signupErr').textContent = '';
+  const name=$('suName').value.trim(), phone=$('suPhone').value.trim(), vno=$('suVno').value.trim(), pin=$('suPin').value;
+  if (!name || !phone || !vno || !pin) { $('signupErr').textContent='모든 칸을 입력하세요.'; return; }
+  if (String(pin).length < 4) { $('signupErr').textContent='PIN은 4자리 이상.'; return; }
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, emailOf(phone), pwOf(pin));
+    await setDoc(doc(db,'users',cred.user.uid), { role:'pending', name, phone, vno, createdAt: serverTimestamp() });
+    // onAuthStateChanged가 pending 화면으로 전환
+  } catch (e) {
+    const m = { 'auth/email-already-in-use':'이미 가입된 전화번호입니다. 로그인하세요.', 'auth/weak-password':'PIN이 너무 짧습니다.' };
+    $('signupErr').textContent = m[e.code] || ('가입 실패: ' + (e.code||e.message));
+  }
+};
+
+let meUnsub = null;
+onAuthStateChanged(auth, async (user) => {
+  if (meUnsub) { meUnsub(); meUnsub = null; }
+  if (!user) { me=null; show('loginView'); return; }
+  // 본인 문서를 실시간 구독 → 승인(role 변경) 시 화면 자동 전환
+  meUnsub = onSnapshot(doc(db,'users',user.uid), (snap) => {
+    me = snap.exists() ? { uid:user.uid, ...snap.data() } : { uid:user.uid, role:'pending' };
+    if (me.role === 'admin') startAdmin();
+    else if (me.role === 'driver') startDriver();
+    else { $('pendWho').textContent = `${me.name||''} · ${me.vno||''}`; show('pendingView'); }
+  });
+});
+
+// ── 관리자
+let statusVal = '확정';
+$('statusSeg').querySelectorAll('button').forEach(b => b.onclick = () => {
+  statusVal = b.dataset.st;
+  $('statusSeg').querySelectorAll('button').forEach(x=>x.classList.toggle('on', x===b));
+  $('statusHint').textContent = statusVal==='선배차'
+    ? '기사에게 "⚠️ 선배차 — 서류 준비중, 예정 건"으로 알림이 갑니다.'
+    : '기사에게 "🚚 새 배차"로 알림이 갑니다.';
+});
+$('statusSeg').querySelector('button').click();
+
+let adminReady = false;
+async function loadVehicles() {
+  const ds = await getDocs(query(collection(db,'users'), where('role','==','driver')));
+  const sel = $('vnoSel'); sel.innerHTML='';
+  ds.forEach(d => { const u=d.data(); const o=document.createElement('option'); o.value=u.vno||''; o.textContent=`${u.name||''} (${u.vno||'차량번호없음'})`; sel.appendChild(o); });
+}
+async function startAdmin() {
+  $('adminWho').textContent = (me.name||'관리자');
+  show('adminView');
+  if (adminReady) return;
+  adminReady = true;
+  await loadVehicles();
+  if (!$('fDate').value) $('fDate').value = new Date().toISOString().slice(0,10);
+  // 최근 보낸 배차(실시간)
+  onSnapshot(query(collection(db,'dispatches'), orderBy('createdAt','desc'), limit(15)), (snap)=>{
+    $('adminList').innerHTML = snap.empty ? '<div class="empty">아직 없음</div>' :
+      snap.docs.map(d=>dispCard(d.data(), d.id, true)).join('');
+  });
+  // 가입 승인 대기(실시간)
+  onSnapshot(query(collection(db,'users'), where('role','==','pending')), (snap)=>{
+    $('approveCard').classList.toggle('hidden', snap.empty);
+    $('pendCount').textContent = snap.empty ? '' : `(${snap.size})`;
+    $('pendList').innerHTML = snap.docs.map(d=>{ const u=d.data(); return `
+      <div style="border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px">
+        <div style="font-weight:800">${esc(u.name||'')} <span class="hint">${esc(u.phone||'')}</span></div>
+        <div class="r" style="color:var(--muted);font-size:13px;margin:3px 0">🚛 차량 ${esc(u.vno||'(미입력)')}</div>
+        <div style="display:flex;gap:6px;margin-top:6px">
+          <button class="btn" style="flex:1;padding:8px;background:var(--ok)" onclick="window.__approve('${d.id}')">✅ 승인</button>
+          <button class="btn sub" style="flex:1;padding:8px" onclick="window.__reject('${d.id}','${esc(u.name||'')}')">거절</button>
+        </div>
+      </div>`; }).join('');
+  });
+}
+window.__approve = async (uid) => {
+  try { await updateDoc(doc(db,'users',uid), { role:'driver', approvedAt: serverTimestamp() }); await loadVehicles(); toast('승인 완료 — 이제 배차를 받습니다'); }
+  catch(e){ toast('승인 실패: ' + e.message); }
+};
+window.__reject = async (uid, name) => {
+  if (!confirm(`${name} 가입을 거절할까요? (목록에서 제거)`)) return;
+  try { await deleteDoc(doc(db,'users',uid)); toast('거절 처리됨'); }
+  catch(e){ toast('처리 실패: ' + e.message); }
+};
+// 배차일보 파서로 폼 채우기(마스터 없이도 날짜·시간·화주·경로·컨번호·수량·주소·청구 등)
+function fillFromParse(text) {
+  if (!window.BCM) { toast('파서 로딩 중 — 잠시 후 다시'); return; }
+  const { res, info } = window.BCM.parseText(text);
+  const set = (id, v) => { if (v != null && v !== '') $(id).value = v; };
+  set('fDate', res.date && res.date.v); set('fTime', res.time && res.time.v);
+  set('fShipper', res.shipper && res.shipper.v);
+  set('fLoad', res.load && res.load.v);
+  set('fUnload', (res.unload && res.unload.v) || (res.addr && res.addr.v)); // 하차지 = 하차라벨 또는 주소
+  set('fCntr', res.cntr && res.cntr.v);
+  // 폼에 칸 없는 항목은 메모로
+  const extra = [];
+  if (res.billto) extra.push('청구처 ' + res.billto.v);
+  if (res.charge) extra.push('청구가 ' + res.charge.v);
+  if (res.bl) extra.push('B/L ' + res.bl.v);
+  if (res.size || res.type) extra.push('규격 ' + [(res.size && res.size.v), (res.type && res.type.v)].filter(Boolean).join(''));
+  if (extra.length && !$('fMemo').value) $('fMemo').value = extra.join(' / ');
+  // 차량번호 자동선택(파싱된 vno가 등록 기사면)
+  if (res.vno && res.vno.v) { const opt = [...$('vnoSel').options].find(o => o.value === res.vno.v); if (opt) $('vnoSel').value = res.vno.v; }
+  const qty = (res._qty && res._qty > 1) ? ` · 수량 ${res._qty}대(각각 보내려면 여러 번 전송)` : '';
+  $('parseInfo').innerHTML = (info && info.length ? '인식: ' + info.join(' · ') : '인식된 값 없음 — 직접 입력') + qty;
+}
+$('parseBtn').onclick = () => { const t = $('pasteBox').value.trim(); if (t) { fillFromParse(t); toast('내용에서 채웠습니다 — 확인 후 보내세요'); } };
+// 파일 드롭/선택 (PDF·워드·txt)
+$('dropZone').onclick = () => $('fileInp').click();
+$('dropZone').ondragover = (e) => { e.preventDefault(); $('dropZone').style.borderColor = 'var(--accent)'; };
+$('dropZone').ondragleave = () => { $('dropZone').style.borderColor = 'var(--line)'; };
+$('dropZone').ondrop = (e) => { e.preventDefault(); $('dropZone').style.borderColor = 'var(--line)'; if (e.dataTransfer.files[0]) handleAdminFile(e.dataTransfer.files[0]); };
+$('fileInp').onchange = () => { if ($('fileInp').files[0]) handleAdminFile($('fileInp').files[0]); };
+async function handleAdminFile(f) {
+  const info = $('parseInfo'); const nm = f.name.toLowerCase();
+  try {
+    if (nm.endsWith('.txt')) { const t = await f.text(); $('pasteBox').value = t; fillFromParse(t); return; }
+    if (nm.endsWith('.docx')) { info.textContent = '워드 읽는 중…'; const t = await window.BCM.readDocx(await f.arrayBuffer()); $('pasteBox').value = t.trim(); fillFromParse(t); return; }
+    if (nm.endsWith('.pdf') || f.type === 'application/pdf') {
+      if (!window.pdfjsLib) { info.textContent = 'PDF 판독기 로딩 실패 — 텍스트로 붙여넣어 주세요.'; return; }
+      info.textContent = 'PDF 읽는 중…';
+      const pdf = await pdfjsLib.getDocument({ data: await f.arrayBuffer() }).promise;
+      let txt = '';
+      for (let p = 1; p <= Math.min(pdf.numPages, 3); p++) {
+        const pg = await pdf.getPage(p); const c = await pg.getTextContent();
+        txt += c.items.map(i => i.str).join(' ') + '\n';
+        try { const an = await pg.getAnnotations(); for (const a of an) { const s = (a.contentsObj && a.contentsObj.str) || a.contents || ''; if (s) txt += '\n' + s; } } catch (e) {}
+      }
+      $('pasteBox').value = txt.trim();
+      if (txt.replace(/\s/g, '').length < 8) info.textContent = '글자가 거의 없는 스캔 PDF입니다 — 텍스트로 붙여넣어 주세요.';
+      else fillFromParse(txt);
+      return;
+    }
+    info.textContent = '지원하지 않는 형식입니다.';
+  } catch (e) { info.textContent = '파일 처리 실패: ' + e.message; }
+}
+$('sendBtn').onclick = async () => {
+  $('sendErr').textContent='';
+  const vno = $('vnoSel').value;
+  if (!vno) { $('sendErr').textContent='차량(기사)을 선택하세요.'; return; }
+  const d = {
+    vno, date:$('fDate').value, time:$('fTime').value, shipper:$('fShipper').value.trim(),
+    load:$('fLoad').value.trim(), unload:$('fUnload').value.trim(), cntr:$('fCntr').value.trim(),
+    memo:$('fMemo').value.trim(), status:statusVal, read:false,
+    createdAt:serverTimestamp(), createdBy:me.uid
+  };
+  if (!d.date || !d.shipper) { $('sendErr').textContent='최소 날짜·화주는 입력하세요.'; return; }
+  try { await addDoc(collection(db,'dispatches'), d);
+    toast(statusVal==='선배차'?'선배차 발송됨 — 기사에게 알림':'배차 발송됨 — 기사에게 알림');
+    ['pasteBox','fShipper','fLoad','fUnload','fCntr','fMemo','fTime'].forEach(id=>$(id).value='');
+  } catch(e){ $('sendErr').textContent='발송 실패: '+e.message; }
+};
+
+// ── 기사
+async function startDriver() {
+  $('driverWho').textContent = `${me.name||''} · ${me.vno||''}`;
+  show('driverView');
+  await ensurePush();               // 알림 권한/토큰
+  if (!me.vno) { $('driverList').innerHTML='<div class="empty">차량번호가 등록되지 않았습니다. 배차담당에게 문의하세요.</div>'; return; }
+  dvMode='day'; dvDay=todayStr();   // 로그인/재접속하면 항상 '오늘'로 시작
+  onSnapshot(query(collection(db,'dispatches'), where('vno','==',me.vno), orderBy('date','desc')), (snap)=>{
+    const docs = snap.docs.filter(d => d.data().status !== '회수'); // 회수된 배차는 기사에게 숨김
+    driverDocs = docs.map(d=>({ id:d.id, data:d.data() }));
+    renderDriver();
+    // 안 읽은 건 읽음 처리(회수 제외)
+    docs.forEach(d=>{ if(d.data().read===false) updateDoc(doc(db,'dispatches',d.id),{read:true,readAt:serverTimestamp()}).catch(()=>{}); });
+  });
+}
+// 기사 대시보드: ①당일배차 ②월배차내역
+let driverDocs = [];        // 회수 제외한 내 배차 전체
+let dvMode = 'day';         // 'day' | 'month'
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function thisMonth(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
+let dvDay = todayStr();      // 'YYYY-MM-DD'
+let dvMonth = thisMonth();   // 'YYYY-MM'
+function shiftMonth(ym, n){ const [y,m]=ym.split('-').map(Number); const d=new Date(y, m-1+n, 1); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
+function shiftDay(ds, n){ const [y,m,d]=ds.split('-').map(Number); const x=new Date(y, m-1, d+n); return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0'); }
+function won(v){ return (Number(v)||0).toLocaleString(); }
+function dayLabel(ds){ const [y,m,d]=ds.split('-').map(Number); const w=['일','월','화','수','목','금','토'][new Date(y,m-1,d).getDay()]; return `${m}월 ${d}일 (${w})`; }
+function renderDriver(){
+  // 타일 카운트(당일/이번달) — 항상 최신 기준으로 표시
+  const dayList = driverDocs.filter(x=>String(x.data.date||'')===dvDay);
+  const monList = driverDocs.filter(x=>String(x.data.date||'').slice(0,7)===dvMonth);
+  $('tileDayCount').textContent = dayList.length + '건';
+  $('tileMonthCount').textContent = monList.length + '건';
+  $('tileDaySub').textContent = (dvMode==='day') ? dayLabel(dvDay) : '오늘';
+  $('tileMonthSub').textContent = dvMonth.replace('-','년 ') + '월';
+  $('tileDay').classList.toggle('on', dvMode==='day');
+  $('tileMonth').classList.toggle('on', dvMode==='month');
+
+  const isMonth = dvMode==='month';
+  const list = isMonth ? monList : dayList;
+  const empty = isMonth ? `${dvMonth.replace('-','년 ')}월 배차가 없습니다.` : `${dayLabel(dvDay)} 배차가 없습니다.`;
+  const sumLabel = isMonth ? '월 매출(하불)' : '일 매출(하불)';
+  $('driverList').innerHTML = list.length ? list.map(x=>dispCard(x.data, x.id)).join('')
+    : `<div class="empty">${empty}</div>`;
+  const pay = list.reduce((s,x)=>s+(Number(x.data.pay)||0),0);
+  $('dvSummary').innerHTML = `<div class="hint">${sumLabel}</div><div style="font-weight:900;font-size:19px;color:var(--ok)">₩ ${won(pay)}</div>`;
+
+  // 날짜/월 입력 전환 + 한 줄 이동 버튼 한글 라벨
+  $('dvDay').style.display   = isMonth ? 'none' : '';
+  $('dvMonth').style.display = isMonth ? '' : 'none';
+  $('dvDay').value = dvDay;
+  $('dvMonth').value = dvMonth;
+  $('dvPrev').textContent = isMonth ? '이전달' : '전날';
+  $('dvNext').textContent = isMonth ? '다음달' : '다음날';
+  $('dvDateLabel').textContent = isMonth ? (dvMonth.replace('-','년 ')+'월') : dayLabel(dvDay);
+}
+$('tileDay').onclick   = ()=>{ dvMode='day'; dvDay=todayStr(); renderDriver(); };
+$('tileMonth').onclick = ()=>{ dvMode='month'; dvMonth=thisMonth(); renderDriver(); };
+$('dvDay').onchange = (e)=>{ if(e.target.value){ dvMode='day'; dvDay=e.target.value; renderDriver(); } };
+$('dvMonth').onchange = (e)=>{ if(e.target.value){ dvMode='month'; dvMonth=e.target.value; renderDriver(); } };
+$('dvPrev').onclick = ()=>{ if(dvMode==='month'){ dvMonth=shiftMonth(dvMonth,-1); } else { dvDay=shiftDay(dvDay,-1); } renderDriver(); };
+$('dvNext').onclick = ()=>{ if(dvMode==='month'){ dvMonth=shiftMonth(dvMonth,+1); } else { dvDay=shiftDay(dvDay,+1); } renderDriver(); };
+function setNotifUI(state, msg){ // 'on' | 'off' | 'na'
+  $('notifMsg').innerHTML = msg;
+  $('notifMsg').style.display = (state === 'on') ? 'none' : 'block'; // 정상(켜짐)이면 숨김, 문제 있을 때만 안내 표시
+  $('notifOn').classList.toggle('on', state === 'on');
+  $('notifOff').classList.toggle('on', state === 'off');
+  const dis = state === 'na';
+  $('notifOn').disabled = dis; $('notifOff').disabled = dis;
+}
+function notifPref(){ try { return localStorage.getItem('notifPref'); } catch(e){ return null; } }
+function setNotifPref(v){ try { localStorage.setItem('notifPref', v); } catch(e){} }
+async function ensurePush() {
+  const supported = ('Notification' in window) && ('serviceWorker' in navigator) && ('PushManager' in window);
+  if (!supported) { setNotifUI('na', '📱 이 화면에선 알림 불가 — <b>아이폰</b>은 공유(⬆️)→"홈 화면에 추가" 후 아이콘으로 여세요. (iOS 16.4↑)'); return; }
+  if (notifPref() === 'off') { setNotifUI('off', '알림이 꺼져 있어요. "켜짐"을 누르면 이 폰으로 배차 알림이 옵니다.'); return; }
+  if (Notification.permission === 'granted') { await enableNotif(); return; }
+  if (Notification.permission === 'denied') { setNotifUI('off', '🔕 브라우저에서 알림이 차단됨 — 자물쇠🔒→알림→허용 후 새로고침하세요.'); return; }
+  setNotifUI('off', '"켜짐"을 누르면 알림 허용을 요청합니다.');
+}
+$('notifOn').onclick = async () => {
+  setNotifPref('on');
+  try {
+    if (Notification.permission !== 'granted') {
+      const p = await Notification.requestPermission();
+      if (p !== 'granted') { setNotifUI('off', '🔕 허용이 안 됐어요. 다시 "켜짐"을 누르거나 브라우저 알림 설정을 확인하세요.'); return; }
+    }
+    await enableNotif();
+  } catch (e) { setNotifUI('off', '알림 켜기 실패: ' + (e.message || e)); }
+};
+$('notifOff').onclick = async () => { setNotifPref('off'); await disableNotif(); setNotifUI('off', '알림을 껐습니다. 이 폰으론 배차 알림이 오지 않습니다.'); };
+async function currentToken(){
+  if (!swReg) swReg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+  return getToken(messaging, { vapidKey: window.FB_VAPID_KEY, serviceWorkerRegistration: swReg });
+}
+async function enableNotif() {
+  setNotifUI('on', '알림 등록 중…');
+  try {
+    const token = await currentToken();
+    if (token) { await setDoc(doc(db,'fcmTokens',me.uid), { tokens: await arrayUnionLocal(token) }, { merge:true });
+      setNotifUI('on', '🔔 <b>켜짐 ✓</b> — 새 배차가 오면 이 폰으로 알림이 옵니다.'); }
+    else setNotifUI('off', '⚠️ 토큰을 못 받았어요. 새로고침 후 다시 시도하세요.');
+  } catch (e) { setNotifUI('off', '⚠️ 등록 실패: ' + (e && e.message ? e.message : e)); }
+}
+async function disableNotif() {
+  try { const token = await currentToken();
+    if (token) { const s = await getDoc(doc(db,'fcmTokens',me.uid)); const cur = (s.exists() && s.data().tokens) || [];
+      await setDoc(doc(db,'fcmTokens',me.uid), { tokens: cur.filter(t => t !== token) }, { merge:true }); }
+  } catch (e) {}
+}
+// 간단 arrayUnion(로컬 병합) — 기존 토큰 유지
+async function arrayUnionLocal(token){ const s=await getDoc(doc(db,'fcmTokens',me.uid)); const cur=(s.exists()&&s.data().tokens)||[]; return [...new Set([...cur, token])]; }
+
+// 포그라운드(앱 켜져있을 때) 메시지 → 화면 토스트
+onMessage(messaging, (payload) => {
+  const n = payload.notification || {};
+  toast((n.title||'새 배차') + ' — ' + (n.body||''));
+});
+
+// ── 공통: 배차 카드
+function dispCard(d, id, isAdmin){
+  const cancelled = d.status==='회수';
+  const pre = d.status==='선배차';
+  const done = !!d.done;
+  const route = [d.load,d.unload].filter(Boolean).map(esc).join(' → ');
+  let badge;
+  if (cancelled) badge = '<span class="badge" style="background:#3a1414;color:#ff8a8a">❌ 취소됨</span>';
+  else if (done) badge = '<span class="badge" style="background:#0e2a1f;color:#5fd39b">✅ 배차완료</span>';
+  else if (pre) badge = '<span class="badge pre">선배차·서류준비중</span>';
+  else badge = '<span class="badge ok">확정</span>';
+  const body = `<div style="${cancelled?'opacity:.5;text-decoration:line-through':''}">
+    <div class="top"><span class="who">${esc(d.shipper||'(화주미정)')}</span>${badge}</div>
+    <div class="r">📅 <b>${esc(d.date||'')}</b>${d.time?(' · 🕐 '+esc(d.time)):''}</div>
+    ${route?`<div class="r">📍 ${route}</div>`:''}
+    ${d.cntr?`<div class="r">🔢 ${esc(d.cntr)}</div>`:''}
+    ${d.memo?`<div class="r">📝 ${esc(d.memo)}</div>`:''}
+  </div>`;
+  let action = '';
+  if (isAdmin && id && !cancelled) {
+    action = `<button class="btn sub" style="margin-top:8px;padding:8px;font-size:14px" onclick="event.stopPropagation();window.__recall('${id}')">↩ 배차 회수(취소)</button>`;
+  } else if (!isAdmin && id && !cancelled) {
+    const addr = d.addr || d.unload || d.load || '';
+    const nav = addr ? `<a class="btn sub" style="margin-top:8px;padding:8px;font-size:14px;display:block;text-align:center;text-decoration:none;box-sizing:border-box" href="https://map.kakao.com/link/search/${encodeURIComponent(addr)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">🗺 길찾기 · ${esc(addr)}</a>` : '';
+    const doneBtn = (!done && d.status==='확정') ? `<button class="btn" style="margin-top:8px;background:var(--ok)" onclick="event.stopPropagation();window.__done('${id}')">✅ 배차완료 누르기</button>` : '';
+    action = nav + doneBtn;
+  }
+  // 상세보기: 탭하면 전체 정보 시트
+  if (id) { window.__disp = window.__disp || {}; window.__disp[id] = { d, isAdmin: !!isAdmin }; }
+  const cls = `disp ${pre?'pre ':''}${id?'tap':''}`.trim();
+  const onclick = id ? ` onclick="window.__detail('${id}')"` : '';
+  const more = id ? `<div class="hint" style="margin-top:6px;text-align:right">자세히 ›</div>` : '';
+  return `<div class="${cls}"${onclick}>${body}${action}${more}</div>`;
+}
+// ── 배차 상세보기 시트
+function won2(v){ return (Number(v)||0).toLocaleString(); }
+// 연락처: 전화번호를 tel: 링크로, 줄바꿈 유지(이름+여러 번호 대응)
+function telHtml(t){
+  return esc(String(t))
+    .replace(/(0\d{1,2}[-\s]?\d{3,4}[-\s]?\d{4})/g, m => `<a href="tel:${m.replace(/[^0-9]/g,'')}">${m}</a>`)
+    .replace(/\r?\n/g, '<br>');
+}
+function firstTel(t){ const m=String(t||'').match(/0\d{1,2}[-\s]?\d{3,4}[-\s]?\d{4}/); return m ? m[0].replace(/[^0-9]/g,'') : ''; }
+window.__detail = (id) => {
+  const rec = (window.__disp||{})[id]; if(!rec) return;
+  const d = rec.d, isAdmin = rec.isAdmin;
+  const cancelled = d.status==='회수', done = !!d.done, pre = d.status==='선배차';
+  let badge;
+  if (cancelled) badge = '<span class="badge" style="background:#3a1414;color:#ff8a8a">❌ 취소됨</span>';
+  else if (done) badge = '<span class="badge" style="background:#0e2a1f;color:#5fd39b">✅ 배차완료</span>';
+  else if (pre) badge = '<span class="badge pre">선배차</span>';
+  else badge = '<span class="badge ok">확정</span>';
+  const ioTxt = d.io==='I'?'수입':d.io==='O'?'수출':(d.io||'');
+  const sizeTxt = [d.size, d.spec].filter(Boolean).join(' / ');
+  const HTML = '\x00';  // 표시용: 이 값은 이미 HTML(이스케이프 완료)이라는 표식
+  const rows = [
+    ['📅','날짜', [d.date, d.time].filter(Boolean).join(' · ')],
+    ['🔁','수출입', ioTxt],
+    ['🚚','차량', d.vno],
+    ['🏭','상차지', d.load],
+    ['🎯','하차지', d.unload],
+    ['📍','주소', d.addr],
+    ['📦','규격', sizeTxt],
+    ['🔢','컨번호', d.cntr],
+    ['🚢','선사', d.line],
+    ['📄','B/L', d.bl],
+    ['☎️','연락처', d.tel ? HTML+telHtml(d.tel) : ''],
+    ['📝','비고', d.memo],
+    ['💰','하불', d.pay ? ('₩ ' + won2(d.pay)) : ''],
+  ].filter(r => r[2] != null && r[2] !== '');
+  const dl = rows.map(r => {
+    const v = String(r[2]);
+    const html = v[0]===HTML ? v.slice(1) : esc(v);
+    return `<dt>${r[0]} ${r[1]}</dt><dd>${html}</dd>`;
+  }).join('');
+  // 하단 액션 (길찾기는 실주소 우선)
+  const addr = d.addr || d.unload || d.load || '';
+  let acts = '';
+  if (addr) acts += `<a class="btn sub" href="https://map.kakao.com/link/search/${encodeURIComponent(addr)}" target="_blank" rel="noopener">🗺 ${d.addr?'주소':'하차지'} 길찾기</a>`;
+  const tel1 = firstTel(d.tel);
+  if (tel1) acts += `<a class="btn sub" href="tel:${tel1}">☎️ 화주에게 전화</a>`;
+  if (!isAdmin && !done && d.status==='확정') acts += `<button class="btn" style="background:var(--ok)" onclick="window.__done('${id}');window.__closeDetail()">✅ 배차완료 누르기</button>`;
+  if (isAdmin && !cancelled) acts += `<button class="btn sub" onclick="window.__recall('${id}');window.__closeDetail()">↩ 배차 회수(취소)</button>`;
+  $('detailPanel').innerHTML =
+    `<div class="sh-top"><span class="who">${esc(d.shipper||'(화주미정)')}</span>${badge}<button class="sh-x" onclick="window.__closeDetail()">✕</button></div>`+
+    `<dl class="dl">${dl}</dl>`+
+    (acts?`<div class="sh-act">${acts}</div>`:'');
+  $('detailSheet').classList.remove('hidden');
+};
+window.__closeDetail = () => $('detailSheet').classList.add('hidden');
+$('detailSheet').addEventListener('click', (e)=>{ if(e.target && e.target.id==='detailSheet') window.__closeDetail(); });
+window.__recall = async (id) => {
+  if (!confirm('이 배차를 회수(취소)할까요?\n기사 화면에서는 사라집니다.')) return;
+  try { await updateDoc(doc(db,'dispatches',id), { status:'회수', canceledAt: serverTimestamp() }); toast('배차를 회수했습니다'); }
+  catch(e){ toast('회수 실패: ' + e.message); }
+};
+window.__done = async (id) => {
+  try { await updateDoc(doc(db,'dispatches',id), { done:true, completedAt: serverTimestamp() }); toast('배차완료 처리됨 ✅'); }
+  catch(e){ toast('처리 실패: ' + e.message); }
+};
+
+// ── 아주 가벼운 오더 파서(붙여넣기용, 관리자 편의)
+function parsePaste(text){
+  const r={};
+  const cn=text.match(/\b([A-Z]{4}\d{7})\b/); if(cn) r.cntr=cn[1];
+  const tm=text.match(/(오전|오후)?\s*(\d{1,2})\s*시\s*(반|(\d{1,2})\s*분)?/);
+  if(tm){let h=+tm[2]; if(/오후/.test(tm[1]||'')&&h<12)h+=12; const mn=tm[3]==='반'?30:(tm[4]?+tm[4]:0); r.time=String(h).padStart(2,'0')+':'+String(mn).padStart(2,'0');}
+  else{const t2=text.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/); if(t2)r.time=t2[0];}
+  const md=text.match(/(\d{1,2})\s*\/\s*(\d{1,2})\s*일?/)||text.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일/);
+  const rel=/오늘|내일|모레|다음주|담주|이번주|요일/.test(text);
+  const base=new Date(); const fmt=(x)=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+  if(rel){ const add=(n)=>{const x=new Date(base);x.setDate(x.getDate()+n);return x;};
+    if(/모레/.test(text))r.date=fmt(add(2)); else if(/내일/.test(text))r.date=fmt(add(1)); else if(/오늘/.test(text))r.date=fmt(base);
+    const DK={일:0,월:1,화:2,수:3,목:4,금:5,토:6}; const wm=text.replace(/\d{1,2}\s*월\s*\d{1,2}\s*일\s*[월화수목금토일]\s*요일/g,' ').match(/(이번주|다음주|담주)?\s*([월화수목금토일])\s*요일/);
+    if(wm){const td=DK[wm[2]],cur=base.getDay(); if(wm[1]){const mon=add(-(cur===0?6:cur-1));const wk=/다음주|담주/.test(wm[1])?7:0;const x=new Date(mon);x.setDate(x.getDate()+wk+(td===0?6:td-1));r.date=fmt(x);} else {let g=(td-cur+7)%7;if(!g)g=7;r.date=fmt(add(g));}}
+  } else if(md){ r.date=base.getFullYear()+'-'+String(md[1]).padStart(2,'0')+'-'+String(md[2]).padStart(2,'0'); }
+  const sh=text.match(/화주(?:명)?\s*[:\-]?\s*([가-힣A-Za-z0-9()·&]{2,})/); if(sh)r.shipper=sh[1];
+  return r;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>배차일보</title>
+<style>
+  :root{
+    --bg:#eef1f6; --panel:#fff; --line:#e2e7ef; --text:#1a2233; --muted:#6a7789;
+    --accent:#2563eb; --accent-soft:#e8f0fe; --ok:#15a34a; --bad:#dc2626; --warn:#e08600; --gray:#9aa6b6;
+    --shadow:0 1px 3px rgba(20,30,50,.08),0 1px 2px rgba(20,30,50,.05);
+    --io-i:#0369a1; --io-i-bg:#e0f2fe; --io-o:#9333ea; --io-o-bg:#f3e8ff;
+    --usr:#0d7a53; --usr-bg:#e5f6ee;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#0e131e;--panel:#161c29;--line:#28303f;--text:#e6ebf3;--muted:#8b97ad;
+      --accent:#5b8cff;--accent-soft:#1b2740;--io-i-bg:#0c2233;--io-o-bg:#241033;--usr-bg:#0e2a1f;--shadow:none;--gray:#5a6675;}
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--text);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+  header{position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+  .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:9px 14px}
+  .bar h1{font-size:16px;margin:0 6px 0 0;font-weight:800;white-space:nowrap}
+  .tabs{display:flex;gap:3px;background:var(--bg);border-radius:9px;padding:3px}
+  .tabs button{border:0;background:transparent;color:var(--muted);padding:6px 13px;border-radius:7px;cursor:pointer;font-weight:700;font-size:13px}
+  .tabs button.on{background:var(--panel);color:var(--accent);box-shadow:var(--shadow)}
+  .grow{flex:1}
+  input,select,textarea{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 10px;outline:none}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+  button.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:700}
+  button.btn:hover{border-color:var(--accent);color:var(--accent)}
+  button.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+  button.btn.pri:hover{color:#fff;filter:brightness(1.05)}
+  button.btn.sm{padding:4px 9px;font-size:12.5px}
+  .chk{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;cursor:pointer;user-select:none}
+  main{padding:12px 14px 60px;max-width:1400px;margin:0 auto}
+  .view{display:none} .view.on{display:block}
+  .meta{color:var(--muted);font-size:12.5px;margin:2px 2px 10px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .meta b{color:var(--text)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+  /* 당일배차 */
+  .dayhead{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  .dayhead .d{font-size:20px;font-weight:800}
+  .dayhead .dow{color:var(--muted);font-weight:600;font-size:14px}
+  .tablewrap{overflow:auto;border-radius:12px}
+  table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap}
+  th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line)}
+  th{position:sticky;top:0;background:var(--panel);z-index:5;font-weight:700;font-size:12px;color:var(--muted);cursor:pointer}
+  tbody tr:hover{background:var(--accent-soft)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  td.act{white-space:nowrap}
+  .pill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11.5px;font-weight:700}
+  .io-I{color:var(--io-i);background:var(--io-i-bg)} .io-O{color:var(--io-o);background:var(--io-o-bg)}
+  .tag-user{color:var(--usr);background:var(--usr-bg);padding:0 6px;border-radius:5px;font-size:10.5px;font-weight:800;margin-left:6px}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+  .cbadge{margin-left:5px;font-size:11px;font-weight:800}
+  .cbadge.ok{color:var(--ok)} .cbadge.bad{color:var(--bad)} .cbadge.warn{color:var(--warn)} .cbadge.na{color:var(--gray)}
+  .amt-hide .amt{display:none !important}
+  .empty{padding:44px 16px;text-align:center;color:var(--muted)}
+  .empty b{display:block;font-size:16px;color:var(--text);margin-bottom:6px}
+  /* form */
+  .formgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px 16px;padding:16px}
+  .fld{display:flex;flex-direction:column;gap:4px;position:relative}
+  .fld label{font-size:12px;color:var(--muted);font-weight:700}
+  .fld.wide{grid-column:1/-1}
+  .fld .hint{font-size:11.5px;color:var(--muted)}
+  .conf-low{background:#fff8e1;border-color:var(--warn)!important}
+  @media (prefers-color-scheme:dark){.conf-low{background:#2a2410}}
+  .sug{position:absolute;top:100%;left:0;right:0;z-index:40;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(20,30,50,.18);margin-top:2px;max-height:230px;overflow:auto;display:none}
+  .sug.open{display:block}
+  .sug div{padding:7px 10px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;gap:8px}
+  .sug div:hover,.sug div.hi{background:var(--accent-soft)}
+  .sug div small{color:var(--muted)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .chips button{border:1px solid var(--line);background:var(--bg);border-radius:20px;padding:4px 12px;font-size:13px;cursor:pointer;font-weight:600}
+  .chips button:hover{border-color:var(--accent);color:var(--accent)}
+  .chips button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .formsec{grid-column:1/-1;font-weight:800;font-size:13px;color:var(--accent);border-top:2px solid var(--line);padding-top:12px;margin-top:4px}
+  .formsec small{color:var(--muted);font-weight:600;margin-left:6px}
+  .pill.miss{color:var(--warn);background:#fff4e0;font-weight:800}
+  @media (prefers-color-scheme:dark){.pill.miss{background:#2a2010}}
+  .cntrbox{display:flex;flex-direction:column;gap:6px}
+  .cntrrow{display:flex;gap:8px;align-items:center}
+  .cntrrow input{flex:1;text-transform:uppercase;font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.5px}
+  .cntrmsg{font-size:12px;font-weight:700;min-width:150px}
+  .cntrmsg.ok{color:var(--ok)} .cntrmsg.bad{color:var(--bad)} .cntrmsg.warn{color:var(--warn)} .cntrmsg.na{color:var(--gray)}
+  .drop{border:2px dashed var(--line);border-radius:12px;padding:14px;text-align:center;color:var(--muted);cursor:pointer;background:var(--bg)}
+  .drop.hot{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+  .paste{width:100%;min-height:70px;resize:vertical}
+  .formbar{display:flex;gap:10px;justify-content:flex-end;padding:0 16px 16px;flex-wrap:wrap}
+  .note{margin:0 16px 12px;padding:9px 12px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font-size:12.5px}
+  .note.warn{background:#fff4e0;color:#a35a00}
+  @media (prefers-color-scheme:dark){.note.warn{background:#2a2010;color:#e0a75a}}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .fdrop{position:relative}
+  .fmenu{position:absolute;top:calc(100% + 4px);left:0;z-index:30;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(20,30,50,.16);padding:8px;min-width:170px;max-height:300px;overflow:auto;display:none}
+  .fmenu.open{display:block}
+  .fmenu label{display:flex;gap:8px;align-items:center;padding:4px 6px;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap}
+  .fmenu label:hover{background:var(--bg)}
+  .cards{display:none}
+  @media (max-width:860px){
+    .tablewrap table{display:none}
+    .cards{display:grid;gap:10px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--shadow)}
+    .card .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+    .card .who{font-weight:800;font-size:15px}
+    .card .r{color:var(--muted);font-size:12.5px;margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 12px}
+    .formgrid{grid-template-columns:1fr 1fr}
+    .fld.wide{grid-column:1/-1}
+  }
+  /* 폰: 오더 입력 폼을 한 열로(가로 한 화면에 딱 맞게) */
+  @media (max-width:600px){
+    .bar{padding:8px 10px}
+    main{padding:10px 10px 60px}
+    .formgrid{grid-template-columns:1fr;gap:10px;padding:12px}
+    .formbar{padding:0 12px 14px}
+    .formbar .btn{flex:1;padding:11px 12px;font-size:15px}
+    .cntrrow{flex-wrap:wrap}
+    .cntrrow input{flex:1 1 100%}
+    .cntrmsg{min-width:0;flex:1 1 100%}
+    .sug{max-height:180px}
+  }
+</style>
+</head>
+<body class="amt-hide">
+<header>
+  <div class="bar">
+    <h1>배차일보</h1>
+    <div class="tabs" id="tabs">
+      <button data-v="day" class="on">당일배차</button>
+      <button data-v="input">＋ 입력</button>
+      <button data-v="sum">요약</button>
+      <button data-v="find">조회</button>
+    </div>
+    <span class="grow"></span>
+    <label class="chk"><input type="checkbox" id="amt"> 금액</label>
+    <span id="storeinfo" class="chk" style="cursor:default"></span>
+  </div>
+</header>
+<main>
+  <!-- 당일배차 -->
+  <section class="view on" id="v-day">
+    <div class="dayhead">
+      <button class="btn sm" id="dprev">◀</button>
+      <input type="date" id="dsel">
+      <button class="btn sm" id="dnext">▶</button>
+      <button class="btn sm" id="dlast">최근일</button>
+      <span class="d" id="dbig"></span><span class="dow" id="ddow"></span>
+      <span class="grow"></span>
+      <span class="meta" id="daymeta" style="margin:0"></span>
+      <button class="btn pri" id="addBtn">＋ 새 배차</button>
+    </div>
+    <div class="panel tablewrap">
+      <table id="dtbl"><thead></thead><tbody></tbody></table>
+      <div class="cards" id="dcards"></div>
+      <div class="empty" id="dempty" style="display:none"><b>이 날짜에 배차가 없습니다</b>＋ 새 배차로 추가하세요</div>
+    </div>
+  </section>
+
+  <!-- 입력 -->
+  <section class="view" id="v-input">
+    <div class="panel" style="margin-bottom:14px">
+      <div style="padding:14px 16px 6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <b>빠른 입력</b><span class="hint" style="color:var(--muted)">메신저 내용을 그대로 붙여넣거나, D/O·PDF를 올리면 자동으로 아래 폼을 채웁니다.</span>
+      </div>
+      <div style="padding:0 16px 14px;display:grid;grid-template-columns:1fr;gap:10px">
+        <textarea class="paste" id="pasteBox" placeholder="여기에 메신저 내용을 붙여넣고 [자동 파싱] — 필터 없이 통째로 붙여도 됩니다."></textarea>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn pri" id="parseBtn">자동 파싱</button>
+          <div class="drop grow" id="drop">📄 D/O · PDF · 워드(.docx) · 이미지 파일을 여기에 끌어다 놓기 (또는 클릭)</div>
+          <input type="file" id="file" accept=".pdf,.docx,image/*,.txt" style="display:none">
+        </div>
+        <div id="parseInfo" class="hint" style="color:var(--muted)"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="note" id="editNote" style="display:none"></div>
+      <div class="formgrid" id="form"></div>
+      <div class="formbar">
+        <span class="grow hint" style="color:var(--muted)" id="formStatus"></span>
+        <button class="btn" id="clearForm">폼 비우기</button>
+        <button class="btn pri" id="saveBtn">저장</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 요약 -->
+  <section class="view" id="v-sum">
+    <div class="meta">
+      <span>기준</span>
+      <select id="grpby">
+        <option value="vno">차량번호</option><option value="date">날짜</option>
+        <option value="shipper">화주</option><option value="billto">청구처</option>
+        <option value="line">선사</option><option value="div">구분(자/용차)</option>
+      </select>
+      <input type="date" id="sfrom" class="sm"><span>~</span><input type="date" id="sto">
+      <span class="hint">기간 내 집계</span>
+    </div>
+    <div class="panel tablewrap"><table id="stbl"><thead></thead><tbody></tbody></table></div>
+  </section>
+
+  <!-- 조회 -->
+  <section class="view" id="v-find">
+    <div class="bar" style="padding:0 0 10px">
+      <input id="q" placeholder="검색 — 화주·지역·차량·컨번호·B/L (예: 청주SDI)" style="flex:1;max-width:380px">
+      <input type="date" id="ffrom"><span>~</span><input type="date" id="fto">
+      <button class="btn sm" id="csv">CSV</button>
+      <button class="btn sm" id="aliasBtn">별칭 관리</button>
+      <button class="btn sm" id="freset">초기화</button>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="meta" id="fmeta"></div>
+    <div class="panel tablewrap"><table id="ftbl"><thead></thead><tbody></tbody></table><div class="cards" id="fcards"></div></div>
+    <div style="text-align:center;padding:14px" id="ffoot"></div>
+  </section>
+</main>
+<script src="data.js"></script>
+<script>
+/* ============ 데이터 ============ */
+const D=window.__DISPATCH__, COL=D.columns, LAB=D.labels;
+/* 경량 배포용 사전(dictionary) 인코딩이면 원본 rows로 복원 (없으면 그대로) */
+if(D.dicts){const DC=D.dictCols,DI=D.dicts,CI=DC.map(c=>COL.indexOf(c)),N=COL.length;
+  D.rows=D.rows.map(r=>{const o=r.slice();while(o.length<N)o.push(null);
+    DC.forEach((c,k)=>{const j=CI[k],v=o[j];o[j]=(v==null?null:DI[c][v]);});return o;});}
+const LKEY='bcm_entries_v1', AKEY='bcm_alias_v1';
+const won=n=>n==null||n===''?'':Number(n).toLocaleString('ko-KR');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const DOW=['일','월','화','수','목','금','토'];
+const srcTag=r=>r._src==='user'?(r._over?'<span class="tag-user">수정</span>':'<span class="tag-user">신규</span>'):'';
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+
+let BASE=D.rows.map((r,i)=>{const o={_src:'base',_id:'b'+i};COL.forEach((c,j)=>o[c]=r[j]);return o;});
+let USER=load(LKEY,[]);
+let ALIAS=load(AKEY,{shipper:{},region:{'청주':['오창'],'안산':['반월']}}); // 지역 별칭 예시 seed
+let ALL=[];
+function rebuild(){
+  // USER 항목은 신규이거나, 기존(base) 건을 덮어쓰는 수정본(_over)일 수 있다.
+  const over=new Set(USER.filter(u=>u._over).map(u=>u._over));           // 수정/삭제된 base id
+  const tomb=new Set(USER.filter(u=>u._deleted).map(u=>u._over));        // 삭제된 base id
+  ALL=BASE.filter(b=>!over.has(b._id))                                    // 덮인 base 제외
+        .concat(USER.filter(u=>!u._deleted));                            // 삭제표식 제외
+  buildMasters();buildTokens();
+}
+function load(k,def){try{return JSON.parse(localStorage.getItem(k))??def;}catch(e){return def;}}
+function saveUser(){localStorage.setItem(LKEY,JSON.stringify(USER));rebuild();refreshStore();}
+function saveAlias(){localStorage.setItem(AKEY,JSON.stringify(ALIAS));buildTokens();}
+
+/* ============ ISO 6346 ============ */
+const CV={A:10,B:12,C:13,D:14,E:15,F:16,G:17,H:18,I:19,J:20,K:21,L:23,M:24,N:25,O:26,P:27,Q:28,R:29,S:30,T:31,U:32,V:34,W:35,X:36,Y:37,Z:38};
+function cntrState(s){ // '' na warn ok bad
+  s=(s||'').toString().toUpperCase().replace(/\s+/g,'');
+  if(s.length===0)return {st:'',msg:''};
+  if(s.length<=10)return {st:'na',msg:'입력 중…'};
+  if(!/^[A-Z]{4}[0-9]{7}$/.test(s))return {st:'warn',msg:'형식: 영문4 + 숫자7'};
+  let sum=0;for(let i=0;i<10;i++){const c=s[i];const v=i<4?CV[c]:+c;sum+=v*Math.pow(2,i);}
+  let cd=sum%11;if(cd===10)cd=0;
+  return cd===+s[10]?{st:'ok',msg:'✓ 정상'}:{st:'bad',msg:'✕ 번호를 다시 확인하세요'};
+}
+function cntrCell(v){
+  if(v==null||v==='')return '';
+  return String(v).split(/[\n,]/).map(x=>x.trim()).filter(Boolean).map(p=>{
+    const {st}=cntrState(p);const sym=st==='ok'?'✓':st==='bad'?'✕':st==='warn'?'!':'';
+    return `<span class="mono">${esc(p)}</span>${sym?`<span class="cbadge ${st}">${sym}</span>`:''}`;
+  }).join('<br>');
+}
+
+/* ============ 마스터 ============ */
+let M={};
+function topKey(map){let best=null,n=-1;for(const [k,c] of map)if(c>n){n=c;best=k;}return best;}
+function buildMasters(){
+  const veh=new Map(),shp=new Map(),lines=new Map(),loads=new Map(),unloads=new Map(),bills=new Map();
+  const inc=(m,k)=>{if(k==null||k==='')return;m.set(k,(m.get(k)||0)+1);};
+  for(const r of ALL){
+    // vehicle
+    if(r.vno!=null&&r.vno!==''){const key=String(r.vno);let v=veh.get(key);if(!v){v={key,div:new Map(),chassis:new Map(),n:0};veh.set(key,v);}v.n++;inc(v.div,r.div);inc(v.chassis,r.chassis);}
+    // shipper
+    if(r.shipper){let s=shp.get(r.shipper);if(!s){s={name:r.shipper,addr:new Map(),tel:new Map(),bill:new Map(),n:0};shp.set(r.shipper,s);}s.n++;inc(s.addr,r.addr);inc(s.tel,r.tel);inc(s.bill,r.billto);}
+    inc(lines,r.line);inc(loads,r.load);inc(unloads,r.unload);inc(bills,r.billto);
+  }
+  M={veh,shp,lines,loads,unloads,bills};
+}
+function vehInfo(key){const v=M.veh.get(String(key));if(!v)return null;
+  return {div:topKey(v.div),chassis:[...v.chassis.entries()].sort((a,b)=>b[1]-a[1]).slice(0,4).map(x=>x[0]),n:v.n};}
+function shpInfo(name){const s=M.shp.get(name);if(!s)return null;
+  return {addrs:[...s.addr.entries()].sort((a,b)=>b[1]-a[1]).map(x=>x[0]),tel:topKey(s.tel),bill:topKey(s.bill),n:s.n};}
+// 화주 정규화: 대소문자·공백 무시, 1글자 오타 허용 → 마스터 표준명 반환(없으면 null)
+function canonShipper(name){
+  if(!name)return null;if(M.shp.has(name))return name;
+  const n=name.toLowerCase().replace(/\s/g,'');
+  for(const k of M.shp.keys()){if(k.toLowerCase().replace(/\s/g,'')===n)return k;}
+  if(name.length>=5)for(const k of M.shp.keys()){if(k.length===name.length){let d=0;for(let i=0;i<k.length;i++)if(k[i]!==name[i]){if(++d>1)break;}if(d===1)return k;}} // 짧은 이름 오교정 방지(5자+)
+  return null;
+}
+
+/* ============ 지역토큰 + 검색토큰(별칭 곱) ============ */
+function regionTokens(addr){
+  if(!addr)return [];
+  const out=new Set();
+  for(const w of String(addr).split(/\s+/)){
+    const m=w.match(/^(.+?)(특별자치시|특별자치도|특별시|광역시|시|군|구|읍|면|동|리|도)$/);
+    if(m&&m[1].length>=1){out.add(m[1]);out.add(w);}
+  }
+  return [...out];
+}
+let TOK=new Map(); // _id -> lowercased blob
+function buildTokens(){
+  TOK=new Map();
+  for(const r of ALL){
+    const regs=new Set(regionTokens(r.addr));
+    // 지역 별칭 확장
+    for(const rg of [...regs]){(ALIAS.region[rg]||[]).forEach(a=>regs.add(a));}
+    const names=new Set([r.shipper].filter(Boolean));
+    (ALIAS.shipper[r.shipper]||[]).forEach(a=>names.add(a));
+    const parts=[r.date,r.vno,r.shipper,r.billto,r.line,r.load,r.unload,r.bl,r.do,r.cntr,r.addr];
+    for(const n of names)for(const rg of regs){parts.push(rg+''+n);parts.push(n+''+rg);}
+    parts.push(...regs,...names);
+    TOK.set(r._id,parts.filter(Boolean).join(' ').toLowerCase());
+  }
+}
+function matchQuery(r,q){
+  if(!q)return true;
+  const blob=TOK.get(r._id)||'';
+  return q.toLowerCase().split(/\s+/).filter(Boolean).every(t=>blob.includes(t));
+}
+
+/* ============ 초기화 ============ */
+rebuild();
+function refreshStore(){document.getElementById('storeinfo').textContent=`내 입력 ${USER.length}건 · 전체 ${ALL.length.toLocaleString()}건`;}
+refreshStore();
+const allDates=ALL.map(r=>r.date).filter(Boolean).sort();
+let selDate=allDates[allDates.length-1]||today();
+
+/* ============ 당일배차 ============ */
+const DSHOW=[['time','시간'],['io','수출입'],['vno','차량'],['div','구분'],['shipper','화주'],['load','상차'],['unload','하차'],['spec','규격'],['cntr','컨번호'],['bl','B/L'],['charge','청구'],['pay','하불']];
+function specOf(r){return r.spec||[r.size,r.type].filter(Boolean).join('');}
+function renderDay(){
+  document.getElementById('dsel').value=selDate;
+  const dt=new Date(selDate+'T00:00');
+  document.getElementById('dbig').textContent=selDate;
+  document.getElementById('ddow').textContent='('+DOW[dt.getDay()]+')';
+  let rows=ALL.filter(r=>r.date===selDate).sort((a,b)=>String(a.time||'').localeCompare(String(b.time||'')));
+  const c=rows.reduce((s,r)=>s+(+r.charge||0),0),p=rows.reduce((s,r)=>s+(+r.pay||0),0);
+  const miss=rows.filter(r=>!r.vno).length;
+  document.getElementById('daymeta').innerHTML=`<span><b>${rows.length}</b>건</span>${miss?`<span style="color:var(--warn);font-weight:700">미배차 ${miss}</span>`:''}<span class="amt">청구 <b>${won(c)}</b></span><span class="amt">하불 <b>${won(p)}</b></span>`;
+  const thead=document.querySelector('#dtbl thead');
+  thead.innerHTML='<tr>'+DSHOW.map(([k,l])=>`<th class="${k==='charge'||k==='pay'?'amt num':''}">${l}</th>`).join('')+'<th></th></tr>';
+  const tb=document.querySelector('#dtbl tbody');
+  document.getElementById('dempty').style.display=rows.length?'none':'';
+  tb.innerHTML=rows.map(r=>{
+    const cells=DSHOW.map(([k])=>{
+      if(k==='io')return `<td><span class="pill io-${r.io}">${r.io==='I'?'수입':r.io==='O'?'수출':esc(r.io)}</span></td>`;
+      if(k==='vno')return r.vno?`<td>${esc(r.vno)}</td>`:`<td><span class="pill miss">미배차</span></td>`;
+      if(k==='cntr')return `<td>${cntrCell(r.cntr)}</td>`;
+      if(k==='spec')return `<td>${esc(specOf(r))}</td>`;
+      if(k==='charge'||k==='pay')return `<td class="amt num">${won(r[k])}</td>`;
+      if(k==='shipper')return `<td>${esc(r.shipper)}${srcTag(r)}</td>`;
+      return `<td>${esc(r[k])}</td>`;
+    }).join('');
+    const disp=!r.vno?`<button class="btn sm pri" data-edit="${r._id}">배차</button> `:'';
+    const act=`<td class="act">${disp}<button class="btn sm" data-edit="${r._id}">편집</button> <button class="btn sm" data-del="${r._id}">삭제</button> <button class="btn sm" data-dup="${r._id}">복제</button></td>`;
+    return `<tr>${cells}${act}</tr>`;
+  }).join('');
+  document.getElementById('dcards').innerHTML=rows.map(r=>`<div class="card"><div class="top"><span class="who">${esc(r.shipper)}${srcTag(r)}</span><span class="pill io-${r.io}">${r.io==='I'?'수입':'수출'}</span></div>
+    <div class="r"><span>🕐 ${esc(r.time||'-')}</span><span>🚛 ${r.vno?esc(r.vno)+' ('+esc(r.div||'')+')':'<span class="pill miss">미배차</span>'}</span><span>${esc(specOf(r))}</span></div>
+    <div class="r"><span>${esc(r.load)} → ${esc(r.unload)}</span></div><div class="r">${cntrCell(r.cntr)}</div>
+    <div class="r amt"><span>청구 ${won(r.charge)}</span><span>하불 ${won(r.pay)}</span></div>
+    <div class="r">${!r.vno?`<button class="btn sm pri" data-edit="${r._id}">배차</button> `:''}<button class="btn sm" data-edit="${r._id}">편집</button> <button class="btn sm" data-del="${r._id}">삭제</button> <button class="btn sm" data-dup="${r._id}">복제</button></div></div>`).join('');
+  bindRowActions();
+}
+function bindRowActions(){
+  document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openForm(ALL.find(x=>x._id===b.dataset.edit)));
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>delRow(b.dataset.del));
+  document.querySelectorAll('[data-dup]').forEach(b=>b.onclick=()=>{const r=ALL.find(x=>x._id===b.dataset.dup);openForm(Object.assign({},r,{_src:'user',_id:null,_over:null,_deleted:false}));});
+}
+function delRow(id){
+  if(!confirm('삭제할까요?'))return;
+  if(id.startsWith('u')){USER=USER.filter(x=>x._id!==id);}          // 내 입력 삭제
+  else{USER.push({_src:'user',_id:'u'+Date.now(),_over:id,_deleted:true});} // 기존 건은 삭제표식(원본은 보존)
+  saveUser();renderDay();
+}
+function shiftDay(n){const d=new Date(selDate+'T00:00');d.setDate(d.getDate()+n);
+  selDate=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); // UTC 변환(toISOString) 쓰면 KST에서 하루 밀림
+  renderDay();}
+document.getElementById('dprev').onclick=()=>shiftDay(-1);
+document.getElementById('dnext').onclick=()=>shiftDay(1);
+document.getElementById('dlast').onclick=()=>{selDate=allDates[allDates.length-1];renderDay();};
+document.getElementById('dsel').onchange=e=>{selDate=e.target.value;renderDay();};
+document.getElementById('addBtn').onclick=()=>{openForm(null);};
+
+/* ============ 입력 폼 ============ */
+const FIELDS=[
+  // ── 배차 등록 (선행) ──
+  {sec:'등록',k:'date',l:'날짜',t:'date'},{k:'time',l:'시간',t:'time'},
+  {k:'io',l:'수출입',t:'sel',opts:[['I','수입'],['O','수출']]},
+  {k:'shipper',l:'화주',t:'shipper'},{k:'billto',l:'청구처',t:'ac',src:'bills'},
+  {k:'addr',l:'주소 (＝ 하차지)',t:'addr',w:1},{k:'tel',l:'연락처',t:'text',w:1},
+  {k:'line',l:'선사',t:'ac',src:'lines'},{k:'load',l:'상차지',t:'ac',src:'loads'},
+  {k:'spec',l:'규격',t:'spec',w:1},
+  {k:'cntr',l:'컨번호',t:'cntr',w:1},
+  {k:'bl',l:'B/L or B/K',t:'text'},{k:'do',l:'D/O',t:'text'},
+  {k:'selfc',l:'자가',t:'bool'},{k:'customs',l:'통관',t:'bool'},{k:'seal',l:'실봉인번호',t:'text'},
+  {k:'tare',l:'테어(숫자)',t:'num'},{k:'memo',l:'비고/메모',t:'text',w:1},
+  {k:'charge',l:'청구예정',t:'num'},
+  // ── 배차 (차량 배정, 후행) ──
+  {sec:'배차',k:'div',l:'차량구분',t:'sel',opts:[['자차','자차'],['용차','용차']]},
+  {k:'vno',l:'차량번호(뒷4자리/용차사)',t:'vno'},{k:'chassis',l:'샤시번호',t:'chassis'},
+  {k:'pay',l:'하불예정',t:'num'},
+];
+const SPEC_QUICK=[['20','20',''],['40H','40','H']]; // 기본 빠른 선택
+const SIZES=[['20','20'],['40','40'],['45','45']], TYPES=[['','-'],['D','D'],['H','H'],['RE','RE'],['FR','FR'],['OT','OT']];
+let editing=null;
+function openForm(rec){
+  const en=document.getElementById('editNote');en.className='note';
+  if(!rec){editing={_src:'user',_id:null,date:selDate,io:'I',size:'40',type:'H'};en.style.display='none';}
+  else if(rec._src==='base'){editing=Object.assign({},rec,{_src:'user',_id:null,_over:rec._id,_deleted:false});
+    en.style.display='';en.textContent='기존 배차일보 건을 편집합니다 — 원본은 보존되고 수정본으로 저장됩니다.';}
+  else if(rec._id){editing=Object.assign({},rec);en.style.display='';en.textContent='내 입력 건을 편집 중입니다.';}
+  else{editing=Object.assign({},rec);en.style.display='';en.textContent='복제해서 새 건으로 입력합니다.';}
+  buildFormDom();document.getElementById('saveBtn').textContent='저장';switchTab('input');
+}
+const AC_FIELDS=['vno','shipper','billto','line','load'];
+function buildFormDom(){
+  const g=document.getElementById('form');g.innerHTML='';
+  let curSec=null;
+  for(const f of FIELDS){
+    if(f.sec&&f.sec!==curSec){curSec=f.sec;
+      const h=document.createElement('div');h.className='formsec';
+      h.innerHTML=f.sec==='등록'?'① 배차 등록 <small>먼저 등록</small>':'② 배차 — 차량 배정 <small>나중에 해도 됨 (비우면 “미배차”)</small>';
+      g.appendChild(h);
+    }
+    const wrap=document.createElement('div');wrap.className='fld'+(f.w?' wide':'');
+    const val=editing[f.k];
+    // 규격: 20 / 40H 빠른선택 + 기타
+    if(f.t==='spec'){
+      const isQ=SPEC_QUICK.some(([,s,t])=>s===(editing.size||'')&&t===(editing.type||''));
+      wrap.innerHTML=`<label>${f.l}</label><div class="chips" id="specq">${
+        SPEC_QUICK.map(([lab,s,t])=>`<button type="button" data-s="${s}" data-t="${t}" class="${s===(editing.size||'')&&t===(editing.type||'')?'on':''}">${lab}</button>`).join('')
+      }<button type="button" id="specmore" class="${isQ?'':'on'}">다른 규격 ▾</button></div>
+      <div id="specother" style="display:${isQ?'none':'flex'};gap:8px;margin-top:6px">
+        <select id="specsize">${SIZES.map(([v,t])=>`<option value="${v}" ${editing.size===v?'selected':''}>${t}피트</option>`).join('')}</select>
+        <select id="spectype">${TYPES.map(([v,t])=>`<option value="${v}" ${(editing.type||'')===v?'selected':''}>${t}</option>`).join('')}</select></div>`;
+      g.appendChild(wrap);
+      const setSpec=(s,t)=>{editing.size=s;editing.type=t;buildFormDom();};
+      wrap.querySelectorAll('#specq [data-s]').forEach(b=>b.onclick=()=>setSpec(b.dataset.s,b.dataset.t));
+      wrap.querySelector('#specmore').onclick=()=>{document.getElementById('specother').style.display='flex';};
+      wrap.querySelector('#specsize').onchange=e=>{editing.size=e.target.value;};
+      wrap.querySelector('#spectype').onchange=e=>{editing.type=e.target.value;};
+      continue;
+    }
+    // 주소 (= 하차지). 특이사항일 때만 하차지 별도
+    if(f.t==='addr'){
+      const diff=editing.unload&&editing.unload!==editing.addr;
+      wrap.innerHTML=`<label>${f.l}</label>
+        <input data-k="addr" type="text" value="${esc(editing.addr||'')}" autocomplete="off">
+        <label class="chk" style="margin-top:5px"><input type="checkbox" id="unloadDiff" ${diff?'checked':''}> 하차지가 주소와 다름 (특이사항)</label>
+        <input id="unloadInp" type="text" placeholder="하차지 따로 입력" value="${esc(diff?editing.unload:'')}" style="display:${diff?'block':'none'};margin-top:4px" autocomplete="off">`;
+      g.appendChild(wrap);
+      const a=wrap.querySelector('[data-k="addr"]');a.oninput=()=>{editing.addr=a.value;};
+      const df=wrap.querySelector('#unloadDiff'),ui=wrap.querySelector('#unloadInp');
+      df.onchange=()=>{ui.style.display=df.checked?'block':'none';if(!df.checked){editing.unload='';ui.value='';}};
+      ui.oninput=()=>{editing.unload=ui.value;};
+      continue;
+    }
+    let ctl='';
+    if(f.t==='sel')ctl=`<select data-k="${f.k}"><option value="">-</option>${f.opts.map(([v,t])=>`<option value="${v}" ${val===v?'selected':''}>${t}</option>`).join('')}</select>`;
+    else if(f.t==='bool')ctl=`<label class="chk"><input type="checkbox" data-k="${f.k}" ${val?'checked':''}> 예</label>`;
+    else if(f.t==='cntr')ctl=`<div class="cntrbox" id="cntrbox"></div>`;
+    else ctl=`<input data-k="${f.k}" type="${f.t==='date'?'date':f.t==='time'?'time':f.t==='num'?'number':'text'}" value="${val==null?'':esc(val)}" autocomplete="off">`;
+    wrap.innerHTML=`<label>${f.l}</label>${ctl}<div class="sug"></div>`;
+    g.appendChild(wrap);
+    const inp=wrap.querySelector('[data-k]');
+    if(inp&&f.t!=='bool'&&f.t!=='sel'&&f.t!=='cntr'){
+      const sug=wrap.querySelector('.sug');
+      inp.oninput=()=>{editing[f.k]=inp.value;if(AC_FIELDS.includes(f.k))suggest(f,inp,sug);};
+      inp.onfocus=()=>{if(AC_FIELDS.includes(f.k))suggest(f,inp,sug);};
+      inp.onblur=()=>setTimeout(()=>sug.classList.remove('open'),160);
+      if(AC_FIELDS.includes(f.k))inp.onkeydown=e=>sugKey(e,f.k,sug);
+    } else if(inp){inp.onchange=()=>{editing[f.k]=f.t==='bool'?inp.checked:inp.value;};}
+  }
+  renderCntr();
+}
+function setField(k,v){editing[k]=v;const el=document.querySelector(`#form [data-k="${k}"]`);if(el){if(el.type==='checkbox')el.checked=!!v;else el.value=v==null?'':v;}}
+/* 자동완성 */
+function suggest(f,inp,box){
+  const q=(inp.value||'').trim().toLowerCase();
+  let items=[];
+  if(f.k==='vno'){
+    const arr=[...M.veh.values()];
+    items=arr.filter(v=>v.key.toLowerCase().includes(q)).sort((a,b)=>b.n-a.n).slice(0,8)
+      .map(v=>({val:v.key,sub:`${topKey(v.div)||''} · ${v.n}건`}));
+  }else if(f.k==='shipper'){
+    items=[...M.shp.values()].filter(s=>s.name.toLowerCase().includes(q)).sort((a,b)=>b.n-a.n).slice(0,8)
+      .map(s=>({val:s.name,sub:`${s.n}건`}));
+  }else{
+    const m=M[f.src];if(m)items=[...m.keys()].filter(k=>String(k).toLowerCase().includes(q)).slice(0,8).map(k=>({val:k,sub:''}));
+  }
+  if(!items.length||!q){box.classList.remove('open');box._items=null;return;}
+  box._items=items;box._hi=0;
+  box.innerHTML=items.map((it,i)=>`<div data-i="${i}" data-val="${esc(it.val)}" class="${i===0?'hi':''}">${esc(it.val)}<small>${esc(it.sub)}</small></div>`).join('');
+  box.classList.add('open');
+  box.querySelectorAll('div').forEach(d=>d.onmousedown=e=>{e.preventDefault();pick(f.k,d.dataset.val);box.classList.remove('open');});
+}
+function sugHi(box,dir){
+  if(!box._items||!box._items.length)return;
+  box._hi=(box._hi+dir+box._items.length)%box._items.length;
+  box.querySelectorAll('div').forEach((d,i)=>d.classList.toggle('hi',i===box._hi));
+  const el=box.querySelector('.hi');if(el)el.scrollIntoView({block:'nearest'});
+}
+function sugKey(e,k,box){
+  if(!box.classList.contains('open')||!box._items)return;
+  if(e.key==='ArrowDown'){e.preventDefault();sugHi(box,1);}
+  else if(e.key==='ArrowUp'){e.preventDefault();sugHi(box,-1);}
+  else if(e.key==='Enter'){
+    const i=box._hi>=0?box._hi:0;e.preventDefault();pick(k,box._items[i].val);box.classList.remove('open');
+  }
+  else if(e.key==='Tab'){
+    const i=box._hi>=0?box._hi:0;pick(k,box._items[i].val);box.classList.remove('open');
+  }
+  else if(e.key==='Escape'){box.classList.remove('open');}
+}
+function pick(k,val){
+  setField(k,val);
+  if(k==='vno'){const vi=vehInfo(val);if(vi){if(vi.div)setField('div',vi.div);chassisChips(vi.chassis);}}
+  if(k==='shipper'){const si=shpInfo(val);if(si){if(si.addrs.length){setField('addr',si.addrs[0]);}if(si.tel)setField('tel',si.tel);if(si.bill)setField('billto',si.bill);
+    if(si.addrs.length>1)addrChips(si.addrs);}}
+}
+function chassisChips(list){
+  let host=document.getElementById('chassisChips');
+  const fld=[...document.querySelectorAll('#form .fld')].find(x=>x.querySelector('[data-k="chassis"]'));
+  if(!fld)return;host&&host.remove();
+  if(!list||!list.length)return;
+  host=document.createElement('div');host.className='chips';host.id='chassisChips';host.style.marginTop='4px';
+  host.innerHTML='<span class="hint" style="color:var(--muted)">최근:</span>'+list.map(c=>`<button type="button">${esc(c)}</button>`).join('');
+  fld.appendChild(host);
+  host.querySelectorAll('button').forEach(b=>b.onclick=()=>setField('chassis',b.textContent));
+}
+function addrChips(list){
+  const fld=[...document.querySelectorAll('#form .fld')].find(x=>x.querySelector('[data-k="addr"]'));
+  if(!fld)return;let host=document.getElementById('addrChips');host&&host.remove();
+  host=document.createElement('div');host.className='chips';host.id='addrChips';host.style.marginTop='4px';
+  host.innerHTML='<span class="hint" style="color:var(--muted)">사업장:</span>'+list.slice(0,6).map(a=>`<button type="button" title="${esc(a)}">${esc(a.length>18?a.slice(0,18)+'…':a)}</button>`).join('');
+  fld.appendChild(host);
+  host.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>setField('addr',list[i]));
+}
+/* 컨번호 실시간 검증 — 값 재대입 없이 즉시 판정(커서 튐 없음), 자동이동 없음 */
+function cntrRow(v){
+  const row=document.createElement('div');row.className='cntrrow';
+  row.innerHTML=`<input value="${esc(v)}" maxlength="11" placeholder="ABCU1234567" autocomplete="off"><span class="cntrmsg"></span><button class="btn sm" type="button" tabindex="-1" title="컨번호 한 줄 추가">＋</button>`;
+  const inp=row.querySelector('input'),msg=row.querySelector('.cntrmsg');
+  const upd=()=>{const st=cntrState(inp.value);msg.className='cntrmsg '+st.st;msg.textContent=st.msg;syncCntr();};
+  inp.oninput=upd;upd();
+  row.querySelector('button').onclick=()=>{const box=document.getElementById('cntrbox');const nr=cntrRow('');box.appendChild(nr);nr.querySelector('input').focus();syncCntr();};
+  return row;
+}
+function syncCntr(){const box=document.getElementById('cntrbox');if(!box)return;
+  editing.cntr=[...box.querySelectorAll('input')].map(i=>i.value.trim().toUpperCase()).filter(Boolean).join(', ');}
+function renderCntr(){
+  const box=document.getElementById('cntrbox');if(!box)return;box.innerHTML='';
+  let list=(editing.cntr!=null&&editing.cntr!=='')?String(editing.cntr).split(/[\n,]/).map(x=>x.trim()).filter(Boolean):[];
+  if(!list.length)list=[''];
+  list.forEach(v=>box.appendChild(cntrRow(v)));
+}
+document.getElementById('clearForm').onclick=()=>{editing={_src:'user',_id:null,date:selDate,io:'I',size:'40',type:'H'};buildFormDom();document.getElementById('editNote').style.display='none';};
+document.getElementById('saveBtn').onclick=()=>{
+  if(!editing.date){alert('날짜를 입력하세요');return;}
+  if(!editing.shipper){alert('화주를 입력하세요 (배차 등록은 화주부터)');return;}
+  editing.spec=[editing.size,editing.type].filter(Boolean).join('');
+  if(!editing.unload)editing.unload=editing.addr||'';        // 특이사항 없으면 하차지=주소
+  const qty=Math.max(1,Math.min(30,+editing._qty||1));
+  if(editing._id){const i=USER.findIndex(x=>x._id===editing._id);delete editing._qty;USER[i]=editing;}
+  else{for(let n=0;n<qty;n++){const e=Object.assign({},editing);delete e._qty;e._id='u'+Date.now()+'_'+n;USER.push(e);}}
+  saveUser();
+  selDate=editing.date;
+  const st=qty>1?`${qty}건 오더 등록됨 — 차량 미배차 (디테일 나중에) ✓`:(editing.vno?'저장됨 (배차완료) ✓':'등록됨 — 차량 미배차 ✓');
+  document.getElementById('saveBtn').textContent='저장';
+  switchTab('day');renderDay();
+  document.getElementById('daymeta').insertAdjacentHTML('afterbegin',`<span style="color:var(--ok);font-weight:700">${st}</span>`);
+};
+
+/* ============ 파싱 (메신저/파일) ============ */
+function parseText(text){
+  const res={};const info=[];
+  const cntrs=[...new Set([...text.matchAll(/\b([A-Z]{4}\d{7})\b/g)].map(m=>m[1]))];
+  if(cntrs.length){const allok=cntrs.every(c=>cntrState(c).st==='ok');
+    res.cntr={v:cntrs.join(', '),c:allok?1:0.5};info.push(`컨번호 ${cntrs.length}${allok?'':' (검증 필요)'}`);}
+  const tel=text.match(/01[016789][-.\s]?\d{3,4}[-.\s]?\d{4}/);if(tel){res.tel={v:tel[0],c:1};info.push('연락처');}
+  const bt=text.match(/청구처\s*[:\-]?\s*([가-힣A-Za-z0-9()·&]{2,})/);if(bt){res.billto={v:bt[1],c:.85};info.push('청구처');}
+  const cg=text.match(/청구\s*[가액]\s*[:\-]?\s*([\d,]{4,})\s*원?/);if(cg){res.charge={v:cg[1].replace(/,/g,''),c:.8};info.push('청구가');}
+  const REGION=/(서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주|경상[남북]도|전라[남북]도|충청[남북]도|경기도|강원도|제주도)\s*[가-힣]{1,4}(시|군|구)\s*[가-힣0-9\s\-()]{2,40}/;
+  // '도착지/하차지/납품처' 라벨 옆 주소를 최우선(공급받는자·공급자 주소보다 우선)
+  const dz=text.match(/(도착지|하차지|납품처|인도지|배송지|납품지|하치장)\s*[:\-]?\s*([^\n]{0,90})/);
+  const am=(dz&&dz[2].match(REGION))||text.match(REGION);
+  if(am){let a=am[0].replace(/\s+/g,' ').trim();
+    a=a.split(/\s0?1[016789][-.\s]?\d/)[0].trim();   // 전화번호 앞에서 자름
+    a=a.replace(/\s+[A-Za-z].*$/,'').trim();          // 뒤쪽 영문코드(DWS 등) 제거
+    a=a.split(/\s*(특이사항|비고|담당|연락처|청구|출하|도착|품명|수량|현장|송장|주소|시간)/)[0].trim(); // 뒤 항목 앞에서 자름
+    res.addr={v:a,c:.6};info.push('주소');}
+  // ── 날짜: 명시(YYYY-M-D / M월D일 / M.D) → 상대(오늘·내일·모레·다음주 화요일 …)
+  // 오더는 항상 '오늘'을 기준으로 상대날짜 계산(붙여넣은 대화의 날짜 헤더는 무시)
+  const refD=new Date();
+  const fmtD=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
+  const hasRel=/다음주|담주|다담주|이번주|금주|내일|모레|글피|오늘|요일/.test(text); // '차주'(車主)는 제외
+  let dateVal=null,dateConf=1,dateNote='';
+  const yr=(text.match(/(20\d{2})\s*년/)||[])[1]||new Date().getFullYear();
+  const pad2=x=>String(x).padStart(2,'0');
+  // ⬆ 현장 도착/납품일 우선: 'M/D일' 형태 또는 도착·납품·상차·현장·하차 키워드 근처 날짜(발행일보다 우선)
+  let deliv=null;
+  const sd=text.match(/(\d{1,2})\s*\/\s*(\d{1,2})\s*일/);
+  if(sd)deliv=[+sd[1],+sd[2]];
+  if(!deliv){const kb=text.match(/(도착|납품|상차|현장|하차|입고|배송|납기)[^\d]{0,12}(\d{1,2})\s*[월\/\.]\s*(\d{1,2})/);if(kb)deliv=[+kb[2],+kb[3]];}
+  if(!deliv){const ka=text.match(/(\d{1,2})\s*[월\/\.]\s*(\d{1,2})\s*일?[^\d]{0,8}(도착|납품|상차|하차|입고|현장)/);if(ka)deliv=[+ka[1],+ka[2]];}
+  const dm=text.match(/(20\d{2})[-.\/](\d{1,2})[-.\/](\d{1,2})/);
+  const mdk=text.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일/);
+  if(deliv&&!hasRel&&deliv[0]>=1&&deliv[0]<=12&&deliv[1]>=1&&deliv[1]<=31){dateVal=`${yr}-${pad2(deliv[0])}-${pad2(deliv[1])}`;dateConf=.7;dateNote=' (현장/납품일)';}
+  else if(dm&&!hasRel){dateVal=`${dm[1]}-${pad2(dm[2])}-${pad2(dm[3])}`;}
+  else if(mdk&&!hasRel){dateVal=`${yr}-${pad2(mdk[1])}-${pad2(mdk[2])}`;}
+  else if(!hasRel){const m2=text.match(/\b(\d{1,2})[.\/](\d{1,2})\b/);
+    if(m2)dateVal=`${yr}-${pad2(m2[1])}-${pad2(m2[2])}`;}
+  if(hasRel){
+    const DK={'일':0,'월':1,'화':2,'수':3,'목':4,'금':5,'토':6};let rd=null;
+    if(/모레/.test(text))rd=addD(refD,2);
+    else if(/내일/.test(text))rd=addD(refD,1);
+    else if(/글피/.test(text))rd=addD(refD,3);
+    else if(/오늘/.test(text))rd=new Date(refD);
+    const relText=text.replace(/\d{1,2}\s*월\s*\d{1,2}\s*일\s*[월화수목금토일]\s*요일/g,' '); // 날짜헤더 제거
+    const wk=relText.match(/(이번주|금주|다음주|담주|다담주)\s*([월화수목금토일])\s*요일/); // 주+요일 우선
+    const bare=relText.match(/([월화수목금토일])\s*요일/);
+    const wm=wk?{word:wk[1],dow:wk[2]}:(bare?{word:'',dow:bare[1]}:null);
+    if(wm){const tdow=DK[wm.dow],cur=refD.getDay();
+      if(wm.word){const mon=addD(refD,-(cur===0?6:cur-1));              // 이번주 월요일
+        const wkn=/다담주/.test(wm.word)?14:(/다음주|담주/.test(wm.word)?7:0);
+        rd=addD(mon,wkn+(tdow===0?6:tdow-1));
+      }else{let g=(tdow-cur+7)%7;if(g===0)g=7;rd=addD(refD,g);}          // 주 지정 없으면 다음 해당요일
+    }
+    if(rd){dateVal=fmtD(rd);dateConf=0.55;dateNote=` (오늘 ${refD.getMonth()+1}/${refD.getDate()} 기준)`;}
+  }
+  if(dateVal){res.date={v:dateVal,c:dateConf};info.push('날짜'+(dateConf<0.75?' ⚠확인'+dateNote:''));}
+  // ── 시간: 오전/오후 N시(반/N분) 우선, 없으면 HH:MM
+  const kt=text.match(/(오전|오후|아침|저녁|밤|새벽|낮)?\s*(\d{1,2})\s*시\s*(반|(\d{1,2})\s*분)?/);
+  if(kt){let h=+kt[2];const ap=kt[1]||'';
+    if(/오후|저녁|밤|낮/.test(ap)&&h<12)h+=12;
+    if(/오전|아침|새벽/.test(ap)&&h===12)h=0;
+    const mn=kt[3]==='반'?30:(kt[4]?+kt[4]:0);
+    res.time={v:String(h).padStart(2,'0')+':'+String(mn).padStart(2,'0'),c:ap?0.85:0.6};info.push('시간');
+  }else{const tm=text.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);if(tm){res.time={v:tm[0].padStart(5,'0'),c:1};info.push('시간');}}
+  // ── 수출입: 키워드 확장(들어온/입항 → 수입, 나가는/출항 → 수출)
+  if(/수입|import|반입|들어온|들어옴|입항|양하/i.test(text)){res.io={v:'I',c:/수입|반입/.test(text)?1:0.7};}
+  else if(/수출|export|반출|나가는|출항|선적/i.test(text)){res.io={v:'O',c:/수출|반출/.test(text)?1:0.7};}
+  // ── 수량: "컨테이너 2대", "2대", "2개"
+  const qm=text.match(/컨테이너\s*(\d{1,2})\s*대?/)||text.match(/(\d{1,2})\s*대(?!리)/)||text.match(/(\d{1,2})\s*개/);
+  if(qm){const q=+qm[1];if(q>=1&&q<=30){res._qty=q;if(q>1)info.push(`수량 ${q}대`);}}
+  const sz=text.match(/\b(20|40|45)\b/);if(sz){res.size={v:sz[1],c:.6};}
+  const tp=text.match(/\b(RF|RH|HC|OT|FR|DV|GP)\b/i)||text.match(/(리퍼|오픈탑|플랫)/);
+  if(tp){const map={RF:'RE',RH:'RE',리퍼:'RE',OT:'OT',오픈탑:'OT',FR:'FR',플랫:'FR'};res.type={v:map[tp[1].toUpperCase?tp[1].toUpperCase():tp[1]]||(sz&&sz[1]?'':'H'),c:.5};}
+  // 차량 뒷4자리: 마스터에 있는 4자리
+  const nums=[...text.matchAll(/\b(\d{4})\b/g)].map(m=>m[1]).filter(n=>M.veh.has(n));
+  if(nums.length){res.vno={v:nums[0],c:.7};info.push('차량후보');}
+  // ① 명시 라벨 "화주 XXX" / "화주:XXX" / "화주명 XXX" 최우선 (마스터로 정규화)
+  const shLabel=text.match(/화주(?:명)?\s*[:\-]?\s*([가-힣A-Za-z0-9()·&]{2,})/);
+  if(shLabel){const c=canonShipper(shLabel[1]);res.shipper={v:c||shLabel[1],c:c?.9:.8};}
+  // ② 마스터 매칭 (라벨 없을 때, 대소문자 무시·긴 이름 우선)
+  if(!res.shipper){const T=text.toUpperCase();
+    for(const s of [...M.shp.keys()].sort((a,b)=>b.length-a.length)){if(s&&s.length>=2&&T.includes(s.toUpperCase())){res.shipper={v:s,c:.8};break;}}}
+  // ③ 마스터에 없는 새 화주: 짧은 오더면 앞쪽 명사를 후보로 (단, 터미널·경로·잡토큰 제외)
+  if(!res.shipper){
+    const STOP=/^(내일|모레|오늘|글피|이번주|금주|다음주|담주|차주|다담주|오전|오후|아침|저녁|밤|새벽|낮|수입|수출|반입|반출|들어온|들어옴|들어온거|입항|출항|선적|도착|출발|컨테이너|컨|박스|피트|기준|담당|화주|화주명|안녕하세요|안녕하세용|있어요|있음)$/;
+    const isTerm=t=>t.split(/[-→~>]/).some(x=>x&&(M.loads.has(x)||M.unloads.has(x)));
+    const toks=text.replace(/[()\[\]:·,\/\n"]/g,' ').split(/\s+/).filter(Boolean);
+    // 오더는 대개 '맨 앞'이 화주 → 앞쪽 몇 토큰만 후보(대화체 노이즈 방지)
+    for(const t of toks.slice(0,4)){
+      if(t.length<2||STOP.test(t))continue;
+      if(/^\d/.test(t)||/\d(대|개|시|분|피트|월|일|톤)/.test(t)||/^\d+$/.test(t))continue; // 수량/시간/날짜/숫자 제외
+      if(/^[A-Z]{4}\d{7}$/.test(t)||/^[A-Z0-9]{9,}$/.test(t)||/요일$/.test(t))continue;      // 컨번호/코드/요일 제외
+      if(/입니다$|건$|도착|출발/.test(t)||isTerm(t))continue;                                 // 서술어·터미널·경로 제외
+      const c=canonShipper(t);res.shipper={v:c||t,c:c?.7:.45};break;
+    }
+  }
+  // 상차/하차: 라벨(상차/하차) 뒤에 오는 터미널 우선, 없으면 첫 매칭
+  const findTerm=(map,labels,useFallback)=>{
+    for(const lb of labels){const gi=text.indexOf(lb);if(gi>=0){const seg=text.slice(gi,gi+18);
+      for(const t of map.keys()){if(t&&t.length>=2&&seg.includes(t))return t;}}}
+    if(useFallback){for(const t of map.keys()){if(t&&t.length>=2&&text.includes(t))return t;}}
+    return null;
+  };
+  const ld=findTerm(M.loads,['상차','상차지','싣','출발'],true);
+  if(ld)res.load={v:ld,c:.6};
+  const ul=findTerm(M.unloads,['하차','하차지','하치','도착','→'],false); // 하차 라벨 있을 때만(없으면 주소=하차지)
+  if(ul)res.unload={v:ul,c:.5};
+  // 라벨 뒤 자유 텍스트 상/하차지(마스터에 없어도 잡기)
+  if(!res.load){const m=text.match(/(상차지|상차|출고지|상차장소)\s*[:\-]?\s*([가-힣A-Za-z0-9()]{2,20})/);
+    if(m&&!/^(후|시|시간|완료|장소|지$)/.test(m[2]))res.load={v:m[2],c:.5};}
+  if(!res.unload){const m=text.match(/(하차지|하차|도착지|하치장|납품지|납품처)\s*[:\-]?\s*([가-힣A-Za-z0-9()]{2,20})/);
+    if(m&&!/^(후|시|시간|완료|지$)/.test(m[2]))res.unload={v:m[2],c:.5};}
+  const bl=text.match(/\b[A-Z]{3,4}[A-Z0-9]{6,}\b/);if(bl&&!cntrs.includes(bl[0])){res.bl={v:bl[0],c:.5};}
+  return {res,info};
+}
+function applyParse(text){
+  if(!editing)editing={_src:'user',_id:null,date:selDate,io:'I',div:'자차'};
+  const {res,info}=parseText(text);
+  for(const k in res){if(k[0]==='_')continue;editing[k]=res[k].v;}
+  if(res.vno){const vi=vehInfo(res.vno.v);if(vi&&vi.div)editing.div=vi.div;}
+  if(res.shipper){const si=shpInfo(res.shipper.v);if(si){if(si.addrs[0]&&!res.addr)editing.addr=si.addrs[0];if(si.tel&&!res.tel)editing.tel=si.tel;if(si.bill&&!res.billto)editing.billto=si.bill;}}
+  const qty=(res._qty&&res._qty>1)?res._qty:1;
+  if(qty>1)editing._qty=qty;              // 저장 시 N건 등록
+  buildFormDom();
+  document.getElementById('saveBtn').textContent=qty>1?`${qty}건 등록`:'저장';
+  // 확신 낮은 필드 노랑
+  for(const k in res){if(k[0]==='_')continue;if(res[k].c<0.75){const el=document.querySelector(`#form [data-k="${k}"]`);if(el)el.classList.add('conf-low');}}
+  const qtyMsg=qty>1?` <span style="color:var(--accent);font-weight:700">· 저장하면 ${qty}건이 오더장에 등록됩니다 (디테일 나중에)</span>`:'';
+  document.getElementById('parseInfo').innerHTML=info.length?`파싱됨: ${info.join(' · ')} <span style="color:var(--warn)">— 노란 칸은 확인 필요</span>${qtyMsg}`:'인식된 값이 없습니다. 직접 입력하세요.';
+}
+document.getElementById('parseBtn').onclick=()=>{const t=document.getElementById('pasteBox').value.trim();if(t)applyParse(t);};
+/* 파일 드롭 */
+const drop=document.getElementById('drop'),fileInp=document.getElementById('file');
+drop.onclick=()=>fileInp.click();
+['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('hot');}));
+['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('hot');}));
+drop.addEventListener('drop',ev=>handleFile(ev.dataTransfer.files[0]));
+fileInp.onchange=()=>handleFile(fileInp.files[0]);
+// .docx(워드) 텍스트 추출 — 외부 라이브러리 없이 ZIP 파싱 + 브라우저 내장 압축해제
+async function readDocx(buf){
+  const dv=new DataView(buf),u8=new Uint8Array(buf),td=new TextDecoder();
+  let eocd=-1;
+  for(let i=u8.length-22;i>=0&&i>u8.length-22-65536;i--){if(dv.getUint32(i,true)===0x06054b50){eocd=i;break;}}
+  if(eocd<0)throw new Error('ZIP 형식 아님');
+  let cd=dv.getUint32(eocd+16,true);const n=dv.getUint16(eocd+10,true);
+  let off=-1,csize=0,method=8;
+  for(let e=0;e<n&&dv.getUint32(cd,true)===0x02014b50;e++){
+    const m=dv.getUint16(cd+10,true),cs=dv.getUint32(cd+20,true);
+    const fnl=dv.getUint16(cd+28,true),efl=dv.getUint16(cd+30,true),cml=dv.getUint16(cd+32,true);
+    const lo=dv.getUint32(cd+42,true),name=td.decode(u8.subarray(cd+46,cd+46+fnl));
+    if(name==='word/document.xml'){off=lo;csize=cs;method=m;}
+    cd+=46+fnl+efl+cml;
+  }
+  if(off<0)throw new Error('document.xml 없음');
+  const lfnl=dv.getUint16(off+26,true),lefl=dv.getUint16(off+28,true);
+  const start=off+30+lfnl+lefl,comp=u8.subarray(start,start+csize);
+  let bytes=comp;
+  if(method===8){const ds=new DecompressionStream('deflate-raw');
+    bytes=new Uint8Array(await new Response(new Blob([comp]).stream().pipeThrough(ds)).arrayBuffer());}
+  let xml=td.decode(bytes).replace(/<\/w:p>/g,'\n').replace(/<w:tab\/>/g,'\t').replace(/<w:br\s*\/?>/g,'\n');
+  return xml.replace(/<[^>]+>/g,'').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')
+    .replace(/&#(\d+);/g,(m,d)=>String.fromCharCode(+d)).replace(/&amp;/g,'&');
+}
+async function handleFile(f){
+  if(!f)return;const info=document.getElementById('parseInfo');
+  if(f.type==='text/plain'||f.name.endsWith('.txt')){const t=await f.text();document.getElementById('pasteBox').value=t;applyParse(t);return;}
+  if(f.name.toLowerCase().endsWith('.docx')){
+    info.textContent='워드 문서 읽는 중…';
+    try{const t=await readDocx(await f.arrayBuffer());document.getElementById('pasteBox').value=t.trim();
+      if(t.replace(/\s/g,'').length<5)info.innerHTML='<span style="color:var(--warn)">문서에서 글자를 찾지 못했습니다.</span>';
+      else applyParse(t);
+    }catch(e){info.innerHTML='<span style="color:var(--bad)">워드 처리 실패: '+esc(e.message)+'</span>';}
+    return;
+  }
+  if(f.type==='application/pdf'||f.name.toLowerCase().endsWith('.pdf')){
+    if(!window.pdfjsLib){info.innerHTML='<span style="color:var(--warn)">PDF 판독기(pdf.js)를 불러오지 못했습니다. 온라인 상태에서 다시 시도하거나 텍스트를 붙여넣으세요.</span>';return;}
+    info.textContent='PDF 텍스트 추출 중…';
+    try{
+      const buf=await f.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+      let txt='';for(let p=1;p<=Math.min(pdf.numPages,3);p++){const pg=await pdf.getPage(p);
+        const c=await pg.getTextContent();txt+=c.items.map(i=>i.str).join(' ')+'\n';
+        try{const ann=await pg.getAnnotations();for(const a of ann){       // FreeText/메모 주석의 값도 포함
+          const s=(a.contentsObj&&a.contentsObj.str)||a.contents||'';if(s)txt+='\n'+s;}}catch(e){}
+      }
+      document.getElementById('pasteBox').value=txt.trim();
+      if(txt.replace(/\s/g,'').length<10){info.innerHTML='<span style="color:var(--warn)">글자가 거의 없는 스캔 PDF입니다. 실제 앱에서는 이미지를 Claude Vision으로 판독합니다.</span>';}
+      else applyParse(txt);
+    }catch(e){info.innerHTML='<span style="color:var(--bad)">PDF 처리 실패: '+esc(e.message)+'</span>';}
+    return;
+  }
+  if(f.type.startsWith('image/')){
+    info.innerHTML='📷 이미지(D/O 등)는 <b>실제 앱에서 Claude Vision</b>으로 판독해 자동 입력됩니다. 지금 샘플에서는 브라우저만으로 한글 OCR을 하지 않으니, 내용을 텍스트로 붙여넣어 주세요.';
+    return;
+  }
+  info.textContent='지원하지 않는 형식입니다.';
+}
+
+/* ============ 요약 ============ */
+function renderSum(){
+  const gi=document.getElementById('grpby').value;
+  const f=document.getElementById('sfrom').value,t=document.getElementById('sto').value;
+  let rows=ALL.filter(r=>(!f||r.date>=f)&&(!t||r.date<=t));
+  const m=new Map();
+  for(const r of rows){const key=r[gi]==null||r[gi]===''?'(빈값)':String(r[gi]);const o=m.get(key)||{n:0,c:0,p:0};o.n++;o.c+=+r.charge||0;o.p+=+r.pay||0;m.set(key,o);}
+  const arr=[...m.entries()].sort((a,b)=>b[1].n-a[1].n);
+  const tot=arr.reduce((s,[,o])=>({n:s.n+o.n,c:s.c+o.c,p:s.p+o.p}),{n:0,c:0,p:0});
+  const lab={vno:'차량',date:'날짜',shipper:'화주',billto:'청구처',line:'선사',div:'구분'}[gi];
+  document.querySelector('#stbl thead').innerHTML=`<tr><th>${lab}</th><th class="num">건수</th><th class="num amt">청구</th><th class="num amt">하불</th></tr>`;
+  document.querySelector('#stbl tbody').innerHTML=`<tr style="font-weight:800"><td>합계 (${arr.length}종)</td><td class="num">${tot.n.toLocaleString()}</td><td class="num amt">${won(tot.c)}</td><td class="num amt">${won(tot.p)}</td></tr>`+
+    arr.map(([k,o])=>`<tr><td>${esc(k)}</td><td class="num">${o.n.toLocaleString()}</td><td class="num amt">${won(o.c)}</td><td class="num amt">${won(o.p)}</td></tr>`).join('');
+}
+document.getElementById('grpby').onchange=renderSum;
+document.getElementById('sfrom').onchange=renderSum;document.getElementById('sto').onchange=renderSum;
+
+/* ============ 조회 ============ */
+const FSHOW=[['date','날짜'],['io','수출입'],['vno','차량'],['shipper','화주'],['load','상차'],['unload','하차'],['spec','규격'],['cntr','컨번호'],['bl','B/L'],['charge','청구'],['pay','하불']];
+const FILTER_COLS=[['io','수출입'],['div','구분'],['size','사이즈'],['line','선사']];
+const fstate={q:'',from:'',to:'',page:1,per:100,filters:{}};
+FILTER_COLS.forEach(([k])=>fstate.filters[k]=new Set());
+function buildFilterUI(){
+  const w=document.getElementById('filters');w.innerHTML='';
+  FILTER_COLS.forEach(([key,label])=>{
+    const vals=[...new Set(ALL.map(r=>r[key]).map(v=>v==null||v===''?'(빈값)':String(v)))].sort();
+    const d=document.createElement('div');d.className='fdrop';
+    d.innerHTML=`<button class="btn sm">${label} ▾</button><div class="fmenu">${vals.map(v=>`<label><input type="checkbox" value="${esc(v)}"> ${esc(v)}</label>`).join('')}</div>`;
+    w.appendChild(d);const btn=d.querySelector('button'),menu=d.querySelector('.fmenu');
+    btn.onclick=e=>{e.stopPropagation();document.querySelectorAll('.fmenu.open').forEach(m=>m!==menu&&m.classList.remove('open'));menu.classList.toggle('open');};
+    menu.onclick=e=>e.stopPropagation();
+    menu.querySelectorAll('input').forEach(c=>c.onchange=()=>{c.checked?fstate.filters[key].add(c.value):fstate.filters[key].delete(c.value);fstate.page=1;renderFind();});
+  });
+}
+document.body.onclick=()=>document.querySelectorAll('.fmenu.open').forEach(m=>m.classList.remove('open'));
+function findRows(){
+  return ALL.filter(r=>{
+    if(fstate.from&&r.date<fstate.from)return false;if(fstate.to&&r.date>fstate.to)return false;
+    for(const [k] of FILTER_COLS){const s=fstate.filters[k];if(s.size&&!s.has(r[k]==null||r[k]===''?'(빈값)':String(r[k])))return false;}
+    return matchQuery(r,fstate.q);
+  }).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+}
+function renderFind(){
+  const rows=findRows();
+  const c=rows.reduce((s,r)=>s+(+r.charge||0),0),p=rows.reduce((s,r)=>s+(+r.pay||0),0);
+  document.getElementById('fmeta').innerHTML=`<span><b>${rows.length.toLocaleString()}</b>건</span><span class="amt">청구 <b>${won(c)}</b></span><span class="amt">하불 <b>${won(p)}</b></span>`;
+  document.querySelector('#ftbl thead').innerHTML='<tr>'+FSHOW.map(([k,l])=>`<th class="${k==='charge'||k==='pay'?'amt num':''}">${l}</th>`).join('')+'</tr>';
+  const st=(fstate.page-1)*fstate.per,pg=rows.slice(st,st+fstate.per);
+  document.querySelector('#ftbl tbody').innerHTML=pg.map(r=>'<tr>'+FSHOW.map(([k])=>{
+    if(k==='io')return `<td><span class="pill io-${r.io}">${r.io==='I'?'수입':r.io==='O'?'수출':esc(r.io)}</span></td>`;
+    if(k==='cntr')return `<td>${cntrCell(r.cntr)}</td>`;if(k==='spec')return `<td>${esc(specOf(r))}</td>`;
+    if(k==='charge'||k==='pay')return `<td class="amt num">${won(r[k])}</td>`;
+    if(k==='shipper')return `<td>${esc(r.shipper)}${srcTag(r)}</td>`;
+    return `<td>${esc(r[k])}</td>`;}).join('')+'</tr>').join('');
+  document.getElementById('fcards').innerHTML=pg.map(r=>`<div class="card"><div class="top"><span class="who">${esc(r.shipper)}</span><span class="pill io-${r.io}">${r.io==='I'?'수입':'수출'}</span></div><div class="r"><span>${esc(r.date)}</span><span>🚛 ${esc(r.vno)}</span><span>${esc(specOf(r))}</span></div><div class="r"><span>${esc(r.load)} → ${esc(r.unload)}</span></div><div class="r">${cntrCell(r.cntr)}</div></div>`).join('');
+  const pages=Math.max(1,Math.ceil(rows.length/fstate.per));
+  document.getElementById('ffoot').innerHTML=`<button class="btn sm" ${fstate.page<=1?'disabled':''} id="fp">이전</button> <span class="hint">${fstate.page}/${pages}</span> <button class="btn sm" ${fstate.page>=pages?'disabled':''} id="fn">다음</button>`;
+  const fp=document.getElementById('fp'),fn=document.getElementById('fn');
+  if(fp)fp.onclick=()=>{fstate.page--;renderFind();};if(fn)fn.onclick=()=>{fstate.page++;renderFind();};
+}
+let qt;document.getElementById('q').oninput=e=>{clearTimeout(qt);qt=setTimeout(()=>{fstate.q=e.target.value.trim();fstate.page=1;renderFind();},180);};
+document.getElementById('ffrom').onchange=e=>{fstate.from=e.target.value;renderFind();};
+document.getElementById('fto').onchange=e=>{fstate.to=e.target.value;renderFind();};
+document.getElementById('freset').onclick=()=>{fstate.q='';fstate.from='';fstate.to='';FILTER_COLS.forEach(([k])=>fstate.filters[k].clear());document.querySelectorAll('#filters input').forEach(c=>c.checked=false);document.getElementById('q').value='';document.getElementById('ffrom').value='';document.getElementById('fto').value='';fstate.page=1;renderFind();};
+document.getElementById('csv').onclick=()=>{const rows=findRows();const head=FSHOW.map(([,l])=>l);const body=rows.map(r=>FSHOW.map(([k])=>{let v=k==='spec'?specOf(r):r[k];v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(','));const blob=new Blob(['﻿'+[head.join(','),...body].join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='배차조회.csv';a.click();};
+/* 별칭 관리 */
+document.getElementById('aliasBtn').onclick=()=>{
+  const cur=JSON.stringify(ALIAS,null,2);
+  const v=prompt('별칭(JSON). 거래처/지역 별칭을 곱해서 검색 토큰을 만듭니다.\n예: {"shipper":{"삼성SDI":["SDI"]},"region":{"청주":["오창"]}}',cur);
+  if(v==null)return;try{ALIAS=JSON.parse(v);saveAlias();alert('저장됨. 검색에 반영됩니다.');renderFind();}catch(e){alert('JSON 오류: '+e.message);}
+};
+
+/* ============ 탭 ============ */
+function switchTab(v){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));
+  if(v==='day')renderDay();if(v==='sum'){if(!document.getElementById('sfrom').value){document.getElementById('sfrom').value=allDates[0];document.getElementById('sto').value=allDates[allDates.length-1];}renderSum();}
+  if(v==='find')renderFind();if(v==='input'&&!editing)openForm(null);
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{if(b.dataset.v==='input'){openForm(null);}else switchTab(b.dataset.v);});
+document.getElementById('amt').onchange=e=>document.body.classList.toggle('amt-hide',!e.target.checked);
+
+/* start */
+buildFilterUI();renderDay();
+</script>
+<!-- PDF 판독기 (로컬 번들). 단일파일 빌드에서는 인라인 + Blob 워커로 대체됨 -->
+<script src="vendor/pdf.min.js" onerror="window.__nopdf=1"></script>
+<script>try{if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='vendor/pdf.worker.min.js';}catch(e){}</script>
+</body>
+</html>

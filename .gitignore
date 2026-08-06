@@ -1,0 +1,30 @@
+# === 비밀정보 — 절대 커밋 금지 ===
+.env
+.env.*
+!.env.example
+functions/.env
+functions/.env.*
+
+# KYSS 진단 산출물 (세션 쿠키·PII 포함)
+kyss-api/.kyss_diag_profile/
+kyss-api/diag/
+**/login_trace.log
+
+# 프론트 소스 청크 원본 (18.8MB, 재조사용 — 필요 시 별도 보관)
+kyss-api/bundle/
+
+# 데이터 원본 (엑셀은 별도 관리)
+*.xlsx
+!**/샘플*.xlsx
+
+# 앱 생성 데이터 (엑셀에서 추출, 전화번호·금액 포함 — tools/extract_dispatch.py 로 재생성)
+app/data.js
+# 아티팩트 본문 (data.js 인라인 — PII 포함, tools/build_artifact.py 로 재생성)
+app/artifact_body.html
+배차일보_artifact.html
+
+# OS / 편집기
+.DS_Store
+node_modules/
+__pycache__/
+*.pyc

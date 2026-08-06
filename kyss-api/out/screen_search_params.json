@@ -1,0 +1,2003 @@
+{
+ "allocation/popup/AlloShareOrderPopup": {
+  "fields": [
+   "BSN_LCN_NMB",
+   "CORP_LOC_NM"
+  ],
+  "defaults": {}
+ },
+ "allocation/popup/AlloTeamPopup": {
+  "fields": [
+   "SCH_CD"
+  ],
+  "defaults": {}
+ },
+ "allocation/popup/PassOverPopup": {
+  "fields": [
+   "ALLO_PIC",
+   "ALLO_PIC_NM"
+  ],
+  "defaults": {}
+ },
+ "allocation/popup/prtAlloOrderPopup": {
+  "fields": [
+   "ALLO_PRT_TYPE"
+  ],
+  "defaults": {}
+ },
+ "allocation/popup/prtTransDrivingPopup": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "PRNT_DATE",
+   "P_VHC_ID",
+   "P_VHC_NO",
+   "SCH_BRANCH",
+   "VHC_ID",
+   "VHC_NO"
+  ],
+  "defaults": {}
+ },
+ "allocation/popup/shutAlloStatusPopup": {
+  "fields": [
+   "ALLO_STATUS",
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "IN_ETA_FM",
+   "IN_ETA_TO",
+   "ORD_NO",
+   "ORD_SHTL_DIV",
+   "REG_FM",
+   "REG_TO",
+   "SHTL_SCH_TML",
+   "TML_VOY",
+   "TRANS_SECT"
+  ],
+  "defaults": {}
+ },
+ "bnd-v2/BndUpdate-v2": {
+  "fields": [
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "DCLR_DIV",
+   "REG_USER_ID",
+   "REG_USER_NAME",
+   "SND_RCV_DIV"
+  ],
+  "defaults": {}
+ },
+ "bnd/BndUpdate": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "DCLR_DIV",
+   "REG_USER_ID",
+   "REG_USER_NAME",
+   "SND_RCV_DIV"
+  ],
+  "defaults": {
+   "DCLR_DIV": "",
+   "SND_RCV_DIV": ""
+  }
+ },
+ "bnd/MfcsUpload": {
+  "fields": [
+   "BND_TRANS_CORP",
+   "MRN",
+   "MSN_FROM",
+   "MSN_TO",
+   "M_BL_NO"
+  ],
+  "defaults": {}
+ },
+ "bnd/popup/BndProgressInfoPopup": {
+  "fields": [
+   "CARGO_MGT_NO",
+   "CARGO_PRGS_SCH_TYPE",
+   "H_BL_NO",
+   "M_BL_NO",
+   "SCH_DT"
+  ],
+  "defaults": {}
+ },
+ "bws/BwsAcsCrgLdg": {
+  "fields": [
+   "CARGO_MGT_NO",
+   "DATE_FM",
+   "MONTH",
+   "SCH_OP_DIV",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "OP_DIV": "B"
+  }
+ },
+ "bws/BwsAcsNotiMgt": {
+  "fields": [
+   "CARGO_MGT_NO",
+   "DATE_FM",
+   "MONTH",
+   "SAVE_YN",
+   "SCH_OP_DIV",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "OP_DIV": "B",
+   "SAVE_YN": "N"
+  }
+ },
+ "bws/BwsAgrAgiDivList": {
+  "fields": [
+   "ABN_TYPE",
+   "ABN_TYPE_NM",
+   "AGI_TYPE",
+   "AGI_TYPE_NM",
+   "AGR_TYPE",
+   "AGR_TYPE_NM",
+   "CUST_CD",
+   "CUST_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "DATE_TYPE",
+   "SCH_DATE_TY",
+   "SCH_TXT",
+   "SCH_TXT_TY",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "MAKE_YN": "N",
+   "SCH_CGO_GB": "",
+   "SCH_DATE_TY": "IN",
+   "SCH_TXT_TY": "CARGO_MGT_NO",
+   "SCH_TXT": ""
+  }
+ },
+ "bws/BwsAgrAgiStMgt": {
+  "fields": [
+   "CUST_CD",
+   "CUST_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "DATE_TYPE",
+   "SCH_DATE_TY",
+   "SCH_OP_DIV",
+   "SCH_TXT",
+   "SCH_TXT_TY",
+   "SHPR_YN",
+   "ST_YN",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "MAKE_YN": "N",
+   "SCH_CGO_GB": "",
+   "SCH_DATE_TY": "DT",
+   "SCH_TXT_TY": "CARGO_MGT_NO",
+   "SCH_TXT": ""
+  }
+ },
+ "bws/BwsBndAgiCorrMgt": {
+  "fields": [
+   "CORR_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "AGI_NO",
+   "OP_DIV": "B"
+  }
+ },
+ "bws/BwsBndAgrCorrMgt": {
+  "fields": [
+   "CORR_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "AGR_NO",
+   "OP_DIV": "B"
+  }
+ },
+ "bws/BwsBndEgrSearch": {
+  "fields": [
+   "CNE_CD",
+   "CNE_NM",
+   "CNTR_NO",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_DATE",
+   "SCH_OP_DIV",
+   "SCH_STATE",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_DATE": "ISSUE_TM",
+   "SCH_STATE": "S",
+   "SCH_TYPE": "CARGO_MGT_NO"
+  }
+ },
+ "bws/BwsCloseStMgt": {
+  "fields": [
+   "DATE_TO",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "bws/BwsCustCrgListMgt": {
+  "fields": [
+   "BKG_BL_NO",
+   "CARGO_MGT_NO",
+   "CUST_CD",
+   "CUST_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_DIV",
+   "SCH_DATE_TY",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_DATE_TY": "AGR_DT"
+  }
+ },
+ "bws/BwsDailyCargoAgiReportMgt": {
+  "fields": [
+   "BKG_BL_NO",
+   "CARGO_MGT_NO",
+   "CNTR_NO",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_DIV",
+   "SCH_AGI_TYPE",
+   "SCH_CORP_NM",
+   "SCH_TXT",
+   "SCH_TY",
+   "SEND_YN",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TY": "FWD_NM",
+   "OP_DIV": "B"
+  }
+ },
+ "bws/BwsDailyCargoAgrReportMgt": {
+  "fields": [
+   "BKG_BL_NO",
+   "CARGO_MGT_NO",
+   "CNTR_NO",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_DIV",
+   "SCH_CORP_NM",
+   "SCH_TXT",
+   "SCH_TY",
+   "SEND_YN",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TY": "FWD_NM",
+   "OP_DIV": "B"
+  }
+ },
+ "bws/BwsDmtAgiCorrMgt": {
+  "fields": [
+   "CORR_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "AGI_NO",
+   "OP_DIV": "T"
+  }
+ },
+ "bws/BwsDmtAgrCorrMgt": {
+  "fields": [
+   "CORR_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "AGR_NO",
+   "OP_DIV": "T"
+  }
+ },
+ "bws/BwsEcgList": {
+  "fields": [
+   "BILL_CORP_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "BILL_GUBUN": ""
+  }
+ },
+ "bws/BwsFreeAgiCorrMgt": {
+  "fields": [
+   "CORR_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "AGI_NO",
+   "OP_DIV": "F"
+  }
+ },
+ "bws/BwsFreeAgrCorrMgt": {
+  "fields": [
+   "CORR_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "AGR_NO",
+   "OP_DIV": "F"
+  }
+ },
+ "bws/BwsMonthAgrAgiMgt": {
+  "fields": [
+   "DATE_TO",
+   "OP_DIV",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "OP_DIV": "B"
+  }
+ },
+ "bws/BwsPeriodPerformance": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "FC_TXT",
+   "SEARCH_DT_TYPE",
+   "SEARCH_FC_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SEARCH_DT_TYPE": "IN_ORD_DT"
+  }
+ },
+ "bws/BwsPftCustList": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "bws/BwsPicPFList": {
+  "fields": [
+   "BF_DATE_FM",
+   "BF_DATE_TO",
+   "BF_SEARCH",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_PIC",
+   "OP_PIC_NM",
+   "SCH_DIV",
+   "VAT_DIV",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_DIV": "1"
+  }
+ },
+ "bws/BwsStockStatus": {
+  "fields": [
+   "CNE_CD",
+   "CNE_NM",
+   "DATE_FM",
+   "FWD_CD",
+   "FWD_NM",
+   "OP_DIV",
+   "SCH_DATE",
+   "SCH_WH_ZONE",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "bws/BwsTotSaleStatus": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BILL_GUBUN",
+   "DATE_FM",
+   "DATE_TO",
+   "REG_USER_NM",
+   "REMARK",
+   "SCH_TY",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "BILL_GUBUN": "",
+   "SCH_TY": "B"
+  }
+ },
+ "bws/BwsUniCrossChk": {
+  "fields": [
+   "SCH_DATE_TY",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "MAKE_YN": "N",
+   "SCH_CGO_GB": "",
+   "SCH_DATE_TY": "DT",
+   "SCH_TXT_TY": "CARGO_MGT_NO",
+   "SCH_TXT": ""
+  }
+ },
+ "cfs/FAcsNotiMgt": {
+  "fields": [
+   "CARGO_MGT_NO",
+   "CFS_CS_TP",
+   "DATE_FM",
+   "MONTH",
+   "SAVE_YN",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "CFS_CS_TP": "B",
+   "SAVE_YN": "N"
+  }
+ },
+ "cfs/FBndExportCorrMgt": {
+  "fields": [
+   "CORRECT_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "ORD_NO"
+  }
+ },
+ "cfs/FBndImportCorrMgt": {
+  "fields": [
+   "CORRECT_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "ORD_NO"
+  }
+ },
+ "cfs/FBndUpdate-v2": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "FSCH_TXT_BND_UDT",
+   "FSCH_TYPE_BND_UDT",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "FSCH_TYPE_BND_UDT": "BL_NO",
+   "FSCH_TXT_BND_UDT": ""
+  }
+ },
+ "cfs/FBndUpdate": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "FSCH_TXT_BND_UDT",
+   "FSCH_TYPE_BND_UDT",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "FSCH_TYPE_BND_UDT": "BL_NO",
+   "FSCH_TXT_BND_UDT": ""
+  }
+ },
+ "cfs/FCfsSalesAcct": {
+  "fields": [
+   "CUST_CD",
+   "CUST_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "INV_NO",
+   "SHP_CD",
+   "SHP_NM",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "CFS_REF_TP": "ST"
+  }
+ },
+ "cfs/FCfsSalesInSearch": {
+  "fields": [
+   "CUST_CD",
+   "CUST_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "IN_REF_NO",
+   "USER_ID",
+   "USER_NM",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "CFS_REF_TP": "SR"
+  }
+ },
+ "cfs/FCfsSalesOutMgt": {
+  "fields": [
+   "CUST_CD",
+   "CUST_NM",
+   "ITEM_NM",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "cfs/FCfsSalesOutSearch": {
+  "fields": [
+   "CUST_CD",
+   "CUST_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "ITEM_CD",
+   "ITEM_NM",
+   "OUT_REF_NO",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "CFS_REF_TP": "SI"
+  }
+ },
+ "cfs/FCfsSalesStock": {
+  "fields": [
+   "CFS_CS_TP",
+   "CUST_CD",
+   "CUST_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "DATE_TP",
+   "ITEM_NM",
+   "REG_USER_NM",
+   "STOCK_TP",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "DATE_TP": "S",
+   "CFS_CS_TP": "D",
+   "STOCK_TP": "Y"
+  }
+ },
+ "cfs/FCfsZcePlanSearch": {
+  "fields": [
+   "CNSNEE",
+   "CNSNEE_NM",
+   "CNTR_NO",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_CGO_GB",
+   "SCH_DATE",
+   "SCH_STATE",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_DATE": "RCV_DT",
+   "SCH_STATE": "S",
+   "SCH_TYPE": "CARGO_MGT_NO"
+  }
+ },
+ "cfs/FClpSchMgt": {
+  "fields": [
+   "API_TYPE",
+   "BKG_NO",
+   "CLP_NO",
+   "CLP_PIC",
+   "CLP_PIC_NM",
+   "CNTR_NO",
+   "DATE_FM",
+   "DATE_TO",
+   "LINE_CD",
+   "LINE_NM",
+   "POD_CD",
+   "POD_NM",
+   "STF_TY",
+   "VOY",
+   "VSL",
+   "VSL_CD",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "cfs/FClpSchSkrMgt": {
+  "fields": [
+   "API_TYPE",
+   "BKG_NO",
+   "CLP_NO",
+   "CLP_PIC",
+   "CLP_PIC_NM",
+   "CNTR_NO",
+   "DATE_FM",
+   "DATE_TO",
+   "LINE_CD",
+   "LINE_NM",
+   "POD_CD",
+   "POD_NM",
+   "STF_TY",
+   "VOY",
+   "VSL",
+   "VSL_CD",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "LINE_CD": "SKR",
+   "LINE_NM": "장금상선"
+  }
+ },
+ "cfs/FDomesticExportCorrMgt": {
+  "fields": [
+   "CORRECT_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "ORD_NO"
+  }
+ },
+ "cfs/FDomesticExportMgt": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "LINK_YN",
+   "SCH_CGO_GB",
+   "SCH_DATE",
+   "SCH_STATE",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "STATE_YN",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_DATE": "IN_ORD_DT",
+   "SCH_STATE": "50",
+   "SCH_TYPE": "BL_NO",
+   "SCH_CGO_GB": "B"
+  }
+ },
+ "cfs/FDomesticImportCorrMgt": {
+  "fields": [
+   "CORRECT_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_TXT",
+   "SCH_TYPE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_TYPE": "ORD_NO"
+  }
+ },
+ "cfs/FInOutStcSchMgt": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "DATE_TYPE",
+   "SCH_CGO_GB",
+   "SCH_DATE_TY",
+   "SCH_TXT",
+   "SCH_TXT_TY",
+   "SHPR_YN",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "MAKE_YN": "N",
+   "SCH_CGO_GB": "",
+   "SCH_DATE_TY": "DT",
+   "SCH_TXT_TY": "CARGO_MGT_NO",
+   "SCH_TXT": ""
+  }
+ },
+ "cfs/FRcvCOrdSchMgt": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "GUBUN",
+   "ORD_NO",
+   "ORD_PIC",
+   "ORD_PIC_NM",
+   "POD_CD",
+   "POD_NM",
+   "SHIPPER",
+   "SHIPPER_CD",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "cfs/FRcvCOrdSkrSchMgt": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "GUBUN",
+   "ORD_NO",
+   "ORD_PIC",
+   "ORD_PIC_NM",
+   "POD_CD",
+   "POD_NM",
+   "SHIPPER",
+   "SHIPPER_CD",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "cfs/FStockStatus": {
+  "fields": [
+   "CNSNEE",
+   "CNSNEE_NM",
+   "DATE_FM",
+   "FORWARD",
+   "FORWARD_NM",
+   "SCH_DATE",
+   "SCH_WH_ZONE",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "cfs/FTotSaleStatus": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BILL_GUBUN",
+   "DATE_FM",
+   "DATE_TO",
+   "REG_USER_NM",
+   "REMARK",
+   "SCH_TY",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "BILL_GUBUN": "",
+   "SCH_TY": "B"
+  }
+ },
+ "cfs/FUniPassImpSchMgt": {
+  "fields": [
+   "CARGO_MGT_NO",
+   "DATE_FM",
+   "DATE_TO",
+   "MAKE_YN",
+   "SCH_CGO_GB",
+   "SCH_DATE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "MAKE_YN": "N",
+   "SCH_DATE": "RCV_DT",
+   "SCH_CGO_GB": "B"
+  }
+ },
+ "cfs/popup/FAlloClPopup": {
+  "fields": [
+   "ALLO_P",
+   "ALLO_R",
+   "ALLO_TY",
+   "LIST",
+   "ORDER_TY"
+  ],
+  "defaults": {}
+ },
+ "cfs/popup/FAlloPClConfPopup": {
+  "fields": [
+   "ALLO_P",
+   "ALLO_R",
+   "ALLO_TY",
+   "IN_OUT_REMARK"
+  ],
+  "defaults": {}
+ },
+ "cfs/popup/FAlloPClPopup": {
+  "fields": [
+   "ALLO_P",
+   "ALLO_R",
+   "ALLO_TY",
+   "LIST",
+   "ORDER_TY"
+  ],
+  "defaults": {}
+ },
+ "cfs/popup/FAlloPopup": {
+  "fields": [
+   "ALLO_GB",
+   "ALLO_P",
+   "ALLO_R",
+   "ALLO_TY",
+   "LIST",
+   "ORDER_TY",
+   "PAY_CORP"
+  ],
+  "defaults": {}
+ },
+ "cfs/popup/FAlloShipperPopup": {
+  "fields": [
+   "ALLO_GB",
+   "ALLO_P",
+   "ALLO_R",
+   "ALLO_TY",
+   "LIST",
+   "ORDER_TY",
+   "PAY_CORP"
+  ],
+  "defaults": {}
+ },
+ "cfs/popup/FBndPrgInfoPopup": {
+  "fields": [
+   "CARGO_MGT_NO",
+   "CARGO_PRGS_SCH_TYPE",
+   "H_BL_NO",
+   "M_BL_NO",
+   "SCH_DT"
+  ],
+  "defaults": {}
+ },
+ "cfs/popup/FRcvList2Popup": {
+  "fields": [
+   "ORD_NO",
+   "POD_CD",
+   "POD_NM",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "cfs/popup/FRcvListPopup": {
+  "fields": [
+   "POD_CD",
+   "POD_NM",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "cms/comm/CmsFavoritesMgt": {
+  "fields": [
+   "CSTM_NM",
+   "FAV_CD",
+   "SHIPPER",
+   "USE_YN",
+   "WRK_PLC_NM"
+  ],
+  "defaults": {
+   "USE_YN": "Y",
+   "DATE_YN": "Y"
+  }
+ },
+ "cms/comm/CmsFwdUserMgt": {
+  "fields": [
+   "CORP_CD",
+   "CORP_NM",
+   "SCH_CD",
+   "USE_YN"
+  ],
+  "defaults": {}
+ },
+ "cms/comm/CmsMenuMgt": {
+  "fields": [
+   "MENU_ABBR",
+   "MENU_ID",
+   "MENU_NM",
+   "UPPER_MENU_ID",
+   "USE_YN"
+  ],
+  "defaults": {
+   "USE_YN": "Y"
+  }
+ },
+ "cms/comm/CmsPtnUserMgt": {
+  "fields": [
+   "CORP_CD",
+   "CORP_NM",
+   "SCH_CD",
+   "USE_YN"
+  ],
+  "defaults": {}
+ },
+ "cms/comm/CmsRoleMenuMgt": {
+  "fields": [
+   "ROLE_ID",
+   "ROLE_NM"
+  ],
+  "defaults": {
+   "USE_YN": "Y"
+  }
+ },
+ "cms/history/CmsOrderHistory": {
+  "fields": [
+   "LOG_TYPE",
+   "ORD_NO",
+   "REG_TM"
+  ],
+  "defaults": {}
+ },
+ "cms/popup/CmsPostCodePopup": {
+  "fields": [
+   "SCH_CD"
+  ],
+  "defaults": {}
+ },
+ "cy/adjustment/E71E001C": {
+  "fields": [
+   "TARIFF_ID"
+  ],
+  "defaults": {}
+ },
+ "cy/conMng/E71A011C": {
+  "fields": [
+   "CNTR_NO",
+   "CNTR_SEQ"
+  ],
+  "defaults": {}
+ },
+ "cy/conMng/E71A013C": {
+  "fields": [
+   "CNTR_NO"
+  ],
+  "defaults": {}
+ },
+ "cy/conMng/E71A014C": {
+  "fields": [
+   "CNTR_NO"
+  ],
+  "defaults": {}
+ },
+ "cy/danger/E71F001C": {
+  "fields": [
+   "CNTR_NO",
+   "CUST_CD",
+   "CUST_NM",
+   "LINE_NM"
+  ],
+  "defaults": {}
+ },
+ "cy/danger/E71F002C": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "IO_CD"
+  ],
+  "defaults": {}
+ },
+ "cy/danger/E71F003C": {
+  "fields": [
+   "CUST_CD",
+   "CUST_NM",
+   "DAYS",
+   "LINE_CD",
+   "LINE_NM"
+  ],
+  "defaults": {}
+ },
+ "cy/inOutMng/E71A003C": {
+  "fields": [
+   "CNTR_NO"
+  ],
+  "defaults": {}
+ },
+ "cy/inOutMng/E71A004C": {
+  "fields": [
+   "ASSIGN_DIRECTION",
+   "BLOCK_BAY",
+   "CNTR_SIZE",
+   "CUST_CD",
+   "CUST_NM",
+   "LINE_CD",
+   "LINE_NM"
+  ],
+  "defaults": {}
+ },
+ "cy/reefer/E71A101C": {
+  "fields": [
+   "CNTR_NO"
+  ],
+  "defaults": {}
+ },
+ "cy/reefer/E71A103C": {
+  "fields": [
+   "STCK"
+  ],
+  "defaults": {}
+ },
+ "cy/reefer/E71A104C": {
+  "fields": [
+   "CNTR_NO",
+   "CUST_CD",
+   "CUST_NM",
+   "LINE_CD",
+   "LINE_NM"
+  ],
+  "defaults": {}
+ },
+ "cy/reefer/E71A105C": {
+  "fields": [
+   "CUST_CD",
+   "CUST_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "IO_CD",
+   "LINE_CD",
+   "LINE_NM"
+  ],
+  "defaults": {}
+ },
+ "cy/reefer/E71A106C": {
+  "fields": [
+   "CHK_DT"
+  ],
+  "defaults": {}
+ },
+ "cy/reefer/E71A108C": {
+  "fields": [
+   "CUST_CD",
+   "CUST_NM",
+   "IO_CD",
+   "LINE_NM"
+  ],
+  "defaults": {}
+ },
+ "db/FCfsRequest": {
+  "fields": [
+   "CMPLT_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "REG_USER_NM",
+   "REQ_SEARCH"
+  ],
+  "defaults": {}
+ },
+ "db/faq": {
+  "fields": [
+   "SCH_TXT"
+  ],
+  "defaults": {}
+ },
+ "db/notice": {
+  "fields": [
+   "MNGT_NO",
+   "NOTI_SEARCH"
+  ],
+  "defaults": {}
+ },
+ "db/popup/FCfsRequestPopup": {
+  "fields": [
+   "SCH_CD"
+  ],
+  "defaults": {}
+ },
+ "db/popup/faqPopup": {
+  "fields": [
+   "FAQ_SN"
+  ],
+  "defaults": {}
+ },
+ "db/popup/noticePopup": {
+  "fields": [
+   "SCH_CD"
+  ],
+  "defaults": {}
+ },
+ "db/popup/tmpDownPopup": {
+  "fields": [
+   "ACTION",
+   "IS_NEW",
+   "TMP_SN"
+  ],
+  "defaults": {}
+ },
+ "db/request": {
+  "fields": [
+   "CMPLT_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "REG_USER_NM",
+   "REQ_SEARCH"
+  ],
+  "defaults": {}
+ },
+ "db/tariff": {
+  "fields": [
+   "BLOCK",
+   "CITY",
+   "DO",
+   "DONG",
+   "PERIOD",
+   "REF_DONG",
+   "SURCHARGE",
+   "TYPE"
+  ],
+  "defaults": {}
+ },
+ "dsh/dashboard/customNoticeList": {
+  "fields": [
+   "AUTH",
+   "MNGT_NO",
+   "NOTI_SEARCH",
+   "NOTI_SN"
+  ],
+  "defaults": {}
+ },
+ "dsh/dashboard/orderByShipper": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "ORDER_TYPE",
+   "SHIPPER",
+   "SHIPPER_CD",
+   "WRK_PLC_NM"
+  ],
+  "defaults": {}
+ },
+ "dsh/dashboard/popup/customNoticeMgt": {
+  "fields": [
+   "DOC_UPLOAD",
+   "SCH_CD"
+  ],
+  "defaults": {}
+ },
+ "dsh/dashboard/popup/orderTempPopup": {
+  "fields": [
+   "BKG_BL_NO",
+   "LINE_CD",
+   "LINE_NM",
+   "LINE_TYPE"
+  ],
+  "defaults": {}
+ },
+ "intro/membership/Intro": {
+  "fields": [
+   "BLOCK",
+   "CITY",
+   "DO",
+   "DONG",
+   "PERIOD",
+   "REF_DONG",
+   "SURCHARGE",
+   "TYPE"
+  ],
+  "defaults": {}
+ },
+ "intro/membership/IntroJoin": {
+  "fields": [
+   "CORP_NM"
+  ],
+  "defaults": {}
+ },
+ "legal/VhcLocTrckMgt": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "CHASSIS_NO",
+   "CNTR_NO",
+   "DATE_FM",
+   "DATE_TO",
+   "SEARCH_GB",
+   "VHC_NO",
+   "WRK_PLC_ADDR",
+   "WRK_PLC_NM"
+  ],
+  "defaults": {}
+ },
+ "mdm/code/MdmCarrierMgt": {
+  "fields": [
+   "CARR_CD",
+   "CARR_DIV",
+   "CARR_NM",
+   "USE_YN"
+  ],
+  "defaults": {
+   "USE_YN": "Y"
+  }
+ },
+ "mdm/code/MdmImdgMgt": {
+  "fields": [
+   "UNNO"
+  ],
+  "defaults": {
+   "USE_YN": "Y"
+  }
+ },
+ "mdm/code/MdmLineMgt": {
+  "fields": [
+   "CODE",
+   "NAME",
+   "USE_YN"
+  ],
+  "defaults": {
+   "USE_YN": "Y"
+  }
+ },
+ "mdm/code/MdmSelPchMgt": {
+  "fields": [
+   "SELPCH_CD",
+   "SELPCH_NM",
+   "USE_YN"
+  ],
+  "defaults": {
+   "USE_YN": "Y"
+  }
+ },
+ "mdm/code/MdmTruckDistanceRate": {
+  "fields": [
+   "PERIOD",
+   "START_DT"
+  ],
+  "defaults": {}
+ },
+ "mdm/code/MdmTruckStdRateMgt": {
+  "fields": [
+   "PERIOD",
+   "START_DT"
+  ],
+  "defaults": {}
+ },
+ "mdm/popup/MdmEqpHistoryPopup": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO"
+  ],
+  "defaults": {}
+ },
+ "mobile/MobileDrvNotice": {
+  "fields": [
+   "MNGT_NO",
+   "NOTI_SEARCH"
+  ],
+  "defaults": {}
+ },
+ "mobile/popup/drvNoticeMgtPopup": {
+  "fields": [
+   "DOC_UPLOAD",
+   "NOTI_TYPE",
+   "SCH_CD"
+  ],
+  "defaults": {}
+ },
+ "order/door/excelUpload": {
+  "fields": [
+   "TEMPLATE"
+  ],
+  "defaults": {}
+ },
+ "order/door/export/kakaoOrderList": {
+  "fields": [
+   "BKG_NO",
+   "DATE_FM",
+   "DATE_TO"
+  ],
+  "defaults": {
+   "BKG_NO": ""
+  }
+ },
+ "order/door/import/kakaoOrderList": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "M_BL_NO"
+  ],
+  "defaults": {
+   "M_BL_NO": ""
+  }
+ },
+ "order/popup/doorAlloPtnPopup": {
+  "fields": [
+   "BSN_LCN_NMB",
+   "CORP_LOC_NM"
+  ],
+  "defaults": {}
+ },
+ "order/popup/orderMultiModiPopup": {
+  "fields": [
+   "CORP_CD",
+   "CSTM_CORP_NM",
+   "WRK_PLC_NM"
+  ],
+  "defaults": {}
+ },
+ "order/popup/shuttleAlloPtnPopup": {
+  "fields": [
+   "BSN_LCN_NMB",
+   "CORP_LOC_NM"
+  ],
+  "defaults": {}
+ },
+ "order/popup/shuttleCntrValidationPopup": {
+  "fields": [
+   "LIST",
+   "TYPE"
+  ],
+  "defaults": {}
+ },
+ "order/popup/vslSkrHasListPopup": {
+  "fields": [
+   "SCH_CD",
+   "VSL",
+   "VSL_NM"
+  ],
+  "defaults": {}
+ },
+ "outputs/billingTot/billTotByAcc": {
+  "fields": [
+   "AMT_TYPE",
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_DEPT"
+  ],
+  "defaults": {}
+ },
+ "outputs/management/hiredCarCorpBillPaySt": {
+  "fields": [
+   "ACC_TERM",
+   "BRANCH",
+   "CAR_CORP_SCH_DIV",
+   "CAR_CORP_SCH_DIV2",
+   "DATE_FM",
+   "DATE_TO",
+   "INV_TAX",
+   "O_DEPT",
+   "PAY_CORP",
+   "PAY_CORP_NM",
+   "PAY_PIC",
+   "PAY_PIC_NM",
+   "SCH_BRANCH",
+   "SCH_DATE_FM",
+   "SCH_DATE_TO"
+  ],
+  "defaults": {}
+ },
+ "outputs/management/orderRecvSt": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BILL_RCV",
+   "BILL_STS_TAX_INV",
+   "BRANCH",
+   "CLS_STATUS",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_DEPT",
+   "ORDER_DS_DIV",
+   "ORDER_TYPE",
+   "SALES_DIV",
+   "SALES_DIV_TYPE",
+   "SCH_DATE_TYPE",
+   "SCH_TXT",
+   "SCH_TXT_TYPE",
+   "USE_YN"
+  ],
+  "defaults": {}
+ },
+ "outputs/management/profitNLossStat": {
+  "fields": [
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "INV_TAX",
+   "OP_DEPT",
+   "SCH_DIV",
+   "SCH_DT"
+  ],
+  "defaults": {}
+ },
+ "outputs/management/rtVhcRevSt": {
+  "fields": [
+   "ALLO_REG_USER_ID",
+   "ALLO_REG_USER_NM",
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_DEPT",
+   "SCH_DATE_FM",
+   "SCH_DATE_TO",
+   "TRANS_TYPE",
+   "VHC_CLS",
+   "VHC_ID",
+   "VHC_NO",
+   "VHC_SN"
+  ],
+  "defaults": {}
+ },
+ "outputs/management/vhcPayDdcMgt": {
+  "fields": [
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_DEPT",
+   "SCH_DATE_FM",
+   "SCH_DATE_TO",
+   "TRANS_TYPE",
+   "VHC_CLS",
+   "VHC_ID",
+   "VHC_NO",
+   "VHC_SN"
+  ],
+  "defaults": {}
+ },
+ "outputs/management/vhcSales": {
+  "fields": [
+   "BASE_MON",
+   "BRANCH",
+   "INV_TAX",
+   "OP_DEPT",
+   "SCH_DIV",
+   "VHC_ID",
+   "VHC_NO"
+  ],
+  "defaults": {}
+ },
+ "outputs/management/vhcTrcStat": {
+  "fields": [
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_DATE_FM",
+   "SCH_DATE_TO",
+   "TRANS_TYPE",
+   "VHC_CLS",
+   "VHC_ID",
+   "VHC_NO",
+   "VHC_SN"
+  ],
+  "defaults": {}
+ },
+ "outputs/payTot/payCorpStatus": {
+  "fields": [
+   "BRANCH",
+   "DATE_FM",
+   "DIRECT_YN",
+   "OP_DEPT",
+   "PAY_CORP",
+   "PAY_CORP_NM",
+   "VHC_NO"
+  ],
+  "defaults": {
+   "VHC_CLS": "20"
+  }
+ },
+ "outputs/payTot/stateOfAccByVehicle": {
+  "fields": [
+   "BRANCH",
+   "INV_TAX",
+   "OP_DEPT",
+   "PAY_CORP",
+   "PAY_CORP_NM",
+   "PAY_MON"
+  ],
+  "defaults": {}
+ },
+ "outputs/popup/pointLogPopup": {
+  "fields": [
+   "CSTM_CORP",
+   "ORD_REG_USER"
+  ],
+  "defaults": {}
+ },
+ "outputs/popup/prtPayListPopup": {
+  "fields": [
+   "BRANCH",
+   "PRNT_DATE_FM",
+   "PRNT_DATE_TO",
+   "SCH_DATE_FM",
+   "SCH_DATE_TO",
+   "SORT_DIV",
+   "SORT_TYPE",
+   "SORT_YN",
+   "VHC_PAY_PRT_DIV"
+  ],
+  "defaults": {}
+ },
+ "outputs/popup/prtPrtnCLPayPopup": {
+  "fields": [
+   "PRNT_DATE",
+   "SCH_BRANCH",
+   "SCH_DATE_FM",
+   "SCH_DATE_TO",
+   "SORT_DIV",
+   "SORT_TYPE",
+   "SORT_YN"
+  ],
+  "defaults": {}
+ },
+ "outputs/popup/prtTransListPopup": {
+  "fields": [
+   "BRANCH",
+   "PRNT_DATE_FM",
+   "PRNT_DATE_TO",
+   "SCH_DATE_FM",
+   "SCH_DATE_TO",
+   "SORT_DIV",
+   "SORT_TYPE",
+   "SORT_YN",
+   "YES_NO"
+  ],
+  "defaults": {}
+ },
+ "outputs/popup/prtTransPayPopup": {
+  "fields": [
+   "PAY_ACC_TERM",
+   "PRNT_DATE",
+   "SCH_DATE_FM",
+   "SCH_DATE_TO",
+   "SORT_DIV",
+   "SORT_TYPE",
+   "SORT_YN"
+  ],
+  "defaults": {}
+ },
+ "outputs/shutTotalOutputMgt": {
+  "fields": [
+   "BILL_CL_STATUS",
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BILL_CORP_PIC_LIST",
+   "BILL_PIC",
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "DCSN_DIV",
+   "EXC_SCH_TYPE",
+   "KEYWORD",
+   "OP_SCH_CON_TYPE",
+   "OP_SCH_DATE_TYPE",
+   "ORDER_DS_DIV",
+   "ORDER_STATUS",
+   "ORDER_TYPE",
+   "PAY_CL_STATUS",
+   "SALE_GB",
+   "SEARCH_TEXT",
+   "SEARCH_TYPE",
+   "ZERO_TAX_YN"
+  ],
+  "defaults": {
+   "ORDER_STATUS": "",
+   "SEARCH_TYPE": "W",
+   "SALE_GB": "",
+   "OP_SCH_DATE_TYPE": "BILL_CF_DT",
+   "OP_SCH_CON_TYPE": "LINE_CD",
+   "KEYWORD": "",
+   "EXC_SCH_TYPE": "B",
+   "ORDER_DS_DIV": "S"
+  }
+ },
+ "outputs/statistics/billCorpByUnpaidSt": {
+  "fields": [
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_DT"
+  ],
+  "defaults": {
+   "SCH_DT": "WRK_DT"
+  }
+ },
+ "outputs/statistics/monNCorpBillSt": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_DT",
+   "VAT_DIV"
+  ],
+  "defaults": {}
+ },
+ "outputs/statistics/monNCorpPFMSt": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_DT",
+   "VAT_DIV"
+  ],
+  "defaults": {}
+ },
+ "outputs/statistics/opMonNCorpPFMSt": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "VAT_DIV"
+  ],
+  "defaults": {}
+ },
+ "outputs/statistics/opOpPicPFMSt": {
+  "fields": [
+   "BF_DATE_FM",
+   "BF_DATE_TO",
+   "BF_SEARCH",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_PIC",
+   "OP_PIC_NM",
+   "SCH_DIV",
+   "UNPROXY_YN",
+   "VAT_DIV"
+  ],
+  "defaults": {
+   "SCH_DIV": "1",
+   "UNPROXY_YN": "Y"
+  }
+ },
+ "outputs/statistics/opPicByBillSt": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "OP_PIC",
+   "OP_PIC_NM",
+   "SCH_DT"
+  ],
+  "defaults": {}
+ },
+ "outputs/statistics/opPicPFMSt": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "OP_PIC",
+   "OP_PIC_NM",
+   "SCH_DIV",
+   "VAT_DIV"
+  ],
+  "defaults": {
+   "SCH_DIV": "1"
+  }
+ },
+ "outputs/statistics/pointByPFMSt": {
+  "fields": [
+   "BF_DATE_FM",
+   "BF_DATE_TO",
+   "BF_SEARCH",
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "DEPT_YN",
+   "OP_DEPT",
+   "PAY_ZERO",
+   "VAT_DIV"
+  ],
+  "defaults": {
+   "PAY_ZERO": "Y"
+  }
+ },
+ "outputs/statistics/termNCorpPaySt": {
+  "fields": [
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "VAT_DIV",
+   "VHC_CLS"
+  ],
+  "defaults": {}
+ },
+ "outputs/totalOutputMgt": {
+  "fields": [
+   "BILL_CL_STATUS",
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BILL_CORP_PIC_LIST",
+   "BILL_PIC",
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "DCSN_DIV",
+   "EXC_SCH_TYPE",
+   "KEYWORD",
+   "OP_DEPT",
+   "OP_SCH_CON_TYPE",
+   "OP_SCH_DATE_TYPE",
+   "OP_SCH_USER_TYPE",
+   "ORDER_DS_DIV",
+   "ORDER_STATUS",
+   "ORDER_TYPE",
+   "PAY_CL_STATUS",
+   "PIC_USER_ID",
+   "PIC_USER_NAME",
+   "SALE_GB",
+   "SEARCH_TEXT",
+   "SEARCH_TYPE",
+   "ZERO_TAX_YN"
+  ],
+  "defaults": {
+   "ORDER_STATUS": "",
+   "SEARCH_TYPE": "W",
+   "SALE_GB": "",
+   "OP_SCH_DATE_TYPE": "BILL_CF_DT",
+   "OP_SCH_CON_TYPE": "LINE_CD",
+   "OP_SCH_USER_TYPE": "ALLO_REG_USER_NM",
+   "KEYWORD": "",
+   "PIC_USER_ID": "",
+   "EXC_SCH_TYPE": "B",
+   "ORDER_DS_DIV": "D"
+  }
+ },
+ "sm/TransSpecPtn": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "PAY_MGT_ALL",
+   "PAY_MGT_CLS",
+   "PAY_MGT_NOT_CLS"
+  ],
+  "defaults": {
+   "FILTER_VEHICLE": "Y",
+   "PAY_MGT_ALL": "Y",
+   "PAY_MGT_NOT_CLS": "Y",
+   "PAY_MGT_CLS": "Y",
+   "PAY_CLS_YN": ""
+  }
+ },
+ "sm/TransSpecShp": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "ORDER_TYPE",
+   "SCH_TYPE",
+   "SHIPPER_NM"
+  ],
+  "defaults": {
+   "SCH_TYPE": "R"
+  }
+ },
+ "sm/TrkPaymentList": {
+  "fields": [
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "OP_DEPT",
+   "ORDER_DS_DIV",
+   "ORDER_TYPE",
+   "VHC_CLS"
+  ],
+  "defaults": {}
+ },
+ "sm/collect/billCollectByAcc": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BILL_CORP_PIC_LIST",
+   "BILL_PIC",
+   "BILL_STS",
+   "BRANCH",
+   "COLLECT_DIV",
+   "DATE_FM",
+   "DATE_TO",
+   "DEP_ACCT",
+   "SALES_CD",
+   "SALES_NM",
+   "SALE_GB",
+   "SCH_DATE_TYPE",
+   "SCH_NO",
+   "SCH_NO_TYPE",
+   "SCH_TXT",
+   "SCH_TXT_TYPE",
+   "SUBTOT_DIV",
+   "VAT_DIV"
+  ],
+  "defaults": {}
+ },
+ "sm/generalBilling/LargeBillingClosing": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BILL_CORP_PIC_LIST",
+   "BILL_PIC",
+   "BRANCH",
+   "CARRY_OVER_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "FREE_PAY",
+   "ORDER_DS_DIV",
+   "ORDER_TYPE",
+   "PAY_CONF",
+   "SALES_CODE",
+   "SCH_TXT",
+   "SCH_TYPE"
+  ],
+  "defaults": {}
+ },
+ "sm/generalBilling/billingClosing": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BILL_CORP_PIC_LIST",
+   "BILL_PIC",
+   "BRANCH",
+   "CARRY_OVER_YN",
+   "DATE_FM",
+   "DATE_TO",
+   "FREE_PAY",
+   "OP_PIC",
+   "OP_PIC_NM",
+   "ORDER_DS_DIV",
+   "ORDER_TYPE",
+   "PAY_CONF",
+   "SALES_CODE",
+   "SCH_TXT",
+   "SCH_TYPE"
+  ],
+  "defaults": {}
+ },
+ "sm/generalBilling/taxMgt": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "BILL_NO",
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "II_CORP_CD",
+   "TAX_NO"
+  ],
+  "defaults": {}
+ },
+ "sm/generalPayment/paymentConf": {
+  "fields": [
+   "BRANCH",
+   "DATE_FM",
+   "DATE_TO",
+   "DCSN_DIV",
+   "ORDER_DS_DIV",
+   "PAY_CORP",
+   "PAY_CORP_NM",
+   "PAY_DIV",
+   "PAY_MGT_ALL",
+   "PAY_MGT_CLS",
+   "PAY_MGT_NOT_CLS",
+   "VHC_CLS",
+   "VHC_NO"
+  ],
+  "defaults": {
+   "SCH_TYPE": "BLN",
+   "FILTER_CORP": "Y",
+   "PAY_MGT_ALL": "Y",
+   "PAY_MGT_NOT_CLS": "Y",
+   "PAY_MGT_CLS": "Y"
+  }
+ },
+ "sm/popup/resendMailPopup": {
+  "fields": [
+   "EMAIL"
+  ],
+  "defaults": {}
+ },
+ "wms/AppView/WmsAgiWrkList": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "WH_ZONE",
+   "WMS_AGI_STATE"
+  ],
+  "defaults": {
+   "WH_ZONE": "06277082",
+   "SCH_TYPE": "T"
+  }
+ },
+ "wms/AppView/WmsAgrWrkList": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "WH_ZONE",
+   "WMS_IM_STATE"
+  ],
+  "defaults": {
+   "WH_ZONE": "06277082",
+   "WMS_IM_STATE": "0",
+   "SCH_DATE": "RCV_DT"
+  }
+ },
+ "wms/AppView/WmsLocStt": {
+  "fields": [
+   "CUST_NM",
+   "ITEM_NM",
+   "LOT_NO",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "WH_ZONE": "06277082"
+  }
+ },
+ "wms/Monitoring/WmsWhConfiguration": {
+  "fields": [
+   "MOD",
+   "WH_AREA"
+  ],
+  "defaults": {}
+ },
+ "wms/Monitoring/WmsWhMonitoring": {
+  "fields": [
+   "AUTO_REFRESH",
+   "INVENTORY_COLOR",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "wms/Performance/WmsMonPtnList": {
+  "fields": [
+   "BILL_CORP",
+   "BILL_CORP_NM",
+   "DATE_FM",
+   "DATE_TO",
+   "WH_ZONE"
+  ],
+  "defaults": {}
+ },
+ "wms/Settlement/WmsPftCustList": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "SCH_DATE",
+   "WH_ZONE"
+  ],
+  "defaults": {
+   "SCH_DATE": "TAX_DT"
+  }
+ },
+ "wms/popup/WmsAgrInvenLocaPopup": {
+  "fields": [
+   "WH_AREA",
+   "WH_ID",
+   "WH_ZONE_LIST"
+  ],
+  "defaults": {}
+ },
+ "wms/popup/WmsPrchsInvPrintPopup": {
+  "fields": [
+   "DATE_FM"
+  ],
+  "defaults": {}
+ },
+ "z-dev/template/board/boardMgt": {
+  "fields": [
+   "BOARD_SCH_TXT",
+   "BOARD_SCH_TYPE"
+  ],
+  "defaults": {}
+ },
+ "z-dev/template/containerImgUpload": {
+  "fields": [
+   "DATE_FM",
+   "DATE_TO",
+   "MENU_ABBR",
+   "MENU_NM"
+  ],
+  "defaults": {}
+ },
+ "z-dev/template/faq": {
+  "fields": [
+   "BOARD_SCH_TXT"
+  ],
+  "defaults": {}
+ }
+}
