@@ -176,6 +176,7 @@ function dedupSortReps(reps) {
 }
 
 let repsCache = null;
+const monCorpCache = new Map(); // key: `${pic}|${year}` → 원본 행 배열
 // 내부 직원 목록. code/selectUserCode(216, 가볍고 정확)를 1순위로.
 async function getReps(force) {
   if (repsCache && !force) return repsCache;
@@ -269,14 +270,14 @@ async function getReport(pic, year, branch, period = 'M', month = '') {
     } catch (e) { diag.push({ label, path, error: String(e).slice(0, 200) }); return []; }
   }
 
-  // 주력 데이터: 월별·업체별 매출 (실측 검증됨). 나머지는 진단용으로 함께 시도.
-  const [monCorp, manSales, manOuts, unpaid, orders] = await Promise.all([
-    tryCall('월별·업체별(주력)', 'outputs/statssales/selectMonCorpSalesList'),
-    tryCall('내 월별 매출', 'outputs/statssales/selectManSalesList'),
-    tryCall('내 월별 실적', 'outputs/statssales/selectManOutsList'),
-    tryCall('청구처별 미수', 'outputs/statssales/selectCorpUnpaidList'),
-    tryCall('오더 접수현황', 'outputs/management/selectOrdersList'),
-  ]);
+  // 주력(유일하게 동작) 데이터만 호출 → 빠름.
+  // (selectManSalesList/ManOutsList/CorpUnpaidList=500, selectOrdersList=타임아웃 이라 제외)
+  // 같은 (담당자·연도)는 캐시 → 월만 바꿀 때 즉시.
+  const ckey = `${pic || ''}|${Y}`;
+  let monCorp = monCorpCache.get(ckey);
+  if (monCorp) diag.push({ label: '월별·업체별(캐시)', cached: true, count: monCorp.length });
+  else { monCorp = await tryCall('월별·업체별(주력)', 'outputs/statssales/selectMonCorpSalesList'); monCorpCache.set(ckey, monCorp); }
+  const unpaid = [], orders = [];
 
   // selectMonCorpSalesList 행 스키마(실측):
   //   YYYYMM, B_PRICE(매출/청구), P_PRICE(하불), PROFIT(이익),

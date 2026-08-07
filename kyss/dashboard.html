@@ -42,6 +42,12 @@
   .axis{stroke:var(--line)} .lbl{fill:var(--sub);font-size:10px}
   .line{fill:none;stroke:var(--warn);stroke-width:2}
   .dot{fill:var(--warn)}
+  .tc-row{display:grid;grid-template-columns:190px 1fr 190px;gap:10px;align-items:center;margin:7px 0}
+  .tc-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}
+  .tc-barwrap{background:#0e1524;border-radius:6px;height:20px;overflow:hidden}
+  .tc-bar{height:100%;background:linear-gradient(90deg,var(--acc),var(--good));border-radius:6px;min-width:2px}
+  .tc-val{font-size:12px;white-space:nowrap;text-align:right}
+  @media(max-width:640px){ .tc-row{grid-template-columns:110px 1fr;} .tc-val{grid-column:2;text-align:left} }
   .empty{padding:24px;text-align:center;color:var(--sub)}
 </style>
 </head>
@@ -76,7 +82,12 @@
   </div>
 
   <div class="card">
-    <h2>업체별 현황</h2>
+    <h2>상위 10 업체 (매출)</h2>
+    <div id="topCorp"><div class="empty">조회하면 표시됩니다.</div></div>
+  </div>
+
+  <div class="card">
+    <h2>업체별 현황 (전체)</h2>
     <div id="byCorp" class="scroll"><div class="empty">—</div></div>
   </div>
 
@@ -182,6 +193,7 @@ async function loadReport(){
   const rpt = await jget(`/api/report?pic=${encodeURIComponent(pic)}&year=${year}&month=${month}&branch=${encodeURIComponent(DEFAULTS.branch||'')}`);
   renderKpis(rpt, rep);
   renderChart(rpt);
+  renderTopCorp(rpt.byCorp);
   renderTable('#byCorp', rpt.byCorp);
   renderTable('#unpaid', rpt.unpaid);
   showDiag({note:rpt.note, report:rpt.diag});
@@ -244,6 +256,21 @@ function renderChart(r){
       ${bars}${single?'':`<path class="line" d="${line}"/>`}${dots}${labels}${vlab}
       <text class="lbl" x="${pad}" y="16">${legend}</text>
     </svg>`;
+}
+
+function renderTopCorp(byCorp){
+  const box = $('#topCorp');
+  const top = (byCorp||[]).slice(0,10);
+  if(!top.length){ box.innerHTML='<div class="empty">데이터 없음</div>'; return; }
+  const max = Math.max(1, ...top.map(x=>x.매출||0));
+  box.innerHTML = top.map((x,i)=>{
+    const w = Math.max(1, (x.매출||0)/max*100);
+    return `<div class="tc-row">
+      <div class="tc-name" title="${x.업체}">${i+1}. ${x.업체}</div>
+      <div class="tc-barwrap"><div class="tc-bar" style="width:${w}%"></div></div>
+      <div class="tc-val">${won(x.매출)}원 <span class="muted">· 이익 ${won(x.이익)} (${(x.이익율||0).toFixed(1)}%)</span></div>
+    </div>`;
+  }).join('');
 }
 
 function renderTable(sel, rows){
