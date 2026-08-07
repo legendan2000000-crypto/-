@@ -188,9 +188,11 @@ async function loadReport(){
   const pic = resolveRepCode(), year = $('#year').value, month = $('#month').value;
   if(!pic){ $('#hint').textContent = '먼저 영업사원 이름을 선택/입력하세요.'; return; }
   if(!validateRep(true)){ return; }
+  const repObj = REPS.find(r=>String(r.code)===String(pic));
+  const nm = repObj ? repObj.name : '';
   $('#chart').innerHTML = '<div class="empty">불러오는 중…</div>';
   const rep = $('#rep').value || pic;
-  const rpt = await jget(`/api/report?pic=${encodeURIComponent(pic)}&year=${year}&month=${month}&branch=${encodeURIComponent(DEFAULTS.branch||'')}`);
+  const rpt = await jget(`/api/report?pic=${encodeURIComponent(pic)}&name=${encodeURIComponent(nm)}&year=${year}&month=${month}&branch=${encodeURIComponent(DEFAULTS.branch||'')}`);
   renderKpis(rpt, rep);
   renderChart(rpt);
   renderTopCorp(rpt.byCorp);

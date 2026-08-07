@@ -247,56 +247,57 @@ function findDateKey(row) {
   return best;
 }
 
-async function getReport(pic, year, branch, period = 'M', month = '') {
+async function getReport(pic, year, branch, period = 'M', month = '', name = '') {
   const Y = Number(year) || new Date().getFullYear();
   const MM = /^\d{1,2}$/.test(String(month)) ? String(month).padStart(2, '0') : ''; // 특정 월(빈값=연간)
   const diag = [];
-  const search = {
-    DATE_FM: ym1(Y, 1), DATE_TO: ym1(Y, 12),
-    BF_DATE_FM: ym1(Y - 1, 1), BF_DATE_TO: ym1(Y - 1, 12),
-    OP_PIC: pic || null,
-    BRANCH: branch || null,
-    OP_DEPT: null,
-    PAY_ZERO: 'Y',
-  };
 
-  // 여러 통계 엔드포인트를 병렬로 호출 (실패해도 대시보드는 뜨도록 개별 try)
-  async function tryCall(label, path, extra) {
-    try {
-      const r = await apiSelect(path, { ...search, ...(extra || {}) });
+  // selectManSalesList = "영업담당자별 매출현황" (실측 캡처):
+  //   필수 SEARCH: SCH_DT="BILL_DT", DATE_FM/DATE_TO="YYYY-MM-01"(단일월), OP_PIC=담당자코드, OP_PIC_NM=이름
+  // 연간(12개월)을 월별로 조회해 담당자·연도 기준으로 캐시 → 월 전환 즉시.
+  const ckey = `${pic || ''}|${Y}`;
+  let all = monCorpCache.get(ckey);
+  if (all) {
+    diag.push({ label: '담당자 매출(캐시)', cached: true, count: all.length });
+  } else {
+    const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    const perMonth = []; let sample = null;
+    const results = await Promise.all(months.map(async (mm) => {
+      const d = `${Y}-${mm}-01`;
+      const r = await apiSelect('outputs/statssales/selectManSalesList', {
+        SCH_DT: 'BILL_DT', DATE_FM: d, DATE_TO: d, OP_PIC: pic || null, OP_PIC_NM: name || null,
+      });
       const list = pickList(r.data);
-      diag.push({ label, path, status: r.status, message: r.message, count: list.length, sample: list[0] || null });
-      return list;
-    } catch (e) { diag.push({ label, path, error: String(e).slice(0, 200) }); return []; }
+      perMonth.push({ mm, status: r.status, count: list.length, message: r.message });
+      if (!sample && list.length) sample = list[0];
+      return list.map((x) => ({ ...x, __MM: `${Y}-${mm}` }));
+    }));
+    all = results.flat();
+    monCorpCache.set(ckey, all);
+    perMonth.sort((a, b) => a.mm.localeCompare(b.mm));
+    diag.push({ label: '담당자 매출(월별)', path: 'outputs/statssales/selectManSalesList', perMonth, sample });
   }
 
-  // 주력(유일하게 동작) 데이터만 호출 → 빠름.
-  // (selectManSalesList/ManOutsList/CorpUnpaidList=500, selectOrdersList=타임아웃 이라 제외)
-  // 같은 (담당자·연도)는 캐시 → 월만 바꿀 때 즉시.
-  const ckey = `${pic || ''}|${Y}`;
-  let monCorp = monCorpCache.get(ckey);
-  if (monCorp) diag.push({ label: '월별·업체별(캐시)', cached: true, count: monCorp.length });
-  else { monCorp = await tryCall('월별·업체별(주력)', 'outputs/statssales/selectMonCorpSalesList'); monCorpCache.set(ckey, monCorp); }
-  const unpaid = [], orders = [];
-
-  // selectMonCorpSalesList 행 스키마(실측):
-  //   YYYYMM, B_PRICE(매출/청구), P_PRICE(하불), PROFIT(이익),
-  //   CORP_LOC_NM(업체), BILL_CORP(청구처코드), *_CNTR(컨테이너 수량들)
+  // 금액·업체 필드 자동 감지 (스키마 미검증 대비 - 확인되면 고정)
+  const s0 = all[0] || {};
+  const K = (known, pats) => (s0[known] != null ? known : findKey(s0, pats));
+  const billK = K('B_PRICE', [/B_PRICE/i, /BILL.*(AMT|PRICE|AMOUNT)/i, /SALE.*AMT/i, /매출/, /청구/]);
+  const payK = K('P_PRICE', [/P_PRICE/i, /PAY.*(AMT|PRICE|AMOUNT)/i, /하불/]);
+  const profK = K('PROFIT', [/PROFIT/i, /이익(?!율)/]);
+  const corpK = K('CORP_LOC_NM', [/CORP.*NM/i, /SHIPPER.*NM/i, /거래처/, /업체/, /화주/]);
+  const val = (r, k) => (k ? toNum(r[k]) : 0);
   const cntrSum = (r) => Object.keys(r).filter((k) => /_CNTR$/.test(k)).reduce((s, k) => s + toNum(r[k]), 0);
 
-  // 선택 연도 우선(응답에 전년 데이터가 섞여 오므로). 없으면 전체.
-  let rows = monCorp;
-  const inYear = monCorp.filter((r) => String(r.YYYYMM || '').startsWith(String(Y)));
-  if (inYear.length) rows = inYear;
-  // 특정 월 선택 시 그 달만
-  if (MM) rows = rows.filter((r) => String(r.YYYYMM || '').slice(0, 7) === `${Y}-${MM}`);
+  // 월 필터
+  let rows = all;
+  if (MM) rows = all.filter((r) => r.__MM === `${Y}-${MM}`);
 
-  // 기간(월/주/일) 집계 — 주력 데이터는 월 단위이므로 주/일은 월로 수렴
+  // 월별 집계
   const acc = {};
   for (const r of rows) {
-    const key = bucketKey(normDate(r.YYYYMM), period) || '?';
+    const key = bucketKey(r.__MM, period) || r.__MM;
     const a = acc[key] || (acc[key] = { month: key, bill: 0, pay: 0, profit: 0, cnt: 0 });
-    a.bill += toNum(r.B_PRICE); a.pay += toNum(r.P_PRICE); a.profit += toNum(r.PROFIT); a.cnt += cntrSum(r);
+    a.bill += val(r, billK); a.pay += val(r, payK); a.profit += val(r, profK); a.cnt += cntrSum(r);
   }
   const mon = Object.values(acc).sort((x, y) => x.month.localeCompare(y.month)).map((a) => ({
     month: a.month, bill: a.bill, pay: a.pay, profit: a.profit || (a.bill - a.pay),
@@ -313,23 +314,20 @@ async function getReport(pic, year, branch, period = 'M', month = '') {
   // 업체별 랭킹 (매출 큰 순)
   const cacc = {};
   for (const r of rows) {
-    const nm = r.CORP_LOC_NM || r.BILL_CORP || '(미상)';
+    const nm = (corpK && r[corpK]) || r.BILL_CORP || '(미상)';
     const a = cacc[nm] || (cacc[nm] = { corp: nm, bill: 0, pay: 0, profit: 0, cnt: 0 });
-    a.bill += toNum(r.B_PRICE); a.pay += toNum(r.P_PRICE); a.profit += toNum(r.PROFIT); a.cnt += cntrSum(r);
+    a.bill += val(r, billK); a.pay += val(r, payK); a.profit += val(r, profK); a.cnt += cntrSum(r);
   }
   const byCorp = Object.values(cacc)
-    .sort((x, y) => y.bill - x.bill)
-    .slice(0, 300)
+    .sort((x, y) => y.bill - x.bill).slice(0, 300)
     .map((a) => ({ 업체: a.corp, 매출: a.bill, 하불: a.pay, 이익: a.profit, '이익율': a.bill ? +((a.profit / a.bill) * 100).toFixed(1) : 0, 물동량: a.cnt }));
 
-  const note = monCorp.length ? undefined
-    : '주력 데이터(월별·업체별) 조회 실패 - 아래 진단을 확인하세요.';
+  const note = all.length ? undefined
+    : '이 담당자·연도의 매출이 없습니다 (또는 담당자코드 불일치). 아래 진단을 확인하세요.';
 
   return {
-    ok: mon.length > 0, pic, year: Y, month: MM, period, kpi, monthly: mon, byCorp,
-    unpaid: unpaid.slice(0, 200),
-    orders: orders.slice(0, 200),
-    note, diag,
+    ok: mon.length > 0, pic, name, year: Y, month: MM, period, kpi, monthly: mon, byCorp,
+    unpaid: [], orders: [], note, diag,
   };
 }
 
@@ -366,7 +364,8 @@ const server = http.createServer(async (req, res) => {
       const branch = u.searchParams.get('branch') || '';
       const period = (u.searchParams.get('period') || 'M').toUpperCase();
       const month = u.searchParams.get('month') || '';
-      return sendJson(res, 200, await getReport(pic, year, branch, period, month));
+      const name = u.searchParams.get('name') || '';
+      return sendJson(res, 200, await getReport(pic, year, branch, period, month, name));
     }
 
     // 스키마 발굴용 임의 조회 (개발/디버그)  /api/raw?path=...&search={"...":".."}
