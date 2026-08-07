@@ -313,8 +313,8 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`\n  KYSS 영업 대시보드  →  http://localhost:${PORT}\n`);
-  console.log(`  BASE   : ${BASE}`);
-  console.log(`  계정   : ${ENV.KYSS_ID ? ENV.KYSS_ID : '(.env 에 KYSS_ID 없음!)'}`);
-  console.log(`  브라우저에서 위 주소를 열어 영업사원을 선택하세요.\n`);
+  console.log(`\n  KYSS Sales Dashboard  ->  http://localhost:${PORT}\n`);
+  console.log(`  BASE : ${BASE}`);
+  console.log(`  ID   : ${ENV.KYSS_ID ? ENV.KYSS_ID : '(no KYSS_ID in .env !)'}`);
+  console.log(`  Open the address above in your browser. Do NOT close this window.\n`);
 });
