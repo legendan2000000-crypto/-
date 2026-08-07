@@ -369,49 +369,6 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, await getReport(pic, year, branch, period, month));
     }
 
-    // 담당자 필터 자동탐지: 여러 후보 필드로 조회 → 매출합이 줄어드는 필드가 진짜 필터
-    if (u.pathname === '/api/probe') {
-      if (!(await ensureLogin())) { res.writeHead(401); return res.end('로그인 필요'); }
-      const Y = Number(u.searchParams.get('year')) || new Date().getFullYear();
-      const pic = u.searchParams.get('pic') || ENV.DEFAULT_OP_PIC || ENV.KYSS_ID || '';
-      const base = { DATE_FM: ym1(Y, 1), DATE_TO: ym1(Y, 12), BF_DATE_FM: ym1(Y - 1, 1), BF_DATE_TO: ym1(Y - 1, 12), PAY_ZERO: 'Y' };
-      const FIELDS = ['(필터없음)', 'OP_PIC', 'SALE_PIC', 'SALES_PIC', 'PIC', 'PIC_CD', 'SAL_PIC', 'OP_MAN', 'MAN_CD', 'SALE_MAN', 'EMP_NO', 'USER_ID', 'OP_PIC_CD', 'SALES_PIC_CD', 'SALE_PIC_CD'];
-      const rowsOut = [];
-      for (const f of FIELDS) {
-        const body = { ...base }; if (f !== '(필터없음)') body[f] = pic;
-        const r = await apiSelect('outputs/statssales/selectMonCorpSalesList', body);
-        const list = pickList(r.data);
-        rowsOut.push({ field: f, status: r.status, rows: list.length, sum: list.reduce((s, x) => s + toNum(x.B_PRICE), 0) });
-      }
-      // 다른 후보 엔드포인트(영업사원 실적)도 폭넓은 파라미터로 200 나는지 확인
-      const bigBody = { ...base, OP_PIC: pic, SALE_PIC: pic, PIC: pic, BRANCH: ENV.DEFAULT_BRANCH || null, OP_DEPT: null };
-      const altPaths = ['outputs/statssales/selectManSalesList', 'outputs/statssales/selectManOutsList', 'outputs/statssales/selectOPManOutsList', 'outputs/statssales/selectOPMonCorpOutsList'];
-      const altOut = [];
-      for (const p of altPaths) {
-        const r = await apiSelect(p, bigBody);
-        altOut.push({ path: p, status: r.status, message: r.message, rows: pickList(r.data).length });
-      }
-      const baseSum = rowsOut[0].sum, baseRows = rowsOut[0].rows;
-      const winners = rowsOut.filter((x) => x.field !== '(필터없음)' && x.status === 200 && x.rows > 0 && (x.rows < baseRows || x.sum < baseSum));
-      const esc = (s) => String(s).replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
-      const won = (n) => Math.round(n).toLocaleString('en-US');
-      const trs = rowsOut.map((x) => {
-        const hit = x.field !== '(필터없음)' && x.status === 200 && x.rows > 0 && (x.rows < baseRows || x.sum < baseSum);
-        return `<tr style="background:${hit ? '#123' : 'transparent'}"><td>${esc(x.field)}</td><td>${x.status}</td><td style="text-align:right">${x.rows}</td><td style="text-align:right">${won(x.sum)}</td><td>${hit ? '✅ 담당자 필터로 보임' : ''}</td></tr>`;
-      }).join('');
-      const alt = altOut.map((x) => `<tr><td>${esc(x.path)}</td><td>${x.status}</td><td style="text-align:right">${x.rows}</td><td>${esc(x.message || '')}</td></tr>`).join('');
-      const html = `<!doctype html><meta charset=utf-8><body style="font-family:system-ui,'Malgun Gothic';background:#0f1420;color:#e6ebf5;padding:20px">
-        <h2>담당자 필터 자동탐지 (pic=${esc(pic)}, ${Y}년)</h2>
-        <p>기준(필터없음): <b>${baseRows}행 / 매출합 ${won(baseSum)}</b>. 이보다 <b>줄어든</b> 필드가 담당자 필터입니다.</p>
-        <table border=1 cellpadding=6 style="border-collapse:collapse"><tr><th>필터 필드</th><th>status</th><th>행수</th><th>매출합</th><th>판정</th></tr>${trs}</table>
-        <h3>${winners.length ? '➡ 후보 필터 필드: ' + winners.map((w) => esc(w.field)).join(', ') : '⚠ selectMonCorpSalesList 로는 담당자 필터가 안 먹습니다(모두 동일). 아래 다른 API 확인.'}</h3>
-        <h3>영업사원별 전용 API 시도</h3>
-        <table border=1 cellpadding=6 style="border-collapse:collapse"><tr><th>API</th><th>status</th><th>행수</th><th>message</th></tr>${alt}</table>
-      </body>`;
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-      return res.end(html);
-    }
-
     // 스키마 발굴용 임의 조회 (개발/디버그)  /api/raw?path=...&search={"...":".."}
     if (u.pathname === '/api/raw') {
       if (!(await ensureLogin())) return sendJson(res, 401, { error: '로그인 필요', login: loginDiag });
