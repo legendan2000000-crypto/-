@@ -157,49 +157,60 @@ function findKey(row, patterns) {
   return null;
 }
 
-/* ───────────────────────── 영업사원 목록 ───────────────────────── */
-// 여러 후보 엔드포인트를 시도해서 처음으로 이름+코드가 담긴 목록을 반환
-function normalizeReps(list) {
-  if (!list.length) return [];
-  const codeK = findKey(list[0], [/^OP_PIC$/i, /PIC.*CD/i, /USER.*CD/i, /EMP.*NO/i, /^CD$/i, /CODE/i, /_ID$/i]);
-  const nameK = findKey(list[0], [/PIC.*NM/i, /USER.*NM/i, /EMP.*NM/i, /^NM$/i, /NAME/i, /명$/]);
-  const deptK = findKey(list[0], [/DEPT.*NM/i, /DEPT/i, /부서/]);
-  const brK = findKey(list[0], [/BRANCH.*NM/i, /BRANCH/i, /영업소/]);
-  const reps = list.map((r0) => ({
-    code: r0[codeK] ?? '', name: r0[nameK] ?? (r0[codeK] ?? ''),
-    dept: deptK ? r0[deptK] : '', branch: brK ? r0[brK] : '', _raw: r0,
-  })).filter((x) => x.code || x.name);
-  const seen = new Set(); const uniq = [];
-  for (const x of reps) { const k = String(x.code || x.name); if (seen.has(k)) continue; seen.add(k); uniq.push(x); }
-  return uniq;
+/* ───────────────────────── 직원(영업사원) 목록 ───────────────────────── */
+// 영업소 코드→명 (알려진 것만; 나머지는 코드 그대로)
+const BRANCH_MAP = { B1: '본사', B4: '울산사무소', B6: '평택사무소', B11: '영남지사' };
+// 회사명/거래처처럼 보이는 값은 직원 이름이 아님 → 제외
+function isPersonName(s) {
+  const v = String(s || '').trim();
+  return v && !/\(주\)|\(유\)|㈜|주식회사|유한회사|담당자\s*$/.test(v);
+}
+function dedupSortReps(reps) {
+  const seen = new Set(), out = [];
+  for (const x of reps) {
+    if (!x.code || !x.name) continue;
+    const k = String(x.code); if (seen.has(k)) continue; seen.add(k); out.push(x);
+  }
+  out.sort((a, b) => String(a.name).localeCompare(String(b.name), 'ko'));
+  return out;
 }
 
-// 전 직원 목록: 여러 후보를 모두 호출해서 "가장 많이" 반환한 것을 채택
-async function getReps() {
-  const attempts = [
-    ['cms/popup/selectCommonPopupPic', { POP_TP: 'PIC' }],
-    ['cms/popup/selectCommonPopupPic', {}],
-    ['cms/comm/selectCmsUserMgt', {}],
-    ['cms/comm/selectCmsUserMgt', { USE_YN: 'Y' }],
-    ['code/selectUserCode', {}],
-    ['cms/popup/selectCommonPopupCorpUser', {}],
-    ['picList', {}],
-    ['picList', undefined],
-  ];
+let repsCache = null;
+// 내부 직원 목록. code/selectUserCode(216, 가볍고 정확)를 1순위로.
+async function getReps(force) {
+  if (repsCache && !force) return repsCache;
   const diag = [];
-  let best = { reps: [], source: null };
-  for (const [path, search] of attempts) {
-    try {
-      const r = await apiSelect(path, search);
-      const list = pickList(r.data);
-      const reps = normalizeReps(list);
-      diag.push({ path, status: r.status, count: list.length, usable: reps.length, sample: list[0] || null });
-      if (reps.length > best.reps.length) best = { reps, source: path };
-    } catch (e) { diag.push({ path, error: String(e).slice(0, 200) }); }
-  }
-  // 이름 가나다 정렬
-  best.reps.sort((a, b) => String(a.name).localeCompare(String(b.name), 'ko'));
-  return { reps: best.reps, source: best.source, diag };
+
+  // 1순위: 내부 사용자 코드목록 { CODE, NAME, BRANCH, DEPT }
+  try {
+    const r = await apiSelect('code/selectUserCode', {});
+    const list = pickList(r.data);
+    diag.push({ path: 'code/selectUserCode', status: r.status, count: list.length, sample: list[0] || null });
+    const reps = dedupSortReps(list.map((x) => ({
+      code: x.CODE ?? x.USER_ID ?? '',
+      name: x.NAME ?? x.USER_LOC_NM ?? '',
+      dept: x.DEPT_NM ?? x.DEPT ?? '',
+      branch: x.BRANCH_NM ?? BRANCH_MAP[x.BRANCH] ?? x.BRANCH ?? '',
+      _raw: x,
+    })).filter((x) => isPersonName(x.name)));
+    if (reps.length >= 10) { repsCache = { reps, source: 'code/selectUserCode', diag }; return repsCache; }
+  } catch (e) { diag.push({ path: 'code/selectUserCode', error: String(e).slice(0, 200) }); }
+
+  // 2순위: 직원관리 전체에서 직원/영업만 (무겁지만 이름·부서 상세)
+  try {
+    const r = await apiSelect('cms/comm/selectCmsUserMgt', { USE_YN: 'Y' });
+    const list = pickList(r.data).filter((x) => x.EMP_YN === 'Y' || x.SALES_YN === 'Y');
+    diag.push({ path: 'cms/comm/selectCmsUserMgt', status: r.status, count: list.length, sample: list[0] || null });
+    const reps = dedupSortReps(list.map((x) => ({
+      code: x.USER_ID ?? x.EMP_NO ?? '',
+      name: x.USER_LOC_NM ?? x.USER_ENG_NM ?? '',
+      dept: x.DEPT_NM ?? '', branch: x.BRANCH_NM ?? BRANCH_MAP[x.BRANCH] ?? x.BRANCH ?? '',
+      _raw: x,
+    })).filter((x) => isPersonName(x.name)));
+    if (reps.length) { repsCache = { reps, source: 'cms/comm/selectCmsUserMgt', diag }; return repsCache; }
+  } catch (e) { diag.push({ path: 'cms/comm/selectCmsUserMgt', error: String(e).slice(0, 200) }); }
+
+  return { reps: [], source: null, diag };
 }
 
 /* ───────────────────────── 선택 사원 실적 리포트 ───────────────────────── */
@@ -344,7 +355,7 @@ const server = http.createServer(async (req, res) => {
 
     if (u.pathname === '/api/reps') {
       if (!(await ensureLogin())) return sendJson(res, 401, { error: '로그인 필요', login: loginDiag });
-      return sendJson(res, 200, await getReps());
+      return sendJson(res, 200, await getReps(u.searchParams.get('fresh') === '1'));
     }
 
     if (u.pathname === '/api/report') {

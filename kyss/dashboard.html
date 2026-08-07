@@ -151,9 +151,9 @@ async function init(){
   await loadReps();
 }
 
-async function loadReps(){
+async function loadReps(fresh){
   const dl = $('#repList'); dl.innerHTML = '';
-  const r = await jget('/api/reps');
+  const r = await jget('/api/reps' + (fresh===true ? '?fresh=1' : ''));
   REPS = (r.reps || []);
   if(!REPS.length){
     $('#hint').textContent = '임직원 목록을 못 불러왔습니다 - 진단 참고 (이름 대신 코드 직접 입력 가능)';
@@ -251,7 +251,7 @@ function showDiag(obj){
 }
 
 $('#load').onclick = loadReport;
-$('#reload-reps').onclick = loadReps;
+$('#reload-reps').onclick = ()=>loadReps(true);
 $('#rep').addEventListener('input', ()=>validateRep(false));
 init();
 </script>
