@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KYSS 영업 대시보드</title>
+<style>
+  :root{
+    --bg:#0f1420; --card:#161d2c; --line:#26304a; --txt:#e6ebf5; --sub:#93a0bd;
+    --acc:#4c8dff; --good:#37c98b; --bad:#ff6b6b; --warn:#f3b13b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic",sans-serif}
+  header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
+  header h1{font-size:16px;margin:0 12px 0 0;font-weight:700}
+  select,input,button{background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px}
+  button{cursor:pointer}
+  button.primary{background:var(--acc);border-color:var(--acc);font-weight:600}
+  .sub{color:var(--sub)}
+  main{padding:20px;max-width:1200px;margin:0 auto}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .kpi .l{color:var(--sub);font-size:12px}
+  .kpi .v{font-size:22px;font-weight:700;margin-top:4px}
+  .kpi .d{font-size:12px;margin-top:2px}
+  .up{color:var(--good)} .down{color:var(--bad)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:20px}
+  .card h2{font-size:14px;margin:0 0 12px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  th{color:var(--sub);font-weight:600;position:sticky;top:0;background:var(--card)}
+  .scroll{overflow:auto;max-height:420px}
+  .muted{color:var(--sub);font-size:13px}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;border:1px solid var(--line)}
+  .pill.ok{color:var(--good);border-color:#1f5c44}
+  .pill.err{color:var(--bad);border-color:#5c2020}
+  details{margin-top:6px}
+  pre{background:#0b0f18;border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto;font-size:12px;color:#c7d2e8}
+  .bar{fill:var(--acc)} .bar.py{fill:#334162}
+  .axis{stroke:var(--line)} .lbl{fill:var(--sub);font-size:10px}
+  .line{fill:none;stroke:var(--warn);stroke-width:2}
+  .dot{fill:var(--warn)}
+  .empty{padding:24px;text-align:center;color:var(--sub)}
+</style>
+</head>
+<body>
+<header>
+  <h1>KYSS 영업 대시보드</h1>
+  <span id="status" class="pill">연결 확인 중…</span>
+  <label class="sub">영업사원
+    <select id="rep"><option>불러오는 중…</option></select>
+  </label>
+  <label class="sub">연도
+    <select id="year"></select>
+  </label>
+  <button class="primary" id="load">조회</button>
+  <button id="reload-reps" title="영업사원 목록 새로고침">↻</button>
+  <span id="hint" class="muted"></span>
+</header>
+
+<main>
+  <div id="kpis" class="kpis"></div>
+
+  <div class="card">
+    <h2>월별 매출 · 이익 추이 <span id="chartsub" class="muted"></span></h2>
+    <div id="chart"><div class="empty">영업사원을 선택하고 [조회]를 누르세요.</div></div>
+  </div>
+
+  <div class="card">
+    <h2>업체별 현황</h2>
+    <div id="byCorp" class="scroll"><div class="empty">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2>청구처별 미수 현황</h2>
+    <div id="unpaid" class="scroll"><div class="empty">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2>진단 (첫 실행 시 실제 응답 확인용)</h2>
+    <div id="diag" class="muted">조회하면 각 API 응답 상태가 표시됩니다.</div>
+  </div>
+</main>
+
+<script>
+const won = n => (n==null||isNaN(n)) ? '-' : Math.round(n).toLocaleString('ko-KR');
+const pct = n => (n==null||isNaN(n)) ? '-' : n.toFixed(1)+'%';
+const $ = s => document.querySelector(s);
+
+async function jget(url){ const r = await fetch(url); return r.json(); }
+
+// 연도 셀렉트 채우기
+(function(){
+  const y = new Date().getFullYear(), sel = $('#year');
+  for(let i=y;i>=y-4;i--){ const o=document.createElement('option'); o.value=i; o.textContent=i; sel.appendChild(o); }
+})();
+
+let DEFAULTS = { branch:'', pic:'' };
+
+async function init(){
+  const st = await jget('/api/status');
+  const el = $('#status');
+  if(st.loggedIn){ el.className='pill ok'; el.textContent='로그인됨'; }
+  else{ el.className='pill err'; el.textContent='로그인 실패'; $('#hint').textContent='.env 계정을 확인하세요 (아래 진단 참고)'; showDiag({login:st.login}); }
+  DEFAULTS = st.defaults || DEFAULTS;
+  await loadReps();
+}
+
+async function loadReps(){
+  const sel = $('#rep');
+  sel.innerHTML = '<option>불러오는 중…</option>';
+  const r = await jget('/api/reps');
+  if(!r.reps || !r.reps.length){
+    sel.innerHTML = '<option value="">(목록 못 불러옴)</option>';
+    $('#hint').textContent = '영업사원 목록 API 확인 필요 - 진단 참고';
+    showDiag({reps:r.diag});
+    // 그래도 기본 담당자로 조회는 가능하게
+    if(DEFAULTS.pic){ const o=document.createElement('option'); o.value=DEFAULTS.pic; o.textContent=DEFAULTS.pic+' (기본)'; sel.innerHTML=''; sel.appendChild(o); }
+    return;
+  }
+  sel.innerHTML = '';
+  for(const rep of r.reps){
+    const o = document.createElement('option');
+    o.value = rep.code;
+    o.textContent = rep.name + (rep.dept? ` · ${rep.dept}`:'') + (rep.code? ` (${rep.code})`:'');
+    if(rep.code===DEFAULTS.pic) o.selected = true;
+    sel.appendChild(o);
+  }
+  $('#hint').textContent = `영업사원 ${r.reps.length}명 (source: ${r.source})`;
+}
+
+async function loadReport(){
+  const pic = $('#rep').value, year = $('#year').value;
+  $('#chart').innerHTML = '<div class="empty">불러오는 중…</div>';
+  const rep = $('#rep').options[$('#rep').selectedIndex]?.textContent || pic;
+  const rpt = await jget(`/api/report?pic=${encodeURIComponent(pic)}&year=${year}&branch=${encodeURIComponent(DEFAULTS.branch||'')}`);
+  renderKpis(rpt, rep);
+  renderChart(rpt);
+  renderTable('#byCorp', rpt.byCorp);
+  renderTable('#unpaid', rpt.unpaid);
+  showDiag({report:rpt.diag});
+}
+
+function renderKpis(r, repLabel){
+  const k = r.kpi || {};
+  const cards = [
+    ['매출(청구)', won(k.bill)+'원'],
+    ['하불', won(k.pay)+'원'],
+    ['이익', won(k.profit)+'원'],
+    ['이익율', pct(k.per)],
+    ['배차건수', won(k.cnt)+'건'],
+  ];
+  $('#kpis').innerHTML = cards.map(([l,v])=>`<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div></div>`).join('')
+    + `<div class="kpi"><div class="l">대상 / 연도</div><div class="v" style="font-size:15px">${r.year}</div><div class="d muted">${repLabel}</div></div>`;
+  $('#chartsub').textContent = k.latestMonth ? `· 최신 ${k.latestMonth.month}: 이익 ${won(k.latestMonth.profit)} (${pct(k.latestMonth.per)})` : '';
+}
+
+function renderChart(r){
+  const m = r.monthly || [];
+  if(!m.length){ $('#chart').innerHTML = '<div class="empty">이 조건의 월별 데이터가 없습니다. (담당자/연도 확인 또는 아래 진단 참고)</div>'; return; }
+  const W=1120,H=280,pad=40, max=Math.max(1,...m.map(x=>Math.max(x.bill,x.profit)));
+  const bw = (W-pad*2)/m.length*0.6, gap=(W-pad*2)/m.length;
+  const y = v => H-pad - (v/max)*(H-pad*2);
+  const maxPer = Math.max(10,...m.map(x=>x.per));
+  const yp = v => H-pad - (v/maxPer)*(H-pad*2);
+  let bars='', line='', dots='', labels='';
+  m.forEach((x,i)=>{
+    const cx = pad + gap*i + gap/2;
+    bars += `<rect class="bar" x="${cx-bw/2}" y="${y(x.bill)}" width="${bw}" height="${H-pad-y(x.bill)}" rx="3"><title>${x.month} 매출 ${won(x.bill)}</title></rect>`;
+    bars += `<rect class="bar" x="${cx-bw/2}" y="${y(x.profit)}" width="${bw}" height="${H-pad-y(x.profit)}" rx="3" fill="#37c98b" opacity=".85"><title>${x.month} 이익 ${won(x.profit)}</title></rect>`;
+    const px=cx, py=yp(x.per);
+    line += (i? 'L':'M')+px+' '+py+' ';
+    dots += `<circle class="dot" cx="${px}" cy="${py}" r="3"><title>${x.month} 이익율 ${pct(x.per)}</title></circle>`;
+    labels += `<text class="lbl" x="${cx}" y="${H-pad+14}" text-anchor="middle">${x.month.slice(5)}</text>`;
+  });
+  $('#chart').innerHTML =
+    `<svg viewBox="0 0 ${W} ${H}" width="100%">
+      <line class="axis" x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}"/>
+      ${bars}<path class="line" d="${line}"/>${dots}${labels}
+      <text class="lbl" x="${pad}" y="16">막대: 매출(파랑)·이익(초록) / 선: 이익율(노랑)</text>
+    </svg>`;
+}
+
+function renderTable(sel, rows){
+  const box = $(sel);
+  if(!rows || !rows.length){ box.innerHTML='<div class="empty">데이터 없음</div>'; return; }
+  // 표시 컬럼: 이름/코드류 먼저, 그다음 금액류. 최대 8개.
+  const keys = Object.keys(rows[0]).filter(k=>k!=='_raw');
+  const nameKeys = keys.filter(k=>/NM|NAME|명|CD|CODE|MONTH|YM/i.test(k));
+  const numKeys  = keys.filter(k=>/AMOUNT|AMT|PROFIT|BILL|PAY|CNT|UNPAID|미수|이익|매출|건수/i.test(k) && !nameKeys.includes(k));
+  const cols = [...new Set([...nameKeys, ...numKeys, ...keys])].slice(0,8);
+  const isNum = k => /AMOUNT|AMT|PROFIT|BILL|PAY|CNT|UNPAID|미수|이익|매출|건수/i.test(k);
+  const head = '<tr>'+cols.map(c=>`<th>${c}</th>`).join('')+'</tr>';
+  const body = rows.slice(0,100).map(r=>'<tr>'+cols.map(c=>`<td>${isNum(c)? won(Number(String(r[c]).replace(/[, ]/g,''))) : (r[c]??'')}</td>`).join('')+'</tr>').join('');
+  box.innerHTML = `<table>${head}${body}</table>`;
+}
+
+function showDiag(obj){
+  $('#diag').innerHTML = '<pre>'+JSON.stringify(obj,null,2)+'</pre>';
+}
+
+$('#load').onclick = loadReport;
+$('#reload-reps').onclick = loadReps;
+init();
+</script>
+</body>
+</html>
