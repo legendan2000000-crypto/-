@@ -35,6 +35,7 @@
   .pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;border:1px solid var(--line)}
   .pill.ok{color:var(--good);border-color:#1f5c44}
   .pill.err{color:var(--bad);border-color:#5c2020}
+  .pill.warn{color:var(--warn);border-color:#5c4a1f}
   details{margin-top:6px}
   pre{background:#0b0f18;border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto;font-size:12px;color:#c7d2e8}
   .bar{fill:var(--acc)} .bar.py{fill:#334162}
@@ -52,14 +53,13 @@
     <input id="rep" list="repList" placeholder="이름으로 검색… (예: 홍길동)" autocomplete="off" style="min-width:240px">
     <datalist id="repList"></datalist>
   </label>
+  <span id="repStatus" class="pill">이름 입력</span>
   <label class="sub">연도
     <select id="year"></select>
   </label>
-  <label class="sub">기간
-    <select id="period">
-      <option value="M">월별</option>
-      <option value="W">주별</option>
-      <option value="D">일별</option>
+  <label class="sub">월
+    <select id="month">
+      <option value="">전체(연간)</option>
     </select>
   </label>
   <button class="primary" id="load">조회</button>
@@ -102,6 +102,8 @@ async function jget(url){ const r = await fetch(url); return r.json(); }
 (function(){
   const y = new Date().getFullYear(), sel = $('#year');
   for(let i=y;i>=y-4;i--){ const o=document.createElement('option'); o.value=i; o.textContent=i; sel.appendChild(o); }
+  const ms = $('#month');
+  for(let m=1;m<=12;m++){ const o=document.createElement('option'); o.value=String(m).padStart(2,'0'); o.textContent=m+'월'; ms.appendChild(o); }
 })();
 
 let DEFAULTS = { branch:'', pic:'' };
@@ -123,6 +125,23 @@ function resolveRepCode(){
 }
 function repLabel(r){ return `${r.name}${r.dept? ' · '+r.dept:''}${r.code? ' ('+r.code+')':''}`; }
 
+// 이름 검색 상태 배지. verbose=true면 조회 직전 검증(불가 시 false 반환)
+function validateRep(verbose){
+  const el = $('#repStatus'); const v = ($('#rep').value||'').trim();
+  const set = (cls,txt)=>{ if(el){ el.className='pill'+(cls?' '+cls:''); el.textContent=txt; } };
+  if(!v){ set('', '이름 입력'); return false; }
+  if(!REPS.length){ set('warn', '목록없음·코드 직접입력'); return true; } // 목록 못 불러온 경우 코드로 시도 허용
+  const m = v.match(/\(([^)]+)\)\s*$/);
+  let rep = m ? REPS.find(r=>String(r.code)===m[1]) : null;
+  if(!rep) rep = REPS.find(r=>r.name===v) || REPS.find(r=>String(r.code)===v);
+  if(!rep){ const part = REPS.filter(r=>r.name && r.name.includes(v));
+    if(part.length===1) rep=part[0];
+    else if(part.length>1){ set('warn', `여러 명(${part.length})·선택 필요`); return false; }
+  }
+  if(rep){ set('ok', `✔ ${rep.name}${rep.dept? ' · '+rep.dept:''} 준비완료`); return true; }
+  set('err', '✖ 확인불가 (오타?)'); return false;
+}
+
 async function init(){
   const st = await jget('/api/status');
   const el = $('#status');
@@ -140,6 +159,7 @@ async function loadReps(){
     $('#hint').textContent = '임직원 목록을 못 불러왔습니다 - 진단 참고 (이름 대신 코드 직접 입력 가능)';
     showDiag({reps:r.diag});
     if(DEFAULTS.pic) $('#rep').value = DEFAULTS.pic;
+    validateRep(false);
     return;
   }
   for(const rep of REPS){
@@ -150,23 +170,23 @@ async function loadReps(){
   const def = REPS.find(x=>String(x.code)===String(DEFAULTS.pic));
   if(def) $('#rep').value = repLabel(def);
   $('#hint').textContent = `임직원 ${REPS.length}명 · 이름을 입력하면 자동완성 (source: ${r.source})`;
+  validateRep(false);
 }
 
 async function loadReport(){
-  const pic = resolveRepCode(), year = $('#year').value, period = $('#period').value;
+  const pic = resolveRepCode(), year = $('#year').value, month = $('#month').value;
   if(!pic){ $('#hint').textContent = '먼저 영업사원 이름을 선택/입력하세요.'; return; }
+  if(!validateRep(true)){ return; }
   $('#chart').innerHTML = '<div class="empty">불러오는 중…</div>';
   const rep = $('#rep').value || pic;
-  const rpt = await jget(`/api/report?pic=${encodeURIComponent(pic)}&year=${year}&period=${period}&branch=${encodeURIComponent(DEFAULTS.branch||'')}`);
+  const rpt = await jget(`/api/report?pic=${encodeURIComponent(pic)}&year=${year}&month=${month}&branch=${encodeURIComponent(DEFAULTS.branch||'')}`);
   renderKpis(rpt, rep);
   renderChart(rpt);
   renderTable('#byCorp', rpt.byCorp);
   renderTable('#unpaid', rpt.unpaid);
   showDiag({note:rpt.note, report:rpt.diag});
-  const monthlyOnly = period!=='M' && (rpt.monthly||[]).every(x=>/^\d{4}-\d{2}$/.test(x.month));
-  $('#hint').textContent = rpt.note ? rpt.note
-    : monthlyOnly ? '※ 현재 매출 데이터는 월 단위까지만 제공됩니다 (주별/일별은 월로 표시).'
-    : `조회 완료 · 이익율 ${pct(rpt.kpi?.per)}`;
+  const scope = rpt.month ? `${rpt.year}년 ${Number(rpt.month)}월` : `${rpt.year}년 전체`;
+  $('#hint').textContent = rpt.note ? rpt.note : `조회 완료 · ${scope} · 이익율 ${pct(rpt.kpi?.per)}`;
 }
 
 function renderKpis(r, repLabel){
@@ -184,10 +204,9 @@ function renderKpis(r, repLabel){
 }
 
 function renderChart(r){
-  const plabel = {M:'월별', W:'주별', D:'일별'}[r.period] || '월별';
-  $('#chartTitle').textContent = plabel;
+  $('#chartTitle').textContent = r.month ? `${r.year}년 ${Number(r.month)}월` : `${r.year}년 월별`;
   const m = r.monthly || [];
-  if(!m.length){ $('#chart').innerHTML = '<div class="empty">이 조건의 월별 데이터가 없습니다. (담당자/연도 확인 또는 아래 진단 참고)</div>'; return; }
+  if(!m.length){ $('#chart').innerHTML = '<div class="empty">이 조건의 데이터가 없습니다. (담당자/연월 확인 또는 아래 진단 참고)</div>'; return; }
   const W=1120,H=280,pad=40, max=Math.max(1,...m.map(x=>Math.max(x.bill,x.profit)));
   const bw = (W-pad*2)/m.length*0.6, gap=(W-pad*2)/m.length;
   const y = v => H-pad - (v/max)*(H-pad*2);
@@ -233,6 +252,7 @@ function showDiag(obj){
 
 $('#load').onclick = loadReport;
 $('#reload-reps').onclick = loadReps;
+$('#rep').addEventListener('input', ()=>validateRep(false));
 init();
 </script>
 </body>

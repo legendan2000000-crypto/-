@@ -235,8 +235,9 @@ function findDateKey(row) {
   return best;
 }
 
-async function getReport(pic, year, branch, period = 'M') {
+async function getReport(pic, year, branch, period = 'M', month = '') {
   const Y = Number(year) || new Date().getFullYear();
+  const MM = /^\d{1,2}$/.test(String(month)) ? String(month).padStart(2, '0') : ''; // 특정 월(빈값=연간)
   const diag = [];
   const search = {
     DATE_FM: ym1(Y, 1), DATE_TO: ym1(Y, 12),
@@ -275,6 +276,8 @@ async function getReport(pic, year, branch, period = 'M') {
   let rows = monCorp;
   const inYear = monCorp.filter((r) => String(r.YYYYMM || '').startsWith(String(Y)));
   if (inYear.length) rows = inYear;
+  // 특정 월 선택 시 그 달만
+  if (MM) rows = rows.filter((r) => String(r.YYYYMM || '').slice(0, 7) === `${Y}-${MM}`);
 
   // 기간(월/주/일) 집계 — 주력 데이터는 월 단위이므로 주/일은 월로 수렴
   const acc = {};
@@ -311,7 +314,7 @@ async function getReport(pic, year, branch, period = 'M') {
     : '주력 데이터(월별·업체별) 조회 실패 - 아래 진단을 확인하세요.';
 
   return {
-    ok: mon.length > 0, pic, year: Y, period, kpi, monthly: mon, byCorp,
+    ok: mon.length > 0, pic, year: Y, month: MM, period, kpi, monthly: mon, byCorp,
     unpaid: unpaid.slice(0, 200),
     orders: orders.slice(0, 200),
     note, diag,
@@ -350,7 +353,8 @@ const server = http.createServer(async (req, res) => {
       const year = u.searchParams.get('year') || new Date().getFullYear();
       const branch = u.searchParams.get('branch') || '';
       const period = (u.searchParams.get('period') || 'M').toUpperCase();
-      return sendJson(res, 200, await getReport(pic, year, branch, period));
+      const month = u.searchParams.get('month') || '';
+      return sendJson(res, 200, await getReport(pic, year, branch, period, month));
     }
 
     // 스키마 발굴용 임의 조회 (개발/디버그)  /api/raw?path=...&search={"...":".."}
