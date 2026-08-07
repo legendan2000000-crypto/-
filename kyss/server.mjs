@@ -59,24 +59,34 @@ function csrfHeader() {
 }
 
 /* ───────────────────────── 저수준 호출 ───────────────────────── */
-async function post(path, bodyObj) {
+async function post(path, bodyObj, timeoutMs = 20000) {
   const url = BASE + path.replace(/^\//, '');
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      ...(cookieHeader() ? { Cookie: cookieHeader() } : {}),
-      ...csrfHeader(),
-    },
-    body: JSON.stringify(bodyObj ?? {}),
-    redirect: 'manual',
-  });
-  storeCookies(res);
-  const text = await res.text();
-  let json = null;
-  try { json = JSON.parse(text); } catch { /* HTML 등 */ }
-  return { status: res.status, ok: res.ok, json, text };
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), timeoutMs); // 응답 무한대기 방지
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        ...(cookieHeader() ? { Cookie: cookieHeader() } : {}),
+        ...csrfHeader(),
+      },
+      body: JSON.stringify(bodyObj ?? {}),
+      redirect: 'manual',
+      signal: ctl.signal,
+    });
+    storeCookies(res);
+    const text = await res.text();
+    let json = null;
+    try { json = JSON.parse(text); } catch { /* HTML 등 */ }
+    return { status: res.status, ok: res.ok, json, text };
+  } catch (e) {
+    const timedOut = e && e.name === 'AbortError';
+    return { status: 0, ok: false, json: null, text: timedOut ? `timeout ${timeoutMs}ms` : String(e), error: true };
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 // 업무 조회 표준: { SEARCH: {...} } → data 반환
@@ -149,45 +159,83 @@ function findKey(row, patterns) {
 
 /* ───────────────────────── 영업사원 목록 ───────────────────────── */
 // 여러 후보 엔드포인트를 시도해서 처음으로 이름+코드가 담긴 목록을 반환
+function normalizeReps(list) {
+  if (!list.length) return [];
+  const codeK = findKey(list[0], [/^OP_PIC$/i, /PIC.*CD/i, /USER.*CD/i, /EMP.*NO/i, /^CD$/i, /CODE/i, /_ID$/i]);
+  const nameK = findKey(list[0], [/PIC.*NM/i, /USER.*NM/i, /EMP.*NM/i, /^NM$/i, /NAME/i, /명$/]);
+  const deptK = findKey(list[0], [/DEPT.*NM/i, /DEPT/i, /부서/]);
+  const brK = findKey(list[0], [/BRANCH.*NM/i, /BRANCH/i, /영업소/]);
+  const reps = list.map((r0) => ({
+    code: r0[codeK] ?? '', name: r0[nameK] ?? (r0[codeK] ?? ''),
+    dept: deptK ? r0[deptK] : '', branch: brK ? r0[brK] : '', _raw: r0,
+  })).filter((x) => x.code || x.name);
+  const seen = new Set(); const uniq = [];
+  for (const x of reps) { const k = String(x.code || x.name); if (seen.has(k)) continue; seen.add(k); uniq.push(x); }
+  return uniq;
+}
+
+// 전 직원 목록: 여러 후보를 모두 호출해서 "가장 많이" 반환한 것을 채택
 async function getReps() {
   const attempts = [
-    ['picList', undefined],
-    ['code/selectUserCode', {}],
-    ['cms/popup/selectCommonPopupPic', { POP_TP: 'PIC', title: '담당자' }],
+    ['cms/popup/selectCommonPopupPic', { POP_TP: 'PIC' }],
     ['cms/popup/selectCommonPopupPic', {}],
+    ['cms/comm/selectCmsUserMgt', {}],
+    ['cms/comm/selectCmsUserMgt', { USE_YN: 'Y' }],
+    ['code/selectUserCode', {}],
+    ['cms/popup/selectCommonPopupCorpUser', {}],
+    ['picList', {}],
+    ['picList', undefined],
   ];
   const diag = [];
+  let best = { reps: [], source: null };
   for (const [path, search] of attempts) {
     try {
       const r = await apiSelect(path, search);
       const list = pickList(r.data);
-      diag.push({ path, status: r.status, count: list.length, sample: list[0] || null });
-      if (list.length) {
-        const codeK = findKey(list[0], [/^OP_PIC$/i, /PIC.*CD/i, /USER.*CD/i, /^CD$/i, /CODE/i, /_ID$/i]);
-        const nameK = findKey(list[0], [/PIC.*NM/i, /USER.*NM/i, /^NM$/i, /NAME/i, /명$/]);
-        const deptK = findKey(list[0], [/DEPT.*NM/i, /DEPT/i, /부서/]);
-        const brK = findKey(list[0], [/BRANCH.*NM/i, /BRANCH/i, /영업소/]);
-        const reps = list.map((r0) => ({
-          code: r0[codeK] ?? '',
-          name: r0[nameK] ?? (r0[codeK] ?? ''),
-          dept: deptK ? r0[deptK] : '',
-          branch: brK ? r0[brK] : '',
-          _raw: r0,
-        })).filter((x) => x.code || x.name);
-        // 코드 기준 중복 제거
-        const seen = new Set(); const uniq = [];
-        for (const x of reps) { const key = String(x.code || x.name); if (seen.has(key)) continue; seen.add(key); uniq.push(x); }
-        return { reps: uniq, source: path, diag };
-      }
+      const reps = normalizeReps(list);
+      diag.push({ path, status: r.status, count: list.length, usable: reps.length, sample: list[0] || null });
+      if (reps.length > best.reps.length) best = { reps, source: path };
     } catch (e) { diag.push({ path, error: String(e).slice(0, 200) }); }
   }
-  return { reps: [], source: null, diag };
+  // 이름 가나다 정렬
+  best.reps.sort((a, b) => String(a.name).localeCompare(String(b.name), 'ko'));
+  return { reps: best.reps, source: best.source, diag };
 }
 
 /* ───────────────────────── 선택 사원 실적 리포트 ───────────────────────── */
 const ym1 = (y, m) => `${y}-${String(m).padStart(2, '0')}-01`;
 
-async function getReport(pic, year, branch) {
+// 날짜 정규화 + 기간 버킷 키
+function normDate(v) {
+  const s = String(v ?? '').trim();
+  let m = s.match(/^(\d{4})(\d{2})(\d{2})$/); if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  m = s.match(/^(\d{4})(\d{2})$/); if (m) return `${m[1]}-${m[2]}`;
+  return s.replace(/[.\/]/g, '-');
+}
+function bucketKey(dateStr, period) {
+  const s = String(dateStr || '');
+  if (period === 'D') return s.slice(0, 10);
+  if (period === 'W') {
+    const d = new Date(s.slice(0, 10));
+    if (isNaN(d)) return s.slice(0, 7);
+    const dt = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const day = (dt.getUTCDay() + 6) % 7; dt.setUTCDate(dt.getUTCDate() - day + 3);
+    const firstThu = new Date(Date.UTC(dt.getUTCFullYear(), 0, 4));
+    const week = 1 + Math.round(((dt - firstThu) / 86400000 - 3 + ((firstThu.getUTCDay() + 6) % 7)) / 7);
+    return `${dt.getUTCFullYear()}-W${String(week).padStart(2, '0')}`;
+  }
+  return s.slice(0, 7); // 'M'
+}
+function findDateKey(row) {
+  let best = null, bestLen = 0;
+  for (const k of Object.keys(row || {})) {
+    const m = String(row[k] ?? '').match(/^(\d{4})[-.\/]?(\d{2})([-.\/]?\d{2})?/);
+    if (m) { const len = m[3] ? 10 : 7; if (len > bestLen) { best = k; bestLen = len; } }
+  }
+  return best;
+}
+
+async function getReport(pic, year, branch, period = 'M') {
   const Y = Number(year) || new Date().getFullYear();
   const diag = [];
   const search = {
@@ -217,31 +265,29 @@ async function getReport(pic, year, branch) {
     tryCall('오더 접수현황', 'outputs/management/selectOrdersList'),
   ]);
 
-  // 월별 집계: 매출/실적 목록에서 월·금액 필드를 자동 감지해 합산
-  function monthly(list) {
+  // 기간 집계(월/주/일): 날짜·금액 필드를 자동 감지해 버킷별 합산
+  function bucketize(list) {
     if (!list.length) return [];
-    const mK = findKey(list[0], [/^MONTH$/i, /YM/i, /연월/, /DATE/i]);
+    const dateK = findDateKey(list[0]) || findKey(list[0], [/^MONTH$/i, /YM/i, /연월/, /DATE/i]);
     const billK = findKey(list[0], [/BILL.*AMOUNT/i, /SALE.*AMT/i, /매출/, /청구/]);
     const payK = findKey(list[0], [/PAY.*AMOUNT/i, /하불/]);
     const profK = findKey(list[0], [/PROFIT(?!_PER)/i, /이익(?!율)/]);
-    const perK = findKey(list[0], [/PROFIT_PER/i, /이익율/]);
     const cntK = findKey(list[0], [/ALLO_CNT/i, /CNT/i, /건수/]);
     const acc = {};
     for (const r of list) {
-      const mo = String(r[mK] ?? '').slice(0, 7) || '?';
-      const a = acc[mo] || (acc[mo] = { month: mo, bill: 0, pay: 0, profit: 0, cnt: 0, _per: [] });
-      a.bill += toNum(r[billK]); a.pay += toNum(r[payK]); a.profit += toNum(r[profK]);
-      a.cnt += toNum(r[cntK]); if (perK) a._per.push(toNum(r[perK]));
+      const key = bucketKey(normDate(r[dateK]), period) || '?';
+      const a = acc[key] || (acc[key] = { month: key, bill: 0, pay: 0, profit: 0, cnt: 0 });
+      a.bill += toNum(r[billK]); a.pay += toNum(r[payK]); a.profit += toNum(r[profK]); a.cnt += toNum(r[cntK]);
     }
     return Object.values(acc).sort((x, y) => x.month.localeCompare(y.month)).map((a) => ({
       month: a.month, bill: a.bill, pay: a.pay,
       profit: a.profit || (a.bill - a.pay),
-      per: a.bill ? +(( (a.profit || a.bill - a.pay) / a.bill) * 100).toFixed(1) : 0,
+      per: a.bill ? +(((a.profit || a.bill - a.pay) / a.bill) * 100).toFixed(1) : 0,
       cnt: a.cnt,
     }));
   }
 
-  const mon = monthly(manSales.length ? manSales : manOuts);
+  const mon = bucketize(manSales.length ? manSales : manOuts);
   const sum = mon.reduce((s, m) => ({ bill: s.bill + m.bill, pay: s.pay + m.pay, profit: s.profit + m.profit, cnt: s.cnt + m.cnt }), { bill: 0, pay: 0, profit: 0, cnt: 0 });
   const kpi = {
     bill: sum.bill, pay: sum.pay, profit: sum.profit, cnt: sum.cnt,
@@ -251,7 +297,7 @@ async function getReport(pic, year, branch) {
 
   return {
     ok: mon.length > 0 || byCorp.length > 0,
-    pic, year: Y, kpi, monthly: mon,
+    pic, year: Y, period, kpi, monthly: mon,
     byCorp: byCorp.slice(0, 200),
     unpaid: unpaid.slice(0, 200),
     orders: orders.slice(0, 200),
@@ -290,7 +336,8 @@ const server = http.createServer(async (req, res) => {
       const pic = u.searchParams.get('pic') || '';
       const year = u.searchParams.get('year') || new Date().getFullYear();
       const branch = u.searchParams.get('branch') || '';
-      return sendJson(res, 200, await getReport(pic, year, branch));
+      const period = (u.searchParams.get('period') || 'M').toUpperCase();
+      return sendJson(res, 200, await getReport(pic, year, branch, period));
     }
 
     // 스키마 발굴용 임의 조회 (개발/디버그)  /api/raw?path=...&search={"...":".."}

@@ -55,6 +55,13 @@
   <label class="sub">연도
     <select id="year"></select>
   </label>
+  <label class="sub">기간
+    <select id="period">
+      <option value="M">월별</option>
+      <option value="W">주별</option>
+      <option value="D">일별</option>
+    </select>
+  </label>
   <button class="primary" id="load">조회</button>
   <button id="reload-reps" title="영업사원 목록 새로고침">↻</button>
   <span id="hint" class="muted"></span>
@@ -64,7 +71,7 @@
   <div id="kpis" class="kpis"></div>
 
   <div class="card">
-    <h2>월별 매출 · 이익 추이 <span id="chartsub" class="muted"></span></h2>
+    <h2><span id="chartTitle">월별</span> 매출 · 이익 추이 <span id="chartsub" class="muted"></span></h2>
     <div id="chart"><div class="empty">영업사원을 선택하고 [조회]를 누르세요.</div></div>
   </div>
 
@@ -146,11 +153,11 @@ async function loadReps(){
 }
 
 async function loadReport(){
-  const pic = resolveRepCode(), year = $('#year').value;
+  const pic = resolveRepCode(), year = $('#year').value, period = $('#period').value;
   if(!pic){ $('#hint').textContent = '먼저 영업사원 이름을 선택/입력하세요.'; return; }
   $('#chart').innerHTML = '<div class="empty">불러오는 중…</div>';
   const rep = $('#rep').value || pic;
-  const rpt = await jget(`/api/report?pic=${encodeURIComponent(pic)}&year=${year}&branch=${encodeURIComponent(DEFAULTS.branch||'')}`);
+  const rpt = await jget(`/api/report?pic=${encodeURIComponent(pic)}&year=${year}&period=${period}&branch=${encodeURIComponent(DEFAULTS.branch||'')}`);
   renderKpis(rpt, rep);
   renderChart(rpt);
   renderTable('#byCorp', rpt.byCorp);
@@ -173,6 +180,8 @@ function renderKpis(r, repLabel){
 }
 
 function renderChart(r){
+  const plabel = {M:'월별', W:'주별', D:'일별'}[r.period] || '월별';
+  $('#chartTitle').textContent = plabel;
   const m = r.monthly || [];
   if(!m.length){ $('#chart').innerHTML = '<div class="empty">이 조건의 월별 데이터가 없습니다. (담당자/연도 확인 또는 아래 진단 참고)</div>'; return; }
   const W=1120,H=280,pad=40, max=Math.max(1,...m.map(x=>Math.max(x.bill,x.profit)));
