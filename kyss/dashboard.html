@@ -162,7 +162,11 @@ async function loadReport(){
   renderChart(rpt);
   renderTable('#byCorp', rpt.byCorp);
   renderTable('#unpaid', rpt.unpaid);
-  showDiag({report:rpt.diag});
+  showDiag({note:rpt.note, report:rpt.diag});
+  const monthlyOnly = period!=='M' && (rpt.monthly||[]).every(x=>/^\d{4}-\d{2}$/.test(x.month));
+  $('#hint').textContent = rpt.note ? rpt.note
+    : monthlyOnly ? '※ 현재 매출 데이터는 월 단위까지만 제공됩니다 (주별/일별은 월로 표시).'
+    : `조회 완료 · 이익율 ${pct(rpt.kpi?.per)}`;
 }
 
 function renderKpis(r, repLabel){
@@ -172,7 +176,7 @@ function renderKpis(r, repLabel){
     ['하불', won(k.pay)+'원'],
     ['이익', won(k.profit)+'원'],
     ['이익율', pct(k.per)],
-    ['배차건수', won(k.cnt)+'건'],
+    ['물동량(컨테이너)', won(k.cnt)+'개'],
   ];
   $('#kpis').innerHTML = cards.map(([l,v])=>`<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div></div>`).join('')
     + `<div class="kpi"><div class="l">대상 / 연도</div><div class="v" style="font-size:15px">${r.year}</div><div class="d muted">${repLabel}</div></div>`;
@@ -212,12 +216,14 @@ function renderTable(sel, rows){
   if(!rows || !rows.length){ box.innerHTML='<div class="empty">데이터 없음</div>'; return; }
   // 표시 컬럼: 이름/코드류 먼저, 그다음 금액류. 최대 8개.
   const keys = Object.keys(rows[0]).filter(k=>k!=='_raw');
-  const nameKeys = keys.filter(k=>/NM|NAME|명|CD|CODE|MONTH|YM/i.test(k));
-  const numKeys  = keys.filter(k=>/AMOUNT|AMT|PROFIT|BILL|PAY|CNT|UNPAID|미수|이익|매출|건수/i.test(k) && !nameKeys.includes(k));
+  const nameKeys = keys.filter(k=>/NM|NAME|명|CD|CODE|MONTH|YM|업체|거래처|청구처|담당|일자/i.test(k));
+  const isPer = k => /(율|per|%)/i.test(k);
+  const isNum = k => !isPer(k) && /AMOUNT|AMT|PROFIT|BILL|PAY|CNT|UNPAID|미수|이익|매출|하불|물동량|금액|건수/i.test(k);
+  const numKeys  = keys.filter(k=>isNum(k) && !nameKeys.includes(k));
   const cols = [...new Set([...nameKeys, ...numKeys, ...keys])].slice(0,8);
-  const isNum = k => /AMOUNT|AMT|PROFIT|BILL|PAY|CNT|UNPAID|미수|이익|매출|건수/i.test(k);
+  const fmt = (k,v) => isPer(k) ? (v===''||v==null?'':(+v).toFixed(1)+'%') : (isNum(k)? won(Number(String(v).replace(/[, ]/g,''))) : (v??''));
   const head = '<tr>'+cols.map(c=>`<th>${c}</th>`).join('')+'</tr>';
-  const body = rows.slice(0,100).map(r=>'<tr>'+cols.map(c=>`<td>${isNum(c)? won(Number(String(r[c]).replace(/[, ]/g,''))) : (r[c]??'')}</td>`).join('')+'</tr>').join('');
+  const body = rows.slice(0,100).map(r=>'<tr>'+cols.map(c=>`<td>${fmt(c, r[c])}</td>`).join('')+'</tr>').join('');
   box.innerHTML = `<table>${head}${body}</table>`;
 }
 

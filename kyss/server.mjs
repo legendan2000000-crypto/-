@@ -257,37 +257,37 @@ async function getReport(pic, year, branch, period = 'M') {
     } catch (e) { diag.push({ label, path, error: String(e).slice(0, 200) }); return []; }
   }
 
-  const [manSales, manOuts, byCorp, unpaid, orders] = await Promise.all([
+  // 주력 데이터: 월별·업체별 매출 (실측 검증됨). 나머지는 진단용으로 함께 시도.
+  const [monCorp, manSales, manOuts, unpaid, orders] = await Promise.all([
+    tryCall('월별·업체별(주력)', 'outputs/statssales/selectMonCorpSalesList'),
     tryCall('내 월별 매출', 'outputs/statssales/selectManSalesList'),
     tryCall('내 월별 실적', 'outputs/statssales/selectManOutsList'),
-    tryCall('업체별', 'outputs/statssales/selectMonCorpSalesList'),
     tryCall('청구처별 미수', 'outputs/statssales/selectCorpUnpaidList'),
     tryCall('오더 접수현황', 'outputs/management/selectOrdersList'),
   ]);
 
-  // 기간 집계(월/주/일): 날짜·금액 필드를 자동 감지해 버킷별 합산
-  function bucketize(list) {
-    if (!list.length) return [];
-    const dateK = findDateKey(list[0]) || findKey(list[0], [/^MONTH$/i, /YM/i, /연월/, /DATE/i]);
-    const billK = findKey(list[0], [/BILL.*AMOUNT/i, /SALE.*AMT/i, /매출/, /청구/]);
-    const payK = findKey(list[0], [/PAY.*AMOUNT/i, /하불/]);
-    const profK = findKey(list[0], [/PROFIT(?!_PER)/i, /이익(?!율)/]);
-    const cntK = findKey(list[0], [/ALLO_CNT/i, /CNT/i, /건수/]);
-    const acc = {};
-    for (const r of list) {
-      const key = bucketKey(normDate(r[dateK]), period) || '?';
-      const a = acc[key] || (acc[key] = { month: key, bill: 0, pay: 0, profit: 0, cnt: 0 });
-      a.bill += toNum(r[billK]); a.pay += toNum(r[payK]); a.profit += toNum(r[profK]); a.cnt += toNum(r[cntK]);
-    }
-    return Object.values(acc).sort((x, y) => x.month.localeCompare(y.month)).map((a) => ({
-      month: a.month, bill: a.bill, pay: a.pay,
-      profit: a.profit || (a.bill - a.pay),
-      per: a.bill ? +(((a.profit || a.bill - a.pay) / a.bill) * 100).toFixed(1) : 0,
-      cnt: a.cnt,
-    }));
-  }
+  // selectMonCorpSalesList 행 스키마(실측):
+  //   YYYYMM, B_PRICE(매출/청구), P_PRICE(하불), PROFIT(이익),
+  //   CORP_LOC_NM(업체), BILL_CORP(청구처코드), *_CNTR(컨테이너 수량들)
+  const cntrSum = (r) => Object.keys(r).filter((k) => /_CNTR$/.test(k)).reduce((s, k) => s + toNum(r[k]), 0);
 
-  const mon = bucketize(manSales.length ? manSales : manOuts);
+  // 선택 연도 우선(응답에 전년 데이터가 섞여 오므로). 없으면 전체.
+  let rows = monCorp;
+  const inYear = monCorp.filter((r) => String(r.YYYYMM || '').startsWith(String(Y)));
+  if (inYear.length) rows = inYear;
+
+  // 기간(월/주/일) 집계 — 주력 데이터는 월 단위이므로 주/일은 월로 수렴
+  const acc = {};
+  for (const r of rows) {
+    const key = bucketKey(normDate(r.YYYYMM), period) || '?';
+    const a = acc[key] || (acc[key] = { month: key, bill: 0, pay: 0, profit: 0, cnt: 0 });
+    a.bill += toNum(r.B_PRICE); a.pay += toNum(r.P_PRICE); a.profit += toNum(r.PROFIT); a.cnt += cntrSum(r);
+  }
+  const mon = Object.values(acc).sort((x, y) => x.month.localeCompare(y.month)).map((a) => ({
+    month: a.month, bill: a.bill, pay: a.pay, profit: a.profit || (a.bill - a.pay),
+    per: a.bill ? +(((a.profit || a.bill - a.pay) / a.bill) * 100).toFixed(1) : 0, cnt: a.cnt,
+  }));
+
   const sum = mon.reduce((s, m) => ({ bill: s.bill + m.bill, pay: s.pay + m.pay, profit: s.profit + m.profit, cnt: s.cnt + m.cnt }), { bill: 0, pay: 0, profit: 0, cnt: 0 });
   const kpi = {
     bill: sum.bill, pay: sum.pay, profit: sum.profit, cnt: sum.cnt,
@@ -295,13 +295,26 @@ async function getReport(pic, year, branch, period = 'M') {
     latestMonth: mon.length ? mon[mon.length - 1] : null,
   };
 
+  // 업체별 랭킹 (매출 큰 순)
+  const cacc = {};
+  for (const r of rows) {
+    const nm = r.CORP_LOC_NM || r.BILL_CORP || '(미상)';
+    const a = cacc[nm] || (cacc[nm] = { corp: nm, bill: 0, pay: 0, profit: 0, cnt: 0 });
+    a.bill += toNum(r.B_PRICE); a.pay += toNum(r.P_PRICE); a.profit += toNum(r.PROFIT); a.cnt += cntrSum(r);
+  }
+  const byCorp = Object.values(cacc)
+    .sort((x, y) => y.bill - x.bill)
+    .slice(0, 300)
+    .map((a) => ({ 업체: a.corp, 매출: a.bill, 하불: a.pay, 이익: a.profit, '이익율': a.bill ? +((a.profit / a.bill) * 100).toFixed(1) : 0, 물동량: a.cnt }));
+
+  const note = monCorp.length ? undefined
+    : '주력 데이터(월별·업체별) 조회 실패 - 아래 진단을 확인하세요.';
+
   return {
-    ok: mon.length > 0 || byCorp.length > 0,
-    pic, year: Y, period, kpi, monthly: mon,
-    byCorp: byCorp.slice(0, 200),
+    ok: mon.length > 0, pic, year: Y, period, kpi, monthly: mon, byCorp,
     unpaid: unpaid.slice(0, 200),
     orders: orders.slice(0, 200),
-    diag,
+    note, diag,
   };
 }
 
