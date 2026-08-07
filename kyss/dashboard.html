@@ -204,29 +204,45 @@ function renderKpis(r, repLabel){
 }
 
 function renderChart(r){
-  $('#chartTitle').textContent = r.month ? `${r.year}년 ${Number(r.month)}월` : `${r.year}년 월별`;
+  const single = !!r.month;
+  $('#chartTitle').textContent = single ? `${r.year}년 ${Number(r.month)}월` : `${r.year}년 월별`;
   const m = r.monthly || [];
   if(!m.length){ $('#chart').innerHTML = '<div class="empty">이 조건의 데이터가 없습니다. (담당자/연월 확인 또는 아래 진단 참고)</div>'; return; }
-  const W=1120,H=280,pad=40, max=Math.max(1,...m.map(x=>Math.max(x.bill,x.profit)));
-  const bw = (W-pad*2)/m.length*0.6, gap=(W-pad*2)/m.length;
-  const y = v => H-pad - (v/max)*(H-pad*2);
-  const maxPer = Math.max(10,...m.map(x=>x.per));
-  const yp = v => H-pad - (v/maxPer)*(H-pad*2);
-  let bars='', line='', dots='', labels='';
+  const W=1120,H=300,pad=44, base=H-pad;
+  const max=Math.max(1,...m.map(x=>Math.max(x.bill,x.pay,x.profit)));
+  const y = v => base - (v/max)*(base-pad);
+  const gap=(W-pad*2)/m.length;
+  // 한 달만: 매출·하불·이익 3개 막대 / 여러 달: 매출·이익 2개 막대(나란히)
+  const series = single
+    ? [['매출','var(--acc)',x=>x.bill],['하불','#5b6b8c',x=>x.pay],['이익','#37c98b',x=>x.profit]]
+    : [['매출','var(--acc)',x=>x.bill],['이익','#37c98b',x=>x.profit]];
+  const n=series.length;
+  const slot=Math.min(gap*0.8, 70*n);           // 그룹 폭(막대 커지지 않게 상한)
+  const bw=Math.min(slot/n-4, 46);
+  const maxPer=Math.max(10,...m.map(x=>x.per));
+  const yp=v=>base-(v/maxPer)*(base-pad);
+  let bars='',line='',dots='',labels='',vlab='';
   m.forEach((x,i)=>{
-    const cx = pad + gap*i + gap/2;
-    bars += `<rect class="bar" x="${cx-bw/2}" y="${y(x.bill)}" width="${bw}" height="${H-pad-y(x.bill)}" rx="3"><title>${x.month} 매출 ${won(x.bill)}</title></rect>`;
-    bars += `<rect class="bar" x="${cx-bw/2}" y="${y(x.profit)}" width="${bw}" height="${H-pad-y(x.profit)}" rx="3" fill="#37c98b" opacity=".85"><title>${x.month} 이익 ${won(x.profit)}</title></rect>`;
-    const px=cx, py=yp(x.per);
-    line += (i? 'L':'M')+px+' '+py+' ';
-    dots += `<circle class="dot" cx="${px}" cy="${py}" r="3"><title>${x.month} 이익율 ${pct(x.per)}</title></circle>`;
-    labels += `<text class="lbl" x="${cx}" y="${H-pad+14}" text-anchor="middle">${x.month.slice(5)}</text>`;
+    const cx=pad+gap*i+gap/2;
+    const groupW=bw*n+4*(n-1); let bx=cx-groupW/2;
+    series.forEach(([nm,color,fn])=>{
+      const v=fn(x), yy=y(v);
+      bars+=`<rect x="${bx}" y="${yy}" width="${bw}" height="${base-yy}" rx="3" fill="${color}"><title>${x.month} ${nm} ${won(v)}</title></rect>`;
+      if(m.length<=6) vlab+=`<text class="lbl" x="${bx+bw/2}" y="${yy-4}" text-anchor="middle">${won(v)}</text>`;
+      bx+=bw+4;
+    });
+    const py=yp(x.per);
+    line+=(i?'L':'M')+cx+' '+py+' ';
+    dots+=`<circle class="dot" cx="${cx}" cy="${py}" r="3"><title>${x.month} 이익율 ${pct(x.per)}</title></circle>`;
+    if(single) dots+=`<text class="lbl" x="${cx}" y="${py-8}" text-anchor="middle" fill="#f3b13b">이익율 ${pct(x.per)}</text>`;
+    labels+=`<text class="lbl" x="${cx}" y="${base+16}" text-anchor="middle">${x.month.slice(5)}</text>`;
   });
+  const legend = single ? '막대: 매출·하불·이익 / 점: 이익율' : '막대: 매출(파랑)·이익(초록) / 선: 이익율(노랑)';
   $('#chart').innerHTML =
     `<svg viewBox="0 0 ${W} ${H}" width="100%">
-      <line class="axis" x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}"/>
-      ${bars}<path class="line" d="${line}"/>${dots}${labels}
-      <text class="lbl" x="${pad}" y="16">막대: 매출(파랑)·이익(초록) / 선: 이익율(노랑)</text>
+      <line class="axis" x1="${pad}" y1="${base}" x2="${W-pad}" y2="${base}"/>
+      ${bars}${single?'':`<path class="line" d="${line}"/>`}${dots}${labels}${vlab}
+      <text class="lbl" x="${pad}" y="16">${legend}</text>
     </svg>`;
 }
 
