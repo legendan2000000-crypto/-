@@ -90,20 +90,16 @@ let loggedIn = false;
 let loginDiag = null;
 
 function loginBodies() {
-  const id = ENV.KYSS_ID, pw = ENV.KYSS_PW;
-  const f = (ENV.KYSS_LOGIN_ID_FIELD || '').trim();
-  const g = (ENV.KYSS_LOGIN_PW_FIELD || '').trim();
-  if (f && g) return [{ [f]: id, [g]: pw }];
-  // 흔한 조합들을 순서대로 시도
+  const id = ENV.KYSS_ID, pw = ENV.KYSS_PW || '';
+  const lang = ENV.KYSS_LANG || 'ko';
+  // KYSS 실제 로그인 형식(네트워크 캡처로 확인):
+  //   { p: 아이디, c: 비밀번호, lang: "ko" }
+  //   비밀번호 앞에는 "!!" 접두어가 붙는다.
+  const prefix = (ENV.KYSS_PW_PREFIX !== undefined ? ENV.KYSS_PW_PREFIX : '!!');
+  const withPrefix = pw.startsWith(prefix) ? pw : prefix + pw; // 중복 방지
   return [
-    { ID: id, PW: pw },
-    { USER_ID: id, PASSWORD: pw },
-    { userId: id, password: pw },
-    { USER_ID: id, USER_PW: pw },
-    { id, pw },
-    { loginId: id, loginPw: pw },
-    // 위 어느 것도 안 맞으면 서버가 무시할 여분 필드까지 합쳐 한 번 더
-    { ID: id, PW: pw, USER_ID: id, PASSWORD: pw, userId: id, password: pw },
+    { p: id, c: withPrefix, lang },   // 1순위: !! 접두어 포함 (확인된 형식)
+    { p: id, c: pw, lang },           // 2순위: 접두어 없이 원문
   ];
 }
 
@@ -117,7 +113,8 @@ async function ensureLogin() {
   for (const body of loginBodies()) {
     jar.clear();
     const r = await post('login', body);
-    const okShape = r.ok && r.json && (r.json.message == null || /success|성공/i.test(String(r.json.message)));
+    const failMsg = r.json && r.json.message && /등록되지|않은|틀|실패|invalid|fail|error|unauthor/i.test(String(r.json.message));
+    const okShape = r.status === 200 && !failMsg;
     const gotCookie = jar.size > 0;
     tried.push({ fields: Object.keys(body).join(','), status: r.status, cookie: gotCookie, message: r.json ? r.json.message : (r.text || '').slice(0, 120) });
     if (okShape && gotCookie) {
