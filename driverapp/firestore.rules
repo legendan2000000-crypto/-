@@ -28,5 +28,13 @@ service cloud.firestore {
     match /fcmTokens/{uid} {
       allow read, write: if isSignedIn() && request.auth.uid == uid;
     }
+
+    // 인수증 사진: 기사는 본인 차량 건 올리기/보기, 관리자는 전체 보기
+    match /receipts/{id} {
+      allow read: if isAdmin() || (isDriver() && resource.data.vno == me().vno);
+      allow create: if isDriver() && request.resource.data.vno == me().vno;
+      allow update: if isDriver() && resource.data.vno == me().vno && request.resource.data.vno == me().vno;
+      allow delete: if isAdmin();
+    }
   }
 }

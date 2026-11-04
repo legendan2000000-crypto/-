@@ -646,11 +646,72 @@ window.__detail = (id) => {
   $('detailPanel').innerHTML =
     `<div class="sh-top"><span class="who">${esc(d.shipper||'(화주미정)')}</span>${badge}<button class="sh-x" onclick="window.__closeDetail()">✕</button></div>`+
     `<dl class="dl">${dl}</dl>`+
+    `<div id="receiptBox" style="margin-top:14px;border-top:1px solid var(--line);padding-top:12px">인수증 불러오는 중…</div>`+
     (acts?`<div class="sh-act">${acts}</div>`:'');
   $('detailSheet').classList.remove('hidden');
+  renderReceipt(id, isAdmin, d);
 };
 window.__closeDetail = () => $('detailSheet').classList.add('hidden');
 $('detailSheet').addEventListener('click', (e)=>{ if(e.target && e.target.id==='detailSheet') window.__closeDetail(); });
+
+// ── 인수증 사진(완료 보고): 기사=촬영/업로드, 관리자=확인
+let receiptTargetId = null, receiptTargetD = null;
+function receiptFileInput(){
+  let el = $('receiptFile');
+  if (!el) { el = document.createElement('input'); el.type='file'; el.id='receiptFile'; el.accept='image/*'; el.setAttribute('capture','environment'); el.style.display='none';
+    el.addEventListener('change', async () => { const f = el.files && el.files[0]; el.value=''; if (f) await doUploadReceipt(receiptTargetId, receiptTargetD, f); });
+    document.body.appendChild(el); }
+  return el;
+}
+window.__pickReceipt = (id) => { receiptTargetId = id; receiptTargetD = (window.__disp||{})[id] && (window.__disp[id].d); receiptFileInput().click(); };
+window.__viewReceipt = (url) => { const w = window.open(); if (w) { w.document.write('<img src="'+url+'" style="max-width:100%">'); } };
+// 이미지를 캔버스로 축소·압축해 용량 작은 dataURL로
+function compressImage(file){
+  return new Promise((resolve, reject) => {
+    const img = new Image(); const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const maxDim = 1280; let w = img.width, h = img.height;
+      if (w > h && w > maxDim) { h = Math.round(h*maxDim/w); w = maxDim; }
+      else if (h >= w && h > maxDim) { w = Math.round(w*maxDim/h); h = maxDim; }
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      let q = 0.6, out = c.toDataURL('image/jpeg', q);
+      while (out.length > 700000 && q > 0.3) { q -= 0.1; out = c.toDataURL('image/jpeg', q); }
+      resolve(out);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('이미지 로드 실패')); };
+    img.src = url;
+  });
+}
+async function doUploadReceipt(id, d, file){
+  const box = $('receiptBox'); if (box) box.innerHTML = '📷 사진 올리는 중… (잠시만요)';
+  try {
+    const photo = await compressImage(file);
+    await setDoc(doc(db,'receipts',id), {
+      vno: (d&&d.vno)||me.vno||'', dispatchId: id, shipper:(d&&d.shipper)||'', date:(d&&d.date)||'',
+      photo, uploadedAt: serverTimestamp(), byUid: me.uid, byName: me.name||''
+    });
+    toast('인수증 올렸습니다 ✅');
+    renderReceipt(id, false, d);
+  } catch(e){ toast('인수증 업로드 실패: ' + (e.message||e)); renderReceipt(id, false, d); }
+}
+async function renderReceipt(id, isAdmin, d){
+  const box = $('receiptBox'); if (!box) return;
+  let snap; try { snap = await getDoc(doc(db,'receipts',id)); } catch(e){ box.innerHTML = '<div class="hint">인수증 조회 실패</div>'; return; }
+  const has = snap && snap.exists();
+  const r = has ? snap.data() : null;
+  let h = '<div style="font-weight:800;margin-bottom:8px">🧾 인수증</div>';
+  if (has && r.photo) {
+    h += `<img src="${r.photo}" onclick="window.__viewReceipt('${r.photo.replace(/'/g,"\\'")}')" style="width:100%;border-radius:10px;border:1px solid var(--line);cursor:zoom-in">`;
+    h += `<div class="hint" style="margin-top:6px">${esc(r.byName||'')} 제출${r.uploadedAt&&r.uploadedAt.toDate?(' · '+r.uploadedAt.toDate().toLocaleString('ko-KR')):''}</div>`;
+    if (!isAdmin) h += `<button class="btn sub" style="margin-top:8px" onclick="window.__pickReceipt('${id}')">📷 사진 다시 올리기</button>`;
+  } else {
+    if (isAdmin) h += '<div class="hint">아직 인수증이 제출되지 않았습니다.</div>';
+    else h += `<div class="hint" style="margin-bottom:8px">사인받은 인수증을 사진으로 올려주세요.</div><button class="btn" onclick="window.__pickReceipt('${id}')">📷 인수증 사진 올리기</button>`;
+  }
+  box.innerHTML = h;
+}
 window.__recall = async (id) => {
   if (!confirm('이 배차를 회수(취소)할까요?\n기사 화면에서는 사라집니다.')) return;
   try { await updateDoc(doc(db,'dispatches',id), { status:'회수', canceledAt: serverTimestamp() }); toast('배차를 회수했습니다'); }
